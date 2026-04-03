@@ -153,7 +153,7 @@ The root `manifest.json` at the repo root is the single file PyDeck fetches firs
 | Field | Type | Required | Description |
 |:---|:---|:---|:---|
 | `schema_version` | integer | No | Catalog schema version. Use `1`. |
-| `label` | string | No | Display name shown as a badge next to the catalog URL in the PyDeck marketplace sources list (e.g. `"Official · Stable"`, `"Official · Beta"`). If omitted, no badge is shown. |
+| `label` | string | No | Display name for this catalog. When set, it appears as a badge next to the catalog URL in the sources list (e.g. `"Official · Stable"`, `"Official · Beta"`) **and** as a small pill on each plugin card when more than one catalog is loaded simultaneously — so users can tell which catalog a plugin comes from. If omitted, the repo name is derived from the URL as a fallback label. |
 | `generated_at` | string | No | ISO 8601 timestamp. Informational only. |
 | `plugins` | array | **Yes** | Array of plugin entries. See below. |
 
@@ -487,6 +487,24 @@ PyDeck aggregates catalog URLs from all of the following sources in order (dupli
 4. **Built-in default** — the URL compiled into `start.py` as `_DEFAULT_MARKETPLACE_MANIFEST_URLS`. This is **always** appended and cannot be disabled — it is the official PyDeck catalog.
 
 All resolved URLs are loaded together. Adding your own catalog does not replace the built-in default; plugins from all catalogs are merged into a single list (first slug wins if the same plugin appears in multiple catalogs).
+
+### Multi-catalog display
+
+When more than one catalog is active, each plugin card in the marketplace shows a **repo label pill** so users can tell which catalog a plugin comes from:
+
+- The pill text is taken from the catalog's `label` field in its root `manifest.json`.
+- If `label` is absent, PyDeck falls back to extracting the repo name from the `raw.githubusercontent.com` URL (e.g. `pydeck-plugins`).
+- The pill is only shown when two or more catalogs are loaded — it is hidden when only the built-in default catalog is active.
+
+Set a clear `label` in your catalog's `manifest.json` to give users a readable source indicator:
+
+```json
+{
+  "schema_version": 1,
+  "label": "My Community Plugins",
+  ...
+}
+```
 
 The catalog URL must be a `raw.githubusercontent.com` URL pointing to the `manifest.json` file:
 

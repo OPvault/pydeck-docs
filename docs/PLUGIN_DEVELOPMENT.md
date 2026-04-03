@@ -17,7 +17,7 @@ Everything you need to build, test, and ship a PyDeck plugin.
 9. [OAuth Integration](#9-oauth-integration)
 10. [Custom CSS — style.css](#10-custom-css--stylecss)
 11. [Client-Side Popup API — PyDeck.popup](#11-client-side-popup-api--pydeckpopup)
-12. [Plugin Images — img/](#12-plugin-images--img)
+12. [Plugin Images — img/ and storage/](#12-plugin-images--img-and-storage)
 13. [options.json (Marketplace Metadata)](#13-optionsjson-marketplace-metadata)
 14. [Button Types](#14-button-types)
 15. [Actions (Multi-Step Sequences)](#15-actions-multi-step-sequences)
@@ -1273,15 +1273,46 @@ Pressing **Escape** closes the popup and resolves with `undefined`.
 
 ---
 
-## 12. Plugin Images — img/
+## 12. Plugin Images — img/ and storage/
 
-Place image files in `plugins/plugin/my_plugin/img/`. They are served by the core at:
+PyDeck distinguishes between two types of plugin files:
+
+| Type | Location | Endpoint | Use for |
+|:---|:---|:---|:---|
+| **Static assets** | `plugins/plugin/<name>/img/` | `GET /api/plugins/<name>/img/<filename>` | Icons, state images — shipped with the plugin |
+| **Runtime-generated files** | `plugins/storage/<name>/` | `GET /api/plugins/<name>/storage/<filename>` | Files the plugin writes at runtime (e.g. downloaded album art) |
+
+### Static images — img/
+
+Place bundled image files in `plugins/plugin/my_plugin/img/`. They are served at:
 
 ```
 GET /api/plugins/<plugin_name>/img/<filename>
 ```
 
 Supported formats: `.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.webp`
+
+### Runtime storage — plugins/storage/
+
+If your plugin **writes files at runtime** (e.g. fetching an image from the internet), write them to `plugins/storage/<plugin_name>/` instead of inside the plugin folder. Reference them with the relative path `plugins/storage/<plugin_name>/<filename>` — the core resolves this path just like any other image.
+
+```python
+from pathlib import Path
+
+_PLUGIN_DIR = Path(__file__).parent
+# _PLUGIN_DIR.parents[1] == pydeck/plugins/
+_STORAGE_DIR = _PLUGIN_DIR.parents[1] / "storage" / "my_plugin"
+
+def _write_runtime_file(data: bytes, name: str) -> str:
+    """Write data to the plugin storage folder and return the relative path."""
+    _STORAGE_DIR.mkdir(parents=True, exist_ok=True)
+    (_STORAGE_DIR / name).write_bytes(data)
+    return f"plugins/storage/my_plugin/{name}"
+```
+
+Use the returned relative path as `display_update["image"]` — the core fetches it via `GET /api/plugins/my_plugin/storage/<filename>`.
+
+**Why separate?** The `img/` directory ships with the plugin (and is replaced on marketplace update). Files in `plugins/storage/` survive plugin updates because they live outside the plugin folder.
 
 ### Using Images in default_display
 
@@ -1545,6 +1576,12 @@ Returns `plugins/plugin/<name>/settings.html` if it exists.
 
 Serves a static image from a plugin's `img/` directory.
 
+#### `GET /api/plugins/<name>/storage/<filename>`
+
+Serves a runtime-generated file from `plugins/storage/<name>/<filename>`. Use this endpoint when a plugin writes files at runtime (e.g. downloaded album art) instead of serving pre-packaged static assets.
+
+**Response:** The file's raw bytes with `Cache-Control: no-store`.
+
 #### `GET /api/plugins/styles.css`
 
 Serves all plugin `style.css` files concatenated into one stylesheet.
@@ -1572,7 +1609,10 @@ This is the mechanism used by the `api_select` UI field type to populate dynamic
 
 #### `GET /api/icons`
 
-Returns metadata for all discovered plugin icons.
+Returns metadata for all discovered plugin icons, combining two sources:
+
+- **Static assets** — files under `plugins/plugin/<name>/img/` (scanned once at startup)
+- **Runtime-generated files** — files under `plugins/storage/<name>/` (scanned live on every request, so newly written files like album art appear without a server restart)
 
 **Response:**
 
@@ -1585,6 +1625,13 @@ Returns metadata for all discovered plugin icons.
       "filename": "mute_0.png",
       "url": "/api/plugins/discord/img/mute_0.png",
       "rel": "plugins/plugin/discord/img/mute_0.png"
+    },
+    {
+      "plugin": "spotify",
+      "name": "_now_playing",
+      "filename": "_now_playing.jpg",
+      "url": "/api/plugins/spotify/storage/_now_playing.jpg",
+      "rel": "plugins/storage/spotify/_now_playing.jpg"
     }
   ]
 }
@@ -1809,6 +1856,24 @@ All events include a `device_id` field so the GUI can scope updates to the corre
         │   └── buttons.json   # Button definitions for the "main" profile
         └── gaming/
             └── buttons.json   # Button definitions for the "gaming" profile
+```
+
+Plugin files on disk:
+
+```
+plugins/
+├── plugin/                    # Installed plugin code (managed by marketplace)
+│   ├── spotify/
+│   │   ├── manifest.json
+│   │   ├── plugin.py
+│   │   └── img/               # Static assets shipped with the plugin
+│   └── discord/
+│       └── ...
+└── storage/                   # Runtime-generated files (written by plugins, not replaced on update)
+    ├── spotify/
+    │   └── _now_playing.jpg   # Downloaded album art
+    └── my_plugin/
+        └── cached_data.json
 ```
 
 ### config.json
