@@ -189,6 +189,7 @@ Each key in `functions` is a function name that must exist in `plugin.py`. The v
 | `poll` | object | No | Background display polling config. See [Display Polling](#7-display-polling). |
 | `ui` | array | Yes | List of UI field definitions for the button editor. See [UI Field Types](#5-ui-field-types). Use `[]` for no fields. |
 | `title_readonly` | boolean | No | When `true`, the web editor shows the title field as read-only with a **Read-only** badge. Use when the plugin or its poller owns the label (for example live clock text or transport state). The title is still persisted with the button like any other field; this flag is UI-only. |
+| `autosave` | — | — | Not a function-level field. The editor shows a **Save** button automatically when any field in the `ui` array sets `"autosave": "off"`. See [Common Properties](#common-properties) under UI Field Types. |
 
 ### Permissions Object
 
@@ -309,6 +310,7 @@ Every field type supports these properties:
 | `label` | string | Yes | Human-readable label shown above the field. |
 | `default` | any | No | Default value when the button is first created. |
 | `visible_if` | object | No | Conditionally show this field based on another field's value. |
+| `autosave` | string | No | `"on"` (default) saves whenever the field changes. `"off"` disables autosave for this field. If **any** field in the function sets `"autosave": "off"`, the editor shows an explicit **Save** button for the whole function. Use `"off"` for fields that are expensive to apply on every keystroke (e.g. a location input that triggers a network request). |
 
 ### input — Text Input
 
