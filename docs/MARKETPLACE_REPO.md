@@ -104,6 +104,7 @@ The root `manifest.json` at the repo root is the single file PyDeck fetches firs
 ```json
 {
   "schema_version": 1,
+  "label": "Official · Stable",
   "generated_at": "2026-04-03T00:00:00Z",
   "plugins": [
     {
@@ -152,6 +153,7 @@ The root `manifest.json` at the repo root is the single file PyDeck fetches firs
 | Field | Type | Required | Description |
 |:---|:---|:---|:---|
 | `schema_version` | integer | No | Catalog schema version. Use `1`. |
+| `label` | string | No | Display name shown as a badge next to the catalog URL in the PyDeck marketplace sources list (e.g. `"Official · Stable"`, `"Official · Beta"`). If omitted, no badge is shown. |
 | `generated_at` | string | No | ISO 8601 timestamp. Informational only. |
 | `plugins` | array | **Yes** | Array of plugin entries. See below. |
 
@@ -477,12 +479,14 @@ This is optional. If omitted, the version is considered compatible with all PyDe
 
 ## 11. How PyDeck Resolves the Catalog URL
 
-PyDeck determines the catalog URL(s) to use in the following priority order (first non-empty source wins, duplicates dropped):
+PyDeck aggregates catalog URLs from all of the following sources in order (duplicates dropped):
 
 1. **Environment variable** `PYDECK_MARKETPLACE_MANIFEST_URL` — comma-separated list of URLs.
 2. **Config file** `~/.config/pydeck/core/config.json` → `marketplace_manifest_urls` (list of strings).
 3. **Config file** (legacy) → `marketplace_manifest_url` (single string).
-4. **Built-in default** — the URL compiled into `start.py` as `_DEFAULT_MARKETPLACE_MANIFEST_URLS`.
+4. **Built-in default** — the URL compiled into `start.py` as `_DEFAULT_MARKETPLACE_MANIFEST_URLS`. This is **always** appended and cannot be disabled — it is the official PyDeck catalog.
+
+All resolved URLs are loaded together. Adding your own catalog does not replace the built-in default; plugins from all catalogs are merged into a single list (first slug wins if the same plugin appears in multiple catalogs).
 
 The catalog URL must be a `raw.githubusercontent.com` URL pointing to the `manifest.json` file:
 
