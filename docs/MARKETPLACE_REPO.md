@@ -257,7 +257,7 @@ Understanding this flow is critical for maintaining the catalog repo correctly.
 
 PyDeck fetches the root `manifest.json` from a URL like:
 ```
-https://raw.githubusercontent.com/opvault/pydeck-plugins/main/manifest.json
+https://raw.githubusercontent.com/opvault/pydeck-plugins/stable/manifest.json
 ```
 
 ### Step 2 — Resolve the install target
