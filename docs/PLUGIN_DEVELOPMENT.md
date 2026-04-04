@@ -1791,18 +1791,36 @@ Returns all discovered plugins with their functions.
   "plugins": [
     {
       "name": "spotify",
+      "display_name": "Spotify",
+      "version": "1.0.3",
       "description": "Control Spotify playback via the Web API",
       "functions": {
         "play_pause": {
           "label": "Play / Pause",
           "description": "Toggle Spotify play/pause",
-          "default_display": { "color": "#1DB954", "text": "Play" }
+          "default_display": { "color": "#1DB954", "text": "Play" },
+          "sidebar_icon": "plugins/plugin/spotify/img/PlayPause.png",
+          "title_readonly": false,
+          "has_ui": true,
+          "autosave": false
         }
       }
     }
   ]
 }
 ```
+
+| Response field | Description |
+|:---|:---|
+| `name` | Internal plugin identifier (directory name). |
+| `display_name` | Human-readable name from the manifest `name` field. |
+| `version` | Plugin version string. |
+| `description` | Plugin description from the manifest. |
+| `functions.<fn>.label` | Button label shown in the sidebar. |
+| `functions.<fn>.sidebar_icon` | Path to the icon shown in the function picker. |
+| `functions.<fn>.title_readonly` | When `true`, the button title cannot be edited by the user. |
+| `functions.<fn>.has_ui` | Whether the function has a configurable UI form. |
+| `functions.<fn>.autosave` | When `true`, config changes are saved immediately without a submit button. |
 
 #### `GET /api/plugins/<name>/functions/<func_name>/form`
 
@@ -1812,15 +1830,27 @@ Returns the HTML form fragment for one plugin function's UI fields.
 
 #### `GET /api/settings/categories`
 
-Returns sidebar categories for the Settings overlay (same document as the deck): built-in **Appearance**, **Text defaults**, and **API**, plus any categories declared by plugins via the manifest `settings` object.
+Returns sidebar categories for the Settings overlay. Built-in categories are always present; plugins can add their own via the manifest `settings` object.
+
+**Built-in category IDs:**
+
+| ID | Label |
+|:---|:---|
+| `device` | Device (brightness, orientation — only shown when a hardware deck is connected) |
+| `appearance` | Appearance |
+| `text_style` | Text defaults |
+| `api` | API (plugin credentials & OAuth) |
 
 **Response:**
 
 ```json
 {
   "categories": [
-    { "id": "appearance", "label": "Appearance", "builtin": true, "plugins": [] },
-    { "id": "integrations", "label": "Integrations", "builtin": false, "plugins": [{ "name": "my_plugin", "order": 0 }] }
+    { "id": "device",      "label": "Device",      "builtin": true,  "plugins": [] },
+    { "id": "appearance",  "label": "Appearance",  "builtin": true,  "plugins": [] },
+    { "id": "text_style",  "label": "Text defaults","builtin": true,  "plugins": [] },
+    { "id": "api",         "label": "API",         "builtin": true,  "plugins": [] },
+    { "id": "integrations","label": "Integrations","builtin": false, "plugins": [{ "name": "my_plugin", "order": 0 }] }
   ]
 }
 ```
@@ -1879,10 +1909,11 @@ The `hotkey` string uses `+`-delimited lowercase key names identical to the form
 
 #### `GET /api/icons`
 
-Returns metadata for all discovered plugin icons, combining two sources:
+Returns metadata for all discovered icons, combining three sources:
 
 - **Static assets** — files under `plugins/plugin/<name>/img/` (scanned once at startup)
 - **Runtime-generated files** — files under `plugins/storage/<name>/` (scanned live on every request, so newly written files like album art appear without a server restart)
+- **User uploads** — files uploaded via `POST /api/icons/upload`, stored in the uploads directory and served via `GET /api/gallery/<filename>`
 
 **Response:**
 
@@ -2133,7 +2164,13 @@ A step may **not** mix `delay` with `plugin`/`function`.
 
 #### `GET /api/credentials`
 
-Returns all plugins that declare credentials, with masked password values.
+Returns all plugins that declare credentials, with password fields masked by default.
+
+**Query parameters:**
+
+| Parameter | Values | Description |
+|:---|:---|:---|
+| `secrets` | `1`, `true`, `yes` | Return real plaintext secret values instead of `••••••••`. Response includes `Cache-Control: no-store` when secrets are exposed. |
 
 **Response:**
 
@@ -2189,6 +2226,19 @@ Handles the OAuth redirect from the provider. Exchanges the authorization code f
 
 ### Folders
 
+#### `GET /api/folders/getall`
+
+Returns all configured folders and the currently active folder ID.
+
+**Response:**
+
+```json
+{
+  "folders": { "gaming": { "name": "Gaming" }, "work": { "name": "Work" } },
+  "active_folder": "gaming"
+}
+```
+
 #### `POST /api/folders/<folder_id>`
 
 Create a folder entry if it doesn't exist. Automatically adds a "back" button at the last slot.
@@ -2199,9 +2249,449 @@ Create a folder entry if it doesn't exist. Automatically adds a "back" button at
 { "name": "Gaming" }
 ```
 
+**Response:**
+
+```json
+{ "ok": true, "folder": { "id": "gaming", "name": "Gaming" } }
+```
+
+#### `POST /api/folders/change/<folder_id>`
+
+Switch the active folder to the given ID.
+
+**Response:**
+
+```json
+{ "active_folder": "gaming" }
+```
+
+Returns **404** if the folder ID does not exist.
+
+#### `POST /api/folders/changename/`
+
+Rename an existing folder.
+
+**Request body:**
+
+```json
+{ "old_name": "gaming", "new_name": "Games" }
+```
+
+**Response:**
+
+```json
+{ "ok": true, "name": "Games" }
+```
+
 #### `DELETE /api/folders/<folder_id>`
 
-Remove a folder entry.
+Remove a folder entry permanently.
+
+**Response:**
+
+```json
+{ "ok": true }
+```
+
+### Deck Preview
+
+#### `GET /api/deck/grid`
+
+Returns a snapshot of every button slot as rendered PNG images (and optionally GIF data). Used by the web UI to refresh the visual deck grid.
+
+**Response:**
+
+```json
+{
+  "t": 1712345678123,
+  "slots": [
+    { "id": 0, "png_b64": "<base64-encoded PNG>" },
+    { "id": 1, "png_b64": "<base64-encoded PNG>", "gif_b64": "<base64-encoded GIF>" }
+  ]
+}
+```
+
+| Field | Description |
+|:---|:---|
+| `t` | Server timestamp in milliseconds (used by the client to detect stale responses). |
+| `slots[].id` | Button slot index. |
+| `slots[].png_b64` | Base64-encoded PNG of the rendered button. |
+| `slots[].gif_b64` | Base64-encoded GIF, present only when the button is displaying an animated GIF. |
+
+#### `GET /api/buttons/<slot>/gif`
+
+Returns the raw animated GIF bytes for the button at the given slot, or an empty **404** response if the slot is not displaying a GIF.
+
+**Response:** Raw bytes (`image/gif`), or **404**.
+
+---
+
+### Icons — Gallery & Uploads
+
+#### `GET /api/gallery/<filename>`
+
+Serves a user-uploaded icon file by filename.
+
+**Response:** The file's raw bytes, or **404**.
+
+#### `POST /api/icons/upload`
+
+Upload a custom icon image. Accepts `image/png`, `image/jpeg`, `image/gif`, and `image/webp`. Maximum file size is enforced by the server.
+
+**Request:** `multipart/form-data` with a `file` field.
+
+**Response — 201:**
+
+```json
+{
+  "icon": {
+    "plugin": null,
+    "name": "my_icon",
+    "filename": "my_icon.png",
+    "url": "/api/gallery/my_icon.png",
+    "rel": "uploads/my_icon.png"
+  }
+}
+```
+
+**Response — 400** if no file is provided or the filename is empty.  
+**Response — 413** if the file exceeds the size limit.  
+**Response — 415** if the MIME type is not an accepted image format.
+
+---
+
+### Devices
+
+#### `GET /api/devices`
+
+Returns all connected Stream Deck devices with their geometry and selection state.
+
+**Response:**
+
+```json
+{
+  "devices": [
+    {
+      "id": "usb:0fd9:0060:00001",
+      "name": "Stream Deck MK.2",
+      "selected": true,
+      "cols": 5,
+      "rows": 3,
+      "num_buttons": 15,
+      "brightness": 70,
+      "orientation": 0
+    }
+  ]
+}
+```
+
+#### `POST /api/devices/select`
+
+Switch the active device.
+
+**Request body:**
+
+```json
+{ "device_id": "usb:0fd9:0060:00001" }
+```
+
+**Response — 200:**
+
+```json
+{
+  "ok": true,
+  "device": "usb:0fd9:0060:00001",
+  "brightness": 70,
+  "orientation": 0,
+  "num_buttons": 15,
+  "cols": 5,
+  "rows": 3
+}
+```
+
+**Response — 404** if the device ID is not recognised.
+
+#### `GET /api/devices/orientation`
+
+Returns the display orientation of the active device.
+
+**Response:**
+
+```json
+{ "orientation": 0 }
+```
+
+Valid values: `0`, `90`, `180`, `270`.
+
+#### `POST /api/devices/orientation`
+
+Set the display orientation of the active device.
+
+**Request body:**
+
+```json
+{ "orientation": 90 }
+```
+
+**Response:**
+
+```json
+{ "ok": true, "orientation": 90 }
+```
+
+**Response — 400** if the value is not one of `0`, `90`, `180`, `270`.
+
+---
+
+### Themes
+
+#### `GET /api/themes`
+
+Returns all available UI themes grouped by family.
+
+**Response:**
+
+```json
+{
+  "themes": { "dark": { "label": "Dark", "slots": ["default", "compact"] } },
+  "theme_groups": [{ "family": "dark", "label": "Dark", "slots": ["default", "compact"] }]
+}
+```
+
+#### `GET /api/themes/<family>/<slot>.css`
+
+Serves the CSS file for a specific theme variant.
+
+**Response:** CSS (`text/css`), or **404**.
+
+#### `GET /api/settings/theme`
+
+Returns the active theme setting.
+
+**Response:**
+
+```json
+{ "theme": "dark/default" }
+```
+
+#### `POST /api/settings/theme`
+
+Set the active theme.
+
+**Request body:**
+
+```json
+{ "theme": "dark/compact" }
+```
+
+**Response:**
+
+```json
+{ "ok": true, "theme": "dark/compact" }
+```
+
+**Response — 400** if `theme` is missing or empty.
+
+---
+
+### Fonts
+
+#### `GET /api/fonts`
+
+Returns the names of all font families available to the deck UI (system fonts + any fonts bundled with themes or plugins).
+
+**Response:**
+
+```json
+{ "fonts": ["Inter", "Roboto", "JetBrains Mono"] }
+```
+
+---
+
+### Profiles
+
+#### `GET /api/profiles/getall`
+
+Returns all profile names.
+
+**Response:**
+
+```json
+{ "profiles": ["main", "gaming", "work"] }
+```
+
+#### `POST /api/profiles/change/<profile_name>`
+
+Switch the active profile to the given name. All button slots reload from the new profile's `buttons.json`.
+
+**Response:**
+
+```json
+{ "active_profile": "gaming" }
+```
+
+**Response — 404** if the profile does not exist.
+
+#### `POST /api/profiles/changename/`
+
+Rename an existing profile.
+
+**Request body:**
+
+```json
+{ "old_name": "gaming", "new_name": "Games" }
+```
+
+**Response:**
+
+```json
+{ "ok": true, "name": "Games" }
+```
+
+**Response — 400** if either name is missing, empty, or the old name doesn't exist.
+
+#### `DELETE /api/profiles/delete/<profile_name>`
+
+Permanently delete a profile and its `buttons.json`.
+
+**Response:**
+
+```json
+{ "ok": true }
+```
+
+**Response — 404** if the profile does not exist.
+
+---
+
+### Marketplace
+
+#### `GET /api/marketplace/catalog`
+
+Returns the combined plugin catalog fetched from all configured manifest URLs.
+
+**Query parameters:**
+
+| Parameter | Description |
+|:---|:---|
+| `q` | Filter by plugin name or description (case-insensitive substring). |
+| `category` | Filter by category string (e.g. `media`, `communication`). |
+
+**Response — 200:**
+
+```json
+{
+  "plugins": [
+    {
+      "slug": "spotify",
+      "name": "Spotify",
+      "description": "Control Spotify playback",
+      "version": "1.0.3",
+      "category": "media",
+      "manifest_url": "https://example.com/plugins/spotify/manifest.json"
+    }
+  ],
+  "generated_at": "2026-04-04T12:00:00Z",
+  "schema_version": 1,
+  "configured": true,
+  "manifest_urls": ["https://example.com/catalog.json"],
+  "catalog_labels": { "https://example.com/catalog.json": "Official" }
+}
+```
+
+Returns `"configured": false` when no marketplace repos have been configured.  
+Returns **502** with `"error"` if all configured repos fail to respond.
+
+#### `GET /api/marketplace/repos`
+
+Returns the currently configured marketplace repository URLs.
+
+**Response:**
+
+```json
+{
+  "manifest_urls": ["https://example.com/catalog.json"],
+  "active_catalogs": 1,
+  "env_manifest_set": false
+}
+```
+
+| Field | Description |
+|:---|:---|
+| `manifest_urls` | List of catalog URLs currently configured. |
+| `active_catalogs` | Number of catalogs that responded successfully. |
+| `env_manifest_set` | `true` if the URL list was overridden by an environment variable. |
+
+#### `PUT /api/marketplace/repos`
+
+Replace the list of marketplace repository URLs.
+
+**Request body:**
+
+```json
+{ "manifest_urls": ["https://example.com/catalog.json"] }
+```
+
+**Response:**
+
+```json
+{ "ok": true, "manifest_urls": ["https://example.com/catalog.json"] }
+```
+
+**Response — 400** if `manifest_urls` is missing or not a list.
+
+#### `POST /api/marketplace/install`
+
+Download and install a plugin from a manifest URL.
+
+**Request body:**
+
+```json
+{
+  "manifest_url": "https://example.com/plugins/spotify/manifest.json",
+  "slug": "spotify",
+  "version": "1.0.3"
+}
+```
+
+| Field | Required | Description |
+|:---|:---|:---|
+| `manifest_url` | Yes | Direct URL to the plugin's `manifest.json`. |
+| `slug` | Yes | Plugin directory name to install into. |
+| `version` | No | Expected version for verification. |
+
+**Response — 200:**
+
+```json
+{
+  "ok": true,
+  "installed_path": "plugins/plugin/spotify",
+  "slug": "spotify",
+  "version": "1.0.3"
+}
+```
+
+**Response — 400** if required fields are missing.  
+**Response — 404** if the manifest URL is unreachable.  
+**Response — 502** if the download fails.
+
+#### `POST /api/marketplace/uninstall`
+
+Remove an installed plugin by slug.
+
+**Request body:**
+
+```json
+{ "slug": "spotify" }
+```
+
+**Response:**
+
+```json
+{ "ok": true, "slug": "spotify" }
+```
+
+---
 
 ### Settings
 
