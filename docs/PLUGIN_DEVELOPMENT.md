@@ -1365,6 +1365,123 @@ Plugins can declare any of the text-style fields inside `default_display`. These
 
 Only the fields you declare are applied at plugin priority; any omitted field falls through to the user's per-button setting or the system default.
 
+### Multi-Position Labels (text_labels)
+
+`text_labels` lets a button display independent text at up to three positions simultaneously — **top**, **middle**, and **bottom** — each rendered at its own y-coordinate. It replaces the single `text` + `text_position` pair when more than one label is needed.
+
+#### Format
+
+```json
+"text_labels": {
+  "top":    "12",
+  "bottom": "00"
+}
+```
+
+- Keys are a subset of `"top"`, `"middle"`, `"bottom"`.
+- Each position may appear **at most once** — uniqueness is guaranteed by the dict structure.
+- Values are the label strings to render at that position.
+- When `text_labels` is set and non-empty it takes **full priority** over `text` and `text_position`; those fields are ignored by the renderer.
+- Pass `null` (or omit) to fall back to the single-label `text` + `text_position` path.
+
+#### Shared style
+
+All labels share the same text-style settings (`text_bold`, `text_color`, `text_font`, `text_size`, etc.). Each label auto-sizes independently when `text_size` is `0`.
+
+#### In display_update
+
+Plugins emit `text_labels` inside `display_update` (or inside a `preload_display_updates` entry) the same way as `text`:
+
+```python
+return {
+    "display_update": {
+        "text_labels": {"top": h, "bottom": m},
+        "text_size": 0,
+    }
+}
+```
+
+#### In the button editor
+
+Users can add multiple labels from the **Title** section of the button editor by clicking **+ Label**. Each row has its own position selector (top / middle / bottom). A position already used by another row is disabled to prevent duplicates.
+
+#### Marquee scroll in text_labels mode
+
+When `text_labels` is active the core automatically scrolls the **lowest present label** (bottom → middle → top priority) when its text overflows the button width — exactly like the single `text` scroll path. All other labels remain centred and static.
+
+Control scroll speed with `scroll_speed` in the same `display_update`:
+
+```python
+return {
+    "display_update": {
+        "text_labels": {"top": "-3:42", "bottom": "A Very Long Song Title"},
+        "text": "",         # must be empty — prevents stale single-label scroll
+        "scroll_speed": 4,  # pixels per tick; omit to use the built-in default
+    }
+}
+```
+
+**Important:** always include `"text": ""` in a `text_labels` update. If a previous update set `text` to a non-empty value, the scroll engine will continue animating that stale text in parallel with the multi-label render, causing visual jank. Explicitly clearing it prevents this.
+
+To disable scrolling on a specific button (keep labels static even when long), set `scroll_enabled: false` in `default_display` or in a `display_update`.
+
+#### Smooth countdowns with text_labels + preload_display_updates
+
+`text_labels` pairs well with `preload_display_updates` for second-by-second tickers that need to look smooth without hammering an external API. The pattern:
+
+1. Fetch fresh data from the API (e.g. track `progress_ms` + `duration_ms`).
+2. Return the current `text_labels` state as `display_update`.
+3. Pre-compute the next N seconds of label states and return them as `preload_display_updates`.
+
+The core fires each preload at its `apply_at` timestamp independently of the poll interval, giving 1-second resolution updates from a single API call.
+
+```python
+import time
+
+def poll_display(config):
+    pb = fetch_playback()          # single API call
+    now = time.time()
+    progress_ms = pb["progress_ms"]
+    duration_ms = pb["item"]["duration_ms"]
+    track_name  = pb["item"]["name"]
+
+    def _time_left(offset_s):
+        remaining_s = max(0, (duration_ms - progress_ms) // 1000 - offset_s)
+        return f"-{remaining_s // 60}:{remaining_s % 60:02d}"
+
+    labels = {"top": _time_left(0), "bottom": track_name}
+
+    preloads = [
+        {
+            "apply_at": now + i,
+            "display_update": {
+                "text_labels": {"top": _time_left(i), "bottom": track_name},
+                "text": "",
+                "scroll_speed": 4,
+            },
+        }
+        for i in range(1, 7)   # pre-compute the next 6 seconds
+    ]
+
+    return {
+        "display_update": {"text_labels": labels, "text": "", "scroll_speed": 4},
+        "preload_display_updates": preloads,
+    }
+```
+
+The Spotify plugin uses this pattern for its **Show Time Left** option on the Play / Pause button — the countdown ticks every second while the track title scrolls simultaneously, all from a single API call every 3 seconds.
+
+#### Clock plugin — vertical style
+
+The built-in Clock plugin (vertical style) uses `text_labels` to position each time component at a dedicated slot rather than stacking everything in one block:
+
+| Configuration | Labels |
+|:---|:---|
+| Hour + Minute | `{"top": "12", "bottom": "00"}` |
+| Hour + Minute + Seconds | `{"top": "12", "middle": "00", "bottom": "30"}` |
+| Hour + Minute + Date | `{"top": "12", "middle": "00", "bottom": "Fri 04"}` |
+| Hour + Minute + Seconds + Date | `{"top": "12", "middle": "00:30", "bottom": "Fri 04"}` |
+
 ### Using Images in display_states
 
 ```json
@@ -1713,17 +1830,153 @@ Execute a button press from the web UI and return the result.
 
 ### Actions
 
+The Actions API provides full CRUD access to named multi-step action sequences stored in `~/.config/pydeck/core/actions.json`. Each step is either a plugin call or a delay (see [§15](#15-actions-multi-step-sequences) for the step schema).
+
 #### `GET /api/actions`
 
-Returns all configured action names.
+Returns all configured action names as a sorted array.
 
 **Response:**
 
 ```json
 {
-  "actions": ["mute_then_deafen", "launch_and_play"]
+  "actions": ["launch_and_play", "mute_then_deafen"]
 }
 ```
+
+---
+
+#### `GET /api/actions/<name>`
+
+Returns the step list for a single named action.
+
+**Path parameters:** `name` — the action name (URL-encoded).
+
+**Response — 200:**
+
+```json
+{
+  "name": "mute_then_deafen",
+  "steps": [
+    { "plugin": "discord", "function": "toggle_mute" },
+    { "delay": 2000 },
+    { "plugin": "discord", "function": "toggle_deafen" }
+  ]
+}
+```
+
+**Response — 404** when the action does not exist:
+
+```json
+{ "error": "action 'mute_then_deafen' not found" }
+```
+
+---
+
+#### `POST /api/actions`
+
+Create a new named action. Returns **409**-equivalent via a 400 error if the name already exists and `overwrite` is not set.
+
+**Request body:**
+
+```json
+{
+  "name": "mute_then_deafen",
+  "steps": [
+    { "plugin": "discord", "function": "toggle_mute" },
+    { "delay": 2000 },
+    { "plugin": "discord", "function": "toggle_deafen" }
+  ],
+  "overwrite": false
+}
+```
+
+| Field | Type | Required | Description |
+|:---|:---|:---|:---|
+| `name` | string | yes | Unique action name. Non-empty, stripped of surrounding whitespace. |
+| `steps` | array | yes | Ordered list of step objects (see step schema below). |
+| `overwrite` | boolean | no (default `false`) | If `true`, replace an existing action with the same name. |
+
+**Response — 201:**
+
+```json
+{
+  "name": "mute_then_deafen",
+  "steps": [
+    { "plugin": "discord", "function": "toggle_mute" },
+    { "delay": 2000 },
+    { "plugin": "discord", "function": "toggle_deafen" }
+  ]
+}
+```
+
+**Response — 400** on validation failure:
+
+```json
+{ "error": "action 'mute_then_deafen' already exists" }
+```
+
+---
+
+#### `PUT /api/actions/<name>`
+
+Replace the step list of an existing action. The name itself cannot be changed; delete and re-create to rename.
+
+**Path parameters:** `name` — the action name (URL-encoded).
+
+**Request body:**
+
+```json
+{
+  "steps": [
+    { "plugin": "discord", "function": "toggle_mute" }
+  ]
+}
+```
+
+**Response — 200:**
+
+```json
+{
+  "name": "mute_then_deafen",
+  "steps": [
+    { "plugin": "discord", "function": "toggle_mute" }
+  ]
+}
+```
+
+**Response — 404** when the action does not exist.
+
+---
+
+#### `DELETE /api/actions/<name>`
+
+Remove a named action permanently.
+
+**Path parameters:** `name` — the action name (URL-encoded).
+
+**Response — 200:**
+
+```json
+{ "deleted": "mute_then_deafen" }
+```
+
+**Response — 404** when the action does not exist.
+
+---
+
+#### Step Schema
+
+Every step in a `steps` array must be one of two shapes:
+
+| Shape | Fields | Description |
+|:---|:---|:---|
+| Plugin call | `{ "plugin": string, "function": string }` | Invokes the named function in the named plugin. Both fields are required and non-empty. |
+| Delay | `{ "delay": integer }` | Pauses execution for `delay` milliseconds (non-negative integer). Cannot be combined with plugin fields. |
+
+A step may **not** mix `delay` with `plugin`/`function`.
+
+---
 
 ### Credentials
 
@@ -2302,6 +2555,8 @@ POST /api/settings/text-style   → update (partial or full)
 ### Layer 2 — User Per-Button Settings
 
 The user can customise text style for each individual button through the **Title → T↓** popup in the button editor. These settings are saved in the button's `display` object inside `buttons.json`. They override the system default for that button.
+
+The user can also configure **multi-position labels** from the Title section by clicking **+ Label**. When multiple labels are configured the button stores a `text_labels` dict instead of a plain `text` string; see [Multi-Position Labels (text_labels)](#multi-position-labels-text_labels) for details.
 
 ### Layer 3 — Plugin Manifest (highest priority)
 
