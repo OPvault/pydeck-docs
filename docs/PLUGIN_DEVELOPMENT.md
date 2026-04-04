@@ -1225,6 +1225,23 @@ Replace a simple `"oauth": true` with an object:
 | `token_url` | string | Yes | The provider's token exchange endpoint URL. |
 | `scopes` | string | No | Space-separated OAuth scopes to request. |
 | `auth_method` | string | No | How client credentials are sent to the token endpoint. `"basic"` (default) sends Base64-encoded `client_id:client_secret` in the Authorization header. `"post"` sends them as form body fields. |
+| `user_agent` | string | No | `User-Agent` header sent to the token endpoint. Defaults to `PyDeck/1.0`. Set this when the provider requires a specific format — for example, Discord's API requires the `DiscordBot` prefix. |
+
+> **`user_agent` example — Discord:**  
+> Discord's API rejects token requests whose `User-Agent` does not start with `DiscordBot`.  
+> Declare it in the manifest so `lib/oauth.py` never needs provider-specific strings:
+>
+> ```json
+> "oauth": {
+>   "authorize_url": "https://discord.com/api/oauth2/authorize",
+>   "token_url":     "https://discord.com/api/oauth2/token",
+>   "scopes":        "rpc rpc.voice.read rpc.voice.write",
+>   "auth_method":   "post",
+>   "user_agent":    "DiscordBot (pydeck, 1.0)"
+> }
+> ```
+>
+> Any plugin that does **not** set `user_agent` automatically sends `PyDeck/1.0`.
 
 ### How the OAuth Flow Works
 
