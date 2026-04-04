@@ -305,7 +305,7 @@ Every field type supports these properties:
 
 | Property | Type | Required | Description |
 |:---|:---|:---|:---|
-| `type` | string | Yes | One of: `input`, `number`, `checkbox`, `slider`, `select`, `radio` |
+| `type` | string | Yes | One of: `input`, `number`, `checkbox`, `slider`, `select`, `radio`, `hotkey_recorder` |
 | `id` | string | Yes | Unique key within the function. This becomes the config key passed to your Python function. |
 | `label` | string | Yes | Human-readable label shown above the field. |
 | `default` | any | No | Default value when the button is first created. |
@@ -415,6 +415,101 @@ Mutually exclusive options rendered as radio buttons.
   "default": "normal"
 }
 ```
+
+### hotkey_recorder — Keyboard Shortcut Recorder
+
+A text input paired with a **Record** button. When the user clicks Record, the editor calls `GET /api/plugins/<name>/api/record` and waits up to 10 seconds for a key combo to be pressed on the physical keyboard. The result is written back into the text field automatically.
+
+Modifier-only presses (Ctrl, Alt, Shift, Super held alone) are ignored — the field only captures a combo that includes at least one non-modifier key, so pressing Shift+A produces `shift+a`, not just `shift`.
+
+```json
+{
+  "type": "hotkey_recorder",
+  "id": "hotkey",
+  "label": "Key / Shortcut",
+  "placeholder": "ctrl+c",
+  "default": ""
+}
+```
+
+| Property | Description |
+|:---|:---|
+| `placeholder` | Hint text shown when the field is empty. |
+
+**Key name format** — the recorded value (and any manually typed value) uses `+`-delimited lowercase key names:
+
+| Example value | Meaning |
+|:---|:---|
+| `ctrl+c` | Ctrl + C |
+| `shift+a` | Shift + A |
+| `super+l` | Super/Win + L |
+| `ctrl+alt+delete` | Ctrl + Alt + Delete |
+| `f5` | Function key F5 |
+| `volumeup` | Media volume up key |
+
+**Requirements for the Record button to work:**
+
+1. The plugin must expose an `api_record(config)` top-level function in `plugin.py`. The editor calls `GET /api/plugins/<your_plugin>/api/record` when the user clicks Record. If the endpoint is missing, the button shows an error.
+2. The server process must have permission to read `/dev/input/event*` (Linux only). Add the running user to the `input` group: `sudo usermod -aG input $USER`, then log out and back in.
+
+**Error display** — if `api_record` returns `{"success": false, "error": "..."}`, the error message is shown inside the Record button for 4 seconds, then the button resets. This makes permission problems immediately visible instead of silently failing.
+
+**Implementing `api_record` in your plugin:**
+
+```python
+import select
+import time
+import evdev
+from evdev import ecodes
+from typing import Any, Dict, Set
+
+_MODIFIER_CODES = {
+    ecodes.KEY_LEFTCTRL,  ecodes.KEY_RIGHTCTRL,
+    ecodes.KEY_LEFTALT,   ecodes.KEY_RIGHTALT,
+    ecodes.KEY_LEFTSHIFT, ecodes.KEY_RIGHTSHIFT,
+    ecodes.KEY_LEFTMETA,  ecodes.KEY_RIGHTMETA,
+}
+
+def api_record(config: Dict[str, Any]) -> Dict[str, Any]:
+    """Block until the user presses a key combo; return it as a string."""
+    timeout = min(30.0, max(1.0, float(config.get("timeout") or 10)))
+    devices = [
+        evdev.InputDevice(p) for p in evdev.list_devices()
+        if _is_keyboard(p)
+    ]
+    if not devices:
+        return {"success": False, "error": "No keyboard devices found."}
+
+    held: Set[int] = set()
+    deadline = time.monotonic() + timeout
+    try:
+        while True:
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                return {"success": False, "error": "Timeout."}
+            readable, _, _ = select.select(devices, [], [], remaining)
+            if not readable:
+                return {"success": False, "error": "Timeout."}
+            for dev in readable:
+                for event in dev.read():
+                    if event.type != ecodes.EV_KEY:
+                        continue
+                    if event.value == 1:       # key down
+                        if event.code in _MODIFIER_CODES:
+                            held.add(event.code)
+                        else:
+                            return {
+                                "success": True,
+                                "hotkey": _build_combo(held, event.code),
+                            }
+                    elif event.value == 0:     # key up
+                        held.discard(event.code)
+    finally:
+        for dev in devices:
+            dev.close()
+```
+
+The built-in **Keyboard** plugin ships a production-ready `api_record` implementation — see `plugins/plugin/keyboard/plugin.py` for the full version including permission-error detection and a robust keyboard-device filter.
 
 ### visible_if — Conditional Visibility
 
@@ -1751,6 +1846,17 @@ This function becomes available at `GET /api/plugins/my_plugin/api/entities`.
 **Response:** Whatever the `api_<endpoint>` function returns, serialized as JSON.
 
 This is the mechanism used by the `api_select` UI field type to populate dynamic dropdowns (e.g. the Home Assistant entity picker).
+
+**Well-known endpoint — `api_record`**
+
+When a function's `ui` contains a `hotkey_recorder` field, the editor calls `GET /api/plugins/<name>/api/record` when the user clicks the **Record** button. The endpoint must block until a key combo is pressed (or a timeout expires) and return:
+
+```json
+{ "success": true,  "hotkey": "ctrl+c" }
+{ "success": false, "error":  "Timeout: no key combo was pressed." }
+```
+
+The `hotkey` string uses `+`-delimited lowercase key names identical to the format accepted by the **Keyboard** plugin's `press_key` function. See the [`hotkey_recorder` field type](#hotkey_recorder--keyboard-shortcut-recorder) for implementation details.
 
 ### Icons
 
