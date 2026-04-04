@@ -189,6 +189,7 @@ Each key in `functions` is a function name that must exist in `plugin.py`. The v
 | `poll` | object | No | Background display polling config. See [Display Polling](#7-display-polling). |
 | `ui` | array | Yes | List of UI field definitions for the button editor. See [UI Field Types](#5-ui-field-types). Use `[]` for no fields. |
 | `title_readonly` | boolean | No | When `true`, the web editor shows the title field as read-only with a **Read-only** badge. Use when the plugin or its poller owns the label (for example live clock text or transport state). The title is still persisted with the button like any other field; this flag is UI-only. |
+| `disableGallary` / `disableGallery` | boolean | No | When `true`, the button editor hides the icon/image picker for that function. Use this for buttons that should not let users browse or replace the displayed image. The current MET current-temperature function uses this to remove the gallery UI. |
 | `autosave` | — | — | Not a function-level field. The editor shows a **Save** button automatically when any field in the `ui` array sets `"autosave": "off"`. See [Common Properties](#common-properties) under UI Field Types. |
 
 ### Permissions Object
@@ -1638,6 +1639,8 @@ The built-in Clock plugin (vertical style) uses `text_labels` to position each t
 All plugin images are automatically discovered and shown in the Icon Gallery (the image picker in the button editor). Users can browse and select any plugin's icons for any button.
 
 The **sidebar** library tile uses only `sidebar_icon` (see functions table), not `default_display.image`.
+
+If a function sets `disableGallary` or `disableGallery` in its manifest, the editor hides the entire **Button Icon** field for that function, including the label and browse button. This is useful for single-purpose buttons where the image is part of the function's own presentation and should not be user-editable.
 
 ---
 
