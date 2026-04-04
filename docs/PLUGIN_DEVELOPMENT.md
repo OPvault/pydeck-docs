@@ -641,6 +641,19 @@ return {
 - Omit `preload_display_updates` if you do not need timed delivery; behavior stays unchanged.
 - The same key is honored on **HTTP button press** responses (`plugin` result dict) so a manual refresh can re-seed the schedule.
 
+**Cancelling all pending preloads:**
+
+Return an **explicit empty list** to cancel every scheduled frame for a button without scheduling new ones:
+
+```python
+return {
+    "display_update": {"image": "plugins/plugin/my_plugin/img/icon.png", "text": "", "text_labels": None},
+    "preload_display_updates": [],   # ← cancels any countdown/animation still in flight
+}
+```
+
+This is the pattern used by the Spotify plugin when playback stops — the idle-reset update clears the album art and text while `[]` cancels any countdown ticks that were pre-scheduled during the last playing session. Omitting the key entirely leaves existing preloads running.
+
 The **clock** plugin uses this API to register the next several seconds ahead whenever the displayed second changes.
 
 ### Real Example — Spotify Album Art
@@ -1386,7 +1399,9 @@ Only the fields you declare are applied at plugin priority; any omitted field fa
 
 #### Shared style
 
-All labels share the same text-style settings (`text_bold`, `text_color`, `text_font`, `text_size`, etc.). Each label auto-sizes independently when `text_size` is `0`.
+All labels share the same text-style settings (`text_bold`, `text_color`, `text_font`, `text_size`, etc.).
+
+When `text_size` is `0` (auto) each label finds its own best-fit font size independently — a short label like `"-2:24"` keeps a large font while a long label like `"Bohemian Rhapsody — Queen"` shrinks (or scrolls) to fit. They are **not** forced to a common size driven by the longest label. Set an explicit `text_size` to pin all labels to the same point size.
 
 #### In display_update
 
@@ -1470,6 +1485,19 @@ def poll_display(config):
 ```
 
 The Spotify plugin uses this pattern for its **Show Time Left** option on the Play / Pause button — the countdown ticks every second while the track title scrolls simultaneously, all from a single API call every 3 seconds.
+
+When playback stops (Spotify closes or no active device) the plugin returns an idle reset that reverts the button to the static play/pause icon and cancels any remaining preloads in one response:
+
+```python
+return {
+    "display_update": {
+        "image": "plugins/plugin/spotify/img/PlayPause.png",
+        "text": "",
+        "text_labels": None,
+    },
+    "preload_display_updates": [],  # cancel pending countdown ticks
+}
+```
 
 #### Clock plugin — vertical style
 
