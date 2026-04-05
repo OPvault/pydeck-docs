@@ -186,7 +186,7 @@ Each key in `functions` is a function name that must exist in `plugin.py`. The v
 | `label` | string | Yes | Human-readable name shown in the sidebar and editor. |
 | `description` | string | No | Short description shown below the label. |
 | `sidebar_icon` | string | No | Relative path to an image for the **sidebar** action tile only (same path style as `default_display.image`). Omitted or empty → generic “+” tile. **Not** derived from `default_display.image`; set explicitly when you want a tile graphic. Legacy alias: `action_tile_icon`. |
-| `default_display` | object | No | Initial button appearance when dragged onto a slot. Supports `color` (hex), `text` (string), `image` (relative path), optional **`scroll_enabled`** / **`scroll_speed`** (title marquee), and all text-style fields: `show_title`, `text_position`, `text_size`, `text_bold`, `text_italic`, `text_underline`, `text_color`, `text_font`. Text-style fields act as **suggestions** by default (applied only when the user has not set the field); add a companion `<field>_lock: true` to hard-lock a field so the manifest always wins. See [Text Style in default_display](#text-style-in-default_display) and [Text Style Priority Chain](#14-text-style-priority-chain). |
+| `default_display` | object | No | Initial button appearance when dragged onto a slot. Supports `color` (hex), `text` (string), `image` (relative path), optional **`scroll_enabled`** / **`scroll_speed`** (title marquee), and all text-style fields: `show_title`, `text_position`, `text_size`, `text_bold`, `text_italic`, `text_underline`, `text_color`. Text-style fields act as **suggestions** by default (applied only when the user has not set the field); add a companion `<field>_lock: true` to hard-lock a field so the manifest always wins. See [Text Style in default_display](#text-style-in-default_display) and [Text Style Priority Chain](#14-text-style-priority-chain). |
 | `display_states` | object | No | Maps state keys (like `"default"`, `"active"`) to partial display overrides. Used for toggling button images. See [Display States](#6-display-states-and-toggling). |
 | `poll` | object | No | Background display polling config. See [Display Polling](#7-display-polling). |
 | `ui` | array | Yes | List of UI field definitions for the button editor. See [UI Field Types](#5-ui-field-types). Use `[]` for no fields. |
@@ -1505,7 +1505,6 @@ To opt a specific field in to hard-locking (always overriding the user), add a c
 | `text_italic` | boolean | `false` | Render the label in italic. |
 | `text_underline` | boolean | `false` | Draw an underline beneath the label. |
 | `text_color` | string | `""` | Hex color for the label (e.g. `"#ffffff"`). `""` = auto-contrasting. |
-| `text_font` | string | `""` | Font family name (must be installed on the host system). `""` = DejaVu Sans. |
 
 Only the fields you declare are applied at plugin priority; any omitted field falls through to the user's per-button setting or the system default.
 
@@ -1521,7 +1520,6 @@ Each text-style field has an optional companion boolean `<field>_lock`. When set
 | `text_italic_lock` | `text_italic` |
 | `text_underline_lock` | `text_underline` |
 | `text_color_lock` | `text_color` |
-| `text_font_lock` | `text_font` |
 | `show_title_lock` | `show_title` |
 
 **Suggestion (default) — user can override `text_position`:**
@@ -1549,7 +1547,7 @@ Each text-style field has an optional companion boolean `<field>_lock`. When set
 }
 ```
 
-**Example** — a Spotify button that places the track name in the middle in white, using a specific font:
+**Example** — a Spotify button that places the track name in the middle in white:
 
 ```json
 "default_display": {
@@ -1561,8 +1559,7 @@ Each text-style field has an optional companion boolean `<field>_lock`. When set
   "text_bold": false,
   "text_italic": false,
   "text_underline": false,
-  "text_color": "#ffffff",
-  "text_font": "Noto Sans"
+  "text_color": "#ffffff"
 }
 ```
 
@@ -1587,7 +1584,7 @@ Each text-style field has an optional companion boolean `<field>_lock`. When set
 
 #### Shared style
 
-All labels share the same text-style settings (`text_bold`, `text_color`, `text_font`, `text_size`, etc.).
+All labels share the same text-style settings (`text_bold`, `text_color`, `text_size`, etc.).
 
 When `text_size` is `0` (auto) each label finds its own best-fit font size independently — a short label like `"-2:24"` keeps a large font while a long label like `"Bohemian Rhapsody — Queen"` shrinks (or scrolls) to fit. They are **not** forced to a common size driven by the longest label. Set an explicit `text_size` to pin all labels to the same point size.
 
@@ -2572,20 +2569,6 @@ Set the active theme.
 
 ---
 
-### Fonts
-
-#### `GET /api/fonts`
-
-Returns the names of all font families available to the deck UI (system fonts + any fonts bundled with themes or plugins).
-
-**Response:**
-
-```json
-{ "fonts": ["Inter", "Roboto", "JetBrains Mono"] }
-```
-
----
-
 ### Profiles
 
 #### `GET /api/profiles/getall`
@@ -3271,7 +3254,6 @@ POST /api/settings/text-style   → update (partial or full)
 | `text_italic` | `false` |
 | `text_underline` | `false` |
 | `text_color` | `""` (auto-contrasting) |
-| `text_font` | `""` (DejaVu Sans) |
 
 ### Layer 2 — User Per-Button Settings
 
