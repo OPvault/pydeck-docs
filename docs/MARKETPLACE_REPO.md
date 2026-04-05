@@ -229,6 +229,7 @@ This is **not** the same format as the root catalog `manifest.json`. It is the p
   "author": "PyDeck Team",
   "slug": "spotify",
   "entrypoint": "plugin.py",
+  "python_dependencies": ["requests"],
   "credentials": [
     { "id": "client_id", "label": "Client ID", "type": "text" },
     { "id": "client_secret", "label": "Client Secret", "type": "password" }

@@ -133,6 +133,7 @@ The manifest is a JSON object with the following top-level keys:
   "version": "1.0.0",
   "description": "What the plugin does",
   "author": "Your Name",
+  "python_dependencies": [ ... ],
   "credentials": [ ... ],
   "oauth": { ... },
   "permissions": { ... },
@@ -148,6 +149,7 @@ The manifest is a JSON object with the following top-level keys:
 | `version` | string | No | Semantic version string (e.g. `"1.0.0"`). |
 | `description` | string | No | One-line description shown in the sidebar. |
 | `author` | string | No | Plugin author name. |
+| `python_dependencies` | array | No | List of pip package names the plugin requires. The backend installs missing packages automatically at startup and restarts itself. See [Python Dependencies](#python-dependencies). |
 | `credentials` | array | No | Credential fields shown under **Settings → API** on the web UI. See [Credentials](#8-credentials). |
 | `settings` | object | No | Optional category for a plugin-defined settings panel. See [Plugin settings panel](#plugin-settings-panel) under Credentials. |
 | `oauth` | object | No | OAuth2 Authorization Code flow config. See [OAuth](#9-oauth-integration). |
@@ -184,13 +186,44 @@ Each key in `functions` is a function name that must exist in `plugin.py`. The v
 | `label` | string | Yes | Human-readable name shown in the sidebar and editor. |
 | `description` | string | No | Short description shown below the label. |
 | `sidebar_icon` | string | No | Relative path to an image for the **sidebar** action tile only (same path style as `default_display.image`). Omitted or empty → generic “+” tile. **Not** derived from `default_display.image`; set explicitly when you want a tile graphic. Legacy alias: `action_tile_icon`. |
-| `default_display` | object | No | Initial button appearance when dragged onto a slot. Supports `color` (hex), `text` (string), `image` (relative path), optional **`scroll_enabled`** / **`scroll_speed`** (title marquee), and all text-style fields: `show_title`, `text_position`, `text_size`, `text_bold`, `text_italic`, `text_underline`, `text_color`, `text_font`. Text-style fields declared here take the highest priority in the system/user/plugin merge chain. See [Text Style in default_display](#text-style-in-default_display) and [Text Style Priority Chain](#14-text-style-priority-chain). |
+| `default_display` | object | No | Initial button appearance when dragged onto a slot. Supports `color` (hex), `text` (string), `image` (relative path), optional **`scroll_enabled`** / **`scroll_speed`** (title marquee), and all text-style fields: `show_title`, `text_position`, `text_size`, `text_bold`, `text_italic`, `text_underline`, `text_color`, `text_font`. Text-style fields act as **suggestions** by default (applied only when the user has not set the field); add a companion `<field>_lock: true` to hard-lock a field so the manifest always wins. See [Text Style in default_display](#text-style-in-default_display) and [Text Style Priority Chain](#14-text-style-priority-chain). |
 | `display_states` | object | No | Maps state keys (like `"default"`, `"active"`) to partial display overrides. Used for toggling button images. See [Display States](#6-display-states-and-toggling). |
 | `poll` | object | No | Background display polling config. See [Display Polling](#7-display-polling). |
 | `ui` | array | Yes | List of UI field definitions for the button editor. See [UI Field Types](#5-ui-field-types). Use `[]` for no fields. |
 | `title_readonly` | boolean | No | When `true`, the web editor shows the title field as read-only with a **Read-only** badge. Use when the plugin or its poller owns the label (for example live clock text or transport state). The title is still persisted with the button like any other field; this flag is UI-only. |
 | `disableGallary` / `disableGallery` | boolean | No | When `true`, the button editor hides the icon/image picker for that function. Use this for buttons that should not let users browse or replace the displayed image. The current MET current-temperature function uses this to remove the gallery UI. |
 | `autosave` | — | — | Not a function-level field. The editor shows a **Save** button automatically when any field in the `ui` array sets `"autosave": "off"`. See [Common Properties](#common-properties) under UI Field Types. |
+
+### Python Dependencies
+
+Declares the pip packages your plugin needs. PyDeck reads this list every time the backend starts and automatically installs any package that is not yet present in the venv. If anything is newly installed the process restarts itself so the packages are importable before any plugin code runs.
+
+```json
+{
+  "python_dependencies": ["evdev", "requests"]
+}
+```
+
+| Field | Type | Description |
+|:---|:---|:---|
+| `python_dependencies` | array of strings | Pip package names (the same names you would pass to `pip install`). Import names and pip names may differ — use the pip name (e.g. `"pillow"`, not `"PIL"`). |
+
+**Example — keyboard plugin** (`plugins/plugin/keyboard/manifest.json`):
+
+```json
+{
+  "name": "Keyboard",
+  "python_dependencies": ["evdev"],
+  "permissions": {
+    "evdev": ["UInput", "ecodes"],
+    "time": ["sleep"]
+  }
+}
+```
+
+> **Note:** `python_dependencies` is a **pip package list**, while `permissions` is an **RPC allowlist** (module → callable names). They are independent — a package listed in `python_dependencies` does not need a matching entry in `permissions`.
+
+---
 
 ### Permissions Object
 
@@ -1459,7 +1492,9 @@ Reference images using their relative path from the project root:
 <a name="text-style-in-default_display"></a>
 ### Text Style in default_display
 
-Plugins can declare any of the text-style fields inside `default_display`. These values sit at the **highest priority** in the three-layer style merge chain, overriding both the user's per-button settings and the system defaults.
+Plugins can declare any of the text-style fields inside `default_display`. By default these act as **suggestions** — they are applied only when the user has not explicitly set that field on the button. A field declared in the manifest will not override a value the user has already saved.
+
+To opt a specific field in to hard-locking (always overriding the user), add a companion `<field>_lock: true` key alongside it. See [Lock tags](#lock-tags) below.
 
 | Field | Type | Default | Description |
 |:---|:---|:---|:---|
@@ -1471,6 +1506,48 @@ Plugins can declare any of the text-style fields inside `default_display`. These
 | `text_underline` | boolean | `false` | Draw an underline beneath the label. |
 | `text_color` | string | `""` | Hex color for the label (e.g. `"#ffffff"`). `""` = auto-contrasting. |
 | `text_font` | string | `""` | Font family name (must be installed on the host system). `""` = DejaVu Sans. |
+
+Only the fields you declare are applied at plugin priority; any omitted field falls through to the user's per-button setting or the system default.
+
+#### Lock tags
+
+Each text-style field has an optional companion boolean `<field>_lock`. When set to `true` it switches that field from suggestion mode to hard-lock mode — the manifest value always wins, even if the user has configured a different value on the button.
+
+| Lock tag | Locks field |
+|:---|:---|
+| `text_position_lock` | `text_position` |
+| `text_size_lock` | `text_size` |
+| `text_bold_lock` | `text_bold` |
+| `text_italic_lock` | `text_italic` |
+| `text_underline_lock` | `text_underline` |
+| `text_color_lock` | `text_color` |
+| `text_font_lock` | `text_font` |
+| `show_title_lock` | `show_title` |
+
+**Suggestion (default) — user can override `text_position`:**
+
+```json
+"default_display": {
+  "color": "#1e293b",
+  "text": "Type",
+  "text_position": "middle",
+  "scroll_enabled": false
+}
+```
+
+**Locked — plugin always enforces `text_position` and `text_size`:**
+
+```json
+"default_display": {
+  "color": "#1e293b",
+  "text": "Type",
+  "text_position": "middle",
+  "text_position_lock": true,
+  "text_size": 18,
+  "text_size_lock": true,
+  "scroll_enabled": false
+}
+```
 
 **Example** — a Spotify button that places the track name in the middle in white, using a specific font:
 
@@ -1488,8 +1565,6 @@ Plugins can declare any of the text-style fields inside `default_display`. These
   "text_font": "Noto Sans"
 }
 ```
-
-Only the fields you declare are applied at plugin priority; any omitted field falls through to the user's per-button setting or the system default.
 
 ### Multi-Position Labels (text_labels)
 
@@ -3166,7 +3241,9 @@ PyDeck resolves the final text style for every rendered button through a three-l
 ┌─────────────────────────────────────────────────────────────────┐
 │  Priority (highest → lowest)                                    │
 │                                                                 │
-│  3. Plugin manifest  default_display  ← always wins            │
+│  3. Plugin manifest  default_display  ← wins when field_lock   │
+│                                          is true, otherwise     │
+│                                          suggestion only        │
 │  2. User per-button  display settings ← wins over system       │
 │  1. System Default   (Settings UI)    ← global fallback        │
 └─────────────────────────────────────────────────────────────────┘
@@ -3202,20 +3279,24 @@ The user can customise text style for each individual button through the **Title
 
 The user can also configure **multi-position labels** from the Title section by clicking **+ Label**. When multiple labels are configured the button stores a `text_labels` dict instead of a plain `text` string; see [Multi-Position Labels (text_labels)](#multi-position-labels-text_labels) for details.
 
-### Layer 3 — Plugin Manifest (highest priority)
+### Layer 3 — Plugin Manifest
 
-Text-style fields declared inside `default_display` in the plugin's `manifest.json` always override both the user's per-button settings and the system default. This lets plugins enforce a specific look for their function buttons regardless of the user's preferences.
+Text-style fields declared inside `default_display` in the plugin's `manifest.json` act as **suggestions** by default: they are applied only when the user has not explicitly set that field on the button. If the user has saved a value for the field, their choice takes priority.
 
-Only fields that are **explicitly declared** in the manifest take effect at plugin priority. Any field omitted from the manifest falls through to layer 2 or layer 1.
+To override the user and enforce a specific value regardless of their settings, add a companion `<field>_lock: true` alongside the field. Only then does the manifest field take the highest priority.
+
+Only fields that are **explicitly declared** in the manifest participate in layer 3 at all. Any omitted field falls through to layer 2 or layer 1.
 
 ### Practical example
 
-A user has set a system default of `text_position: "top"` and `text_bold: true`. They configure a specific Spotify button with `text_size: 12`. The Spotify plugin declares `text_position: "middle"` and `text_color: "#ffffff"` in its manifest. The resolved style is:
+A user has set a system default of `text_position: "top"` and `text_bold: true`. They configure a specific Spotify button with `text_size: 12` and explicitly save `text_position: "bottom"`. The Spotify plugin declares `text_position: "middle"` (no lock) and `text_color: "#ffffff"` (no lock) in its manifest. The resolved style is:
 
 | Field | Value | Source |
 |:---|:---|:---|
-| `text_position` | `"middle"` | Plugin manifest |
-| `text_color` | `"#ffffff"` | Plugin manifest |
+| `text_position` | `"bottom"` | User per-button (manifest suggestion overridden) |
+| `text_color` | `"#ffffff"` | Plugin manifest suggestion (user had not set it) |
 | `text_size` | `12` | User per-button |
 | `text_bold` | `true` | System default |
 | All other fields | system defaults | System default |
+
+If the plugin instead declared `"text_position_lock": true`, the resolved `text_position` would be `"middle"` regardless of what the user saved.
