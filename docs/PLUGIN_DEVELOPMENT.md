@@ -150,7 +150,7 @@ The manifest is a JSON object with the following top-level keys:
 | `description` | string | No | One-line description shown in the sidebar. |
 | `author` | string | No | Plugin author name. |
 | `python_dependencies` | array | No | List of pip package names the plugin requires. The backend installs missing packages automatically at startup and restarts itself. See [Python Dependencies](#python-dependencies). |
-| `credentials` | array | No | Credential fields shown under **Settings → API** on the web UI. See [Credentials](#8-credentials). |
+| `credentials` | array | No | Credential fields shown under **Settings → Credentials** on the web UI. See [Credentials](#8-credentials). |
 | `settings` | object | No | Optional category for a plugin-defined settings panel. See [Plugin settings panel](#plugin-settings-panel) under Credentials. |
 | `oauth` | object | No | OAuth2 Authorization Code flow config. See [OAuth](#9-oauth-integration). |
 | `permissions` | object | No | Module-level permission whitelist for the RPC system. |
@@ -1000,7 +1000,7 @@ The file is created automatically the first time a user saves credentials throug
 
 ### Declaring Credentials in the Manifest
 
-To tell PyDeck that your plugin needs credentials, add a `credentials` array to `manifest.json`. Each entry describes one input field that will appear under **Settings → API** in the web UI (open **Settings** from the deck header, then choose the **API** category):
+To tell PyDeck that your plugin needs credentials, add a `credentials` array to `manifest.json`. Each entry describes one input field that will appear under **Settings → Credentials** in the web UI (open **Settings** from the deck header, then choose the **Credentials** category):
 
 ```json
 {
@@ -1029,14 +1029,14 @@ Each entry has these fields:
 | Field | Type | Description |
 |:---|:---|:---|
 | `id` | string | The key stored in `credentials.json` and injected into your function's `config` dict. Must be unique within the plugin. |
-| `label` | string | Human-readable label shown next to the input field under **Settings → API**. |
+| `label` | string | Human-readable label shown next to the input field under **Settings → Credentials**. |
 | `type` | string | `"text"` renders a normal visible input. `"password"` renders a masked input and the saved value is displayed as `••••••••` when re-opened. |
 
-If a plugin has **no** `credentials` array (or it's empty), the plugin simply won't appear in the API credentials list — no section, no fields.
+If a plugin has **no** `credentials` array (or it's empty), the plugin simply won't appear in the Credentials list — no section, no fields.
 
-### The API credentials UI
+### The Credentials UI
 
-On **Settings → API**, the UI calls `GET /api/credentials`, which scans every discovered plugin's manifest for `credentials` declarations. For each plugin that declares credentials:
+On **Settings → Credentials**, the UI calls `GET /api/credentials`, which scans every discovered plugin's manifest for `credentials` declarations. For each plugin that declares credentials:
 
 1. A **section** is shown with the plugin name as a header
 2. **Input fields** are rendered for each credential definition
@@ -1066,7 +1066,7 @@ Plugins can add a **custom HTML panel** in the **Settings** overlay (gear on the
 
 2. Optionally add `plugins/plugin/<your_plugin>/settings.html`. Static HTML only; no server-side templating.
 
-3. The settings page calls `GET /api/settings/categories` to build the sidebar (built-in categories **Appearance**, **Text defaults**, and **API** are always listed first). For each plugin in a category, the UI loads:
+3. The settings page calls `GET /api/settings/categories` to build the sidebar (built-in categories **Appearance**, **Text defaults**, and **Credentials** are always listed first). For each plugin in a category, the UI loads:
 
 ```
 GET /api/plugins/<plugin_name>/settings/panel
@@ -1137,7 +1137,7 @@ Here's the full lifecycle of how a credential value flows through the system, us
 }
 ```
 
-**2. User enters the key under Settings → API:**
+**2. User enters the key under Settings → Credentials:**
 
 The GUI shows a password input labeled "OpenWeather API Key". The user pastes their key and clicks Save.
 
@@ -1214,7 +1214,7 @@ A key design principle: credentials are per-plugin, not per-button. If you have 
 
 ### Credential Validation in Your Function
 
-Always check that required credentials are present before using them. If a credential is missing, return a clear error message pointing the user to **Settings → API**:
+Always check that required credentials are present before using them. If a credential is missing, return a clear error message pointing the user to **Settings → Credentials**:
 
 ```python
 def my_function(config):
@@ -1222,7 +1222,7 @@ def my_function(config):
     if not api_key:
         return {
             "success": False,
-            "error": "API key not configured — add it under Settings → API",
+            "error": "API key not configured — add it under Settings → Credentials",
         }
     # Safe to proceed...
 ```
@@ -1279,7 +1279,7 @@ Replace a simple `"oauth": true` with an object:
 
 ### How the OAuth Flow Works
 
-1. User saves `client_id` and `client_secret` under **Settings → API**
+1. User saves `client_id` and `client_secret` under **Settings → Credentials**
 2. User clicks **Authorize** in the same place
 3. The GUI calls `GET /api/<plugin_name>/authorize`
 4. The core reads the manifest's `oauth` config and builds the authorization URL
@@ -1340,7 +1340,7 @@ Plugin-specific theme colors and UI component styles. The core uses CSS classes 
     color: #64c896;
 }
 
-/* Settings → API (credentials) UI */
+/* Settings → Credentials UI */
 .api-section-icon.my_plugin-icon {
     background: rgba(100, 200, 150, 0.18);
     color: #64c896;
@@ -1914,7 +1914,7 @@ Returns sidebar categories for the Settings overlay. Built-in categories are alw
 | `device` | Device (brightness, orientation — only shown when a hardware deck is connected) |
 | `appearance` | Appearance |
 | `text_style` | Text defaults |
-| `api` | API (plugin credentials & OAuth) |
+| `api` | Credentials (plugin credentials & OAuth) |
 
 **Response:**
 
@@ -1924,7 +1924,7 @@ Returns sidebar categories for the Settings overlay. Built-in categories are alw
     { "id": "device",      "label": "Device",      "builtin": true,  "plugins": [] },
     { "id": "appearance",  "label": "Appearance",  "builtin": true,  "plugins": [] },
     { "id": "text_style",  "label": "Text defaults","builtin": true,  "plugins": [] },
-    { "id": "api",         "label": "API",         "builtin": true,  "plugins": [] },
+    { "id": "api",         "label": "Credentials",  "builtin": true,  "plugins": [] },
     { "id": "integrations","label": "Integrations","builtin": false, "plugins": [{ "name": "my_plugin", "order": 0 }] }
   ]
 }

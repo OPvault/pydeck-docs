@@ -55,7 +55,7 @@ Keep the Client Secret private.
 
 1. Open PyDeck in your browser (`http://127.0.0.1:8686`)
 2. Click the **Settings** icon in the deck header
-3. Navigate to **API → Spotify**
+3. Navigate to **Credentials → Spotify**
 4. Paste your **Client ID** and **Client Secret**
 5. Click **Save**
 
@@ -63,7 +63,7 @@ Keep the Client Secret private.
 
 ## Step 4 — Authorize
 
-1. Still in **Settings → API → Spotify**, click **Authorize**
+1. Still in **Settings → Credentials → Spotify**, click **Authorize**
 2. Your browser opens Spotify's login/consent page
 3. Log in and click **Agree** to grant the requested permissions
 4. The browser redirects back to PyDeck automatically

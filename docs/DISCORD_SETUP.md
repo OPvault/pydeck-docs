@@ -64,7 +64,7 @@ Keep the Client Secret private — treat it like a password.
 
 1. Open PyDeck in your browser (`http://127.0.0.1:8686`)
 2. Click the **Settings** icon in the deck header
-3. Navigate to **API → Discord**
+3. Navigate to **Credentials → Discord**
 4. Paste your **Client ID** and **Client Secret**
 5. Click **Save**
 
@@ -72,7 +72,7 @@ Keep the Client Secret private — treat it like a password.
 
 ## Step 5 — Authorize
 
-1. Still in **Settings → API → Discord**, click **Authorize**
+1. Still in **Settings → Credentials → Discord**, click **Authorize**
 2. Your browser opens Discord's OAuth page — log in if prompted
 3. Click **Authorize** on the Discord consent screen
 4. The browser redirects back to PyDeck automatically
