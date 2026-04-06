@@ -134,6 +134,7 @@ The manifest is a JSON object with the following top-level keys:
   "description": "What the plugin does",
   "author": "Your Name",
   "python_dependencies": [ ... ],
+  "licenses": [ ... ],
   "credentials": [ ... ],
   "oauth": { ... },
   "permissions": { ... },
@@ -150,6 +151,7 @@ The manifest is a JSON object with the following top-level keys:
 | `description` | string | No | One-line description shown in the sidebar. |
 | `author` | string | No | Plugin author name. |
 | `python_dependencies` | array | No | List of pip package names the plugin requires. The backend installs missing packages automatically at startup and restarts itself. See [Python Dependencies](#python-dependencies). |
+| `licenses` | array | No | Third-party license declarations for the plugin. Each entry names a license and points to its file inside the plugin folder. Shown in the marketplace as a **Licenses** button. See [Licenses](#licenses). |
 | `credentials` | array | No | Credential fields shown under **Settings → Credentials** on the web UI. See [Credentials](#8-credentials). |
 | `settings` | object | No | Optional category for a plugin-defined settings panel. See [Plugin settings panel](#plugin-settings-panel) under Credentials. |
 | `oauth` | object | No | OAuth2 Authorization Code flow config. See [OAuth](#9-oauth-integration). |
@@ -240,6 +242,42 @@ Declares which standard library modules and functions the plugin uses. Used by t
 ```
 
 Each key is a module name, and the value is a list of function/attribute names from that module.
+
+---
+
+### Licenses
+
+If your plugin ships with or relies on third-party code or data that carries its own license, declare each one in a `licenses` array. Each entry is an object with two fields:
+
+| Field | Type | Required | Description |
+|:---|:---|:---|:---|
+| `name` | string | Yes | Human-readable name for the license (e.g. `"MIT"`, `"OpenF1"`, `"Apache 2.0"`). Shown as the tab label in the marketplace viewer. |
+| `file` | string | Yes | Filename of the license text **inside the plugin folder** (e.g. `"LICENSE-openf1"`). Only files declared here can be served to the UI — no other files are accessible. |
+
+```json
+{
+  "licenses": [
+    { "name": "OpenF1",     "file": "LICENSE-openf1" },
+    { "name": "Jolpica F1", "file": "LICENSE-jolpica" }
+  ]
+}
+```
+
+The marketplace reads this list and shows a **Licenses** pill button on the plugin card. Clicking it opens a viewer modal. When a plugin declares more than one license, the viewer renders a tab for each entry — clicking a tab loads that license's full text.
+
+**Plugin folder layout example** (F1 plugin with two licenses):
+
+```
+plugins/plugin/f1/
+├── manifest.json        ← declares both licenses
+├── plugin.py
+├── LICENSE-openf1       ← OpenF1 API license
+└── LICENSE-jolpica      ← Jolpica F1 license
+```
+
+> **Note:** The `file` value must be a plain filename with no path separators. The backend only serves files that appear in the `licenses` list, so listing a file here is both the declaration and the access grant.
+
+> **Tip:** Always include license files when your plugin uses an external API, dataset, or library that requires attribution — it keeps the project legally clean and lets users understand the data sources at a glance.
 
 ---
 
