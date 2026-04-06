@@ -339,7 +339,7 @@ Every field type supports these properties:
 
 | Property | Type | Required | Description |
 |:---|:---|:---|:---|
-| `type` | string | Yes | One of: `input`, `number`, `checkbox`, `slider`, `select`, `radio`, `hotkey_recorder` |
+| `type` | string | Yes | One of: `input`, `number`, `checkbox`, `slider`, `select`, `radio`, `hotkey_recorder`, `api_select` |
 | `id` | string | Yes | Unique key within the function. This becomes the config key passed to your Python function. |
 | `label` | string | Yes | Human-readable label shown above the field. |
 | `default` | any | No | Default value when the button is first created. |
@@ -544,6 +544,120 @@ def api_record(config: Dict[str, Any]) -> Dict[str, Any]:
 ```
 
 The built-in **Keyboard** plugin ships a production-ready `api_record` implementation — see `plugins/plugin/keyboard/plugin.py` for the full version including permission-error detection and a robust keyboard-device filter.
+
+### api_select — Dynamic API Dropdown
+
+A native `<select>` element whose options are populated at runtime by calling a plugin API endpoint. Use this when the list of choices depends on live data (e.g. a list of smart-home entities, playlists, or devices).
+
+```json
+{
+  "type": "api_select",
+  "id": "entity_id",
+  "label": "Entity",
+  "api": "entities",
+  "default": "",
+  "display": {
+    "label": "friendly_name",
+    "value": "entity_id"
+  }
+}
+```
+
+| Property | Type | Required | Description |
+|:---|:---|:---|:---|
+| `api` | string | Yes | Name of the `api_<endpoint>` function to call. E.g. `"entities"` calls `GET /api/plugins/<name>/api/entities`. |
+| `display.label` | string | No | Key in each API response object to use as the option label. Defaults to `"label"`. |
+| `display.value` | string | No | Key in each API response object to use as the option value. Defaults to `"value"`. |
+| `filter_field` | string | No | `id` of another field in the same function whose value is forwarded to the API as a query parameter. Use this to scope the dropdown to a domain or category selected by the user. |
+| `filter_by` | string | No | Query parameter name sent to the API when `filter_field` changes. E.g. `"domain"` → `GET /api/plugins/<name>/api/entities?domain=light`. Required when `filter_field` is set. |
+
+**How it works:**
+
+1. When the editor opens, the field calls `GET /api/plugins/<name>/api/<api>` and populates the `<select>` with the returned array.
+2. If `filter_field` is set, the call becomes `GET /api/plugins/<name>/api/<api>?<filter_by>=<value>` and re-fires whenever the referenced field changes.
+3. Any query parameters in the request are automatically merged into the `config` dict passed to the Python function, so no manual parsing is needed.
+
+**Real-world example — Home Assistant entity picker (domain → entity):**
+
+The built-in Home Assistant plugin uses two chained `api_select` fields: the first lets the user pick a domain (light, switch, media_player, …), and the second re-fetches the entity list scoped to that domain whenever the selection changes. Selecting "All" from the domain field clears the filter and shows every entity.
+
+**`manifest.json` — `ui` array for the `toggle` function:**
+
+```json
+"ui": [
+  {
+    "type": "api_select",
+    "id": "domain_filter",
+    "label": "Domain",
+    "api": "domains",
+    "display": {
+      "label": "label",
+      "value": "value"
+    },
+    "default": ""
+  },
+  {
+    "type": "api_select",
+    "id": "entity_id",
+    "label": "Entity",
+    "api": "entities",
+    "filter_field": "domain_filter",
+    "filter_by": "domain",
+    "display": {
+      "label": "name",
+      "value": "entity_id"
+    },
+    "default": ""
+  }
+]
+```
+
+- `domain_filter` calls `GET /api/plugins/home-assistant/api/domains` and shows all domains present in the user's HA instance, with an "All" option prepended (value `""`).
+- `entity_id` calls `GET /api/plugins/home-assistant/api/entities` and re-fetches with `?domain=<value>` every time `domain_filter` changes. An empty value means no filter — all entities are shown.
+
+**`plugin.py` — the two API endpoint functions:**
+
+```python
+def api_domains(config: Dict[str, Any]) -> list:
+    """Return unique entity domains present in the user's HA instance.
+
+    Always prepends an 'All' option so the filter can be cleared.
+    """
+    client = _get_client(config)
+    states = client.list_states()
+    seen: dict[str, str] = {}
+    for s in states:
+        domain = s["entity_id"].split(".")[0]
+        if domain not in seen:
+            seen[domain] = domain.replace("_", " ").title()
+    domains = sorted(seen.items())
+    return [{"label": "All", "value": ""}] + [
+        {"label": label, "value": domain} for domain, label in domains
+    ]
+
+
+def api_entities(config: Dict[str, Any]) -> list:
+    """Return HA entities for the entity picker.
+
+    Accepts an optional ``domain`` query param to filter by domain.
+    The query param is automatically injected into config by PyDeck.
+    """
+    client = _get_client(config)
+    domain_filter = str(config.get("domain") or "").strip()
+    states = client.list_states()
+    return [
+        {
+            "entity_id": s["entity_id"],
+            "name": s.get("attributes", {}).get(
+                "friendly_name", s["entity_id"]
+            ),
+        }
+        for s in states
+        if not domain_filter or s["entity_id"].split(".")[0] == domain_filter
+    ]
+```
+
+The function must return a JSON-serialisable list. Each item should be a dict containing at least the keys referenced by `display.label` and `display.value`.
 
 ### visible_if — Conditional Visibility
 
@@ -1967,7 +2081,7 @@ This function becomes available at `GET /api/plugins/my_plugin/api/entities`.
 
 **Response:** Whatever the `api_<endpoint>` function returns, serialized as JSON.
 
-This is the mechanism used by the `api_select` UI field type to populate dynamic dropdowns (e.g. the Home Assistant entity picker).
+This is the mechanism used by the [`api_select` field type](#api_select--dynamic-api-dropdown) to populate dynamic dropdowns. Query parameters sent to the endpoint are automatically merged into the `config` dict, enabling server-side filtering (e.g. scoping an entity list to a specific domain).
 
 **Well-known endpoint — `api_record`**
 
