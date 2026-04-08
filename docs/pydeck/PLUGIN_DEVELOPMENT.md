@@ -2029,7 +2029,8 @@ Returns all discovered plugins with their functions.
           "sidebar_icon": "plugins/plugin/spotify/img/PlayPause.png",
           "title_readonly": false,
           "has_ui": true,
-          "autosave": false
+          "autosave": false,
+          "actionable": true
         }
       }
     }
@@ -2048,6 +2049,7 @@ Returns all discovered plugins with their functions.
 | `functions.<fn>.title_readonly` | When `true`, the button title cannot be edited by the user. |
 | `functions.<fn>.has_ui` | Whether the function has a configurable UI form. |
 | `functions.<fn>.autosave` | When `true`, config changes are saved immediately without a submit button. |
+| `functions.<fn>.actionable` | When `true`, the function can be used as a step inside an Action sequence. Derived from the `actionable` flag in the manifest's `functions` entry. |
 
 #### `GET /api/plugins/<name>/functions/<func_name>/form`
 
@@ -2932,13 +2934,41 @@ Set the Stream Deck brightness.
 
 ## 17. WebSocket Events
 
-The server uses Socket.IO to push real-time events to the web GUI. Connect to the same host/port as the HTTP server.
+The server exposes a native WebSocket endpoint at `ws://<host>:<port>/ws`. Connect to the same host/port as the HTTP server — no Socket.IO client library is required.
+
+```js
+const ws = new WebSocket(`ws://${location.host}/ws`);
+ws.addEventListener('message', (ev) => {
+  const msg = JSON.parse(ev.data);
+  // msg.event identifies the event type
+});
+```
+
+The connection is **push-only** from the server side — the client does not send messages over this socket.
+
+### Message format
+
+All messages are JSON objects with an `event` field that identifies the event type:
+
+```json
+{ "event": "<event_name>", ...payload }
+```
 
 ### Event: `deck_event`
 
-All events are emitted under the `deck_event` channel with a `type` field:
+Emitted whenever something changes on the deck (button press, display update, folder change, etc.).
 
-| Type | Fields | Description |
+```json
+{
+  "event": "deck_event",
+  "type": "press",
+  "button": 3,
+  "device_id": "abc123",
+  "result": { ... }
+}
+```
+
+| `type` value | Additional fields | Description |
 |:---|:---|:---|
 | `press` | `button`, `device_id`, `result?` | A button was pressed (physical or web). `result` contains the plugin return dict. |
 | `error` | `button`, `device_id`, `error` | A button press failed. `error` is the error message string. |
@@ -2946,6 +2976,16 @@ All events are emitted under the `deck_event` channel with a `type` field:
 | `folder_change` | `device_id` | The active folder changed. GUI should reload all button images. |
 
 All events include a `device_id` field so the GUI can scope updates to the correct device. Cross-device sync emits `display_update` events for **all** affected devices simultaneously — a client viewing Device B will see its buttons update live when Device A is pressed.
+
+### Event: `devices_changed`
+
+Emitted when the list of connected hardware devices changes (device connected or disconnected).
+
+```json
+{ "event": "devices_changed", "devices": ["serial1", "serial2"] }
+```
+
+The `devices` array contains the serial identifiers of all currently connected hardware decks.
 
 ---
 

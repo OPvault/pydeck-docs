@@ -38,5 +38,5 @@ The docs live in the [`docs/`](./docs/) folder.
 
 | Repo | Description |
 |:---|:---|
-| [`opvault/pydeck`](https://github.com/opvault/pydeck) | The main PyDeck application (Flask server, web UI, hardware listener). |
+| [`opvault/pydeck`](https://github.com/opvault/pydeck) | The main PyDeck application (FastAPI server, web UI, hardware listener). |
 | [`opvault/pydeck-plugins`](https://github.com/opvault/pydeck-plugins) | The official plugin catalog repo used by the PyDeck marketplace. |

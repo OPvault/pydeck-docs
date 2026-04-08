@@ -29,7 +29,7 @@ PyDeck uses two separate GitHub repositories.
 ┌─────────────────────────────────┐       ┌─────────────────────────────────────┐
 │  pydeck  (main app repo)        │       │  pydeck-plugins  (catalog repo)     │
 │                                 │       │                                     │
-│  start.py  ─── Flask app        │       │  manifest.json  ── catalog index    │
+│  start.py  ─── FastAPI app       │       │  manifest.json  ── catalog index    │
 │  marketplace/  ─── installer    │──────▶│  plugins/                           │
 │  plugins/plugin/  ─── local     │       │    <slug>/                          │
 │    plugins installed here       │       │      <version>/                     │
@@ -40,7 +40,7 @@ PyDeck uses two separate GitHub repositories.
          user runs this                            hosted on GitHub
 ```
 
-**The main app repo (`pydeck`)** runs on the user's machine. It contains the Flask server, the hardware listener, the web UI, and the local `plugins/plugin/` directory where installed plugins live.
+**The main app repo (`pydeck`)** runs on the user's machine. It contains the FastAPI server (served via Uvicorn), the hardware listener, the web UI, and the local `plugins/plugin/` directory where installed plugins live.
 
 **The catalog repo (`pydeck-plugins`)** is hosted on GitHub. It contains:
 - A root `manifest.json` that lists every available plugin and its versions.
