@@ -119,6 +119,7 @@ plugins/plugin/my_plugin/
 | `style.css` | Custom CSS rules for your plugin. Automatically scanned and served by the core — no registration needed. |
 | `options.json` | Human-friendly metadata for a future plugin marketplace (description, features, tags). |
 | `img/` | Image assets served at `/api/plugins/<name>/img/<filename>`. Used for button icons, display states, etc. |
+| `*.sh` | Post-install shell script executed once after marketplace installation. Declared via `post_install_script` in the manifest. See [Post-Install Scripts](#post-install-scripts). |
 | `*.py` | Additional Python modules. Import them from `plugin.py` using a path insert (see [Spotify example](#spotify-oauth--api-client)). |
 
 ---
@@ -138,6 +139,8 @@ The manifest is a JSON object with the following top-level keys:
   "credentials": [ ... ],
   "oauth": { ... },
   "permissions": { ... },
+  "post_install_script": "scripts/setup.sh",
+  "post_install_requires_sudo": false,
   "functions": { ... }
 }
 ```
@@ -156,6 +159,8 @@ The manifest is a JSON object with the following top-level keys:
 | `settings` | object | No | Optional category for a plugin-defined settings panel. See [Plugin settings panel](#plugin-settings-panel) under Credentials. |
 | `oauth` | object | No | OAuth2 Authorization Code flow config. See [OAuth](#9-oauth-integration). |
 | `permissions` | object | No | Module-level permission whitelist for the RPC system. |
+| `post_install_script` | string | No | Relative path to a `.sh` script that runs after the plugin is installed from the marketplace. See [Post-Install Scripts](#post-install-scripts). |
+| `post_install_requires_sudo` | boolean | No | When `true`, the user is prompted for their sudo password before the post-install script executes. Defaults to `false`. |
 | `functions` | object | Yes | Maps function names to their metadata. This is the core of the manifest. |
 
 ### Functions Object
@@ -278,6 +283,66 @@ plugins/plugin/f1/
 > **Note:** The `file` value must be a plain filename with no path separators. The backend only serves files that appear in the `licenses` list, so listing a file here is both the declaration and the access grant.
 
 > **Tip:** Always include license files when your plugin uses an external API, dataset, or library that requires attribution — it keeps the project legally clean and lets users understand the data sources at a glance.
+
+---
+
+### Post-Install Scripts
+
+A plugin can include a shell script that runs once after installation from the marketplace. This is useful for system-level setup that cannot be handled by `python_dependencies` alone — for example, installing a system package, compiling a native extension, or writing a config file.
+
+#### Declaring a Post-Install Script
+
+Add `post_install_script` to the manifest's top-level object. The value is a relative path (from the plugin root) to a `.sh` file:
+
+```json
+{
+  "name": "my_plugin",
+  "version": "1.0.0",
+  "description": "Plugin with post-install setup",
+  "author": "Your Name",
+  "post_install_script": "scripts/setup.sh",
+  "post_install_requires_sudo": true,
+  "functions": { ... }
+}
+```
+
+| Field | Type | Required | Description |
+|:---|:---|:---|:---|
+| `post_install_script` | string | No | Relative path to a `.sh` file inside the plugin folder. Must not contain `..`, must not be absolute, and must not be a symlink. |
+| `post_install_requires_sudo` | boolean | No | When `true`, the UI prompts for the user's sudo password before executing the script. Defaults to `false`. |
+
+#### Plugin folder layout example
+
+```
+plugins/plugin/my_plugin/
+├── manifest.json
+├── plugin.py
+└── scripts/
+    └── setup.sh          ← post-install script
+```
+
+#### How It Works
+
+1. The user installs the plugin from the marketplace.
+2. If the manifest declares `post_install_script`, a **pending post-install request** is created and the UI shows a review prompt.
+3. The prompt displays the script contents so the user can inspect it before approving.
+4. If the script requires sudo, the user must provide their password.
+5. On **Approve**, the script is executed with `/bin/bash` in the plugin directory. The result (`succeeded`, `failed`, or `timeout`) is reported back.
+6. On **Decline**, the plugin directory is deleted and the installation is cancelled. Declining always removes the plugin — there is no way to keep a plugin while skipping its post-install script.
+
+#### Script Constraints
+
+- The path must be relative and stay inside the plugin directory (no `..` traversal).
+- The file must have a `.sh` extension.
+- Symlinks are not allowed.
+- The script runs with a minimal environment (`PATH`, `HOME`, `LANG`) and has a default timeout of 120 seconds.
+- If the script times out, the process is killed and the result is reported as `timeout`.
+
+#### Security
+
+Post-install scripts run arbitrary shell commands on the host machine. The review prompt exists so the user can read the script source before deciding. When `post_install_requires_sudo` is set, the password is used for a single `sudo -S` invocation and is not persisted.
+
+> **Tip:** Keep post-install scripts short, idempotent, and well-commented. Users are more likely to approve a script they can understand at a glance.
 
 ---
 
@@ -761,6 +826,34 @@ def toggle_mute(config: Dict[str, Any]) -> Dict[str, Any]:
 ```
 
 The core looks up `"active"` in `display_states`, finds `{"image": ".../mute_on.png"}`, and persists that to `buttons.json`. The button image updates on the Stream Deck and in the web GUI.
+
+### User-Level Per-State Image Overrides
+
+The web editor lets users customise the image for each state independently. When a function defines `display_states`, the editor shows state selector dots below the icon preview. Clicking a dot switches to that state so the user can browse the icon gallery and pick a different image for it.
+
+User overrides are stored on the button itself in a `display_states` field that mirrors the manifest structure:
+
+```json
+{
+  "id": 0,
+  "type": "plugin",
+  "plugin": "discord",
+  "function": "toggle_mute",
+  "config": {},
+  "display": { "color": "#000000", "text": "", "image": "plugins/plugin/discord/img/mute_on.png" },
+  "display_states": {
+    "default": { "image": "/api/gallery/my_custom_unmuted.png" },
+    "active":  { "image": "/api/gallery/my_custom_muted.png" }
+  }
+}
+```
+
+When a state change occurs (plugin returns `"state": "active"`), the core resolves the final display in two steps:
+
+1. **Manifest lookup** — read the state's partial display from the function's `display_states` in `manifest.json`.
+2. **User override merge** — if the button has its own `display_states` entry for that key, those values are merged on top (user wins).
+
+This means plugins always define the *default* images for each state, but users can replace them per-button without editing the manifest.
 
 ### display_update — Direct Override
 
@@ -1858,6 +1951,8 @@ The built-in Clock plugin (vertical style) uses `text_labels` to position each t
 }
 ```
 
+These manifest-level images serve as defaults. Users can override them per-button via the web editor's state selector dots — see [User-Level Per-State Image Overrides](#user-level-per-state-image-overrides).
+
 ### Icon Gallery
 
 All plugin images are automatically discovered and shown in the Icon Gallery (the image picker in the button editor). Users can browse and select any plugin's icons for any button.
@@ -1915,6 +2010,27 @@ The standard button type. Calls one plugin function on each press.
   }
 }
 ```
+
+When the function defines `display_states` in its manifest and the user has customised per-state images via the editor, the button also carries a `display_states` field:
+
+```json
+{
+  "id": 3,
+  "type": "plugin",
+  "plugin": "discord",
+  "function": "toggle_mute",
+  "config": {},
+  "display": { "color": "#000000", "text": "", "image": "plugins/plugin/discord/img/mute_on.png" },
+  "display_states": {
+    "default": { "image": "/api/gallery/custom_unmuted.png" },
+    "active":  { "image": "/api/gallery/custom_muted.png" }
+  }
+}
+```
+
+| Field | Description |
+|:---|:---|
+| `display_states` | Optional. Per-state display overrides set by the user in the web editor. Keys match the state names from the manifest's `display_states`. When a state change occurs, these values are merged on top of the manifest defaults (user wins). See [User-Level Per-State Image Overrides](#user-level-per-state-image-overrides). |
 
 ### plugin_loop — Repeating Press
 
@@ -2026,6 +2142,7 @@ Returns all discovered plugins with their functions.
           "label": "Play / Pause",
           "description": "Toggle Spotify play/pause",
           "default_display": { "color": "#1DB954", "text": "Play" },
+          "display_states": {},
           "sidebar_icon": "plugins/plugin/spotify/img/PlayPause.png",
           "title_readonly": false,
           "has_ui": true,
@@ -2046,6 +2163,7 @@ Returns all discovered plugins with their functions.
 | `description` | Plugin description from the manifest. |
 | `functions.<fn>.label` | Button label shown in the sidebar. |
 | `functions.<fn>.sidebar_icon` | Path to the icon shown in the function picker. |
+| `functions.<fn>.display_states` | Object mapping state keys to partial display overrides, from the manifest. Empty `{}` when the function has no states. The web editor uses this to show state selector dots. |
 | `functions.<fn>.title_readonly` | When `true`, the button title cannot be edited by the user. |
 | `functions.<fn>.has_ui` | Whether the function has a configurable UI form. |
 | `functions.<fn>.autosave` | When `true`, config changes are saved immediately without a submit button. |
@@ -2171,7 +2289,7 @@ Returns metadata for all discovered icons, combining three sources:
 
 #### `GET /api/buttons`
 
-Returns all buttons in the active profile.
+Returns all buttons in the active profile. Buttons that have user-level per-state image overrides include a `display_states` field.
 
 **Response:**
 
@@ -2185,6 +2303,18 @@ Returns all buttons in the active profile.
       "function": "play_pause",
       "config": {},
       "display": { "color": "#1DB954", "text": "Play", "image": null }
+    },
+    {
+      "id": 3,
+      "type": "plugin",
+      "plugin": "discord",
+      "function": "toggle_mute",
+      "config": {},
+      "display": { "color": "#000000", "text": "", "image": "plugins/plugin/discord/img/mute_on.png" },
+      "display_states": {
+        "default": { "image": "/api/gallery/custom_unmuted.png" },
+        "active":  { "image": "/api/gallery/custom_muted.png" }
+      }
     }
   ]
 }
@@ -2206,6 +2336,25 @@ Create or update a button. Send the full button object as JSON.
   "display": { "color": "#ff0000", "text": "YT", "image": null }
 }
 ```
+
+To save user-level per-state image overrides (for functions that define `display_states` in their manifest), include a `display_states` field:
+
+```json
+{
+  "id": 3,
+  "type": "plugin",
+  "plugin": "discord",
+  "function": "toggle_mute",
+  "config": {},
+  "display": { "color": "#000000", "text": "", "image": "plugins/plugin/discord/img/mute_on.png" },
+  "display_states": {
+    "default": { "image": "/api/gallery/custom_unmuted.png" },
+    "active":  { "image": "/api/gallery/custom_muted.png" }
+  }
+}
+```
+
+When omitted or empty, only the manifest's `display_states` are used during state changes. See [User-Level Per-State Image Overrides](#user-level-per-state-image-overrides).
 
 **Response:** The normalized button object.
 
@@ -2875,18 +3024,37 @@ Download and install a plugin from a manifest URL.
 | `slug` | Yes | Plugin directory name to install into. |
 | `version` | No | Expected version for verification. |
 
-**Response — 200:**
+**Response — 200 (no post-install):**
 
 ```json
 {
   "ok": true,
   "installed_path": "plugins/plugin/spotify",
   "slug": "spotify",
-  "version": "1.0.3"
+  "version": "1.0.3",
+  "postinstall_required": false
 }
 ```
 
-**Response — 400** if required fields are missing.  
+**Response — 200 (post-install required):**
+
+When the plugin declares a `post_install_script`, the response includes post-install details and a `request_id` for the pending request. The UI should present the review prompt before calling the approve/decline endpoints.
+
+```json
+{
+  "ok": true,
+  "installed_path": "plugins/plugin/spotify",
+  "slug": "spotify",
+  "version": "1.0.3",
+  "postinstall_required": true,
+  "request_id": "abc123",
+  "requires_sudo": false,
+  "script_rel_path": "scripts/setup.sh",
+  "script_abs_path": "/home/user/pydeck/plugins/plugin/spotify/scripts/setup.sh"
+}
+```
+
+**Response — 400** if required fields are missing or the post-install script declaration is invalid.  
 **Response — 404** if the manifest URL is unreachable.  
 **Response — 502** if the download fails.
 
@@ -2905,6 +3073,143 @@ Remove an installed plugin by slug.
 ```json
 { "ok": true, "slug": "spotify" }
 ```
+
+#### `GET /api/marketplace/postinstall/status/{request_id}`
+
+Returns the current status of a pending or completed post-install request.
+
+**Response — pending:**
+
+```json
+{
+  "found": true,
+  "request_id": "abc123",
+  "slug": "spotify",
+  "version": "1.0.3",
+  "status": "pending",
+  "requires_sudo": false,
+  "script_rel_path": "scripts/setup.sh",
+  "script_abs_path": "/home/user/pydeck/plugins/plugin/spotify/scripts/setup.sh"
+}
+```
+
+**Response — completed:**
+
+```json
+{
+  "found": true,
+  "request_id": "abc123",
+  "slug": "spotify",
+  "version": "1.0.3",
+  "status": "succeeded",
+  "exit_code": 0,
+  "error": "",
+  "script_abs_path": "/home/user/pydeck/plugins/plugin/spotify/scripts/setup.sh",
+  "deleted_plugin_on_decline": false
+}
+```
+
+| `status` value | Description |
+|:---|:---|
+| `pending` | Waiting for user to approve or decline. |
+| `succeeded` | Script ran and exited with code 0. |
+| `failed` | Script ran but exited with a non-zero code. |
+| `timeout` | Script exceeded the timeout (default 120s) and was killed. |
+| `declined_and_deleted` | User declined; plugin directory was removed. |
+| `declined_delete_failed` | User declined but the directory could not be removed. |
+| `bad_password` | Incorrect sudo password was provided. |
+
+Returns `{"found": false, "request_id": "..."}` if the request ID is unknown.
+
+#### `GET /api/marketplace/postinstall/script/{request_id}`
+
+Returns a preview of the post-install script contents so the user can review it before approving.
+
+**Response — 200:**
+
+```json
+{
+  "ok": true,
+  "request_id": "abc123",
+  "slug": "spotify",
+  "version": "1.0.3",
+  "script_abs_path": "/home/user/pydeck/plugins/plugin/spotify/scripts/setup.sh",
+  "script_rel_path": "scripts/setup.sh",
+  "content": "#!/bin/bash\napt install -y libfoo...",
+  "truncated": false
+}
+```
+
+`truncated` is `true` when the script exceeds the preview size limit (default 128 KB), in which case `content` contains only the first portion.
+
+**Response — 404** if the request ID is unknown.
+
+#### `POST /api/marketplace/postinstall/decline`
+
+Decline a pending post-install request. The plugin directory is deleted and the installation is cancelled.
+
+**Request body:**
+
+```json
+{ "request_id": "abc123" }
+```
+
+**Response — 200:**
+
+```json
+{
+  "ok": true,
+  "request_id": "abc123",
+  "slug": "spotify",
+  "version": "1.0.3",
+  "status": "declined_and_deleted",
+  "deleted_plugin_on_decline": true,
+  "error": "",
+  "script_abs_path": "/home/user/pydeck/plugins/plugin/spotify/scripts/setup.sh"
+}
+```
+
+**Response — 400** if `request_id` is missing.  
+**Response — 404** if the request ID is unknown.
+
+#### `POST /api/marketplace/postinstall/approve`
+
+Approve and execute a pending post-install script.
+
+**Request body:**
+
+```json
+{
+  "request_id": "abc123",
+  "sudo_password": "optional — required when post_install_requires_sudo is true"
+}
+```
+
+| Field | Required | Description |
+|:---|:---|:---|
+| `request_id` | Yes | The pending request ID returned by the install endpoint. |
+| `sudo_password` | Conditional | Required when the manifest sets `post_install_requires_sudo: true`. |
+
+**Response — 200:**
+
+```json
+{
+  "ok": true,
+  "request_id": "abc123",
+  "slug": "spotify",
+  "version": "1.0.3",
+  "status": "succeeded",
+  "exit_code": 0,
+  "output": "setup complete\n",
+  "error": "",
+  "script_abs_path": "/home/user/pydeck/plugins/plugin/spotify/scripts/setup.sh"
+}
+```
+
+**Response — 400** if `request_id` is missing, `sudo_password` is not a string, or the password is required but empty.  
+**Response — 404** if the request ID is unknown.
+
+When the sudo password is incorrect, the response has status `200` with `"status": "bad_password"` so the UI can re-prompt.
 
 ---
 
@@ -2974,6 +3279,8 @@ Emitted whenever something changes on the deck (button press, display update, fo
 | `error` | `button`, `device_id`, `error` | A button press failed. `error` is the error message string. |
 | `display_update` | `button`, `device_id` | A button's display was updated (by poller or cross-device sync). GUI should refresh that button's image. |
 | `folder_change` | `device_id` | The active folder changed. GUI should reload all button images. |
+| `postinstall_prompt` | `request_id`, `slug`, `version`, `requires_sudo`, `script_rel_path`, `script_abs_path` | A newly installed plugin has a post-install script awaiting user review. The UI should show the review/approve prompt. |
+| `postinstall_result` | `request_id`, `slug`, `version`, `status`, `exit_code?`, `error?`, `script_abs_path`, `deleted_plugin_on_decline?` | A post-install request was resolved (approved, declined, timed out, or failed). See [Post-Install Scripts](#post-install-scripts) for `status` values. |
 
 All events include a `device_id` field so the GUI can scope updates to the correct device. Cross-device sync emits `display_update` events for **all** affected devices simultaneously — a client viewing Device B will see its buttons update live when Device A is pressed.
 
@@ -3047,12 +3354,26 @@ The `buttonProfiles` value selects which profile's `buttons.json` is active.
       "function": "play_pause",
       "config": {},
       "display": { "color": "#1DB954", "text": "Play", "image": null }
+    },
+    {
+      "id": 3,
+      "type": "plugin",
+      "plugin": "discord",
+      "function": "toggle_mute",
+      "config": {},
+      "display": { "color": "#000000", "text": "", "image": "plugins/plugin/discord/img/mute_on.png" },
+      "display_states": {
+        "default": { "image": "/api/gallery/custom_unmuted.png" },
+        "active":  { "image": "/api/gallery/custom_muted.png" }
+      }
     }
   ]
 }
 ```
 
 Buttons are sorted by `id`. The Stream Deck listener maps buttons to physical slots in sorted order.
+
+The optional `display_states` field stores user-level per-state display overrides. When present, these are merged on top of the manifest's `display_states` during state changes (user values win). Buttons without custom per-state images omit this field entirely.
 
 ---
 
