@@ -1245,7 +1245,7 @@ The file is created automatically the first time a user saves credentials throug
 
 ### Declaring Credentials in the Manifest
 
-To tell PyDeck that your plugin needs credentials, add a `credentials` array to `manifest.json`. Each entry describes one input field that will appear under **Settings → Credentials** in the web UI (open **Settings** from the deck header, then choose the **Credentials** category):
+To tell PyDeck that your plugin needs credentials, add a `credentials` array to `manifest.json`. Each entry describes one input field that will appear under **Settings → Credentials** in the web UI (click the gear icon in the deck header to open Settings, then choose the **Credentials** category):
 
 ```json
 {
@@ -1291,7 +1291,7 @@ On **Settings → Credentials**, the UI calls `GET /api/credentials`, which scan
 
 ### Plugin settings panel
 
-Plugins can add a **custom HTML panel** in the **Settings** overlay (gear on the deck; URL stays `/`) and group multiple plugins under one sidebar category.
+Plugins can add a **custom HTML panel** in **Settings** (gear icon in the deck header; opens `/settings`) and group multiple plugins under one sidebar category.
 
 1. Add a `settings` object to `manifest.json`:
 
@@ -1311,7 +1311,7 @@ Plugins can add a **custom HTML panel** in the **Settings** overlay (gear on the
 
 2. Optionally add `plugins/plugin/<your_plugin>/settings.html`. Static HTML only; no server-side templating.
 
-3. The settings page calls `GET /api/settings/categories` to build the sidebar (built-in categories **Appearance**, **Text defaults**, and **Credentials** are always listed first). For each plugin in a category, the UI loads:
+3. The settings page calls `GET /api/settings/categories` to build the sidebar (built-in categories — **Marketplace**, **Device**, **Appearance**, **Credentials**, **Updates**, and **Licenses** — are always listed first). For each plugin in a category, the UI loads:
 
 ```
 GET /api/plugins/<plugin_name>/settings/panel
@@ -1319,7 +1319,7 @@ GET /api/plugins/<plugin_name>/settings/panel
 
 If `settings.html` is missing, the category still appears when `settings` is declared, and the user sees a short note for that plugin’s panel.
 
-With Settings open, **Escape** closes the overlay and returns to the deck (URL remains `/`).
+With Settings open, **Escape** closes the settings view and returns to the deck (navigates back to `/`).
 
 When the user clicks Save:
 - The GUI sends `POST /api/credentials/<plugin_name>` with the field values
@@ -2177,26 +2177,30 @@ Returns the HTML form fragment for one plugin function's UI fields.
 
 #### `GET /api/settings/categories`
 
-Returns sidebar categories for the Settings overlay. Built-in categories are always present; plugins can add their own via the manifest `settings` object.
+Returns sidebar categories for the Settings page. Built-in categories are always present; plugins can add their own via the manifest `settings` object.
 
 **Built-in category IDs:**
 
 | ID | Label |
 |:---|:---|
+| `marketplace` | Marketplace |
 | `device` | Device (brightness, orientation — only shown when a hardware deck is connected) |
-| `appearance` | Appearance |
-| `text_style` | Text defaults |
+| `appearance` | Appearance (includes text-style defaults) |
 | `api` | Credentials (plugin credentials & OAuth) |
+| `updates` | Updates (app updater & version selector) |
+| `licenses` | Licenses |
 
 **Response:**
 
 ```json
 {
   "categories": [
+    { "id": "marketplace", "label": "Marketplace", "builtin": true,  "plugins": [] },
     { "id": "device",      "label": "Device",      "builtin": true,  "plugins": [] },
     { "id": "appearance",  "label": "Appearance",  "builtin": true,  "plugins": [] },
-    { "id": "text_style",  "label": "Text defaults","builtin": true,  "plugins": [] },
     { "id": "api",         "label": "Credentials",  "builtin": true,  "plugins": [] },
+    { "id": "updates",     "label": "Updates",      "builtin": true,  "plugins": [] },
+    { "id": "licenses",    "label": "Licenses",     "builtin": true,  "plugins": [] },
     { "id": "integrations","label": "Integrations","builtin": false, "plugins": [{ "name": "my_plugin", "order": 0 }] }
   ]
 }
@@ -3747,7 +3751,7 @@ PyDeck resolves the final text style for every rendered button through a three-l
 
 ### Layer 1 — System Default
 
-The **System Default** is a global fallback that applies to every button that has no per-button override. It is configured in the PyDeck web UI under **Settings → Text defaults** (open Settings from the deck header).
+The **System Default** is a global fallback that applies to every button that has no per-button override. It is configured in the PyDeck web UI under **Settings → Appearance** (scroll down past the theme picker to the text-defaults section).
 
 The defaults are stored in `~/.config/pydeck/core/config.json` under the key `text_style_defaults` and can also be read/written via the API:
 

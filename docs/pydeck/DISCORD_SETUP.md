@@ -98,7 +98,7 @@ The plugin polls Discord's voice state every 10 seconds and keeps the button ima
 |---|---|---|
 | `redirect_uri: Not matching configuration` | Redirect URI in Discord portal doesn't match | Ensure it is exactly `http://127.0.0.1:8686/oauth/discord/callback` |
 | `Discord IPC socket not found` | Discord is not running, or you are using a browser / modified client | Start the **official** Discord desktop app; browser and modified clients (Vencord, BetterDiscord) do not expose the IPC socket |
-| `Authentication failed` | Token is invalid or expired | Go to Settings → API → Discord and click **Authorize** again |
+| `Authentication failed` | Token is invalid or expired | Go to Settings → Credentials → Discord and click **Authorize** again |
 | `Not authorized` | No token saved yet | Complete Step 5 (Authorize) |
 | Button image stuck after mute inside Discord | Poll hasn't fired yet | State syncs within ~10 s |
 
