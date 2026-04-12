@@ -567,6 +567,25 @@ When multiple spacers exist in the same container, the available space is divide
 - **Container:** No
 - **Default size:** auto (expands to fill)
 
+#### `<marquee>` — Scrolling Text
+
+Renders horizontally scrolling text, clipped to the element bounds. When the rendered text fits within the box, it behaves identically to `<text>` (no scrolling). When the text overflows, it scrolls continuously from right to left.
+
+```xml
+<marquee class="song-title" speed="30">{track_name}</marquee>
+```
+
+| Attribute | Description |
+|:---|:---|
+| `speed` | Scroll speed in pixels per second. Default: `30`. |
+
+- **Container:** No
+- **Inherits all text styling** — `font-size`, `color`, `font-weight`, `font-style`, `shadow`, `text-stroke`, etc.
+- **Automatically triggers the animation tick** (~15 FPS) — no `@keyframes` needed. See [Performance Notes](#performance-notes) in the Animations section.
+- Scroll offset is derived from the render timestamp, so no plugin-side state is required.
+
+> **Tip:** Use `<marquee>` for labels that may overflow, such as song titles or long status messages. For text that always fits, prefer `<text>`.
+
 ---
 
 ## 6. style.css — Styling
@@ -644,6 +663,7 @@ Styles cascade using CSS-like specificity: `(id count, class count, tag count)`.
 | `font-weight` | `normal`, `bold` | `normal` |
 | `font-style` | `normal`, `italic` | `normal` |
 | `text-align` | `left`, `center`, `right` | `center` |
+| `text-anchor` | A single character (e.g. `:`) or `none` | `none` |
 | `text-decoration` | `none`, `underline` | `none` |
 | `color` | hex, `rgb()` | `#ffffff` |
 
@@ -670,6 +690,7 @@ Styles cascade using CSS-like specificity: `(id count, class count, tag count)`.
 | `shadow` | `<offset-x> <offset-y> <blur> <color>` or `none` | `none` |
 | `glow` | `<size> <color>` or `none` | `none` |
 | `blur` | pixels (Gaussian blur radius) | `0` |
+| `text-stroke` | `<width> <color>` or `none` | `none` |
 
 #### Animation
 
@@ -819,7 +840,7 @@ The `fit` attribute on `<img>` controls how the source image is sized within the
 | Mode | Behaviour |
 |:---|:---|
 | `cover` (default) | Scale to fill the entire box, cropping excess. |
-| `contain` | Scale to fit within the box, preserving aspect ratio. |
+| `contain` | Scale to fit within the box, preserving aspect ratio. The image is centred within the element bounds. |
 | `stretch` | Stretch to exactly match width and height. |
 
 ### Text Rendering
@@ -831,6 +852,25 @@ Text is rendered using the computed font, and positioned according to `text-alig
 - `right` — flush right
 
 Text is always vertically centred within the element's box. Shadow is rendered first (behind the text) when the `shadow` property is set.
+
+#### Text Anchor
+
+The `text-anchor` property centres the text so that a specific character sits at the horizontal midpoint of the canvas. This is useful for aligning colons in clock displays, decimal points in numbers, or any other fixed reference character:
+
+```css
+.time { text-anchor: :; }
+```
+
+When `text-anchor` is set and the anchor character exists in the text, `text-align` is ignored. If the character is not found, `text-align` applies as normal.
+
+#### Text Stroke
+
+The `text-stroke` property draws an outline around text, rendered behind the fill colour. It works on both `<text>` and `<marquee>` elements:
+
+```css
+.title { text-stroke: 1 #000000; }
+/*        width  color */
+```
 
 #### Emoji Support
 
@@ -1003,8 +1043,8 @@ The `.icon-container` box (and its child `<img>`) will rotate continuously. The 
 
 ### Performance Notes
 
-- Only buttons whose CSS contains `@keyframes` are re-rendered at the fast animation tick rate. Other buttons render at normal poll intervals.
-- Animation detection is cached per plugin — if you add or remove `@keyframes`, restart the server.
+- Buttons whose CSS contains `@keyframes` **or** whose template tree contains a `<marquee>` element are re-rendered at the fast animation tick rate (~15 FPS). Other buttons render at normal poll intervals.
+- Animation detection is cached per plugin — if you add or remove `@keyframes` or `<marquee>` elements, restart the server.
 - The animation tick only calls `render_button` (no `on_poll` dispatch) — it re-renders with the current state at a new timestamp.
 
 ---
