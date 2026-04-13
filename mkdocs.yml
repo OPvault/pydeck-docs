@@ -23,6 +23,16 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to dark mode
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+
 extra_css:
   - stylesheets/extra.css
 
