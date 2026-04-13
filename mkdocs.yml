@@ -12,17 +12,19 @@ theme:
     repo: fontawesome/brands/github
   palette:
     - scheme: slate
-      primary: indigo
-      accent: blue
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-7
         name: Switch to light mode
     - scheme: default
-      primary: indigo
-      accent: blue
+      primary: custom
+      accent: custom
       toggle:
         icon: material/brightness-4
         name: Switch to dark mode
+extra_css:
+  - stylesheets/extra.css
 
 extra_files:
   - CNAME
