@@ -1,0 +1,34 @@
+site_name: PyDeck Docs
+site_description: Documentation for PyDeck
+
+site_url: https://docs.pydeck.no
+repo_url: https://github.com/OPvault/pydeck-docs
+
+theme:
+  name: material
+
+extra_files:
+  - CNAME
+
+nav:
+  - Home: index.md
+
+  - PyDeck:
+      - Marketplace Repo: pydeck/MARKETPLACE_REPO.md
+
+  - Plugin Development:
+      - Plugin Development: pydeck/PLUGIN_DEVELOPMENT.md
+      - PDK Development: pydeck/PDK_DEVELOPMENT.md
+      - Release Stable: pydeck-plugins/RELEASE_STABLE.md
+      - Sync From PyDeck: pydeck-plugins/SYNC_FROM_PYDECK.md
+
+  - Themes Development:
+      - Theme Development: pydeck/THEME_DEVELOPMENT.md
+      - Generate Manifest: pydeck-plugins/GENERATE_MANIFEST.md
+      - Release Stable: pydeck-plugins/RELEASE_STABLE.md
+      - Sync From PyDeck: pydeck-plugins/SYNC_FROM_PYDECK.md
+
+
+  - PyDeck Official Plugins:
+      - Discord Setup: pydeck/DISCORD_SETUP.md
+      - Spotify Setup: pydeck/SPOTIFY_SETUP.md

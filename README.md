@@ -2,13 +2,15 @@
 
 Documentation for [PyDeck](https://github.com/opvault/pydeck) — a Python-powered, web-based macro deck that lets you trigger actions from buttons in a browser UI.
 
+**Live site:** [docs.pydeck.no](https://docs.pydeck.no)
+
 ---
 
 ## What is this repo?
 
 This repository contains the official developer documentation for PyDeck. It covers how to extend PyDeck through plugins and themes, and how to maintain a plugin catalog for the marketplace.
 
-The docs live in the [`docs/`](./docs/) folder.
+The docs live in the [`docs/`](./docs/) folder and are published to [docs.pydeck.no](https://docs.pydeck.no) via GitHub Pages.
 
 ---
 
