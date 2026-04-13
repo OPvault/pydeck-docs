@@ -25,7 +25,7 @@ Everything you need to understand how the PyDeck marketplace works, how the two 
 
 PyDeck uses two separate GitHub repositories.
 
-```
+```text
 ┌─────────────────────────────────┐       ┌─────────────────────────────────────┐
 │  pydeck  (main app repo)        │       │  pydeck-plugins  (catalog repo)     │
 │                                 │       │                                     │
@@ -54,7 +54,7 @@ The two repos are **independent**. The catalog repo has no code that runs — it
 
 ## 2. The Plugin Catalog Repo — Layout
 
-```
+```text
 <catalog-repo-root>/
 ├── manifest.json                  # ← Root catalog index (REQUIRED)
 │
@@ -187,7 +187,7 @@ The root `manifest.json` at the repo root is the single file PyDeck fetches firs
 Each version folder contains the actual plugin files that get installed on the user's machine. After install, the contents of the version folder are placed flat inside `plugins/plugin/<slug>/` on the user's machine — the version directory itself is not included.
 
 **Repo structure:**
-```
+```text
 plugins/spotify/1.1.0/
 ├── manifest.json
 ├── plugin.py
@@ -196,7 +196,7 @@ plugins/spotify/1.1.0/
 ```
 
 **After install on user's machine:**
-```
+```text
 plugins/plugin/spotify/
 ├── manifest.json
 ├── plugin.py
@@ -257,7 +257,7 @@ Understanding this flow is critical for maintaining the catalog repo correctly.
 ### Step 1 — Fetch the catalog
 
 PyDeck fetches the root `manifest.json` from a URL like:
-```
+```text
 https://raw.githubusercontent.com/opvault/pydeck-plugins/stable/manifest.json
 ```
 
@@ -275,7 +275,7 @@ It splits the path into:
 ### Step 3 — List files via the GitHub Tree API
 
 PyDeck calls the GitHub Git Tree API:
-```
+```text
 GET https://api.github.com/repos/<owner>/<repo>/git/trees/<ref>?recursive=1
 ```
 
@@ -292,7 +292,7 @@ Files directly under the plugin base that are not inside any version subdirector
 ### Step 5 — Download each file
 
 PyDeck downloads each matching file from:
-```
+```text
 https://raw.githubusercontent.com/<owner>/<repo>/<ref>/<path>
 ```
 
@@ -351,7 +351,7 @@ If `plugins/browser/1.0.0/` doesn't exist as a real directory in the repo, the i
 
 ### 1. Create the version folder in the catalog repo
 
-```
+```text
 plugins/<slug>/<version>/
 ├── manifest.json   ← local plugin manifest
 ├── plugin.py
@@ -400,7 +400,7 @@ The catalog `manifest.json` and the version folder files must be committed and p
 
 ### 1. Create the new version folder
 
-```
+```text
 plugins/<slug>/<new_version>/
 ├── manifest.json   ← update the version field inside to match
 ├── plugin.py
@@ -509,7 +509,7 @@ Set a clear `label` in your catalog's `manifest.json` to give users a readable s
 
 The catalog URL must be a `raw.githubusercontent.com` URL pointing to the `manifest.json` file:
 
-```
+```text
 https://raw.githubusercontent.com/<owner>/<repo>/<branch>/manifest.json
 ```
 

@@ -28,7 +28,7 @@ Buttons can display live album art, the current track name, artist, and a countd
    - **App name** — anything you like, e.g. `PyDeck`
    - **App description** — optional
    - **Redirect URI** — add exactly:
-     ```
+     ```text
      http://127.0.0.1:8686/oauth/spotify/callback
      ```
    - **Which API/SDKs are you planning to use?** — tick **Web API**

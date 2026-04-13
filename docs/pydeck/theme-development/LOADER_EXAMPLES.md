@@ -17,7 +17,7 @@ On startup and whenever the theme list is requested, PyDeck scans every immediat
 
 ### Single-file loading
 
-```
+```text
 themes/<family>/theme.css
 ```
 
@@ -27,7 +27,7 @@ The `scheme` field from the manifest is used to set the CSS `color-scheme` prope
 
 ### Multi-variant loading
 
-```
+```text
 themes/<family>/<filename>   ← filename comes from the variants object
 ```
 
@@ -39,7 +39,7 @@ Selection ID: `<family>/dark` or `<family>/light`
 
 The selected CSS file is served at:
 
-```
+```text
 GET /api/themes/<family>/<slot>.css
 ```
 
@@ -429,7 +429,7 @@ If you build a dark/light pair, verify both variants in the Settings → Appeara
 
 The folder name becomes the theme's family ID and is stored in user config files. Renaming the folder after users have saved this theme as their preference will break their selection and fall back to the default. Choose a stable, slug-friendly name from the start: lowercase, hyphens instead of spaces, no special characters.
 
-```
+```text
 themes/tokyo-night/    ✓  stable
 themes/Tokyo Night/    ✗  spaces not allowed in paths
 themes/my_theme_v2/    ✓  underscores are fine too

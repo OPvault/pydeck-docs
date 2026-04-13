@@ -8,7 +8,7 @@ The simplest possible plugin. Opens URLs in the default browser.
 
 **Directory:**
 
-```
+```text
 plugins/plugin/browser/
 ├── manifest.json
 └── plugin.py
@@ -194,7 +194,7 @@ The most complex plugin. Uses OAuth for authorization, a dedicated API client mo
 
 **Directory:**
 
-```
+```text
 plugins/plugin/spotify/
 ├── manifest.json
 ├── plugin.py
@@ -335,7 +335,7 @@ def my_function(config):
 
 For complex plugins with multiple modules:
 
-```
+```text
 plugins/plugin/my_plugin/
 ├── manifest.json
 ├── plugin.py          # Entry point — thin wrappers that call into your client
@@ -356,7 +356,7 @@ Keep `plugin.py` as a thin orchestration layer. Put complex logic in separate mo
 
 PyDeck resolves the final text style for every rendered button through a three-layer merge. Lower layers provide fallback values; higher layers win for any field they explicitly set.
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │  Priority (highest → lowest)                                    │
 │                                                                 │
@@ -374,7 +374,7 @@ The **System Default** is a global fallback that applies to every button that ha
 
 The defaults are stored in `~/.config/pydeck/core/config.json` under the key `text_style_defaults` and can also be read/written via the API:
 
-```
+```text
 GET  /api/settings/text-style   → current system default values
 POST /api/settings/text-style   → update (partial or full)
 ```

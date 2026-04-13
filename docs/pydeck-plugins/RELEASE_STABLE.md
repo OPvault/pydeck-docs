@@ -71,7 +71,7 @@ Must be run from the repo root while on the `canary` branch with a clean working
 
 ## 5. What It Does — Step by Step
 
-```
+```text
 canary  ──●──────────────●──────────●──▶
            │              │  stable   │
            │              └────merge──┘
@@ -86,14 +86,14 @@ Runs `generate_manifest.py --label "Official · Stable"`, rewriting `manifest.js
 
 ### Step 2 — Commit on canary
 
-```
+```bash
 git add manifest.json
 git commit -m "chore: set manifest label to Official · Stable"
 ```
 
 ### Step 3 — Merge canary → stable
 
-```
+```bash
 git checkout stable
 git merge canary --ff-only
 ```
@@ -102,7 +102,7 @@ The `--ff-only` flag ensures the merge is a clean fast-forward. If `stable` has 
 
 ### Step 4 — Push stable
 
-```
+```bash
 git push origin stable
 ```
 
@@ -110,7 +110,7 @@ At this point PyDeck users on the stable channel see the updated plugins.
 
 ### Step 5 — Switch back to canary
 
-```
+```bash
 git checkout canary
 ```
 
@@ -120,7 +120,7 @@ Runs `generate_manifest.py --label "Official · Canary"`, rewriting `manifest.js
 
 ### Step 7 — Commit and push canary
 
-```
+```bash
 git add manifest.json
 git commit -m "chore: restore manifest label to Official · Canary"
 git push origin canary

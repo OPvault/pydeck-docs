@@ -93,7 +93,7 @@ The first match becomes `icon_path`. If neither exists, a warning is printed and
 
 Several fields can come from multiple sources. The priority chain is:
 
-```
+```text
 catalog.json  >  existing root manifest.json  >  version manifest.json  >  built-in default
 ```
 
@@ -113,7 +113,7 @@ This means regenerating the manifest never loses data — as long as the previou
 
 Place an optional `catalog.json` directly inside the plugin slug directory (next to the version folders, not inside one):
 
-```
+```text
 plugins/spotify/
 ├── catalog.json     ← here
 ├── icon.svg

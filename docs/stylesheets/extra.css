@@ -249,3 +249,7 @@
     background-color: #7f66d4;
     border-color: #7f66d4;
 }
+
+.md-footer-meta {
+    display: none;
+}

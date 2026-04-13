@@ -6,7 +6,7 @@ The fastest way to add a new color palette. This creates a dark-only theme in fo
 
 ### Step 1: Create the theme folder
 
-```
+```text
 themes/my-theme/
 ```
 
@@ -70,7 +70,7 @@ Restart PyDeck. Your theme appears in **Settings → Appearance**. No registrati
 
 All themes live under `themes/` in the project root:
 
-```
+```text
 themes/
 ├── default/               # Built-in dark/light default
 │   ├── manifest.json

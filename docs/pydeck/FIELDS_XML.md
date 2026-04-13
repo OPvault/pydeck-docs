@@ -46,7 +46,7 @@ Both formats produce the same internal structure, but the syntactic difference c
 
 Place `fields.xml` in the plugin root alongside `manifest.json` and `plugin.py`:
 
-```
+```text
 plugins/plugin/my_plugin/
 ├── manifest.json
 ├── plugin.py
@@ -309,7 +309,7 @@ When `fields.xml` is present, it takes priority over:
 
 If a function's UI fields are defined in both `fields.xml` and another source, `fields.xml` wins and a warning is logged:
 
-```
+```text
 fields.xml: overriding existing ui for function 'get_weather' (had 3 field(s))
 ```
 

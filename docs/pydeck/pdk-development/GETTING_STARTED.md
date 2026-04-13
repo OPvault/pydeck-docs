@@ -30,7 +30,7 @@ The fastest way to see PDK in action. This creates a simple clock plugin that di
 
 ### Step 1: Create the plugin folder
 
-```
+```text
 plugins/plugin/clock/
 ```
 
@@ -148,7 +148,7 @@ PDK plugins live under the same `plugins/plugin/<plugin_name>/` root as classic 
 
 For simple plugins with one function, everything lives in the plugin root:
 
-```
+```text
 plugins/
 ├── plugin/
 │   └── my_plugin/
@@ -167,7 +167,7 @@ plugins/
 
 Plugins with multiple functions can organise each function into its own subdirectory. Each subdirectory contains an `.xml` template file and an optional `.py` handler file. Shared code lives in the root `plugin.py`, and shared styles live in the root `style.css`:
 
-```
+```text
 plugins/
 └── plugin/
     └── my_plugin/

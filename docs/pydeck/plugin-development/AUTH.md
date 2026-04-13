@@ -8,7 +8,7 @@ Plugins that interact with external APIs typically need secrets — API keys, cl
 
 All credentials live in a single file:
 
-```
+```text
 ~/.config/pydeck/core/credentials.json
 ```
 
@@ -106,7 +106,7 @@ Plugins can add a **custom HTML panel** in **Settings** (gear icon in the deck h
 
 3. The settings page calls `GET /api/settings/categories` to build the sidebar (built-in categories — **Marketplace**, **Device**, **Appearance**, **Credentials**, **Updates**, and **Licenses** — are always listed first). For each plugin in a category, the UI loads:
 
-```
+```text
 GET /api/plugins/<plugin_name>/settings/panel
 ```
 
@@ -124,7 +124,7 @@ When the user clicks Save:
 
 When a button is pressed, the core performs a two-step merge before calling your function:
 
-```
+```text
 Step 1: Load credentials.json → read the object under your plugin's name
 Step 2: Merge with button config → credentials first, then button config on top
 ```
@@ -331,13 +331,13 @@ Replace a simple `"oauth": true` with an object:
 
 When creating your app on the OAuth provider's dashboard, set the redirect URI to:
 
-```
+```text
 http://127.0.0.1:8686/oauth/<your_plugin_name>/callback
 ```
 
 For example, a Spotify plugin would use:
 
-```
+```text
 http://127.0.0.1:8686/oauth/spotify/callback
 ```
 

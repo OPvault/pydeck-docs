@@ -138,7 +138,7 @@ PyDeck distinguishes between two types of plugin files:
 
 Place bundled image files in `plugins/plugin/my_plugin/img/`. They are served at:
 
-```
+```text
 GET /api/plugins/<plugin_name>/img/<filename>
 ```
 

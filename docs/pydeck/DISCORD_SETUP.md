@@ -39,7 +39,7 @@ The Discord plugin connects to the **local Discord desktop client** via Discord'
 
 1. In the left sidebar click **OAuth2**
 2. Under **Redirects** click **Add Redirect** and enter exactly:
-   ```
+   ```text
    http://127.0.0.1:8686/oauth/discord/callback
    ```
 3. Click **Save Changes**
@@ -108,7 +108,7 @@ The plugin polls Discord's voice state every 10 seconds and keeps the button ima
 
 A standalone Discord.py bot that reuses PyDeck's saved tokens is included at:
 
-```
+```text
 plugins/plugin/discord/bot_example.py
 ```
 

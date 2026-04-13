@@ -10,7 +10,7 @@ The fastest way to see how plugins work. This creates a plugin with one button t
 
 ### Step 1: Create the plugin folder
 
-```
+```text
 plugins/plugin/hello_world/
 ```
 
@@ -68,7 +68,7 @@ Restart PyDeck. The "hello_world" plugin appears in the sidebar with a "Say Hell
 
 Every plugin lives under `plugins/plugin/<plugin_name>/`. The folder name **is** the plugin name used everywhere in the system.
 
-```
+```text
 plugins/plugin/my_plugin/
 ├── manifest.json          # REQUIRED — metadata, functions, credentials, OAuth
 ├── plugin.py              # REQUIRED — Python functions called on button press
@@ -247,7 +247,7 @@ The marketplace reads this list and shows a **Licenses** pill button on the plug
 
 **Plugin folder layout example** (F1 plugin with two licenses):
 
-```
+```text
 plugins/plugin/f1/
 ├── manifest.json        ← declares both licenses
 ├── plugin.py
@@ -288,7 +288,7 @@ Add `post_install_script` to the manifest's top-level object. The value is a rel
 
 #### Plugin folder layout example
 
-```
+```text
 plugins/plugin/my_plugin/
 ├── manifest.json
 ├── plugin.py

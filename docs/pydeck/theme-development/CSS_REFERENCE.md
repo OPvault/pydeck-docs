@@ -134,7 +134,7 @@ The simplest theme format. One manifest, one CSS file, one variant. No dark/ligh
 
 ### Folder layout
 
-```
+```text
 themes/monokai/
 ├── manifest.json
 └── theme.css
@@ -179,7 +179,7 @@ The CSS file **must** be named `theme.css` for single-file themes.
 
 ### How the selection ID looks
 
-```
+```text
 monokai/theme
 ```
 
@@ -193,7 +193,7 @@ When a theme ships two palettes (dark and light), use the `variants` object. The
 
 ### Folder layout
 
-```
+```text
 themes/ocean/
 ├── manifest.json
 ├── dark.css
@@ -267,7 +267,7 @@ When `variants` is present, `scheme` is ignored — the scheme is derived from t
 
 ### How the selection IDs look
 
-```
+```text
 ocean/dark
 ocean/light
 ```

@@ -24,7 +24,7 @@ Syncs plugin source files from a local `pydeck` checkout into the `pydeck-plugin
 
 `sync_from_pydeck.py` lives at the root of the `pydeck-plugins` repo. It bridges the development repo (`pydeck`) and the catalog repo (`pydeck-plugins`):
 
-```
+```text
 pydeck/plugins/plugin/<slug>/   →   pydeck-plugins/plugins/<slug>/<version>/
       (source of truth)                    (catalog, versioned)
 ```
@@ -74,7 +74,7 @@ On first run the script auto-detects the pydeck source path and asks you to conf
 
 The confirmed source path is stored at:
 
-```
+```text
 ~/.config/pydeck/pydeck-plugins/path.json
 ```
 
@@ -106,7 +106,7 @@ The source `manifest.json` version is used as-is. All source files are copied in
 
 Skipped. The output line reads:
 
-```
+```text
   SKIP    spotify  (unchanged, latest=1.1.0)
 ```
 
@@ -114,7 +114,7 @@ Skipped. The output line reads:
 
 The patch segment of the repo version is incremented (e.g. `1.1.0` → `1.1.1`). The source `manifest.json` is updated in-place with the new version string, then all files are copied into `plugins/<slug>/1.1.1/`.
 
-```
+```text
   UPDATE  spotify  →  plugins/spotify/1.1.1  (bumped 1.1.0 → 1.1.1)
 ```
 
@@ -122,7 +122,7 @@ The patch segment of the repo version is incremented (e.g. `1.1.0` → `1.1.1`).
 
 The source version is used without further bumping. Files are copied into `plugins/<slug>/<src_version>/`.
 
-```
+```text
   UPDATE  spotify  →  plugins/spotify/1.2.0  (source version 1.2.0 > repo 1.1.0)
 ```
 
@@ -172,7 +172,7 @@ See [Files That Are Always Ignored](#10-files-that-are-always-ignored).
 
 When a plugin has changes, a coloured unified diff is printed before the update line — similar to `git diff`:
 
-```
+```diff
 diff  home-assistant  (1.1.0 → new)
 --- a/ha_client.py
 +++ b/ha_client.py

@@ -216,7 +216,7 @@ A minimal plugin demonstrating gradient support:
 
 ### Directory structure
 
-```
+```text
 plugins/plugin/my_gradient_plugin/
 ├── manifest.json
 ├── plugin.py

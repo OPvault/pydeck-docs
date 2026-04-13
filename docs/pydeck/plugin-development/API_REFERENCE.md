@@ -1187,7 +1187,7 @@ The `devices` array contains the serial identifiers of all currently connected h
 
 ### Directory Layout
 
-```
+```text
 ~/.config/pydeck/
 └── core/
     ├── config.json            # Active profile name and global settings
@@ -1203,7 +1203,7 @@ The `devices` array contains the serial identifiers of all currently connected h
 
 Plugin files on disk:
 
-```
+```text
 plugins/
 ├── plugin/                    # Installed plugin code (managed by marketplace)
 │   ├── spotify/

@@ -214,7 +214,7 @@ Apply an animation to any element using the `animation` shorthand:
 
 #### Shorthand Format
 
-```
+```text
 animation: <name> <duration> [timing] [delay] [iteration] [direction]
 ```
 

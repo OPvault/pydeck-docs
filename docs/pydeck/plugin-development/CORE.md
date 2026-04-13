@@ -75,7 +75,7 @@ def _get_client(config):
 
 When a button is pressed, the core builds the config dict by merging two sources:
 
-```
+```python
 config = {**credentials, **button_config}
 ```
 

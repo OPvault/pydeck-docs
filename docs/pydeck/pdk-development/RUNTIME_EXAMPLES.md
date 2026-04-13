@@ -88,7 +88,7 @@ This is how plugins implement multi-view buttons (e.g. a weather plugin that tog
 
 Multi-function plugins can place each function's handlers in a separate Python file inside a subdirectory (see [Plugin Directory Structure](GETTING_STARTED.md#3-plugin-directory-structure)). For example, a weather plugin with `weather` and `forecast` functions:
 
-```
+```text
 plugins/plugin/weather/
 ├── plugin.py               # Shared helpers (fallback handlers)
 ├── weather/
@@ -361,7 +361,7 @@ A multi-function weather plugin that uses the subdirectory layout. The `weather`
 
 **Directory structure:**
 
-```
+```text
 plugins/plugin/weather/
 ├── manifest.json           # Shared manifest with both functions
 ├── plugin.py               # Shared utilities (geocoding, API, formatting)
