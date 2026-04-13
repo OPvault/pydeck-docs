@@ -6,6 +6,23 @@ repo_url: https://github.com/OPvault/pydeck-docs
 
 theme:
   name: material
+  logo: assets/logo.png
+  favicon: assets/logo.png
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - scheme: slate
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+    - scheme: default
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
 
 extra_files:
   - CNAME
@@ -17,17 +34,30 @@ nav:
       - Marketplace Repo: pydeck/MARKETPLACE_REPO.md
 
   - Plugin Development:
-      - Plugin Development: pydeck/PLUGIN_DEVELOPMENT.md
-      - PDK Development: pydeck/PDK_DEVELOPMENT.md
+      - Plugin Development:
+          - Getting Started: pydeck/plugin-development/GETTING_STARTED.md
+          - Core Development: pydeck/plugin-development/CORE.md
+          - Authentication: pydeck/plugin-development/AUTH.md
+          - UI & Assets: pydeck/plugin-development/UI_ASSETS.md
+          - API Reference: pydeck/plugin-development/API_REFERENCE.md
+          - Examples & Tips: pydeck/plugin-development/EXAMPLES.md
+      - PDK Development:
+          - Getting Started: pydeck/pdk-development/GETTING_STARTED.md
+          - Templates & Elements: pydeck/pdk-development/TEMPLATES_ELEMENTS.md
+          - Rendering: pydeck/pdk-development/RENDERING.md
+          - Runtime & Examples: pydeck/pdk-development/RUNTIME_EXAMPLES.md
+      - fields.xml Reference: pydeck/FIELDS_XML.md
+      - Gradient Backgrounds: pydeck/GRADIENT_BACKGROUNDS.md
       - Release Stable: pydeck-plugins/RELEASE_STABLE.md
       - Sync From PyDeck: pydeck-plugins/SYNC_FROM_PYDECK.md
 
   - Themes Development:
-      - Theme Development: pydeck/THEME_DEVELOPMENT.md
+      - Getting Started: pydeck/theme-development/GETTING_STARTED.md
+      - CSS Reference: pydeck/theme-development/CSS_REFERENCE.md
+      - Loader & Examples: pydeck/theme-development/LOADER_EXAMPLES.md
       - Generate Manifest: pydeck-plugins/GENERATE_MANIFEST.md
       - Release Stable: pydeck-plugins/RELEASE_STABLE.md
       - Sync From PyDeck: pydeck-plugins/SYNC_FROM_PYDECK.md
-
 
   - PyDeck Official Plugins:
       - Discord Setup: pydeck/DISCORD_SETUP.md

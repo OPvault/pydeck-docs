@@ -12,6 +12,7 @@ Welcome to the official documentation for **PyDeck**.
 
 - [Plugin Development](pydeck/PLUGIN_DEVELOPMENT.md) — Full plugin development workflow
 - [PDK Development](pydeck/PDK_DEVELOPMENT.md) — PyDeck Development Kit usage
+- [fields.xml Reference](pydeck/FIELDS_XML.md) — Unified UI field definitions for all plugin types
 - [Release Stable](pydeck-plugins/RELEASE_STABLE.md) — Publishing a stable release
 - [Sync From PyDeck](pydeck-plugins/SYNC_FROM_PYDECK.md) — Keeping your plugin in sync
 
