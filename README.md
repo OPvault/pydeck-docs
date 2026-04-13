@@ -1,5 +1,7 @@
 # pydeck-docs
 
+[![Deploy Docs](https://github.com/OPvault/pydeck-docs/actions/workflows/deploy.yml/badge.svg)](https://github.com/OPvault/pydeck-docs/actions/workflows/deploy.yml)
+
 Documentation for [PyDeck](https://github.com/opvault/pydeck) — a Python-powered, web-based macro deck that lets you trigger actions from buttons in a browser UI.
 
 **Live site:** [docs.pydeck.no](https://docs.pydeck.no)
