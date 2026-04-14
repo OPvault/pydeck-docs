@@ -1,5 +1,7 @@
 # PDK Development — Getting Started
 
+When you finish this page you will understand how PDK differs from classic plugins, and you will be able to **scaffold and run** a new PDK plugin using the **PDK Plugin Creator** (recommended). An optional hand-written clock tutorial is included if you want to see every file built step by step.
+
 ---
 
 ## 1. What is PDK?
@@ -24,11 +26,58 @@ PDK plugins are rendered server-side via Pillow into PNG images at the correct r
 
 ---
 
-## 2. Quick Start — Clock
+## 2. Quick Start — PDK Plugin Creator
 
-The fastest way to see PDK in action. This creates a simple clock plugin that displays the current time.
+The **PDK Plugin Creator** lives in the [pydeck-plugins](https://github.com/opvault/pydeck-plugins) repo (`python -m tools.pdk_create`). It writes a full **standard PDK layout** into your local **pydeck** checkout under `plugins/plugin/<slug>/` — manifest stubs, `src/shared.py`, `src/shared.css`, `src/functions/<id>/template.xml`, `handler.py`, asset folders, and more — so you skip empty-folder setup and start from working code.
 
-### Step 1: Create the plugin folder
+Full CLI options, path resolution, and non-interactive examples are in **[PDK Plugin Creator](../../pydeck-plugins/PDK_CREATE.md)**.
+
+### Step 1 — Repos and Python
+
+- Python **3.10+**
+- Local clones of **[pydeck](https://github.com/opvault/pydeck)** (where plugins run) and **[pydeck-plugins](https://github.com/opvault/pydeck-plugins)** (where the tool lives)
+
+### Step 2 — Run the creator
+
+From the root of your **pydeck-plugins** clone:
+
+```bash
+python -m tools.pdk_create
+```
+
+**Interactive mode** (default) asks for a slug, display name, description, function ids, and a **preset**:
+
+| Preset | What you get |
+|:---|:---|
+| `static` | Label-style demo — good default to learn the layout |
+| `counter` | Press increments a number — shows `on_press` + state updates |
+
+The tool finds `…/pydeck/plugins/plugin/` using the same rules as `sync_from_pydeck.py` (`--pydeck-source`, `PYDECK_SOURCE`, saved `path.json`, or built-in candidates). If it cannot resolve the path, it prompts you.
+
+**One-shot example** (adjust paths):
+
+```bash
+python -m tools.pdk_create --non-interactive \
+  --pydeck-root /path/to/pydeck \
+  --slug my_clock \
+  --name "My Clock" \
+  --functions clock \
+  --preset static
+```
+
+Then edit the generated `template.xml`, `shared.py`, and CSS to match what you want (for a clock, add `on_poll` and time fields — or start from `static` and follow [Templates & Elements](TEMPLATES_ELEMENTS.md) and [Runtime & Examples](RUNTIME_EXAMPLES.md)).
+
+### Step 3 — Run PyDeck
+
+Restart **PyDeck**, find your plugin in the sidebar, drag a function onto a button, and press it. Iterate in the generated tree under `plugins/plugin/<slug>/`.
+
+---
+
+## 3. Tutorial — clock plugin from scratch (optional)
+
+If you prefer to **create every file by hand** to learn how they fit together, follow this minimal clock. It matches what you could evolve from a **static** scaffold after reading [Rendering](RENDERING.md) and [Runtime & Examples](RUNTIME_EXAMPLES.md).
+
+### Step A: Create the plugin folder
 
 ```text
 plugins/plugin/clock/
@@ -41,7 +90,7 @@ plugins/plugin/clock/
             └── template.xml
 ```
 
-### Step 2: Create `manifest.json`
+### Step B: Create `manifest.json`
 
 For PDK plugins you can provide a standard `manifest.json`. The core will augment it with `pdk: true` automatically.
 
@@ -69,7 +118,7 @@ For PDK plugins you can provide a standard `manifest.json`. The core will augmen
 
 > **Note:** If you omit `manifest.json`, the core can auto-generate one from your templates. See [manifest.json for PDK Plugins](RUNTIME_EXAMPLES.md#2-manifestjson-for-pdk-plugins).
 
-### Step 3: Create `src/functions/clock/template.xml`
+### Step C: Create `src/functions/clock/template.xml`
 
 ```xml
 <template name="clock">
@@ -82,7 +131,7 @@ For PDK plugins you can provide a standard `manifest.json`. The core will augmen
 
 This defines a single template named `clock`. The `{time}`, `{label}`, and `{time_class}` placeholders are filled from `ctx.state` at render time.
 
-### Step 4: Create `src/shared.css`
+### Step D: Create `src/shared.css`
 
 ```css
 :root {
@@ -114,7 +163,7 @@ This defines a single template named `clock`. The `{time}`, `{label}`, and `{tim
 }
 ```
 
-### Step 5: Create `src/shared.py`
+### Step E: Create `src/shared.py`
 
 ```python
 from __future__ import annotations
@@ -141,13 +190,13 @@ def on_poll(ctx: Any, interval: int = 1000) -> None:
         ctx.state.time_class = "time"
 ```
 
-### Step 6: Done
+### Step F: Done
 
-Restart PyDeck. The "clock" plugin appears in the sidebar. Drag it onto a button and the current time renders directly on the button face, updating every second.
+Restart PyDeck. The `clock` plugin appears in the sidebar. Drag it onto a button and the current time renders on the button face, updating every second.
 
 ---
 
-## 3. Plugin Directory Structure
+## 4. Plugin Directory Structure
 
 PDK plugins live under the same `plugins/plugin/<plugin_name>/` root as classic plugins. The folder name **is** the plugin name.
 

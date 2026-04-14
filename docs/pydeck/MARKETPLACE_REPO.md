@@ -1,6 +1,6 @@
 # PyDeck Marketplace Repo Guide
 
-Everything you need to understand how the PyDeck marketplace works, how the two repos relate to each other, and how to maintain a plugin catalog repo.
+This guide explains how the **pydeck** app and **pydeck-plugins** catalog fit together, how catalog `manifest.json` and per-version folders are laid out, and how to add or bump plugins without breaking installs.
 
 ---
 
@@ -250,7 +250,7 @@ This is **not** the same format as the root catalog `manifest.json`. It is the p
 }
 ```
 
-See [PLUGIN_DEVELOPMENT.md](PLUGIN_DEVELOPMENT.md) for the complete `manifest.json` reference.
+See [Plugin Development — Core](plugin-development/CORE.md) for the full `manifest.json` authoring guide (functions, UI, display states, polls, and related behaviour).
 
 ---
 

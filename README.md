@@ -12,29 +12,34 @@ Documentation for [PyDeck](https://github.com/opvault/pydeck) — a Python-power
 
 This repository contains the official developer documentation for PyDeck. It covers how to extend PyDeck through plugins and themes, and how to maintain a plugin catalog for the marketplace.
 
-The docs live in the [`docs/`](./docs/) folder and are published to [docs.pydeck.no](https://docs.pydeck.no) via GitHub Pages.
+The docs live in the [`docs/`](./docs/) folder and are published to [docs.pydeck.no](https://docs.pydeck.no) via GitHub Pages. The published **home page** is [`docs/index.md`](./docs/index.md) — it mirrors the MkDocs navigation and links to every guide.
 
 ---
 
-## Documentation
+## Documentation layout
 
-### `docs/pydeck/` — main app repo
+### `docs/pydeck/` — main application (pydeck repo)
+
+| Topic | Entry |
+|:---|:---|
+| Marketplace | [`docs/pydeck/MARKETPLACE_REPO.md`](./docs/pydeck/MARKETPLACE_REPO.md) |
+| Classic plugins | [`docs/pydeck/plugin-development/GETTING_STARTED.md`](./docs/pydeck/plugin-development/GETTING_STARTED.md) |
+| PDK plugins | [`docs/pydeck/pdk-development/GETTING_STARTED.md`](./docs/pydeck/pdk-development/GETTING_STARTED.md) |
+| Themes | [`docs/pydeck/theme-development/GETTING_STARTED.md`](./docs/pydeck/theme-development/GETTING_STARTED.md) |
+| Gradient backgrounds | [`docs/pydeck/GRADIENT_BACKGROUNDS.md`](./docs/pydeck/GRADIENT_BACKGROUNDS.md) |
+| Spotify | [`docs/pydeck/SPOTIFY_SETUP.md`](./docs/pydeck/SPOTIFY_SETUP.md) |
+| Discord | [`docs/pydeck/DISCORD_SETUP.md`](./docs/pydeck/DISCORD_SETUP.md) |
+
+Additional chapters live alongside those entry points (Core, Auth, API reference, PDK templates/rendering, theme CSS, and so on). Follow links from each getting-started page or open [`mkdocs.yml`](./mkdocs.yml).
+
+### `docs/pydeck-plugins/` — catalog repo tools (pydeck-plugins)
 
 | File | Description |
 |:---|:---|
-| [`docs/pydeck/PLUGIN_DEVELOPMENT.md`](./docs/pydeck/PLUGIN_DEVELOPMENT.md) | How to build, test, and ship a PyDeck plugin — covers `manifest.json`, `plugin.py`, UI fields, credentials, OAuth, WebSocket events, and more. |
-| [`docs/pydeck/THEME_DEVELOPMENT.md`](./docs/pydeck/THEME_DEVELOPMENT.md) | How to create and ship a PyDeck theme — covers CSS variables, single-file and multi-variant themes, and the theme loader. |
-| [`docs/pydeck/MARKETPLACE_REPO.md`](./docs/pydeck/MARKETPLACE_REPO.md) | How the PyDeck marketplace works — covers the two-repo architecture, catalog `manifest.json` format, the install flow, and common errors. |
-| [`docs/pydeck/SPOTIFY_SETUP.md`](./docs/pydeck/SPOTIFY_SETUP.md) | Step-by-step guide to connecting Spotify — create a Developer Dashboard app, configure the redirect URI, authorize, and add playback buttons. |
-| [`docs/pydeck/DISCORD_SETUP.md`](./docs/pydeck/DISCORD_SETUP.md) | Step-by-step guide to connecting Discord — create a Developer Portal application, enable RPC, authorize, and add mute/deafen buttons. |
-
-### `docs/pydeck-plugins/` — catalog repo tools
-
-| File | Description |
-|:---|:---|
-| [`docs/pydeck-plugins/GENERATE_MANIFEST.md`](./docs/pydeck-plugins/GENERATE_MANIFEST.md) | How to use `generate_manifest.py` — regenerates the root `manifest.json` by scanning the `plugins/` directory tree. |
-| [`docs/pydeck-plugins/SYNC_FROM_PYDECK.md`](./docs/pydeck-plugins/SYNC_FROM_PYDECK.md) | How to use `sync_from_pydeck.py` — syncs plugin source files from a local pydeck checkout into the catalog repo with automatic version bumping. |
-| [`docs/pydeck-plugins/RELEASE_STABLE.md`](./docs/pydeck-plugins/RELEASE_STABLE.md) | How to use `release_stable.py` — promotes the `canary` branch to `stable` and restores the canary label in one automated step. |
+| [`PDK_CREATE.md`](./docs/pydeck-plugins/PDK_CREATE.md) | Scaffold a new PDK plugin (`python -m tools.pdk_create`). |
+| [`GENERATE_MANIFEST.md`](./docs/pydeck-plugins/GENERATE_MANIFEST.md) | Regenerate the root `manifest.json` from the `plugins/` tree. |
+| [`SYNC_FROM_PYDECK.md`](./docs/pydeck-plugins/SYNC_FROM_PYDECK.md) | Sync plugin sources from a local PyDeck checkout into the catalog. |
+| [`RELEASE_STABLE.md`](./docs/pydeck-plugins/RELEASE_STABLE.md) | Promote `canary` to `stable` on the catalog repo. |
 
 ---
 

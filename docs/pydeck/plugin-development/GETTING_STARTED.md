@@ -1,6 +1,6 @@
 # Plugin Development — Getting Started
 
-Everything you need to build, test, and ship a PyDeck plugin.
+By the end of this guide you will have run a minimal plugin in PyDeck, know where plugin files live, and know which docs cover manifest details, Python handlers, and shipping.
 
 ---
 
@@ -54,13 +54,14 @@ def greet(config: Dict[str, Any]) -> Dict[str, Any]:
     name = config.get("name") or "World"
     return {
         "success": True,
-        "message": f"Hello, {name}!"
+        "message": f"Hello, {name}!",
+        "display_update": {"text": f"Hi {name}!"},
     }
 ```
 
 ### Step 4: Done
 
-Restart PyDeck. The "hello_world" plugin appears in the sidebar with a "Say Hello" function. Drag it onto a button and press it. The button text changes to "Hi World!" (or whatever name you configured). The `display_update` key tells the core to update the button's appearance on the Stream Deck and in the web GUI after each press.
+Restart PyDeck. The `hello_world` plugin appears in the sidebar with a **Say Hello** function. Drag it onto a button and press it. The optional `message` string is shown in the UI as feedback; the `display_update` dict merges into the button's persisted `display` (here, `text`), so the deck face and web UI show **Hi …** after each press. You can also drive the face with `state` + `display_states` in the manifest — see [Core development](CORE.md#3-display-states-and-toggling).
 
 ---
 

@@ -1,8 +1,12 @@
 # Theme Development — Getting Started
 
+After this page you can add a new color palette to PyDeck as a theme folder and see it in **Settings → Appearance** without touching application code.
+
+---
+
 ## 1. Quick Start — Minimal Theme
 
-The fastest way to add a new color palette. This creates a dark-only theme in four lines of CSS.
+The fastest way to add a new palette: one folder, one `manifest.json`, and one or two CSS files.
 
 ### Step 1: Create the theme folder
 
@@ -14,18 +18,11 @@ The folder name is the theme's **family ID**. It must be a single path component
 
 ### Step 2: Create `manifest.json`
 
-```json
-{
-  "label": "My Theme",
-  "description": "A custom dark theme",
-  "scheme": "dark",
-  "variants": {
-    "dark": "theme.css"
-  }
-}
-```
+Pick **one** of the shapes below. They differ only in whether PyDeck shows a **dark/light switcher** for your theme.
 
-Wait — for a true single-file theme (no dark/light switcher), use this simpler form instead:
+#### Path A — Single stylesheet (no switcher)
+
+Use this when you ship exactly one CSS file (for example `theme.css`). PyDeck loads that file whenever the user selects your theme.
 
 ```json
 {
@@ -35,7 +32,32 @@ Wait — for a true single-file theme (no dark/light switcher), use this simpler
 }
 ```
 
-### Step 3: Create `theme.css`
+With this shape, the loader looks for `theme.css` in the same folder (convention for single-variant themes). Set `"scheme"` to `"dark"` or `"light"` so the UI applies the matching `color-scheme`.
+
+#### Path B — Dark and light variants (switcher in the UI)
+
+Use this when you ship separate `dark.css` and `light.css` files. The user can flip between them in **Settings → Appearance**.
+
+```json
+{
+  "label": "My Theme",
+  "description": "A theme with dark and light modes",
+  "variants": {
+    "dark": "dark.css",
+    "light": "light.css"
+  },
+  "variant_labels": {
+    "dark": "Dark",
+    "light": "Light"
+  }
+}
+```
+
+When `variants` is present, the `scheme` field is ignored; each variant key supplies the scheme for its CSS file.
+
+### Step 3: Create the CSS file(s)
+
+Use the same variable names PyDeck expects (you can copy the block below into **Path A** as `theme.css`, or split / tune values across **Path B** `dark.css` and `light.css`).
 
 ```css
 /* My Theme */
@@ -60,9 +82,11 @@ Wait — for a true single-file theme (no dark/light switcher), use this simpler
 }
 ```
 
+For **Path B**, create both `dark.css` and `light.css` (you can start by duplicating the block above into each file, then adjust the light palette).
+
 ### Step 4: Done
 
-Restart PyDeck. Your theme appears in **Settings → Appearance**. No registration, no code changes — just a folder, a manifest, and a CSS file.
+Restart PyDeck. Your theme appears in **Settings → Appearance**. No registration beyond these files — the theme loader discovers folders under `themes/` automatically.
 
 ---
 

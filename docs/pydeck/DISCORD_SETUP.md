@@ -106,13 +106,15 @@ The plugin polls Discord's voice state every 10 seconds and keeps the button ima
 
 ## Discord bot example
 
-A standalone Discord.py bot that reuses PyDeck's saved tokens is included at:
+Some PyDeck checkouts include a small **Discord.py** sample under the Discord plugin (for example `plugins/plugin/discord/bot_example.py`) that reuses tokens PyDeck stored after you complete **Step 5 — Authorize** above.
 
-```text
-plugins/plugin/discord/bot_example.py
-```
+If you run or adapt that script:
 
-See [`OAUTH_REDIRECT_URI_FIX.md`](./OAUTH_REDIRECT_URI_FIX.md#discord-bot-example) for setup instructions.
+1. Use a **Discord application** whose Client ID and Secret match what you saved in PyDeck (or a separate app whose bot you intend to run — then point the script at the right token source).
+2. Register the **same redirect URI** PyDeck uses (`http://127.0.0.1:8686/oauth/discord/callback`) on that application’s **OAuth2 → Redirects** page if your flow still goes through PyDeck’s OAuth callback; for a fully standalone bot you typically use a different redirect URL and complete OAuth in that app instead — follow Discord’s docs for bot vs user OAuth scopes you need.
+3. Install **discord.py** in the environment you use to run the sample (`pip install discord.py`).
+
+Read the sample file’s header comments for run instructions; behaviour can differ between PyDeck versions.
 
 ---
 
