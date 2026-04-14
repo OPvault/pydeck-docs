@@ -90,8 +90,6 @@ Button config takes precedence, so users can override credentials per-button if 
 
 The `ui` array in each function definition controls what appears in the button editor panel. Each entry is a field object.
 
-> **Tip:** You can also define UI fields in a standalone `fields.xml` file that works identically for both classic and PDK plugins. See the [fields.xml Reference](FIELDS_XML.md) for details.
-
 ### Common Properties
 
 Every field type supports these properties:

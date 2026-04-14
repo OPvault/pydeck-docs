@@ -70,7 +70,6 @@ nav:
           - Templates & Elements: pydeck/pdk-development/TEMPLATES_ELEMENTS.md
           - Rendering: pydeck/pdk-development/RENDERING.md
           - Runtime & Examples: pydeck/pdk-development/RUNTIME_EXAMPLES.md
-      - fields.xml Reference: pydeck/FIELDS_XML.md
       - Gradient Backgrounds: pydeck/GRADIENT_BACKGROUNDS.md
       - Release Stable: pydeck-plugins/RELEASE_STABLE.md
       - Sync From PyDeck: pydeck-plugins/SYNC_FROM_PYDECK.md

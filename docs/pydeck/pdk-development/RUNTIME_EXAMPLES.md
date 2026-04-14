@@ -2,7 +2,7 @@
 
 ---
 
-## 1. plugin.py — Event Handlers
+## 1. Event Handlers (shared.py / handler.py)
 
 PDK plugins use event-driven handlers instead of per-function callables. All handlers receive a single `ctx` argument — a `PDKContext` object.
 
@@ -63,7 +63,7 @@ Called periodically for live-updating displays. The poll interval is determined 
    def on_poll(ctx, interval: int = 5000):  # poll every 5 seconds
        ...
    ```
-2. **Module-level variable** — set `poll_interval` at the top of `plugin.py`:
+2. **Module-level variable** — set `poll_interval` at the top of `src/shared.py`:
    ```python
    poll_interval = 5000
 
@@ -75,7 +75,7 @@ The interval is in **milliseconds**. If neither is set, polling is disabled.
 
 ### Template Switching
 
-Set `ctx.state._template` to the name of any template defined in `plugin.xml` to change which template renders the button:
+Set `ctx.state._template` to the name of any template defined in `template.xml` to change which template renders the button:
 
 ```python
 def on_press(ctx):
@@ -90,17 +90,19 @@ Multi-function plugins can place each function's handlers in a separate Python f
 
 ```text
 plugins/plugin/weather/
-├── plugin.py               # Shared helpers (fallback handlers)
-├── weather/
-│   └── weather.py          # on_load, on_press, on_poll for "weather"
-└── forecast/
-    └── forecast.py         # on_load, on_press, on_poll for "forecast"
+├── src/
+│   ├── shared.py               # Shared helpers (fallback handlers)
+│   └── functions/
+│       ├── weather/
+│       │   └── handler.py      # on_load, on_press, on_poll for "weather"
+│       └── forecast/
+│           └── handler.py      # on_load, on_press, on_poll for "forecast"
 ```
 
 When an event fires for a specific function, the runtime resolves handlers in this order:
 
-1. **Function module** — the `.py` file in the matching subdirectory.
-2. **Root module** — the root `plugin.py` (fallback if the function module doesn't define the handler).
+1. **Function module** — the `handler.py` file in the matching subdirectory (`src/functions/<func>/handler.py`).
+2. **Root module** — the root `src/shared.py` (fallback if the function module doesn't define the handler).
 
 Each function module's `on_load` is called automatically at startup, initialising that function's state independently.
 
@@ -109,18 +111,18 @@ Each function module's `on_load` is called automatically at startup, initialisin
 Each function gets its own isolated state dict. This prevents `_template`, display variables, and internal data from colliding between functions sharing the same plugin:
 
 ```python
-# weather/weather.py
+# src/functions/weather/handler.py
 def on_load(ctx):
     ctx.state._template = "weather"
     ctx.state.line1 = "..."
 
-# forecast/forecast.py
+# src/functions/forecast/handler.py
 def on_load(ctx):
     ctx.state._template = "forecast"
     ctx.state.fc1 = "..."
 ```
 
-Both functions can use `ctx.state._template` without overwriting each other because each operates on a separate state. The root `plugin.py` can hold shared utility functions that the per-function modules import.
+Both functions can use `ctx.state._template` without overwriting each other because each operates on a separate state. The root `src/shared.py` can hold shared utility functions that the per-function modules import.
 
 ---
 
@@ -227,7 +229,7 @@ If a `{key}` has no matching state entry, the placeholder is left as-is.
 
 A simple clock that updates every second, with optional seconds display, 12/24-hour mode, and date line.
 
-**`plugins/plugin/clock/plugin.xml`**
+**`plugins/plugin/clock/src/functions/clock/template.xml`**
 
 ```xml
 <template name="clock">
@@ -247,7 +249,7 @@ A simple clock that updates every second, with optional seconds display, 12/24-h
 </template>
 ```
 
-**`plugins/plugin/clock/style.css`**
+**`plugins/plugin/clock/src/shared.css`**
 
 ```css
 :root {
@@ -300,7 +302,7 @@ A simple clock that updates every second, with optional seconds display, 12/24-h
 }
 ```
 
-**`plugins/plugin/clock/plugin.py`**
+**`plugins/plugin/clock/src/shared.py`**
 
 ```python
 from __future__ import annotations
@@ -357,24 +359,26 @@ def on_poll(ctx: Any, interval: int = 1000) -> None:
 
 ### Weather Plugin (Multi-Function)
 
-A multi-function weather plugin that uses the subdirectory layout. The `weather` function shows current temperature with a weather icon (toggles to high/low detail on press). The `forecast` function displays 3 upcoming forecasts. Shared utilities live in the root `plugin.py`.
+A multi-function weather plugin that uses the subdirectory layout. The `weather` function shows current temperature with a weather icon (toggles to high/low detail on press). The `forecast` function displays 3 upcoming forecasts. Shared utilities live in `src/shared.py`.
 
 **Directory structure:**
 
 ```text
 plugins/plugin/weather/
 ├── manifest.json           # Shared manifest with both functions
-├── plugin.py               # Shared utilities (geocoding, API, formatting)
-├── style.css               # Shared styles for both functions
-├── weather/
-│   ├── weather.xml         # Templates for "weather" function
-│   └── weather.py          # Handlers for "weather" function
-└── forecast/
-    ├── forecast.xml        # Templates for "forecast" function
-    └── forecast.py         # Handlers for "forecast" function
+└── src/
+    ├── shared.py           # Shared utilities (geocoding, API, formatting)
+    ├── shared.css          # Shared styles for both functions
+    └── functions/
+        ├── weather/
+        │   ├── template.xml    # Templates for "weather" function
+        │   └── handler.py      # Handlers for "weather" function
+        └── forecast/
+            ├── template.xml    # Templates for "forecast" function
+            └── handler.py      # Handlers for "forecast" function
 ```
 
-**`weather/weather.xml`**
+**`src/functions/weather/template.xml`**
 
 ```xml
 <template name="weather">
@@ -405,7 +409,7 @@ plugins/plugin/weather/
 </template>
 ```
 
-**`forecast/forecast.xml`**
+**`src/functions/forecast/template.xml`**
 
 ```xml
 <template name="forecast" title="Multiple Forecasts" description="3 upcoming forecasts">
@@ -426,11 +430,11 @@ plugins/plugin/weather/
 </template>
 ```
 
-**`weather/weather.py`** (abbreviated)
+**`src/functions/weather/handler.py`** (abbreviated)
 
 ```python
-from plugin import resolve_location, fetch_timeseries, current_conditions
-from plugin import download_icon, fmt_temp, weather_bg, is_wide
+from shared import resolve_location, fetch_timeseries, current_conditions
+from shared import download_icon, fmt_temp, weather_bg, is_wide
 
 def on_load(ctx):
     ctx.state._temp = 0.0
@@ -456,11 +460,11 @@ def on_poll(ctx, interval=60000):
     _render(ctx)
 ```
 
-**`forecast/forecast.py`** (abbreviated)
+**`src/functions/forecast/handler.py`** (abbreviated)
 
 ```python
-from plugin import resolve_location, fetch_timeseries, pick_forecasts
-from plugin import download_icon, fmt_temp, fmt_time, weather_bg
+from shared import resolve_location, fetch_timeseries, pick_forecasts
+from shared import download_icon, fmt_temp, fmt_time, weather_bg
 
 def on_load(ctx):
     ctx.state._forecasts = []
@@ -477,13 +481,13 @@ def on_poll(ctx, interval=60000):
 
 **Key takeaways:**
 
-- **Multi-function layout** — `weather/` and `forecast/` subdirectories each have their own `.xml` template and `.py` handler. The root `plugin.py` holds shared utilities (geocoding, API calls, formatting).
+- **Multi-function layout** — `src/functions/weather/` and `src/functions/forecast/` subdirectories each have their own `template.xml` and `handler.py`. The root `src/shared.py` holds shared utilities (geocoding, API calls, formatting).
 - **Per-function state** — each function has isolated state. The `weather` function sets `ctx.state._template = "weather"` and the `forecast` function sets `ctx.state._template = "forecast"` without conflict.
-- Two templates in `weather.xml` (`weather` and `weather-detail`) — toggled via `ctx.state._template` on press.
+- Two templates in `template.xml` (`weather` and `weather-detail`) — toggled via `ctx.state._template` on press.
 - `on_poll` runs every 60 seconds to fetch fresh weather data.
 - Weather icon PNGs are downloaded into `plugins/storage/weather/` at runtime and referenced via `{icon_src}` using a relative path from the plugin directory.
 - Private state keys prefixed with `_` (e.g. `_temp`, `_high`, `_icon`) store raw data that isn't displayed directly.
-- Dynamic gradient background using state interpolation in `style.css`: `linear-gradient(180deg, {bg_top}, {bg_bottom})`.
+- Dynamic gradient background using state interpolation in `shared.css`: `linear-gradient(180deg, {bg_top}, {bg_bottom})`.
 
 ---
 
@@ -547,11 +551,11 @@ Using `em` for font sizes and spacing makes your layout scale proportionally if 
 
 ### Image Assets
 
-- **Static images** shipped with your plugin go in `img/`. Reference them as `<img src="img/icon.png" />`.
+- **Static images** shipped with your plugin go in `assets/icons/`. Reference them as `<img src="assets/icons/icon.png" />`.
 - **Runtime-generated files** (e.g. downloaded images) go in `plugins/storage/<plugin_name>/` via `ctx.storage_path`. Reference them as `<img src="../../storage/<plugin_name>/<file>" />`.
-- Files in `img/` are replaced on plugin update. Files in `plugins/storage/` survive updates.
+- Files in `assets/icons/` are replaced on plugin update. Files in `plugins/storage/` survive updates.
 
-See [Images — img/ and storage/](GETTING_STARTED.md#images--img-and-storage) for details and a code example.
+See [Images — assets/icons/ and storage/](GETTING_STARTED.md#images--img-and-storage) for details and a code example.
 
 ### Poll Interval Selection
 

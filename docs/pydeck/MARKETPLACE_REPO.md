@@ -208,14 +208,18 @@ The version directory name (`1.1.0`) is stripped. Everything inside it lands at 
 
 ### Required files in a version folder
 
+For **classic plugins**:
+
 | File | Required | Purpose |
 |:---|:---|:---|
-| `manifest.json` | **Yes** | Local plugin manifest (different from the catalog root `manifest.json`). Declares functions, UI, credentials, OAuth, and permissions. See [PLUGIN_DEVELOPMENT.md](PLUGIN_DEVELOPMENT.md) §3 for the full format. |
+| `manifest.json` | **Yes** | Local plugin manifest (different from the catalog root `manifest.json`). Declares functions, UI, credentials, OAuth, and permissions. |
 | `plugin.py` | **Yes** | Python functions called on button press. |
 | `style.css` | No | Custom CSS. Automatically served by the core. |
 | `options.json` | No | Extra marketplace metadata (features, tags). |
 | `img/` | No | Image assets served via the plugin image API. |
 | `*.py` | No | Additional Python helper modules. |
+
+For **PDK plugins**, the version folder contains the full PDK directory structure (`manifest.json`, `src/`, `assets/`, etc.). See [PDK Getting Started](pdk-development/GETTING_STARTED.md#3-plugin-directory-structure) for the full layout.
 
 ### The local `manifest.json` inside a version folder
 

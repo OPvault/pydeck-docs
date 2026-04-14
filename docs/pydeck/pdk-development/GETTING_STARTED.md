@@ -6,9 +6,9 @@
 
 PDK (PyDeck Development Kit) is an alternative plugin format that replaces the classic `manifest.json` + raw `plugin.py` approach with a template-driven model. Instead of relying on PyDeck's built-in text/image/color renderer, PDK plugins define their own button faces using:
 
-- **XML templates** (`plugin.xml`) — structured markup with tags like `<box>`, `<text>`, `<img>`, and more.
-- **CSS-like stylesheets** (`style.css`) — full cascade with selectors, variables, units, and shorthand properties.
-- **Python event handlers** (`plugin.py`) — `on_load`, `on_press`, `on_poll` functions that receive a rich context object (`ctx`).
+- **XML templates** (`template.xml`) — structured markup with tags like `<box>`, `<text>`, `<img>`, and more.
+- **CSS-like stylesheets** (`shared.css`) — full cascade with selectors, variables, units, and shorthand properties.
+- **Python event handlers** (`shared.py` / `handler.py`) — `on_load`, `on_press`, `on_poll` functions that receive a rich context object (`ctx`).
 
 PDK plugins are rendered server-side via Pillow into PNG images at the correct resolution for each Stream Deck model, so the button face can be anything you can draw — gradients, icons, progress bars, dynamic text, and custom layouts.
 
@@ -18,9 +18,9 @@ PDK plugins are rendered server-side via Pillow into PNG images at the correct r
 |:---|:---|:---|
 | Button face | Text + color + optional image, rendered by the core | Custom template rendered by PDK engine |
 | Appearance definition | `default_display` / `display_states` in manifest | `<template>` blocks + CSS |
-| Logic file | `plugin.py` with per-function callables | `plugin.py` with event handlers (`on_load`, `on_press`, `on_poll`) |
+| Logic file | `plugin.py` with per-function callables | `src/shared.py` with event handlers (`on_load`, `on_press`, `on_poll`) |
 | State management | Return dict with `display_update` key | Set `ctx.state.*` attributes, template re-renders automatically |
-| Detection | Has `manifest.json` only | Has `plugin.xml` |
+| Detection | Has `manifest.json` only | Has `src/functions/` with `template.xml` files |
 
 ---
 
@@ -32,6 +32,13 @@ The fastest way to see PDK in action. This creates a simple clock plugin that di
 
 ```text
 plugins/plugin/clock/
+├── manifest.json
+└── src/
+    ├── shared.py
+    ├── shared.css
+    └── functions/
+        └── clock/
+            └── template.xml
 ```
 
 ### Step 2: Create `manifest.json`
@@ -62,7 +69,7 @@ For PDK plugins you can provide a standard `manifest.json`. The core will augmen
 
 > **Note:** If you omit `manifest.json`, the core can auto-generate one from your templates. See [manifest.json for PDK Plugins](RUNTIME_EXAMPLES.md#2-manifestjson-for-pdk-plugins).
 
-### Step 3: Create `plugin.xml`
+### Step 3: Create `src/functions/clock/template.xml`
 
 ```xml
 <template name="clock">
@@ -75,7 +82,7 @@ For PDK plugins you can provide a standard `manifest.json`. The core will augmen
 
 This defines a single template named `clock`. The `{time}`, `{label}`, and `{time_class}` placeholders are filled from `ctx.state` at render time.
 
-### Step 4: Create `style.css`
+### Step 4: Create `src/shared.css`
 
 ```css
 :root {
@@ -107,7 +114,7 @@ This defines a single template named `clock`. The `{time}`, `{label}`, and `{tim
 }
 ```
 
-### Step 5: Create `plugin.py`
+### Step 5: Create `src/shared.py`
 
 ```python
 from __future__ import annotations
@@ -144,83 +151,79 @@ Restart PyDeck. The "clock" plugin appears in the sidebar. Drag it onto a button
 
 PDK plugins live under the same `plugins/plugin/<plugin_name>/` root as classic plugins. The folder name **is** the plugin name.
 
-### Single-Function Layout
-
-For simple plugins with one function, everything lives in the plugin root:
-
-```text
-plugins/
-├── plugin/
-│   └── my_plugin/
-│       ├── manifest.json      # Optional — metadata, functions, UI fields
-│       ├── plugin.xml         # REQUIRED — template definitions
-│       ├── plugin.py          # REQUIRED — Python event handlers
-│       ├── style.css          # Optional — CSS stylesheet (auto-loaded)
-│       └── img/               # Optional — static images shipped with the plugin
-│           └── icon.png
-└── storage/
-    └── my_plugin/             # Runtime-generated files (written by plugin code)
-        └── downloaded.png
-```
-
-### Multi-Function Layout
-
-Plugins with multiple functions can organise each function into its own subdirectory. Each subdirectory contains an `.xml` template file and an optional `.py` handler file. Shared code lives in the root `plugin.py`, and shared styles live in the root `style.css`:
+### Standard Layout
 
 ```text
 plugins/
 └── plugin/
     └── my_plugin/
-        ├── manifest.json          # Optional — shared metadata
-        ├── plugin.py              # Shared code / fallback handlers
-        ├── style.css              # Shared styles (auto-loaded)
-        ├── img/                   # Shared static images
-        │   └── icon.png
-        ├── func_a/                # Function "func_a"
-        │   ├── func_a.xml         # Templates for this function
-        │   └── func_a.py          # Handlers for this function
-        └── func_b/                # Function "func_b"
-            ├── func_b.xml         # Templates for this function
-            └── func_b.py          # Handlers for this function
+        ├── manifest.json
+        ├── src/
+        │   ├── shared.py          # Shared code / fallback handlers
+        │   ├── shared.css         # Shared CSS stylesheet (auto-loaded)
+        │   └── functions/
+        │       ├── func_a/
+        │       │   ├── template.xml   # Template for this function
+        │       │   ├── handler.py     # Handlers for this function
+        │       │   └── style.css      # Per-function styles (optional)
+        │       └── func_b/
+        │           ├── template.xml
+        │           ├── handler.py
+        │           └── style.css
+        ├── assets/
+        │   ├── icons/             # Static images shipped with the plugin
+        │   │   ├── icon.png
+        │   │   └── func_a.png
+        │   └── fonts/
+        ├── scripts/
+        │   └── setup.sh           # Post-install script
+        └── meta/
+            ├── options.json       # Marketplace metadata
+            └── licenses/
+                ├── LICENSE-main
+                └── LICENSE-third-party
 ```
 
-When subdirectories are used:
+### How It Works
 
-- **Templates** from subdirectory XML files are merged with any root `plugin.xml`. If a template name appears in both, the subdirectory version wins.
-- **Styles** from subdirectory XML `<style>` blocks are appended after root styles, giving them higher cascade precedence.
-- **Handlers** in subdirectory `.py` files take precedence over root `plugin.py` for the matching function. The root module serves as fallback.
+- **Templates** in `src/functions/<func>/template.xml` are discovered and merged. Each function gets its own template file.
+- **Shared styles** in `src/shared.css` are loaded first. Per-function `style.css` files in each function directory are appended after, giving them higher cascade precedence.
+- **Handlers** in `src/functions/<func>/handler.py` take precedence over `src/shared.py` for the matching function. The shared module serves as fallback.
 - **State** is isolated per function — each function gets its own state dict so `_template` and other variables don't collide between functions.
 
 ### Required Files
 
 | File | Purpose |
 |:---|:---|
-| `plugin.xml` or subdirectory `.xml` files | Defines templates for button rendering. The presence of XML sources is what marks a plugin as PDK-based. |
-| `plugin.py` (or per-function `.py` files) | Contains event handler functions (`on_load`, `on_press`, `on_poll`). |
+| `src/functions/<func>/template.xml` | Defines templates for button rendering. The presence of template XML files is what marks a plugin as PDK-based. |
+| `src/shared.py` (and/or per-function `handler.py`) | Contains event handler functions (`on_load`, `on_press`, `on_poll`). |
 
 ### Optional Files
 
 | File | Purpose |
 |:---|:---|
 | `manifest.json` | Plugin metadata, function definitions, UI fields, credentials. If absent, a manifest is auto-generated from the templates. |
-| `style.css` | CSS-like rules automatically loaded before any `<style>` blocks in the template file. |
-| `img/` | Static images shipped with the plugin. Served by the API at `/api/plugins/<name>/img/<filename>`. Referenced in templates via `<img src="img/icon.png" />`. |
+| `src/shared.css` | CSS-like rules automatically loaded before any `<style>` blocks in the template files. |
+| `assets/icons/` | Static images shipped with the plugin. Referenced in templates via `<img src="assets/icons/icon.png" />`. |
+| `meta/options.json` | Marketplace/catalog metadata. |
+| `meta/licenses/` | License files for third-party dependencies. |
+| `scripts/setup.sh` | Post-install shell script. |
 
-### Images — img/ and storage/
+### Images — assets/icons/ and storage/
 
 PDK distinguishes between two types of image files:
 
 | Type | Location | Use for |
 |:---|:---|:---|
-| **Static assets** | `plugins/plugin/<name>/img/` | Icons, state images — shipped with the plugin |
+| **Static assets** | `plugins/plugin/<name>/assets/icons/` | Icons, state images — shipped with the plugin |
 | **Runtime-generated files** | `plugins/storage/<name>/` | Files the plugin writes at runtime (e.g. downloaded weather icons, album art) |
 
-#### Static images — img/
+#### Static images — assets/icons/
 
-Place bundled images in `plugins/plugin/<name>/img/`. Reference them in templates with a relative path from the plugin directory:
+Place bundled images in `assets/icons/`. Reference them in templates with a relative path from the plugin directory:
 
 ```xml
-<img src="img/icon.png" width="32" height="32" fit="contain" />
+<img src="assets/icons/icon.png" width="32" height="32" fit="contain" />
 ```
 
 #### Runtime storage — plugins/storage/
@@ -242,13 +245,13 @@ def _download_image(url: str, filename: str, ctx) -> str:
 
 The `../../storage/<name>/` relative path works because `<img src>` is resolved relative to the plugin directory (`plugins/plugin/<name>/`).
 
-**Why separate?** The `img/` directory ships with the plugin and is replaced on plugin update. Files in `plugins/storage/` survive updates because they live outside the plugin folder.
+**Why separate?** The `assets/` directory ships with the plugin and is replaced on plugin update. Files in `plugins/storage/` survive updates because they live outside the plugin folder.
 
 ### How PDK Plugins Are Detected
 
-A plugin is identified as PDK if its directory contains XML sources. The core checks this via `is_pdk_plugin()`, which looks for:
+A plugin is identified as PDK if its directory contains template XML sources. The core checks this via `is_pdk_plugin()`, which looks for:
 
-1. A root `plugin.xml` file, **or**
-2. Any immediate subdirectory containing `.xml` files (skipping `__pycache__`, `img`, `storage`, and `node_modules`).
+1. A `src/functions/` directory containing subdirectories with `template.xml` files, **or**
+2. (Legacy) A root `plugin.xml` file or immediate subdirectories with `.xml` files.
 
 When a PDK plugin is detected, the core routes rendering, press handling, and polling through the PDK engine instead of the classic path. Plugin discovery also requires either a `manifest.json` file or PDK XML sources — directories with neither are ignored.

@@ -1,6 +1,6 @@
 # Gradient Backgrounds
 
-Add custom gradient backgrounds to Stream Deck buttons. Plugins opt in per function via `fields.xml`, and users create gradients through a Photoshop-style editor built into the color picker.
+Add custom gradient backgrounds to Stream Deck buttons. Plugins opt in per function via `manifest.json`, and users create gradients through a Photoshop-style editor built into the color picker.
 
 ---
 
@@ -31,20 +31,26 @@ Gradient support is **opt-in per function** — plugins declare which functions 
 
 ## 2. Enabling Gradient Support
 
-Add `gradient="true"` to a `<fields>` block in `fields.xml`:
+Add `"gradient": true` to a function entry in `manifest.json`:
 
-```xml
-<plugin>
-
-<fields function="my_function" gradient="true">
-  <field type="input" id="message" label="Message" default="Hello" />
-</fields>
-
-<fields function="other_function">
-  <field type="input" id="text" label="Text" default="" />
-</fields>
-
-</plugin>
+```json
+{
+  "functions": {
+    "my_function": {
+      "label": "My Function",
+      "gradient": true,
+      "ui": [
+        { "type": "input", "id": "message", "label": "Message", "default": "Hello" }
+      ]
+    },
+    "other_function": {
+      "label": "Other Function",
+      "ui": [
+        { "type": "input", "id": "text", "label": "Text", "default": "" }
+      ]
+    }
+  }
+}
 ```
 
 In this example:
@@ -52,15 +58,11 @@ In this example:
 - `my_function` — the color picker shows **Solid / Gradient** tabs
 - `other_function` — the color picker shows the standard solid picker only
 
-The `gradient` attribute is a boolean. Accepted truthy values: `true`, `1`, `yes`, `on`.
-
-> **Note:** `fields.xml` must exist for the plugin. The `gradient` attribute is a property of the `<fields>` block, not individual `<field>` elements. See the [fields.xml Reference](FIELDS_XML.md) for full details on the file format.
-
 ---
 
 ## 3. The Gradient Editor
 
-When a function has `gradient="true"`, the button color picker gains a tabbed interface:
+When a function has `"gradient": true`, the button color picker gains a tabbed interface:
 
 ### Solid Tab
 
@@ -141,7 +143,7 @@ For PDK plugins, the core injects `_button_gradient` into the render state along
 
 ### Usage in CSS
 
-Use `{_button_gradient}` as a `background` value in your `style.css` or `<style>` block:
+Use `{_button_gradient}` as a `background` value in your `src/shared.css` or `<style>` block:
 
 ```css
 :root {
@@ -159,7 +161,7 @@ This works for both solid colours and gradients — when the user hasn't set a g
 
 A PDK template that uses the gradient background:
 
-**style.css:**
+**src/shared.css:**
 
 ```css
 :root {
@@ -179,7 +181,7 @@ A PDK template that uses the gradient background:
 }
 ```
 
-**plugin.xml:**
+**src/functions/gradient_demo/template.xml:**
 
 ```xml
 <template name="gradient_demo" title="Gradient Demo">
@@ -189,7 +191,7 @@ A PDK template that uses the gradient background:
 </template>
 ```
 
-> **Note:** The `_button_gradient` variable is available to **all** PDK plugins, regardless of whether `gradient="true"` is set in `fields.xml`. The `fields.xml` flag only controls whether the gradient editor UI appears — the CSS variable always exists and falls back gracefully.
+> **Note:** The `_button_gradient` variable is available to **all** PDK plugins, regardless of whether `"gradient": true` is set. The manifest flag only controls whether the gradient editor UI appears — the CSS variable always exists and falls back gracefully.
 
 ---
 
@@ -219,8 +221,8 @@ A minimal plugin demonstrating gradient support:
 ```text
 plugins/plugin/my_gradient_plugin/
 ├── manifest.json
-├── plugin.py
-└── fields.xml
+└── src/
+    └── shared.py
 ```
 
 ### manifest.json
@@ -234,10 +236,14 @@ plugins/plugin/my_gradient_plugin/
     "gradient_demo": {
       "label": "Gradient Demo",
       "description": "A button with gradient background support",
+      "gradient": true,
       "default_display": {
         "color": "#1a1a2e",
         "text": "Gradient"
-      }
+      },
+      "ui": [
+        { "type": "input", "id": "message", "label": "Display Message", "default": "Hello" }
+      ]
     },
     "solid_only": {
       "label": "Solid Only",
@@ -245,29 +251,16 @@ plugins/plugin/my_gradient_plugin/
       "default_display": {
         "color": "#2e1a2e",
         "text": "Solid"
-      }
+      },
+      "ui": [
+        { "type": "input", "id": "message", "label": "Display Message", "default": "World" }
+      ]
     }
   }
 }
 ```
 
-### fields.xml
-
-```xml
-<plugin>
-
-<fields function="gradient_demo" gradient="true">
-  <field type="input" id="message" label="Display Message" default="Hello" />
-</fields>
-
-<fields function="solid_only">
-  <field type="input" id="message" label="Display Message" default="World" />
-</fields>
-
-</plugin>
-```
-
-### plugin.py
+### src/shared.py
 
 ```python
 from __future__ import annotations

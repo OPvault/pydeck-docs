@@ -2,17 +2,17 @@
 
 ---
 
-## 1. plugin.xml — Templates
+## 1. template.xml — Templates
 
-The `plugin.xml` file contains one or more `<template>` blocks. Each template defines a button face layout that can be selected at runtime.
+Each function's `template.xml` file contains one or more `<template>` blocks. Each template defines a button face layout that can be selected at runtime.
 
 ### Template Block Syntax
 
 ```xml
-<template name="my_view" title="My View" description="Shows something" icon="img/icon.png">
+<template name="my_view" title="My View" description="Shows something" icon="assets/icons/icon.png">
   <box class="container">
     <text class="title">{heading}</text>
-    <img src="img/logo.png" width="32" height="32" fit="contain" />
+    <img src="assets/icons/logo.png" width="32" height="32" fit="contain" />
   </box>
 </template>
 ```
@@ -58,8 +58,6 @@ def on_press(ctx):
 ### Inline Settings (UI Fields)
 
 Templates can embed `<settings>` blocks with `<field>` elements to define UI fields. These are equivalent to the `ui` array in `manifest.json`.
-
-> **Tip:** You can also define UI fields in a standalone `fields.xml` file instead of embedding them in templates or `manifest.json`. This works for both classic and PDK plugins. See the [fields.xml Reference](FIELDS_XML.md) for details.
 
 Inline `<settings>` example:
 
@@ -199,12 +197,12 @@ Renders a text string. The element's text content is its display value.
 Displays an image file. The `src` path is resolved relative to the plugin directory.
 
 ```xml
-<img src="img/icon.png" width="32" height="32" fit="contain" />
+<img src="assets/icons/icon.png" width="32" height="32" fit="contain" />
 ```
 
 | Attribute | Description |
 |:---|:---|
-| `src` | Path to the image file, resolved relative to the plugin directory. Supports `{variable}` interpolation. For static images use `img/<file>`. For runtime-generated files in storage, use the relative path `../../storage/<plugin_name>/<file>`. |
+| `src` | Path to the image file, resolved relative to the plugin directory. Supports `{variable}` interpolation. For static images use `assets/icons/<file>`. For runtime-generated files in storage, use the relative path `../../storage/<plugin_name>/<file>`. |
 | `fit` | Sizing mode: `cover` (default — fill and crop), `contain` (fit within bounds), or `stretch` (exact size). |
 
 - **Container:** No
@@ -318,13 +316,13 @@ Renders horizontally scrolling text, clipped to the element bounds. When the ren
 
 ---
 
-## 3. style.css — Styling
+## 3. Styling
 
 PDK uses a CSS-like styling system. Styles can come from three sources, listed here from lowest to highest precedence (for rules with the same specificity, the higher-precedence source wins):
 
-1. Linked stylesheets via `<link href="file.css" />` in `plugin.xml` (lowest precedence)
-2. `style.css` file in the plugin directory (auto-loaded)
-3. `<style>` blocks inside `plugin.xml` (highest precedence)
+1. Linked stylesheets via `<link href="file.css" />` in `template.xml` (lowest precedence)
+2. `src/shared.css` file in the plugin's `src/` directory (auto-loaded)
+3. `<style>` blocks inside `template.xml` (highest precedence)
 
 All sources are concatenated and parsed together. Inline `style=""` attributes on elements always have the highest specificity regardless of source.
 
