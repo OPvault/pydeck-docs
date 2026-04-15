@@ -2,6 +2,8 @@
 
 After this page you can add a new color palette to PyDeck as a theme folder and see it in **Settings → Appearance** without touching application code.
 
+**On disk:** Theme families live under **`~/.local/share/pydeck/themes/<family>/`** (or **`$XDG_DATA_HOME/pydeck/themes/<family>/`**). On first start after upgrading, PyDeck migrates a legacy checkout **`themes/`** tree into that directory. HTTP routes stay **`/api/themes/<family>/<slot>.css`**.
+
 ---
 
 ## 1. Quick Start — Minimal Theme
@@ -11,7 +13,7 @@ The fastest way to add a new palette: one folder, one `manifest.json`, and one o
 ### Step 1: Create the theme folder
 
 ```text
-themes/my-theme/
+~/.local/share/pydeck/themes/my-theme/
 ```
 
 The folder name is the theme's **family ID**. It must be a single path component — no slashes, no dots, no `..`.
@@ -86,16 +88,16 @@ For **Path B**, create both `dark.css` and `light.css` (you can start by duplica
 
 ### Step 4: Done
 
-Restart PyDeck. Your theme appears in **Settings → Appearance**. No registration beyond these files — the theme loader discovers folders under `themes/` automatically.
+Restart PyDeck. Your theme appears in **Settings → Appearance**. No registration beyond these files — the theme loader discovers folders under **`~/.local/share/pydeck/themes/`** automatically.
 
 ---
 
 ## 2. Theme Directory Structure
 
-All themes live under `themes/` in the project root:
+All themes live under **`~/.local/share/pydeck/themes/`** (data home; legacy checkout `themes/` is migrated on first run):
 
 ```text
-themes/
+~/.local/share/pydeck/themes/
 ├── default/               # Built-in dark/light default
 │   ├── manifest.json
 │   ├── dark.css           # Empty — base variables come from style.css

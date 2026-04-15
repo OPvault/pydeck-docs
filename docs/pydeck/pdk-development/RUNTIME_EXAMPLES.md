@@ -15,8 +15,8 @@ PDK plugins use event-driven handlers instead of per-function callables. All han
 | `ctx.credentials` | dict | Plugin credentials from `credentials.json` (Settings → Credentials). |
 | `ctx.device_id` | str | Identifier for the Stream Deck device that triggered the event. |
 | `ctx.plugin_name` | str | The plugin's directory name. |
-| `ctx.plugin_dir` | Path | Absolute path to the plugin's own directory (`plugins/plugin/<name>/`). |
-| `ctx.storage_path` | Path | Absolute path to the plugin's persistent storage directory (`plugins/storage/<name>/`). Use this for runtime-generated files (e.g. downloaded images). Files here survive plugin updates. |
+| `ctx.plugin_dir` | Path | Absolute path to the plugin's own directory (`~/.local/share/pydeck/plugin/<name>/` by default, or `$XDG_DATA_HOME/pydeck/plugin/<name>/`). |
+| `ctx.storage_path` | Path | Absolute path to the plugin's persistent storage directory (`~/.local/share/pydeck/storage/<name>/`). Use this for runtime-generated files (e.g. downloaded images). Files here survive plugin updates. |
 | `ctx.refresh()` | method | Mark the display as needing a re-render. |
 
 #### State Attribute Access
@@ -89,7 +89,7 @@ This is how plugins implement multi-view buttons (e.g. a weather plugin that tog
 Multi-function plugins can place each function's handlers in a separate Python file inside a subdirectory (see [Plugin Directory Structure](GETTING_STARTED.md#3-plugin-directory-structure)). For example, a weather plugin with `weather` and `forecast` functions:
 
 ```text
-plugins/plugin/weather/
+~/.local/share/pydeck/plugin/weather/
 ├── src/
 │   ├── shared.py               # Shared helpers (fallback handlers)
 │   └── functions/
@@ -154,6 +154,8 @@ If your PDK plugin includes a `manifest.json`, it is loaded normally and augment
   }
 }
 ```
+
+**`sidebar_icon` (and other install-dir assets):** use a path **relative to the plugin package**, e.g. **`assets/icons/PlayPause.png`** or **`img/icon.png`**. The web UI resolves these using the plugin id. You do **not** need the legacy logical prefix `plugins/plugin/<id>/...` for new PDK manifests (that form remains supported for older plugins).
 
 ### Auto-Generated Manifest (no manifest.json)
 
@@ -229,7 +231,7 @@ If a `{key}` has no matching state entry, the placeholder is left as-is.
 
 A simple clock that updates every second, with optional seconds display, 12/24-hour mode, and date line.
 
-**`plugins/plugin/clock/src/functions/clock/template.xml`**
+**`~/.local/share/pydeck/plugin/clock/src/functions/clock/template.xml`**
 
 ```xml
 <template name="clock">
@@ -249,7 +251,7 @@ A simple clock that updates every second, with optional seconds display, 12/24-h
 </template>
 ```
 
-**`plugins/plugin/clock/src/shared.css`**
+**`~/.local/share/pydeck/plugin/clock/src/shared.css`**
 
 ```css
 :root {
@@ -302,7 +304,7 @@ A simple clock that updates every second, with optional seconds display, 12/24-h
 }
 ```
 
-**`plugins/plugin/clock/src/shared.py`**
+**`~/.local/share/pydeck/plugin/clock/src/shared.py`**
 
 ```python
 from __future__ import annotations
@@ -364,7 +366,7 @@ A multi-function weather plugin that uses the subdirectory layout. The `weather`
 **Directory structure:**
 
 ```text
-plugins/plugin/weather/
+~/.local/share/pydeck/plugin/weather/
 ├── manifest.json           # Shared manifest with both functions
 └── src/
     ├── shared.py           # Shared utilities (geocoding, API, formatting)
@@ -485,7 +487,7 @@ def on_poll(ctx, interval=60000):
 - **Per-function state** — each function has isolated state. The `weather` function sets `ctx.state._template = "weather"` and the `forecast` function sets `ctx.state._template = "forecast"` without conflict.
 - Two templates in `template.xml` (`weather` and `weather-detail`) — toggled via `ctx.state._template` on press.
 - `on_poll` runs every 60 seconds to fetch fresh weather data.
-- Weather icon PNGs are downloaded into `plugins/storage/weather/` at runtime and referenced via `{icon_src}` using a relative path from the plugin directory.
+- Weather icon PNGs are downloaded into **`~/.local/share/pydeck/storage/weather/`** at runtime and referenced via `{icon_src}` using a **storage-relative** `src` (e.g. `clearsky_day.png`) returned from your download helper.
 - Private state keys prefixed with `_` (e.g. `_temp`, `_high`, `_icon`) store raw data that isn't displayed directly.
 - Dynamic gradient background using state interpolation in `shared.css`: `linear-gradient(180deg, {bg_top}, {bg_bottom})`.
 
@@ -552,8 +554,8 @@ Using `em` for font sizes and spacing makes your layout scale proportionally if 
 ### Image Assets
 
 - **Static images** shipped with your plugin go in `assets/icons/`. Reference them as `<img src="assets/icons/icon.png" />`.
-- **Runtime-generated files** (e.g. downloaded images) go in `plugins/storage/<plugin_name>/` via `ctx.storage_path`. Reference them as `<img src="../../storage/<plugin_name>/<file>" />`.
-- Files in `assets/icons/` are replaced on plugin update. Files in `plugins/storage/` survive updates.
+- **Runtime-generated files** (e.g. downloaded images) go under **`~/.local/share/pydeck/storage/<plugin_name>/`** via `ctx.storage_path`. Handlers should return **`src` values relative to `ctx.storage_path`** (e.g. `_now_playing.jpg`, `tracks/monaco.png`) for use in `<img src="{...}" />`. **Legacy:** `plugins/storage/<plugin_name>/...`, or `../../storage/<plugin_name>/...` from the install directory, still resolve.
+- Files in `assets/icons/` are replaced on plugin update. Files under **`~/.local/share/pydeck/storage/`** survive updates.
 
 See [Images — assets/icons/ and storage/](GETTING_STARTED.md#images--img-and-storage) for details and a code example.
 

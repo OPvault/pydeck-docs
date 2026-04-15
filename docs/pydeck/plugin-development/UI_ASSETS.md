@@ -1,13 +1,15 @@
 # Plugin Development — UI & Assets
 
+**Paths:** On disk, each plugin lives under **`~/.local/share/pydeck/plugin/<name>/`** and runtime files under **`~/.local/share/pydeck/storage/<name>/`** (or **`$XDG_DATA_HOME/pydeck/...`**). In `buttons.json` and `display` fields, **`plugins/plugin/...`** and **`plugins/storage/...`** remain the **logical** image paths the core understands.
+
 ## 1. Custom CSS — style.css
 
 Each plugin can provide its own CSS by placing a `style.css` file in the plugin folder. The core automatically scans all plugins and serves their CSS combined at `/api/plugins/styles.css`.
 
 ### How It Works
 
-1. Place `style.css` in your plugin folder: `plugins/plugin/my_plugin/style.css`
-2. The route `GET /api/plugins/styles.css` scans every `plugins/plugin/*/` directory for `style.css`
+1. Place `style.css` in your plugin folder: **`~/.local/share/pydeck/plugin/my_plugin/style.css`**
+2. The route `GET /api/plugins/styles.css` scans every installed plugin directory for `style.css`
 3. All found CSS files are concatenated and served as one stylesheet
 4. The HTML template includes `<link rel="stylesheet" href="/api/plugins/styles.css">` after the core stylesheet
 5. Plugin CSS loads after the core CSS, so plugin rules can override core styles
@@ -131,12 +133,12 @@ PyDeck distinguishes between two types of plugin files:
 
 | Type | Location | Endpoint | Use for |
 |:---|:---|:---|:---|
-| **Static assets** | `plugins/plugin/<name>/img/` | `GET /api/plugins/<name>/img/<filename>` | Icons, state images — shipped with the plugin |
-| **Runtime-generated files** | `plugins/storage/<name>/` | `GET /api/plugins/<name>/storage/<filename>` | Files the plugin writes at runtime (e.g. downloaded album art) |
+| **Static assets** | `~/.local/share/pydeck/plugin/<name>/img/` (logical: `plugins/plugin/<name>/img/`) | `GET /api/plugins/<name>/img/<filename>` | Icons, state images — shipped with the plugin |
+| **Runtime-generated files** | `~/.local/share/pydeck/storage/<name>/` (logical: `plugins/storage/<name>/`) | `GET /api/plugins/<name>/storage/<filename>` | Files the plugin writes at runtime (e.g. downloaded album art) |
 
 ### Static images — img/
 
-Place bundled image files in `plugins/plugin/my_plugin/img/`. They are served at:
+Place bundled image files in **`~/.local/share/pydeck/plugin/my_plugin/img/`**. They are served at:
 
 ```text
 GET /api/plugins/<plugin_name>/img/<filename>
@@ -144,27 +146,26 @@ GET /api/plugins/<plugin_name>/img/<filename>
 
 Supported formats: `.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.webp`
 
-### Runtime storage — plugins/storage/
+### Runtime storage
 
-If your plugin **writes files at runtime** (e.g. fetching an image from the internet), write them to `plugins/storage/<plugin_name>/` instead of inside the plugin folder. Reference them with the relative path `plugins/storage/<plugin_name>/<filename>` — the core resolves this path just like any other image.
+If your plugin **writes files at runtime** (e.g. fetching an image from the internet), write them under **`~/.local/share/pydeck/storage/<plugin_name>/`** instead of inside the plugin folder. In `display_update["image"]` and manifests, use the **logical** path `plugins/storage/<plugin_name>/<filename>` — the core resolves it like any other image.
 
 ```python
 from pathlib import Path
 
-_PLUGIN_DIR = Path(__file__).parent
-# _PLUGIN_DIR.parents[1] == pydeck/plugins/
-_STORAGE_DIR = _PLUGIN_DIR.parents[1] / "storage" / "my_plugin"
+_DATA = Path.home() / ".local" / "share" / "pydeck"
+_STORAGE_DIR = _DATA / "storage" / "my_plugin"
 
 def _write_runtime_file(data: bytes, name: str) -> str:
-    """Write data to the plugin storage folder and return the relative path."""
+    """Write data to the plugin storage folder and return the logical image path."""
     _STORAGE_DIR.mkdir(parents=True, exist_ok=True)
     (_STORAGE_DIR / name).write_bytes(data)
     return f"plugins/storage/my_plugin/{name}"
 ```
 
-Use the returned relative path as `display_update["image"]` — the core fetches it via `GET /api/plugins/my_plugin/storage/<filename>`.
+Use the returned logical path as `display_update["image"]` — the core fetches it via `GET /api/plugins/my_plugin/storage/<filename>`.
 
-**Why separate?** The `img/` directory ships with the plugin (and is replaced on marketplace update). Files in `plugins/storage/` survive plugin updates because they live outside the plugin folder.
+**Why separate?** The `img/` directory ships with the plugin (and is replaced on marketplace update). Files under **`~/.local/share/pydeck/storage/`** survive plugin updates because they live outside the plugin package folder.
 
 ### Using Images in default_display
 

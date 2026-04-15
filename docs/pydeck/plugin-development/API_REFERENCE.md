@@ -16,7 +16,7 @@ Returns all discovered plugins with their functions.
 {
   "plugins": [
     {
-      "name": "spotify",
+      "name": "no.pydeck.spotify",
       "display_name": "Spotify",
       "version": "1.0.3",
       "description": "Control Spotify playback via the Web API",
@@ -26,7 +26,7 @@ Returns all discovered plugins with their functions.
           "description": "Toggle Spotify play/pause",
           "default_display": { "color": "#1DB954", "text": "Play" },
           "display_states": {},
-          "sidebar_icon": "plugins/plugin/spotify/img/PlayPause.png",
+          "sidebar_icon": "plugins/plugin/no.pydeck.spotify/img/PlayPause.png",
           "title_readonly": false,
           "has_ui": true,
           "autosave": false,
@@ -40,7 +40,7 @@ Returns all discovered plugins with their functions.
 
 | Response field | Description |
 |:---|:---|
-| `name` | Internal plugin identifier (directory name). |
+| `name` | Plugin id: the install directory name (RDNN, e.g. `no.pydeck.spotify`). |
 | `display_name` | Human-readable name from the manifest `name` field. |
 | `version` | Plugin version string. |
 | `description` | Plugin description from the manifest. |
@@ -91,7 +91,7 @@ Returns sidebar categories for the Settings page. Built-in categories are always
 
 #### `GET /api/plugins/<name>/settings/panel`
 
-Returns `plugins/plugin/<name>/settings.html` if it exists.
+Returns **`~/.local/share/pydeck/plugin/<name>/settings.html`** if it exists (exact path depends on `XDG_DATA_HOME`).
 
 **Response:** Raw HTML (`text/html`), or **404** if the file is missing.
 
@@ -101,7 +101,7 @@ Serves a static image from a plugin's `img/` directory.
 
 #### `GET /api/plugins/<name>/storage/<filename>`
 
-Serves a runtime-generated file from `plugins/storage/<name>/<filename>`. Use this endpoint when a plugin writes files at runtime (e.g. downloaded album art) instead of serving pre-packaged static assets.
+Serves a runtime-generated file from **`~/.local/share/pydeck/storage/<name>/<filename>`** (logical path in JSON: `plugins/storage/<name>/<filename>`). Use this endpoint when a plugin writes files at runtime (e.g. downloaded album art) instead of serving pre-packaged static assets.
 
 **Response:** The file's raw bytes with `Cache-Control: no-store`.
 
@@ -145,8 +145,8 @@ The `hotkey` string uses `+`-delimited lowercase key names identical to the form
 
 Returns metadata for all discovered icons, combining three sources:
 
-- **Static assets** — files under `plugins/plugin/<name>/img/` (scanned once at startup)
-- **Runtime-generated files** — files under `plugins/storage/<name>/` (scanned live on every request, so newly written files like album art appear without a server restart)
+- **Static assets** — files under **`~/.local/share/pydeck/plugin/<name>/img/`** (scanned once at startup); `rel` values use the logical prefix `plugins/plugin/...`
+- **Runtime-generated files** — files under **`~/.local/share/pydeck/storage/<name>/`** (scanned live on every request, so newly written files like album art appear without a server restart); `rel` uses `plugins/storage/...`
 - **User uploads** — files uploaded via `POST /api/icons/upload`, stored in the uploads directory and served via `GET /api/gallery/<filename>`
 
 **Response:**
@@ -916,7 +916,7 @@ Download and install a plugin from a manifest URL.
 ```json
 {
   "ok": true,
-  "installed_path": "plugins/plugin/spotify",
+  "installed_path": "/home/user/.local/share/pydeck/plugin/spotify",
   "slug": "spotify",
   "version": "1.0.3",
   "postinstall_required": false
@@ -930,14 +930,14 @@ When the plugin declares a `post_install_script`, the response includes post-ins
 ```json
 {
   "ok": true,
-  "installed_path": "plugins/plugin/spotify",
+  "installed_path": "/home/user/.local/share/pydeck/plugin/spotify",
   "slug": "spotify",
   "version": "1.0.3",
   "postinstall_required": true,
   "request_id": "abc123",
   "requires_sudo": false,
   "script_rel_path": "scripts/setup.sh",
-  "script_abs_path": "/home/user/pydeck/plugins/plugin/spotify/scripts/setup.sh"
+  "script_abs_path": "/home/user/.local/share/pydeck/plugin/spotify/scripts/setup.sh"
 }
 ```
 
@@ -976,7 +976,7 @@ Returns the current status of a pending or completed post-install request.
   "status": "pending",
   "requires_sudo": false,
   "script_rel_path": "scripts/setup.sh",
-  "script_abs_path": "/home/user/pydeck/plugins/plugin/spotify/scripts/setup.sh"
+  "script_abs_path": "/home/user/.local/share/pydeck/plugin/spotify/scripts/setup.sh"
 }
 ```
 
@@ -991,7 +991,7 @@ Returns the current status of a pending or completed post-install request.
   "status": "succeeded",
   "exit_code": 0,
   "error": "",
-  "script_abs_path": "/home/user/pydeck/plugins/plugin/spotify/scripts/setup.sh",
+  "script_abs_path": "/home/user/.local/share/pydeck/plugin/spotify/scripts/setup.sh",
   "deleted_plugin_on_decline": false
 }
 ```
@@ -1020,7 +1020,7 @@ Returns a preview of the post-install script contents so the user can review it 
   "request_id": "abc123",
   "slug": "spotify",
   "version": "1.0.3",
-  "script_abs_path": "/home/user/pydeck/plugins/plugin/spotify/scripts/setup.sh",
+  "script_abs_path": "/home/user/.local/share/pydeck/plugin/spotify/scripts/setup.sh",
   "script_rel_path": "scripts/setup.sh",
   "content": "#!/bin/bash\napt install -y libfoo...",
   "truncated": false
@@ -1052,7 +1052,7 @@ Decline a pending post-install request. The plugin directory is deleted and the 
   "status": "declined_and_deleted",
   "deleted_plugin_on_decline": true,
   "error": "",
-  "script_abs_path": "/home/user/pydeck/plugins/plugin/spotify/scripts/setup.sh"
+  "script_abs_path": "/home/user/.local/share/pydeck/plugin/spotify/scripts/setup.sh"
 }
 ```
 
@@ -1089,7 +1089,7 @@ Approve and execute a pending post-install script.
   "exit_code": 0,
   "output": "setup complete\n",
   "error": "",
-  "script_abs_path": "/home/user/pydeck/plugins/plugin/spotify/scripts/setup.sh"
+  "script_abs_path": "/home/user/.local/share/pydeck/plugin/spotify/scripts/setup.sh"
 }
 ```
 

@@ -21,8 +21,8 @@ Regenerates the root `manifest.json` for the `pydeck-plugins` catalog repo by sc
 
 `generate_manifest.py` lives at the root of the `pydeck-plugins` repo. When run, it:
 
-1. Scans every subdirectory of `plugins/` to find plugin slugs.
-2. Inside each slug directory, finds all semver-named version subdirectories (e.g. `1.0.0`, `1.1.0`).
+1. Scans every subdirectory of `plugins/` to find plugin ids (each folder name is the catalog **slug**, normally an **RDNN** id such as `no.pydeck.spotify`).
+2. Inside each plugin directory, finds all semver-named version subdirectories (e.g. `1.0.0`, `1.1.0`).
 3. Reads each version's `manifest.json` to extract per-version fields.
 4. Reads an optional per-plugin `catalog.json` for catalog-only metadata.
 5. Falls back to the existing root `manifest.json` for any fields not covered by the above.
@@ -153,23 +153,23 @@ The generated `manifest.json` follows the standard catalog format:
   "plugins": [
     {
       "name": "Clock",
-      "slug": "clock",
+      "slug": "no.pydeck.clock",
       "category": "utilities",
       "summary": "Display a live digital clock on a button",
       "author": "PyDeck Team",
       "latest": "1.0.1",
-      "icon_path": "plugins/clock/icon.svg",
+      "icon_path": "plugins/no.pydeck.clock/icon.svg",
       "compatible_pydeck_versions": ["1.0"],
       "versions": [
         {
           "version": "1.0.0",
-          "path": "plugins/clock/1.0.0",
+          "path": "plugins/no.pydeck.clock/1.0.0",
           "min_pydeck_version": null,
           "max_pydeck_version": null
         },
         {
           "version": "1.0.1",
-          "path": "plugins/clock/1.0.1",
+          "path": "plugins/no.pydeck.clock/1.0.1",
           "min_pydeck_version": null,
           "max_pydeck_version": null
         }

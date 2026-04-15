@@ -9,10 +9,12 @@ Welcome to the developer documentation for **PyDeck** — a Python-powered deck 
 | You want to… | Start here |
 |:---|:---|
 | Ship plugins through the GitHub catalog | [Marketplace repo](pydeck/MARKETPLACE_REPO.md) |
-| Build a **classic** plugin (`manifest.json` + `plugin.py`) | [Plugin development — Getting started](pydeck/plugin-development/GETTING_STARTED.md) |
+| Build a **classic** plugin (`manifest.json` + `plugin.py`) — **deprecated**; not updated for new features | [Plugin development — Getting started](pydeck/plugin-development/GETTING_STARTED.md) |
 | Build a **PDK** plugin (templates, CSS, custom button faces) | [PDK — Getting started](pydeck/pdk-development/GETTING_STARTED.md) (uses [PDK Plugin Creator](pydeck-plugins/PDK_CREATE.md) first) |
 | Build a **theme** | [Theme development — Getting started](pydeck/theme-development/GETTING_STARTED.md) |
 | Set up Discord or Spotify in PyDeck | [Discord setup](pydeck/DISCORD_SETUP.md) · [Spotify setup](pydeck/SPOTIFY_SETUP.md) |
+
+**Data home (plugins, storage, themes):** Installed plugins and runtime files live under **`~/.local/share/pydeck/plugin/`** and **`~/.local/share/pydeck/storage/`**; UI themes under **`~/.local/share/pydeck/themes/`** (or **`$XDG_DATA_HOME/pydeck/...`** when set). **Classic** `buttons.json` / manifest fields may still use logical paths `plugins/plugin/...` and `plugins/storage/...` — see [Plugin development — Getting started](pydeck/plugin-development/GETTING_STARTED.md). **PDK** prefers shorter paths (`assets/icons/...`, storage-relative `src`); see [PDK — Getting started](pydeck/pdk-development/GETTING_STARTED.md). Themes are covered in [Theme development — Getting started](pydeck/theme-development/GETTING_STARTED.md).
 
 ---
 
@@ -24,7 +26,7 @@ Welcome to the developer documentation for **PyDeck** — a Python-powered deck 
 
 ## Plugin development
 
-**Classic plugins** (manifest + Python):
+**Classic plugins** (manifest + `plugin.py`) — **deprecated** for new work; use **[PDK](pydeck/pdk-development/GETTING_STARTED.md)** instead. These pages remain for existing plugins:
 
 1. [Getting started](pydeck/plugin-development/GETTING_STARTED.md) — Hello world and folder layout  
 2. [Core development](pydeck/plugin-development/CORE.md) — `plugin.py`, `manifest.json`, display states, polls  

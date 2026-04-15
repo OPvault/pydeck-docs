@@ -219,7 +219,7 @@ A minimal plugin demonstrating gradient support:
 ### Directory structure
 
 ```text
-plugins/plugin/my_gradient_plugin/
+~/.local/share/pydeck/plugin/my_gradient_plugin/
 ├── manifest.json
 └── src/
     └── shared.py

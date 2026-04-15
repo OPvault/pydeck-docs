@@ -1,5 +1,8 @@
 # Plugin Development — Core
 
+!!! warning "Classic path only"
+    This chapter documents the **classic** `plugin.py` model, which is **[deprecated for new development](GETTING_STARTED.md)**. Prefer **[PDK](../pdk-development/GETTING_STARTED.md)** for new plugins.
+
 ## 1. plugin.py — Writing Functions
 
 ### Function Signature
@@ -79,7 +82,7 @@ When a button is pressed, the core builds the config dict by merging two sources
 config = {**credentials, **button_config}
 ```
 
-1. **Credentials** — Values from `~/.config/pydeck/core/credentials.json` under your plugin's key (e.g. `client_id`, `client_secret`, `access_token`)
+1. **Credentials** — Values from `~/.config/pydeck/core/credentials.json` under your plugin's key (the **RDNN** install id, e.g. `no.pydeck.spotify`; PyDeck merges legacy short keys for official plugins). Typical entries include `client_id`, `client_secret`, and `access_token`.
 2. **Button config** — Values from the button's UI fields saved in `buttons.json`
 
 Button config takes precedence, so users can override credentials per-button if needed.
@@ -300,7 +303,7 @@ def api_record(config: Dict[str, Any]) -> Dict[str, Any]:
             dev.close()
 ```
 
-The built-in **Keyboard** plugin ships a production-ready `api_record` implementation — see `plugins/plugin/keyboard/plugin.py` for the full version including permission-error detection and a robust keyboard-device filter.
+The built-in **Keyboard** plugin ships a production-ready `api_record` implementation — see **`~/.local/share/pydeck/plugin/keyboard/plugin.py`** for the full version including permission-error detection and a robust keyboard-device filter.
 
 ### api_select — Dynamic API Dropdown
 

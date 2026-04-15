@@ -25,9 +25,13 @@ Syncs plugin source files from a local `pydeck` checkout into the `pydeck-plugin
 `sync_from_pydeck.py` lives at the root of the `pydeck-plugins` repo. It bridges the development repo (`pydeck`) and the catalog repo (`pydeck-plugins`):
 
 ```text
-pydeck/plugins/plugin/<slug>/   →   pydeck-plugins/plugins/<slug>/<version>/
-      (source of truth)                    (catalog, versioned)
+~/.local/share/pydeck/plugin/<rdnn-id>/   →   pydeck-plugins/plugins/<rdnn-id>/<version>/
+           (source of truth)                           (catalog, versioned)
 ```
+
+`<rdnn-id>` is the reverse-DNS plugin id (install folder name), e.g. `no.pydeck.spotify`.
+
+Use **`$XDG_DATA_HOME/pydeck/plugin/`** when `XDG_DATA_HOME` is set. Legacy checkouts may still use **`pydeck/plugins/plugin/`** until PyDeck migrates them on first start.
 
 On each run it:
 
@@ -61,7 +65,7 @@ On first run the script auto-detects the pydeck source path and asks you to conf
 
 | Flag | Description |
 |:---|:---|
-| `--pydeck-source PATH` | Override the saved source path for this run only. Points to `pydeck/plugins/plugin/`. |
+| `--pydeck-source PATH` | Override the saved source path for this run only. Points to the **plugin root** (`~/.local/share/pydeck/plugin/` by default, or legacy `pydeck/plugins/plugin/`). |
 | `--dry-run` | Show what would happen without writing any files. The diff is still printed. |
 | `--no-diff` | Suppress the coloured per-file diff (shown by default for every changed plugin). |
 | `--no-generate` | Skip running `generate_manifest.py` after syncing. |
@@ -80,15 +84,16 @@ The confirmed source path is stored at:
 
 ```json
 {
-  "pydeck_source": "/home/user/Documents/GitHub/pydeck/plugins/plugin"
+  "pydeck_source": "/home/user/.local/share/pydeck/plugin"
 }
 ```
 
 Auto-detection checks these candidate paths in order:
 
-1. `~/Documents/GitHub/pydeck/plugins/plugin`
-2. `<catalog-repo-parent>/pydeck/plugins/plugin`
-3. `~/pydeck/plugins/plugin`
+1. `~/.local/share/pydeck/plugin`
+2. `~/Documents/GitHub/pydeck/plugins/plugin` (legacy checkout layout)
+3. `<catalog-repo-parent>/pydeck/plugins/plugin`
+4. `~/pydeck/plugins/plugin`
 
 Use `--regen-conf` to update the saved path, or `--pydeck-source` to override it for a single run.
 
@@ -181,8 +186,8 @@ diff  home-assistant  (1.1.0 → new)
 
  _PLUGIN_DIR = Path(__file__).parent
 -_IMG_DIR = _PLUGIN_DIR / "img"
-+# Runtime-generated icons go to plugins/storage/
-+_STORAGE_DIR = _PLUGIN_DIR.parents[1] / "storage" / "home-assistant"
++# Runtime-generated icons — prefer ctx.storage_path (~/.local/share/pydeck/storage/<plugin>/)
++_STORAGE_DIR = Path.home() / ".local" / "share" / "pydeck" / "storage" / "home-assistant"
 
  BUTTON_SIZE = 80
 ```
@@ -244,7 +249,7 @@ python sync_from_pydeck.py --yes --no-generate
 ### Override the source path for one run
 
 ```bash
-python sync_from_pydeck.py --pydeck-source ~/code/pydeck/plugins/plugin
+python sync_from_pydeck.py --pydeck-source ~/.local/share/pydeck/plugin
 ```
 
 ### Re-configure the saved source path

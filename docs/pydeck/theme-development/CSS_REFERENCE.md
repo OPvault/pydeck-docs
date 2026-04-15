@@ -135,7 +135,7 @@ The simplest theme format. One manifest, one CSS file, one variant. No dark/ligh
 ### Folder layout
 
 ```text
-themes/monokai/
+~/.local/share/pydeck/themes/monokai/
 ├── manifest.json
 └── theme.css
 ```
@@ -194,7 +194,7 @@ When a theme ships two palettes (dark and light), use the `variants` object. The
 ### Folder layout
 
 ```text
-themes/ocean/
+~/.local/share/pydeck/themes/ocean/
 ├── manifest.json
 ├── dark.css
 └── light.css

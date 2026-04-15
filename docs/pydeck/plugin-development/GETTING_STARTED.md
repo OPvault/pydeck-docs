@@ -1,6 +1,17 @@
 # Plugin Development — Getting Started
 
+!!! warning "Classic plugins are deprecated"
+    The **classic** plugin model described on this page — **`manifest.json` + root `plugin.py`**, with PyDeck’s built‑in text/image/button renderer — is **deprecated for new development**.
+
+    **It is no longer an active product area:** new features and documentation will focus on **[PDK](../pdk-development/GETTING_STARTED.md)** (templates, CSS, Python handlers under `src/`). Classic plugins may receive **only critical maintenance** (for example security or breakage fixes), not ongoing enhancements.
+
+    **Start new plugins as PDK.** Existing classic plugins can keep running; migrate when you need new UI or behaviour.
+
 By the end of this guide you will have run a minimal plugin in PyDeck, know where plugin files live, and know which docs cover manifest details, Python handlers, and shipping.
+
+**Where files live:** On your machine, each plugin is a folder under **`~/.local/share/pydeck/plugin/<name>/`** (or **`$XDG_DATA_HOME/pydeck/plugin/<name>/`** when `XDG_DATA_HOME` is set). Runtime files a plugin writes go under **`~/.local/share/pydeck/storage/<name>/`**. In `manifest.json`, `buttons.json`, and API payloads, PyDeck still uses **logical** paths such as `plugins/plugin/...` and `plugins/storage/...` — keep those in JSON; the core maps them to the data directory when loading.
+
+**Plugin identifiers (RDNN):** The install folder name should be a **reverse-DNS** id (RDNN), e.g. `com.example.myplugin` or `no.pydeck.spotify`, so names stay unique across authors. The manifest `name` field is the **human-readable title** (shown in the UI); it does not have to match the folder name. For official catalog plugins, PyDeck still accepts legacy short folder names (e.g. `spotify`) and maps them to the canonical RDNN id when resolving paths and credentials.
 
 ---
 
@@ -11,14 +22,14 @@ The fastest way to see how plugins work. This creates a plugin with one button t
 ### Step 1: Create the plugin folder
 
 ```text
-plugins/plugin/hello_world/
+~/.local/share/pydeck/plugin/com.example.helloworld/
 ```
 
 ### Step 2: Create `manifest.json`
 
 ```json
 {
-  "name": "hello_world",
+  "name": "Hello World",
   "version": "1.0.0",
   "description": "A simple greeting plugin",
   "functions": {
@@ -61,16 +72,16 @@ def greet(config: Dict[str, Any]) -> Dict[str, Any]:
 
 ### Step 4: Done
 
-Restart PyDeck. The `hello_world` plugin appears in the sidebar with a **Say Hello** function. Drag it onto a button and press it. The optional `message` string is shown in the UI as feedback; the `display_update` dict merges into the button's persisted `display` (here, `text`), so the deck face and web UI show **Hi …** after each press. You can also drive the face with `state` + `display_states` in the manifest — see [Core development](CORE.md#3-display-states-and-toggling).
+Restart PyDeck. The plugin appears in the sidebar under **Hello World** with a **Say Hello** function. Drag it onto a button and press it. The optional `message` string is shown in the UI as feedback; the `display_update` dict merges into the button's persisted `display` (here, `text`), so the deck face and web UI show **Hi …** after each press. You can also drive the face with `state` + `display_states` in the manifest — see [Core development](CORE.md#3-display-states-and-toggling).
 
 ---
 
 ## 2. Plugin Directory Structure
 
-Every plugin lives under `plugins/plugin/<plugin_name>/`. The folder name **is** the plugin name used everywhere in the system.
+Every plugin lives on disk under **`~/.local/share/pydeck/plugin/<plugin_id>/`** (or `$XDG_DATA_HOME/pydeck/plugin/<plugin_id>/`). The folder name **is** the plugin id: use **RDNN** (e.g. `com.example.myplugin`, `no.pydeck.clock`) for new work.
 
 ```text
-plugins/plugin/my_plugin/
+~/.local/share/pydeck/plugin/com.example.myplugin/
 ├── manifest.json          # REQUIRED — metadata, functions, credentials, OAuth
 ├── plugin.py              # REQUIRED — Python functions called on button press
 ├── style.css              # Optional — custom CSS loaded automatically
@@ -191,7 +202,7 @@ Declares the pip packages your plugin needs. PyDeck reads this list every time t
 |:---|:---|:---|
 | `python_dependencies` | array of strings | Pip package names (the same names you would pass to `pip install`). Import names and pip names may differ — use the pip name (e.g. `"pillow"`, not `"PIL"`). |
 
-**Example — keyboard plugin** (`plugins/plugin/keyboard/manifest.json`):
+**Example — keyboard plugin** (`~/.local/share/pydeck/plugin/keyboard/manifest.json`):
 
 ```json
 {
@@ -249,7 +260,7 @@ The marketplace reads this list and shows a **Licenses** pill button on the plug
 **Plugin folder layout example** (F1 plugin with two licenses):
 
 ```text
-plugins/plugin/f1/
+~/.local/share/pydeck/plugin/f1/
 ├── manifest.json        ← declares both licenses
 ├── plugin.py
 ├── LICENSE-openf1       ← OpenF1 API license
@@ -290,7 +301,7 @@ Add `post_install_script` to the manifest's top-level object. The value is a rel
 #### Plugin folder layout example
 
 ```text
-plugins/plugin/my_plugin/
+~/.local/share/pydeck/plugin/my_plugin/
 ├── manifest.json
 ├── plugin.py
 └── scripts/

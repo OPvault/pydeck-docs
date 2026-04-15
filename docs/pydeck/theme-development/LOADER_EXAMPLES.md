@@ -1,12 +1,14 @@
 # Theme Development — Loader & Examples
 
+**On disk:** The loader scans **`~/.local/share/pydeck/themes/`** (or **`$XDG_DATA_HOME/pydeck/themes/`**). A legacy **`themes/`** directory under the PyDeck checkout is migrated there on first run.
+
 ## 1. How the Theme Loader Works
 
 Understanding the loader helps you debug theme issues.
 
 ### Discovery
 
-On startup and whenever the theme list is requested, PyDeck scans every immediate subdirectory of `themes/`:
+On startup and whenever the theme list is requested, PyDeck scans every immediate subdirectory of **`~/.local/share/pydeck/themes/`**:
 
 1. Skip folders whose name contains `/`, `\`, or `..`
 2. Read `manifest.json` — skip if missing or invalid JSON
@@ -18,7 +20,7 @@ On startup and whenever the theme list is requested, PyDeck scans every immediat
 ### Single-file loading
 
 ```text
-themes/<family>/theme.css
+~/.local/share/pydeck/themes/<family>/theme.css
 ```
 
 Selection ID: `<family>/theme`
@@ -28,7 +30,7 @@ The `scheme` field from the manifest is used to set the CSS `color-scheme` prope
 ### Multi-variant loading
 
 ```text
-themes/<family>/<filename>   ← filename comes from the variants object
+~/.local/share/pydeck/themes/<family>/<filename>   ← filename comes from the variants object
 ```
 
 Only `"dark"` and `"light"` are recognized variant keys. Any other key in `variants` is ignored.
@@ -73,7 +75,7 @@ These IDs are used internally and in the Settings API. They are also what gets s
 
 The simplest possible multi-variant theme. Each CSS file is a single `:root {}` block.
 
-**`themes/nord/manifest.json`:**
+**`~/.local/share/pydeck/themes/nord/manifest.json`:**
 
 ```json
 {
@@ -90,7 +92,7 @@ The simplest possible multi-variant theme. Each CSS file is a single `:root {}` 
 }
 ```
 
-**`themes/nord/dark.css`:**
+**`~/.local/share/pydeck/themes/nord/dark.css`:**
 
 ```css
 /* Nord Dark — Polar Night + Frost */
@@ -115,7 +117,7 @@ The simplest possible multi-variant theme. Each CSS file is a single `:root {}` 
 }
 ```
 
-**`themes/nord/light.css`:**
+**`~/.local/share/pydeck/themes/nord/light.css`:**
 
 ```css
 /* Nord Light — Snow Storm + Frost */
@@ -148,7 +150,7 @@ The simplest possible multi-variant theme. Each CSS file is a single `:root {}` 
 
 Same structure as Nord, but also overrides `--radius` and `--radius-sm` for a softer look.
 
-**`themes/el-clasico/manifest.json`:**
+**`~/.local/share/pydeck/themes/el-clasico/manifest.json`:**
 
 ```json
 {
@@ -165,7 +167,7 @@ Same structure as Nord, but also overrides `--radius` and `--radius-sm` for a so
 }
 ```
 
-**`themes/el-clasico/dark.css`:**
+**`~/.local/share/pydeck/themes/el-clasico/dark.css`:**
 
 ```css
 /* El Clásico — dark variant */
@@ -200,7 +202,7 @@ Same structure as Nord, but also overrides `--radius` and `--radius-sm` for a so
 
 A standalone dark theme with a single CSS file. No light/dark toggle.
 
-**`themes/solarized-dark/manifest.json`:**
+**`~/.local/share/pydeck/themes/solarized-dark/manifest.json`:**
 
 ```json
 {
@@ -210,7 +212,7 @@ A standalone dark theme with a single CSS file. No light/dark toggle.
 }
 ```
 
-**`themes/solarized-dark/theme.css`:**
+**`~/.local/share/pydeck/themes/solarized-dark/theme.css`:**
 
 ```css
 /* Solarized Dark — https://ethanschoonover.com/solarized/ */
@@ -243,7 +245,7 @@ A standalone dark theme with a single CSS file. No light/dark toggle.
 
 Catppuccin's two variants have proper palette names. `variant_labels` renames them in the UI.
 
-**`themes/catppuccin/manifest.json`:**
+**`~/.local/share/pydeck/themes/catppuccin/manifest.json`:**
 
 ```json
 {
@@ -268,7 +270,7 @@ The Settings UI shows **Catppuccin (Mocha)** and **Catppuccin (Latte)** as separ
 
 A single-file theme built for maximum legibility.
 
-**`themes/high-contrast/manifest.json`:**
+**`~/.local/share/pydeck/themes/high-contrast/manifest.json`:**
 
 ```json
 {
@@ -278,7 +280,7 @@ A single-file theme built for maximum legibility.
 }
 ```
 
-**`themes/high-contrast/theme.css`:**
+**`~/.local/share/pydeck/themes/high-contrast/theme.css`:**
 
 ```css
 /* High Contrast */
@@ -311,7 +313,7 @@ A single-file theme built for maximum legibility.
 
 A theme that uses a company's brand colors and custom font.
 
-**`themes/acme/manifest.json`:**
+**`~/.local/share/pydeck/themes/acme/manifest.json`:**
 
 ```json
 {
@@ -328,7 +330,7 @@ A theme that uses a company's brand colors and custom font.
 }
 ```
 
-**`themes/acme/dark.css`:**
+**`~/.local/share/pydeck/themes/acme/dark.css`:**
 
 ```css
 /* ACME Corp Dark */
@@ -430,7 +432,7 @@ If you build a dark/light pair, verify both variants in the Settings → Appeara
 The folder name becomes the theme's family ID and is stored in user config files. Renaming the folder after users have saved this theme as their preference will break their selection and fall back to the default. Choose a stable, slug-friendly name from the start: lowercase, hyphens instead of spaces, no special characters.
 
 ```text
-themes/tokyo-night/    ✓  stable
-themes/Tokyo Night/    ✗  spaces not allowed in paths
-themes/my_theme_v2/    ✓  underscores are fine too
+~/.local/share/pydeck/themes/tokyo-night/    ✓  stable
+~/.local/share/pydeck/themes/Tokyo Night/    ✗  spaces not allowed in paths
+~/.local/share/pydeck/themes/my_theme_v2/    ✓  underscores are fine too
 ```

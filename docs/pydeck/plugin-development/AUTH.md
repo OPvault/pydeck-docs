@@ -12,7 +12,7 @@ All credentials live in a single file:
 ~/.config/pydeck/core/credentials.json
 ```
 
-This file is a flat JSON object. Each top-level key is a **plugin name** (matching the folder name under `plugins/plugin/`), and its value is an object of key–value pairs:
+This file is a flat JSON object. Each top-level key is a **plugin name** (matching the folder name under **`~/.local/share/pydeck/plugin/`**), and its value is an object of key–value pairs:
 
 ```json
 {
@@ -102,7 +102,7 @@ Plugins can add a **custom HTML panel** in **Settings** (gear icon in the deck h
 | `category_id` | No | Stable id (`a-z`, `0-9`, `-`). If omitted, it is derived from `category` (lowercase, non-alphanumeric → `-`). |
 | `order` | No | Sort order for your plugin within that category (integer; lower first). |
 
-2. Optionally add `plugins/plugin/<your_plugin>/settings.html`. Static HTML only; no server-side templating.
+2. Optionally add **`~/.local/share/pydeck/plugin/<your_plugin>/settings.html`**. Static HTML only; no server-side templating.
 
 3. The settings page calls `GET /api/settings/categories` to build the sidebar (built-in categories — **Marketplace**, **Device**, **Appearance**, **Credentials**, **Updates**, and **Licenses** — are always listed first). For each plugin in a category, the UI loads:
 

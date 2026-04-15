@@ -106,7 +106,7 @@ The plugin polls Discord's voice state every 10 seconds and keeps the button ima
 
 ## Discord bot example
 
-Some PyDeck checkouts include a small **Discord.py** sample under the Discord plugin (for example `plugins/plugin/discord/bot_example.py`) that reuses tokens PyDeck stored after you complete **Step 5 — Authorize** above.
+Some PyDeck installs include a small **Discord.py** sample under the Discord plugin (for example **`~/.local/share/pydeck/plugin/discord/bot_example.py`**) that reuses tokens PyDeck stored after you complete **Step 5 — Authorize** above.
 
 If you run or adapt that script:
 

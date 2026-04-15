@@ -9,7 +9,7 @@ The simplest possible plugin. Opens URLs in the default browser.
 **Directory:**
 
 ```text
-plugins/plugin/browser/
+~/.local/share/pydeck/plugin/browser/
 ├── manifest.json
 └── plugin.py
 ```
@@ -195,7 +195,7 @@ The most complex plugin. Uses OAuth for authorization, a dedicated API client mo
 **Directory:**
 
 ```text
-plugins/plugin/spotify/
+~/.local/share/pydeck/plugin/spotify/
 ├── manifest.json
 ├── plugin.py
 ├── spotify_client.py
@@ -336,7 +336,7 @@ def my_function(config):
 For complex plugins with multiple modules:
 
 ```text
-plugins/plugin/my_plugin/
+~/.local/share/pydeck/plugin/my_plugin/
 ├── manifest.json
 ├── plugin.py          # Entry point — thin wrappers that call into your client
 ├── my_client.py       # API client / business logic

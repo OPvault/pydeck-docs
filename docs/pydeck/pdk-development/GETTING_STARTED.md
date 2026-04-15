@@ -2,6 +2,15 @@
 
 When you finish this page you will understand how PDK differs from classic plugins, and you will be able to **scaffold and run** a new PDK plugin using the **PDK Plugin Creator** (recommended). An optional hand-written clock tutorial is included if you want to see every file built step by step.
 
+**On disk:** Plugins live under **`~/.local/share/pydeck/plugin/<name>/`** (or **`$XDG_DATA_HOME/pydeck/plugin/<name>/`**). Runtime files use **`~/.local/share/pydeck/storage/<name>/`**.
+
+**Paths in PDK (recommended):**
+
+- **`manifest.json` `sidebar_icon`** — use a path **under the install directory**, e.g. **`assets/icons/PlayPause.png`** or **`img/icon.png`**. The web UI resolves these using the plugin id (no `plugins/plugin/...` prefix needed).
+- **`<img src>` in templates** — paths **under the plugin folder** (e.g. `assets/icons/...`) are resolved from the plugin directory. Files under **`ctx.storage_path`** may use a **short path relative to that storage folder** (e.g. `_now_playing.jpg`, `tracks/monaco.png`); the renderer maps them to `~/.local/share/pydeck/storage/<name>/`.
+
+**Legacy (still supported):** the global logical prefixes **`plugins/plugin/...`** and **`plugins/storage/...`**, plus **`../../storage/<name>/...`** from the plugin directory, still resolve for older plugins and for **classic** `buttons.json` image fields — see [Plugin development — Getting started](../plugin-development/GETTING_STARTED.md).
+
 ---
 
 ## 1. What is PDK?
@@ -28,7 +37,7 @@ PDK plugins are rendered server-side via Pillow into PNG images at the correct r
 
 ## 2. Quick Start — PDK Plugin Creator
 
-The **PDK Plugin Creator** lives in the [pydeck-plugins](https://github.com/opvault/pydeck-plugins) repo (`python -m tools.pdk_create`). It writes a full **standard PDK layout** into your local **pydeck** checkout under `plugins/plugin/<slug>/` — manifest stubs, `src/shared.py`, `src/shared.css`, `src/functions/<id>/template.xml`, `handler.py`, asset folders, and more — so you skip empty-folder setup and start from working code.
+The **PDK Plugin Creator** lives in the [pydeck-plugins](https://github.com/opvault/pydeck-plugins) repo (`python -m tools.pdk_create`). It writes a full **standard PDK layout** into your **plugin data directory** under **`~/.local/share/pydeck/plugin/<slug>/`** (or `$XDG_DATA_HOME/pydeck/plugin/<slug>/`) — manifest stubs, `src/shared.py`, `src/shared.css`, `src/functions/<id>/template.xml`, `handler.py`, asset folders, and more — so you skip empty-folder setup and start from working code.
 
 Full CLI options, path resolution, and non-interactive examples are in **[PDK Plugin Creator](../../pydeck-plugins/PDK_CREATE.md)**.
 
@@ -52,7 +61,7 @@ python -m tools.pdk_create
 | `static` | Label-style demo — good default to learn the layout |
 | `counter` | Press increments a number — shows `on_press` + state updates |
 
-The tool finds `…/pydeck/plugins/plugin/` using the same rules as `sync_from_pydeck.py` (`--pydeck-source`, `PYDECK_SOURCE`, saved `path.json`, or built-in candidates). If it cannot resolve the path, it prompts you.
+The tool finds the **plugin root** (default **`~/.local/share/pydeck/plugin`**) using the same rules as `sync_from_pydeck.py` (`--pydeck-source`, `PYDECK_SOURCE`, saved `path.json`, or built-in candidates, including a **legacy checkout** folder **`…/pydeck/plugins/plugin/`** when it still exists under the PyDeck repo). If it cannot resolve the path, it prompts you.
 
 **One-shot example** (adjust paths):
 
@@ -69,7 +78,7 @@ Then edit the generated `template.xml`, `shared.py`, and CSS to match what you w
 
 ### Step 3 — Run PyDeck
 
-Restart **PyDeck**, find your plugin in the sidebar, drag a function onto a button, and press it. Iterate in the generated tree under `plugins/plugin/<slug>/`.
+Restart **PyDeck**, find your plugin in the sidebar, drag a function onto a button, and press it. Iterate in the generated tree under **`~/.local/share/pydeck/plugin/<slug>/`**.
 
 ---
 
@@ -80,7 +89,7 @@ If you prefer to **create every file by hand** to learn how they fit together, f
 ### Step A: Create the plugin folder
 
 ```text
-plugins/plugin/clock/
+~/.local/share/pydeck/plugin/clock/
 ├── manifest.json
 └── src/
     ├── shared.py
@@ -198,14 +207,13 @@ Restart PyDeck. The `clock` plugin appears in the sidebar. Drag it onto a button
 
 ## 4. Plugin Directory Structure
 
-PDK plugins live under the same `plugins/plugin/<plugin_name>/` root as classic plugins. The folder name **is** the plugin name.
+PDK plugins live under the same **`~/.local/share/pydeck/plugin/<plugin_name>/`** directory as classic plugins (see **`$XDG_DATA_HOME`** above). The folder name **is** the plugin name.
 
 ### Standard Layout
 
 ```text
-plugins/
-└── plugin/
-    └── my_plugin/
+~/.local/share/pydeck/plugin/
+└── my_plugin/
         ├── manifest.json
         ├── src/
         │   ├── shared.py          # Shared code / fallback handlers
@@ -264,8 +272,8 @@ PDK distinguishes between two types of image files:
 
 | Type | Location | Use for |
 |:---|:---|:---|
-| **Static assets** | `plugins/plugin/<name>/assets/icons/` | Icons, state images — shipped with the plugin |
-| **Runtime-generated files** | `plugins/storage/<name>/` | Files the plugin writes at runtime (e.g. downloaded weather icons, album art) |
+| **Static assets** | `~/.local/share/pydeck/plugin/<name>/assets/icons/` | Icons, state images — shipped with the plugin |
+| **Runtime-generated files** | `~/.local/share/pydeck/storage/<name>/` | Files the plugin writes at runtime (e.g. downloaded weather icons, album art) |
 
 #### Static images — assets/icons/
 
@@ -275,9 +283,9 @@ Place bundled images in `assets/icons/`. Reference them in templates with a rela
 <img src="assets/icons/icon.png" width="32" height="32" fit="contain" />
 ```
 
-#### Runtime storage — plugins/storage/
+#### Runtime storage
 
-If your plugin **downloads or generates files at runtime**, write them to `plugins/storage/<plugin_name>/` via `ctx.storage_path`. Reference them in templates using the relative path from the plugin directory:
+If your plugin **downloads or generates files at runtime**, write them via **`ctx.storage_path`** (on disk: **`~/.local/share/pydeck/storage/<plugin_name>/`**). In handlers, return a **`src` string for templates** that is **relative to that storage directory** — for example **`_now_playing.jpg`**, **`clearsky_day.png`**, or **`tracks/monaco.png`** — after writing the file under `ctx.storage_path`. The PDK renderer resolves these to the data home.
 
 ```python
 def _download_image(url: str, filename: str, ctx) -> str:
@@ -285,16 +293,16 @@ def _download_image(url: str, filename: str, ctx) -> str:
     ctx.storage_path.mkdir(parents=True, exist_ok=True)
     dst = ctx.storage_path / filename
     # ... download to dst ...
-    return f"../../storage/{ctx.plugin_name}/{filename}"
+    return filename  # e.g. "_art.jpg" — relative to ctx.storage_path
 ```
 
 ```xml
 <img src="{icon_src}" width="24" height="24" fit="contain" />
 ```
 
-The `../../storage/<name>/` relative path works because `<img src>` is resolved relative to the plugin directory (`plugins/plugin/<name>/`).
+**Legacy:** returning `../../storage/<plugin_name>/<file>` from the plugin directory, or the logical path `plugins/storage/<plugin_name>/<file>`, still works for older code.
 
-**Why separate?** The `assets/` directory ships with the plugin and is replaced on plugin update. Files in `plugins/storage/` survive updates because they live outside the plugin folder.
+**Why separate?** The `assets/` directory ships with the plugin and is replaced on plugin update. Files under **`~/.local/share/pydeck/storage/`** survive updates because they live outside the plugin package folder.
 
 ### How PDK Plugins Are Detected
 

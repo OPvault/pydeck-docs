@@ -24,7 +24,7 @@ Each function's `template.xml` file contains one or more `<template>` blocks. Ea
 | `name` | Yes | Identifier used to select this template. Maps to a function name in the manifest. |
 | `title` | No | Human-readable label shown in the sidebar. Defaults to `name`. |
 | `description` | No | Short description shown in the UI. |
-| `icon` | No | Relative path to a sidebar icon image. |
+| `icon` | No | Path to a sidebar icon image **under the plugin directory** (e.g. `assets/icons/foo.png`). Auto-generated manifests copy this form into `sidebar_icon`; use the same style when writing `manifest.json` by hand (no `plugins/plugin/...` prefix). |
 
 ### Multiple Templates
 
@@ -202,7 +202,7 @@ Displays an image file. The `src` path is resolved relative to the plugin direct
 
 | Attribute | Description |
 |:---|:---|
-| `src` | Path to the image file, resolved relative to the plugin directory. Supports `{variable}` interpolation. For static images use `assets/icons/<file>`. For runtime-generated files in storage, use the relative path `../../storage/<plugin_name>/<file>`. |
+| `src` | Path to the image file. **Install-dir assets** resolve relative to the plugin directory (e.g. `assets/icons/<file>`). **Runtime files** under `ctx.storage_path` may use a **short path relative to that storage folder** (e.g. `_art.jpg`, `icons/cache.png`). Supports `{variable}` interpolation. **Legacy:** global logical paths `plugins/plugin/...` / `plugins/storage/...`, and `../../storage/<plugin_name>/...` from the plugin directory, still work. |
 | `fit` | Sizing mode: `cover` (default — fill and crop), `contain` (fit within bounds), or `stretch` (exact size). |
 
 - **Container:** No

@@ -31,7 +31,7 @@ PyDeck uses two separate GitHub repositories.
 │                                 │       │                                     │
 │  start.py  ─── FastAPI app       │       │  manifest.json  ── catalog index    │
 │  marketplace/  ─── installer    │──────▶│  plugins/                           │
-│  plugins/plugin/  ─── local     │       │    <slug>/                          │
+│  ~/.local/share/pydeck/plugin   │       │    <rdnn-plugin-id>/                │
 │    plugins installed here       │       │      <version>/                     │
 │                                 │       │        manifest.json                │
 │                                 │       │        plugin.py                    │
@@ -40,13 +40,13 @@ PyDeck uses two separate GitHub repositories.
          user runs this                            hosted on GitHub
 ```
 
-**The main app repo (`pydeck`)** runs on the user's machine. It contains the FastAPI server (served via Uvicorn), the hardware listener, the web UI, and the local `plugins/plugin/` directory where installed plugins live.
+**The main app repo (`pydeck`)** runs on the user's machine. It contains the FastAPI server (served via Uvicorn), the hardware listener, and the web UI. Installed plugins live under **`~/.local/share/pydeck/plugin/`** (or **`$XDG_DATA_HOME/pydeck/plugin/`**), not inside the git checkout.
 
 **The catalog repo (`pydeck-plugins`)** is hosted on GitHub. It contains:
 - A root `manifest.json` that lists every available plugin and its versions.
 - One folder per plugin version with all the plugin's files.
 
-When a user installs a plugin through the marketplace UI, PyDeck fetches the catalog, reads the plugin's version path, then downloads the files directly from the catalog repo into `plugins/plugin/<slug>/` on the user's machine.
+When a user installs a plugin through the marketplace UI, PyDeck fetches the catalog, reads the plugin's version path, then downloads the files directly from the catalog repo into **`~/.local/share/pydeck/plugin/<slug>/`** on the user's machine. The catalog **`slug`** is the **RDNN plugin id** (reverse-DNS, e.g. `no.pydeck.spotify`) and matches the install directory name. PyDeck still resolves older short folder names for official plugins during a transition period.
 
 The two repos are **independent**. The catalog repo has no code that runs — it is purely a file store and manifest. PyDeck accesses it entirely via the GitHub raw file API and the Git tree API.
 
@@ -58,13 +58,13 @@ The two repos are **independent**. The catalog repo has no code that runs — it
 <catalog-repo-root>/
 ├── manifest.json                  # ← Root catalog index (REQUIRED)
 │
-└── plugins/                       # ← One subfolder per plugin
-    ├── browser/
+└── plugins/                       # ← One subfolder per plugin (RDNN id)
+    ├── no.pydeck.browser/
     │   └── 1.0.0/                 # ← One subfolder per version
     │       ├── manifest.json
     │       └── plugin.py
     │
-    ├── spotify/
+    ├── no.pydeck.spotify/
     │   ├── 1.0.0/
     │   │   ├── manifest.json
     │   │   ├── plugin.py
@@ -76,7 +76,7 @@ The two repos are **independent**. The catalog repo has no code that runs — it
     │       ├── plugin.py
     │       └── spotify_client.py
     │
-    └── clock/
+    └── no.pydeck.clock/
         └── 1.0.0/
             ├── manifest.json
             └── plugin.py
@@ -84,12 +84,12 @@ The two repos are **independent**. The catalog repo has no code that runs — it
 
 Rules:
 - Each plugin gets **one directory** directly under `plugins/`.
-- The directory name is the plugin's **slug** (also used as the install directory name on the user's machine).
+- The directory name is the plugin's **slug** — an **RDNN plugin id** (reverse-DNS, e.g. `no.pydeck.spotify`, `com.example.widget`). It is also the install directory name on the user's machine.
 - Inside the plugin directory, each released version gets **its own subdirectory** named after the version string (e.g. `1.0.0`).
 - All plugin files for that version live inside the version directory.
 - Version directories are siblings — they do not nest.
 
-The path `plugins/browser/1.0.0` is called the **version path**. The parent `plugins/browser` is the **plugin base**.
+The path `plugins/no.pydeck.browser/1.0.0` is called the **version path**. The parent `plugins/no.pydeck.browser` is the **plugin base**.
 
 > **The `plugins/` prefix shown above assumes the catalog repo root contains a `plugins/` directory.** Your actual prefix may differ — what matters is that the `path` values in `manifest.json` (see below) exactly match the real directory paths in the repo.
 
@@ -109,37 +109,37 @@ The root `manifest.json` at the repo root is the single file PyDeck fetches firs
   "plugins": [
     {
       "name": "Browser",
-      "slug": "browser",
+      "slug": "no.pydeck.browser",
       "category": "utilities",
       "summary": "Open URLs in the default browser",
       "author": "PyDeck Team",
       "latest": "1.0.0",
-      "icon_path": "plugins/browser/icon.png",
+      "icon_path": "plugins/no.pydeck.browser/icon.png",
       "compatible_pydeck_versions": ["1.0.0"],
       "versions": [
         {
           "version": "1.0.0",
-          "path": "plugins/browser/1.0.0"
+          "path": "plugins/no.pydeck.browser/1.0.0"
         }
       ]
     },
     {
       "name": "Spotify",
-      "slug": "spotify",
+      "slug": "no.pydeck.spotify",
       "category": "media",
       "summary": "Control Spotify playback via the Web API",
       "author": "PyDeck Team",
       "latest": "1.1.0",
-      "icon_path": "plugins/spotify/icon.png",
+      "icon_path": "plugins/no.pydeck.spotify/icon.png",
       "compatible_pydeck_versions": ["1.0.0"],
       "versions": [
         {
           "version": "1.0.0",
-          "path": "plugins/spotify/1.0.0"
+          "path": "plugins/no.pydeck.spotify/1.0.0"
         },
         {
           "version": "1.1.0",
-          "path": "plugins/spotify/1.1.0",
+          "path": "plugins/no.pydeck.spotify/1.1.0",
           "min_pydeck_version": "1.0.0"
         }
       ]
@@ -162,7 +162,7 @@ The root `manifest.json` at the repo root is the single file PyDeck fetches firs
 | Field | Type | Required | Description |
 |:---|:---|:---|:---|
 | `name` | string | **Yes** | Human-readable display name (e.g. `"Spotify"`). |
-| `slug` | string | **Yes** | Machine identifier. Must match the plugin folder name under `plugins/` in the catalog repo, and becomes the install folder name under `plugins/plugin/` on the user's machine. Lowercase, no spaces. |
+| `slug` | string | **Yes** | Machine identifier. Must match the plugin folder name under `plugins/` in the catalog repo, and becomes the install folder name under **`~/.local/share/pydeck/plugin/<slug>/`** on the user's machine. Lowercase, no spaces. |
 | `category` | string | **Yes** | Category label used for filtering (e.g. `"media"`, `"utilities"`, `"system"`). |
 | `summary` | string | **Yes** | One-line description shown in the marketplace card. |
 | `author` | string | **Yes** | Author name. |
@@ -184,7 +184,7 @@ The root `manifest.json` at the repo root is the single file PyDeck fetches firs
 
 ## 4. Plugin Version Folders
 
-Each version folder contains the actual plugin files that get installed on the user's machine. After install, the contents of the version folder are placed flat inside `plugins/plugin/<slug>/` on the user's machine — the version directory itself is not included.
+Each version folder contains the actual plugin files that get installed on the user's machine. After install, the contents of the version folder are placed flat inside **`~/.local/share/pydeck/plugin/<slug>/`** on the user's machine — the version directory itself is not included.
 
 **Repo structure:**
 ```text
@@ -197,7 +197,7 @@ plugins/spotify/1.1.0/
 
 **After install on user's machine:**
 ```text
-plugins/plugin/spotify/
+~/.local/share/pydeck/plugin/spotify/
 ├── manifest.json
 ├── plugin.py
 ├── spotify_client.py
@@ -268,7 +268,7 @@ https://raw.githubusercontent.com/opvault/pydeck-plugins/stable/manifest.json
 ### Step 2 — Resolve the install target
 
 From the catalog entry, PyDeck reads:
-- `slug` → used as the install directory name (`plugins/plugin/<slug>/`)
+- `slug` → used as the install directory name (`~/.local/share/pydeck/plugin/<slug>/`)
 - The chosen `version.path` (e.g. `plugins/spotify/1.1.0`)
 
 It splits the path into:
@@ -300,7 +300,7 @@ PyDeck downloads each matching file from:
 https://raw.githubusercontent.com/<owner>/<repo>/<ref>/<path>
 ```
 
-The version prefix is stripped before writing — so `plugins/spotify/1.1.0/plugin.py` is saved to the user's machine as `plugins/plugin/spotify/plugin.py`.
+The version prefix is stripped before writing — so `plugins/spotify/1.1.0/plugin.py` in the catalog is saved on disk as **`~/.local/share/pydeck/plugin/spotify/plugin.py`**. In `buttons.json` and manifests, image paths may still use the **logical** prefix `plugins/plugin/spotify/...`; PyDeck resolves those to the data directory.
 
 ### What causes install to fail
 
