@@ -27,10 +27,15 @@ Buttons can display live album art, the current track name, artist, and a countd
 3. Fill in:
    - **App name** — anything you like, e.g. `PyDeck`
    - **App description** — optional
-   - **Redirect URI** — add exactly:
+   - **Redirect URI** — PyDeck uses `http://127.0.0.1:<port>/oauth/<plugin_id>/callback`, where **`<plugin_id>`** is the plugin’s install directory name (same id PyDeck uses in the API and in `credentials.json`). Add the URI that matches **your** install:
      ```text
-     http://127.0.0.1:8686/oauth/spotify/callback
+     http://127.0.0.1:8686/oauth/no.pydeck.spotify/callback
      ```
+     - **Spotify (legacy) plugin**:
+       ```text
+       http://127.0.0.1:8686/oauth/spotify/callback
+       ```
+     If you are unsure, open **Settings → Credentials → Spotify**, click **Authorize**, and check the `redirect_uri` query parameter on the Spotify login URL — it must match one of the redirect URIs you registered **exactly** (including host and port).
    - **Which API/SDKs are you planning to use?** — tick **Web API**
 4. Accept the terms and click **Save**
 
@@ -100,7 +105,7 @@ On the **Play / Pause** button you can enable:
 
 | Error | Cause | Fix |
 |---|---|---|
-| `redirect_uri: Not matching configuration` | Redirect URI in Spotify Dashboard doesn't match | Ensure it is exactly `http://127.0.0.1:8686/oauth/spotify/callback`; remove any `localhost` entries |
+| `redirect_uri: Not matching configuration` | Redirect URI in Spotify Dashboard doesn't match | Register `http://127.0.0.1:8686/oauth/no.pydeck.spotify/callback`, or `http://127.0.0.1:8686/oauth/spotify/callback` for the **Spotify (legacy) plugin**. Use `127.0.0.1`, not `localhost` |
 | `Not authorized — press the Spotify Authorize button first` | No token saved | Complete Step 4 (Authorize) |
 | `HTTP 403` / playback controls do nothing | Free Spotify account | Playback control requires **Spotify Premium** |
 | `HTTP 404` / no active device | Spotify is not open on any device | Open Spotify on a phone, desktop, or web player |

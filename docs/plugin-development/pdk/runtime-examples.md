@@ -86,7 +86,7 @@ This is how plugins implement multi-view buttons (e.g. a weather plugin that tog
 
 ### Per-Function Modules
 
-Multi-function plugins can place each function's handlers in a separate Python file inside a subdirectory (see [Plugin Directory Structure](GETTING_STARTED.md#3-plugin-directory-structure)). For example, a weather plugin with `weather` and `forecast` functions:
+Multi-function plugins can place each function's handlers in a separate Python file inside a subdirectory (see [Plugin Directory Structure](getting-started.md#3-plugin-directory-structure)). For example, a weather plugin with `weather` and `forecast` functions:
 
 ```text
 ~/.local/share/pydeck/plugin/weather/
@@ -211,7 +211,7 @@ The variable `_button_color` is automatically injected by the core with the user
 |:---|:---|
 | `_template` | Controls which template is rendered. Set in handlers to switch views. |
 | `_button_color` | Injected by the core — the user's chosen button background colour (hex string). |
-| `_button_gradient` | Injected by the core — a CSS gradient string (e.g. `linear-gradient(135deg, #ff0000 0%, #0000ff 100%)`). Falls back to `_button_color` when no gradient is set. See [Gradient Backgrounds](../GRADIENT_BACKGROUNDS.md). |
+| `_button_gradient` | Injected by the core — a CSS gradient string (e.g. `linear-gradient(135deg, #ff0000 0%, #0000ff 100%)`). Falls back to `_button_color` when no gradient is set. See [Gradient backgrounds](../../using/gradient-backgrounds.md). |
 
 ### How It Works
 
@@ -557,7 +557,7 @@ Using `em` for font sizes and spacing makes your layout scale proportionally if 
 - **Runtime-generated files** (e.g. downloaded images) go under **`~/.local/share/pydeck/storage/<plugin_name>/`** via `ctx.storage_path`. Handlers should return **`src` values relative to `ctx.storage_path`** (e.g. `_now_playing.jpg`, `tracks/monaco.png`) for use in `<img src="{...}" />`. **Legacy:** `plugins/storage/<plugin_name>/...`, or `../../storage/<plugin_name>/...` from the install directory, still resolve.
 - Files in `assets/icons/` are replaced on plugin update. Files under **`~/.local/share/pydeck/storage/`** survive updates.
 
-See [Images — assets/icons/ and storage/](GETTING_STARTED.md#images--img-and-storage) for details and a code example.
+See [Images — assets/icons/ and storage/](getting-started.md#images--img-and-storage) for details and a code example.
 
 ### Poll Interval Selection
 

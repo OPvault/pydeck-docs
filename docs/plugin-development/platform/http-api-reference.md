@@ -1,4 +1,11 @@
-# Plugin Development — API Reference
+# HTTP and WebSocket API reference
+
+!!! info "Applies to PDK and classic plugins"
+    These routes and payloads are how **PyDeck’s core** exposes plugins to the web UI and to integrations. **PDK** handlers run behind the same discovery, forms, credentials, and action APIs as classic `plugin.py` functions. This reference does not document PDK template tags — see [Templates and elements](../pdk/templates-elements.md) and [Rendering](../pdk/rendering.md). This guide lives under **Shared platform** in the site nav (not PDK-only).
+
+## Unified button model in HTTP and WebSocket payloads
+
+Plugin discovery and editor APIs use **one schema** for every installed plugin. JSON may therefore include **`default_display`**, **`display_states`**, and WebSocket events such as **`display_update`** — fields rooted in the **classic built-in renderer** and persisted **`buttons.json`** display object. **PDK** draws the hardware button **face** from **templates** and **`ctx.state`**; those classic-oriented fields still matter for the **web editor**, sidebar metadata, and compatibility, but they are not how PDK composes the PNG face. For return dicts and **`display_update`** semantics on the classic path, see [Classic — Core](../classic/core.md).
 
 ## 1. REST API Reference
 

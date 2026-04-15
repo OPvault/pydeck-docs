@@ -9,7 +9,7 @@ When you finish this page you will understand how PDK differs from classic plugi
 - **`manifest.json` `sidebar_icon`** — use a path **under the install directory**, e.g. **`assets/icons/PlayPause.png`** or **`img/icon.png`**. The web UI resolves these using the plugin id (no `plugins/plugin/...` prefix needed).
 - **`<img src>` in templates** — paths **under the plugin folder** (e.g. `assets/icons/...`) are resolved from the plugin directory. Files under **`ctx.storage_path`** may use a **short path relative to that storage folder** (e.g. `_now_playing.jpg`, `tracks/monaco.png`); the renderer maps them to `~/.local/share/pydeck/storage/<name>/`.
 
-**Legacy (still supported):** the global logical prefixes **`plugins/plugin/...`** and **`plugins/storage/...`**, plus **`../../storage/<name>/...`** from the plugin directory, still resolve for older plugins and for **classic** `buttons.json` image fields — see [Plugin development — Getting started](../plugin-development/GETTING_STARTED.md).
+**Legacy (still supported):** the global logical prefixes **`plugins/plugin/...`** and **`plugins/storage/...`**, plus **`../../storage/<name>/...`** from the plugin directory, still resolve for older plugins and for **classic** `buttons.json` image fields — see [Plugin development — Getting started](../classic/getting-started.md).
 
 ---
 
@@ -25,7 +25,7 @@ PDK plugins are rendered server-side via Pillow into PNG images at the correct r
 
 ### PDK vs Classic Plugins
 
-| | Classic Plugin | PDK Plugin |
+| | Classic (built-in renderer) | PDK Plugin |
 |:---|:---|:---|
 | Button face | Text + color + optional image, rendered by the core | Custom template rendered by PDK engine |
 | Appearance definition | `default_display` / `display_states` in manifest | `<template>` blocks + CSS |
@@ -39,7 +39,7 @@ PDK plugins are rendered server-side via Pillow into PNG images at the correct r
 
 The **PDK Plugin Creator** lives in the [pydeck-plugins](https://github.com/opvault/pydeck-plugins) repo (`python -m tools.pdk_create`). It writes a full **standard PDK layout** into your **plugin data directory** under **`~/.local/share/pydeck/plugin/<slug>/`** (or `$XDG_DATA_HOME/pydeck/plugin/<slug>/`) — manifest stubs, `src/shared.py`, `src/shared.css`, `src/functions/<id>/template.xml`, `handler.py`, asset folders, and more — so you skip empty-folder setup and start from working code.
 
-Full CLI options, path resolution, and non-interactive examples are in **[PDK Plugin Creator](../../pydeck-plugins/PDK_CREATE.md)**.
+Full CLI options, path resolution, and non-interactive examples are in **[PDK Plugin Creator](../catalog/pdk-create.md)**.
 
 ### Step 1 — Repos and Python
 
@@ -74,7 +74,7 @@ python -m tools.pdk_create --non-interactive \
   --preset static
 ```
 
-Then edit the generated `template.xml`, `shared.py`, and CSS to match what you want (for a clock, add `on_poll` and time fields — or start from `static` and follow [Templates & Elements](TEMPLATES_ELEMENTS.md) and [Runtime & Examples](RUNTIME_EXAMPLES.md)).
+Then edit the generated `template.xml`, `shared.py`, and CSS to match what you want (for a clock, add `on_poll` and time fields — or start from `static` and follow [Templates & Elements](templates-elements.md) and [Runtime & Examples](runtime-examples.md)).
 
 ### Step 3 — Run PyDeck
 
@@ -84,7 +84,7 @@ Restart **PyDeck**, find your plugin in the sidebar, drag a function onto a butt
 
 ## 3. Tutorial — clock plugin from scratch (optional)
 
-If you prefer to **create every file by hand** to learn how they fit together, follow this minimal clock. It matches what you could evolve from a **static** scaffold after reading [Rendering](RENDERING.md) and [Runtime & Examples](RUNTIME_EXAMPLES.md).
+If you prefer to **create every file by hand** to learn how they fit together, follow this minimal clock. It matches what you could evolve from a **static** scaffold after reading [Rendering](rendering.md) and [Runtime & Examples](runtime-examples.md).
 
 ### Step A: Create the plugin folder
 
@@ -125,7 +125,7 @@ For PDK plugins you can provide a standard `manifest.json`. The core will augmen
 }
 ```
 
-> **Note:** If you omit `manifest.json`, the core can auto-generate one from your templates. See [manifest.json for PDK Plugins](RUNTIME_EXAMPLES.md#2-manifestjson-for-pdk-plugins).
+> **Note:** If you omit `manifest.json`, the core can auto-generate one from your templates. See [manifest.json for PDK Plugins](runtime-examples.md#2-manifestjson-for-pdk-plugins).
 
 ### Step C: Create `src/functions/clock/template.xml`
 

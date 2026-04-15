@@ -1,71 +1,40 @@
-# PyDeck Docs
+# Installation
 
-Welcome to the developer documentation for **PyDeck** — a Python-powered deck you extend with plugins and themes. Use the sidebar for the full outline; this page is a **reading map** with the same order as the site navigation.
+**PyDeck** is a Python-powered macro deck you extend with plugins and themes. This page covers installing and running the main [PyDeck](https://github.com/opvault/pydeck) application on Linux from a git checkout.
 
----
+When the app is running, use the sidebar or jump to [Marketplace & catalog](using/marketplace.md), [PDK development](plugin-development/pdk/getting-started.md) (recommended for new plugins), or [Theme development](theme-development/getting-started.md).
 
-## Choose a path
+## Requirements
 
-| You want to… | Start here |
-|:---|:---|
-| Ship plugins through the GitHub catalog | [Marketplace repo](pydeck/MARKETPLACE_REPO.md) |
-| Build a **classic** plugin (`manifest.json` + `plugin.py`) — **deprecated**; not updated for new features | [Plugin development — Getting started](pydeck/plugin-development/GETTING_STARTED.md) |
-| Build a **PDK** plugin (templates, CSS, custom button faces) | [PDK — Getting started](pydeck/pdk-development/GETTING_STARTED.md) (uses [PDK Plugin Creator](pydeck-plugins/PDK_CREATE.md) first) |
-| Build a **theme** | [Theme development — Getting started](pydeck/theme-development/GETTING_STARTED.md) |
-| Set up Discord or Spotify in PyDeck | [Discord setup](pydeck/DISCORD_SETUP.md) · [Spotify setup](pydeck/SPOTIFY_SETUP.md) |
+- Python 3.9+
+- Linux (udev required for HID access)
+- `libcairo2` system library (required by `cairosvg` for SVG icon rendering)
 
-**Data home (plugins, storage, themes):** Installed plugins and runtime files live under **`~/.local/share/pydeck/plugin/`** and **`~/.local/share/pydeck/storage/`**; UI themes under **`~/.local/share/pydeck/themes/`** (or **`$XDG_DATA_HOME/pydeck/...`** when set). **Classic** `buttons.json` / manifest fields may still use logical paths `plugins/plugin/...` and `plugins/storage/...` — see [Plugin development — Getting started](pydeck/plugin-development/GETTING_STARTED.md). **PDK** prefers shorter paths (`assets/icons/...`, storage-relative `src`); see [PDK — Getting started](pydeck/pdk-development/GETTING_STARTED.md). Themes are covered in [Theme development — Getting started](pydeck/theme-development/GETTING_STARTED.md).
+## Install from git
 
----
+```bash
+git clone https://github.com/opvault/pydeck.git
+cd pydeck
+sudo bash install.sh
+```
 
-## PyDeck
+The installer will:
 
-- [Marketplace repo](pydeck/MARKETPLACE_REPO.md) — Two-repo architecture, catalog layout, install flow, and common errors.
+1. Check your Python version
+2. Create a virtualenv and install dependencies (`fastapi`, `uvicorn`, `pillow`, `cairosvg`, `watchdog`, and others)
+3. Install udev rules so the Stream Deck is accessible without root
+4. Detect your init system (systemd, OpenRC, runit, s6, Upstart, SysV)
+5. Create the appropriate service file
+6. Ask if you want PyDeck to start automatically at boot
 
----
+## Running manually
 
-## Plugin development
+From the cloned repository:
 
-**Classic plugins** (manifest + `plugin.py`) — **deprecated** for new work; use **[PDK](pydeck/pdk-development/GETTING_STARTED.md)** instead. These pages remain for existing plugins:
+```bash
+bash pydeck-start.sh
+```
 
-1. [Getting started](pydeck/plugin-development/GETTING_STARTED.md) — Hello world and folder layout  
-2. [Core development](pydeck/plugin-development/CORE.md) — `plugin.py`, `manifest.json`, display states, polls  
-3. [Authentication](pydeck/plugin-development/AUTH.md) — Credentials and OAuth patterns  
-4. [UI & assets](pydeck/plugin-development/UI_ASSETS.md) — UI fields, images, CSS  
-5. [API reference](pydeck/plugin-development/API_REFERENCE.md) — HTTP and WebSocket APIs  
-6. [Examples & tips](pydeck/plugin-development/EXAMPLES.md)
+Then open `http://localhost:8686` in your browser.
 
-**PDK** (template-driven buttons):
-
-1. [Getting started](pydeck/pdk-development/GETTING_STARTED.md) — What PDK is; quick start with **PDK Plugin Creator**  
-2. [PDK Plugin Creator](pydeck-plugins/PDK_CREATE.md) — Full CLI, paths, and layout reference for `python -m tools.pdk_create`  
-3. [Templates & elements](pydeck/pdk-development/TEMPLATES_ELEMENTS.md)  
-4. [Rendering](pydeck/pdk-development/RENDERING.md)  
-5. [Runtime & examples](pydeck/pdk-development/RUNTIME_EXAMPLES.md)
-
-**Shared guides and catalog tooling**
-
-- [Gradient backgrounds](pydeck/GRADIENT_BACKGROUNDS.md) — User-facing gradients and `_button_gradient`  
-- [Release stable](pydeck-plugins/RELEASE_STABLE.md) — Promote `canary` to `stable` on the catalog repo  
-- [Sync from PyDeck](pydeck-plugins/SYNC_FROM_PYDECK.md) — Copy plugins from a local PyDeck checkout into the catalog  
-
----
-
-## Themes development
-
-1. [Getting started](pydeck/theme-development/GETTING_STARTED.md)  
-2. [CSS reference](pydeck/theme-development/CSS_REFERENCE.md)  
-3. [Loader & examples](pydeck/theme-development/LOADER_EXAMPLES.md)  
-
-**Catalog tooling** (same scripts plugin maintainers use; themes live in the same marketplace repo):
-
-- [Generate manifest](pydeck-plugins/GENERATE_MANIFEST.md)  
-- [Release stable](pydeck-plugins/RELEASE_STABLE.md)  
-- [Sync from PyDeck](pydeck-plugins/SYNC_FROM_PYDECK.md)  
-
----
-
-## PyDeck official plugins
-
-- [Discord setup](pydeck/DISCORD_SETUP.md)  
-- [Spotify setup](pydeck/SPOTIFY_SETUP.md)  
+For the canonical copy of this information (including device support and project layout), see the [PyDeck README](https://github.com/opvault/pydeck/blob/main/README.md) in the application repository.

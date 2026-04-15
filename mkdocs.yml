@@ -48,41 +48,38 @@ markdown_extensions:
 extra_css:
   - stylesheets/extra.css
 
-extra_files:
-  - CNAME
-
 nav:
-  - Home: index.md
+  - Installation: index.md
 
-  - PyDeck:
-      - Marketplace Repo: pydeck/MARKETPLACE_REPO.md
+  - Using PyDeck:
+      - Marketplace: using/marketplace.md
+      - Gradient backgrounds: using/gradient-backgrounds.md
+      - Official plugins:
+          - Discord: using/discord.md
+          - Spotify: using/spotify.md
 
-  - Plugin Development:
+  - Plugin development:
+      - Shared platform:
+          - Authentication: plugin-development/platform/authentication.md
+          - Web UI & Assets: plugin-development/platform/web-ui-and-assets.md
+          - HTTP API Reference: plugin-development/platform/http-api-reference.md
+      - PDK development:
+          - Getting Started: plugin-development/pdk/getting-started.md
+          - PDK Plugin Creator: plugin-development/catalog/pdk-create.md
+          - Templates & Elements: plugin-development/pdk/templates-elements.md
+          - Rendering: plugin-development/pdk/rendering.md
+          - Runtime & Examples: plugin-development/pdk/runtime-examples.md
       - Classic plugins:
-          - Getting Started: pydeck/plugin-development/GETTING_STARTED.md
-          - Core Development: pydeck/plugin-development/CORE.md
-          - Authentication: pydeck/plugin-development/AUTH.md
-          - UI & Assets: pydeck/plugin-development/UI_ASSETS.md
-          - API Reference: pydeck/plugin-development/API_REFERENCE.md
-          - Examples & Tips: pydeck/plugin-development/EXAMPLES.md
-      - PDK Development:
-          - Getting Started: pydeck/pdk-development/GETTING_STARTED.md
-          - PDK Plugin Creator: pydeck-plugins/PDK_CREATE.md
-          - Templates & Elements: pydeck/pdk-development/TEMPLATES_ELEMENTS.md
-          - Rendering: pydeck/pdk-development/RENDERING.md
-          - Runtime & Examples: pydeck/pdk-development/RUNTIME_EXAMPLES.md
-      - Gradient Backgrounds: pydeck/GRADIENT_BACKGROUNDS.md
-      - Release Stable (catalog repo): pydeck-plugins/RELEASE_STABLE.md
-      - Sync From PyDeck (catalog repo): pydeck-plugins/SYNC_FROM_PYDECK.md
+          - Getting Started: plugin-development/classic/getting-started.md
+          - Core Development: plugin-development/classic/core.md
+          - Examples & Tips: plugin-development/classic/examples.md
+      - Catalog tools (pydeck-plugins repo):
+          - Generate Manifest: plugin-development/catalog/generate-manifest.md
+          - Release Stable: plugin-development/catalog/release-stable.md
+          - Sync From PyDeck: plugin-development/catalog/sync-from-pydeck.md
 
-  - Themes Development:
-      - Getting Started: pydeck/theme-development/GETTING_STARTED.md
-      - CSS Reference: pydeck/theme-development/CSS_REFERENCE.md
-      - Loader & Examples: pydeck/theme-development/LOADER_EXAMPLES.md
-      - Generate Manifest: pydeck-plugins/GENERATE_MANIFEST.md
-      - Release Stable (catalog repo): pydeck-plugins/RELEASE_STABLE.md
-      - Sync From PyDeck (catalog repo): pydeck-plugins/SYNC_FROM_PYDECK.md
-
-  - PyDeck Official Plugins:
-      - Discord Setup: pydeck/DISCORD_SETUP.md
-      - Spotify Setup: pydeck/SPOTIFY_SETUP.md
+  - Theme development:
+      - Getting Started: theme-development/getting-started.md
+      - CSS Reference: theme-development/css-reference.md
+      - Loader & Examples: theme-development/loader-examples.md
+      - Marketplace catalog workflows: theme-development/marketplace-catalog.md

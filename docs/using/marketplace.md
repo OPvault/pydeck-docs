@@ -219,7 +219,7 @@ For **classic plugins**:
 | `img/` | No | Image assets served via the plugin image API. |
 | `*.py` | No | Additional Python helper modules. |
 
-For **PDK plugins**, the version folder contains the full PDK directory structure (`manifest.json`, `src/`, `assets/`, etc.). See [PDK Getting Started](pdk-development/GETTING_STARTED.md#3-plugin-directory-structure) for the full layout.
+For **PDK plugins**, the version folder contains the full PDK directory structure (`manifest.json`, `src/`, `assets/`, etc.). See [PDK Getting Started](../plugin-development/pdk/getting-started.md#3-plugin-directory-structure) for the full layout.
 
 ### The local `manifest.json` inside a version folder
 
@@ -250,7 +250,7 @@ This is **not** the same format as the root catalog `manifest.json`. It is the p
 }
 ```
 
-See [Plugin Development — Core](plugin-development/CORE.md) for the full `manifest.json` authoring guide (functions, UI, display states, polls, and related behaviour).
+For **`manifest.json`** (`functions`, `ui`, credentials, permissions, and classic-only **`default_display` / `display_states` / `poll`**): see [PDK — Getting started](../plugin-development/pdk/getting-started.md) for layout and PDK behaviour, [Authentication](../plugin-development/platform/authentication.md) and [HTTP API reference](../plugin-development/platform/http-api-reference.md) for shared platform details, and [Classic — Core](../plugin-development/classic/core.md) for the **deprecated** `plugin.py` return contract and built-in button renderer.
 
 ---
 

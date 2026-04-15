@@ -3,7 +3,7 @@
 !!! warning "Classic plugins are deprecated"
     The **classic** plugin model described on this page — **`manifest.json` + root `plugin.py`**, with PyDeck’s built‑in text/image/button renderer — is **deprecated for new development**.
 
-    **It is no longer an active product area:** new features and documentation will focus on **[PDK](../pdk-development/GETTING_STARTED.md)** (templates, CSS, Python handlers under `src/`). Classic plugins may receive **only critical maintenance** (for example security or breakage fixes), not ongoing enhancements.
+    **It is no longer an active product area:** new features and documentation will focus on **[PDK](../pdk/getting-started.md)** (templates, CSS, Python handlers under `src/`). Classic plugins may receive **only critical maintenance** (for example security or breakage fixes), not ongoing enhancements.
 
     **Start new plugins as PDK.** Existing classic plugins can keep running; migrate when you need new UI or behaviour.
 
@@ -72,7 +72,7 @@ def greet(config: Dict[str, Any]) -> Dict[str, Any]:
 
 ### Step 4: Done
 
-Restart PyDeck. The plugin appears in the sidebar under **Hello World** with a **Say Hello** function. Drag it onto a button and press it. The optional `message` string is shown in the UI as feedback; the `display_update` dict merges into the button's persisted `display` (here, `text`), so the deck face and web UI show **Hi …** after each press. You can also drive the face with `state` + `display_states` in the manifest — see [Core development](CORE.md#3-display-states-and-toggling).
+Restart PyDeck. The plugin appears in the sidebar under **Hello World** with a **Say Hello** function. Drag it onto a button and press it. The optional `message` string is shown in the UI as feedback; the `display_update` dict merges into the button's persisted `display` (here, `text`), so the deck face and web UI show **Hi …** after each press. You can also drive the face with `state` + `display_states` in the manifest — see [Core development](core.md#3-display-states-and-toggling).
 
 ---
 
@@ -107,7 +107,7 @@ Every plugin lives on disk under **`~/.local/share/pydeck/plugin/<plugin_id>/`**
 | `options.json` | Human-friendly metadata for a future plugin marketplace (description, features, tags). |
 | `img/` | Image assets served at `/api/plugins/<name>/img/<filename>`. Used for button icons, display states, etc. |
 | `*.sh` | Post-install shell script executed once after marketplace installation. Declared via `post_install_script` in the manifest. See [Post-Install Scripts](#post-install-scripts). |
-| `*.py` | Additional Python modules. Import them from `plugin.py` using a path insert (see [Spotify example](#spotify-oauth--api-client)). |
+| `*.py` | Additional Python modules. Import them from `plugin.py` using a path insert (see [Spotify example](examples.md#spotify-oauth-api-client-token-refresh)). |
 
 ---
 
@@ -142,9 +142,9 @@ The manifest is a JSON object with the following top-level keys:
 | `author` | string | No | Plugin author name. |
 | `python_dependencies` | array | No | List of pip package names the plugin requires. The backend installs missing packages automatically at startup and restarts itself. See [Python Dependencies](#python-dependencies). |
 | `licenses` | array | No | Third-party license declarations for the plugin. Each entry names a license and points to its file inside the plugin folder. Shown in the marketplace as a **Licenses** button. See [Licenses](#licenses). |
-| `credentials` | array | No | Credential fields shown under **Settings → Credentials** on the web UI. See [Credentials](#8-credentials). |
-| `settings` | object | No | Optional category for a plugin-defined settings panel. See [Plugin settings panel](#plugin-settings-panel) under Credentials. |
-| `oauth` | object | No | OAuth2 Authorization Code flow config. See [OAuth](#9-oauth-integration). |
+| `credentials` | array | No | Credential fields shown under **Settings → Credentials** on the web UI. See [Credentials](../platform/authentication.md#1-credentials). |
+| `settings` | object | No | Optional category for a plugin-defined settings panel. See [Plugin settings panel](../platform/authentication.md#plugin-settings-panel) under Credentials. |
+| `oauth` | object | No | OAuth2 Authorization Code flow config. See [OAuth](../platform/authentication.md#2-oauth-integration). |
 | `permissions` | object | No | Module-level permission whitelist for the RPC system. |
 | `post_install_script` | string | No | Relative path to a `.sh` script that runs after the plugin is installed from the marketplace. See [Post-Install Scripts](#post-install-scripts). |
 | `post_install_requires_sudo` | boolean | No | When `true`, the user is prompted for their sudo password before the post-install script executes. Defaults to `false`. |
@@ -180,13 +180,13 @@ Each key in `functions` is a function name that must exist in `plugin.py`. The v
 | `label` | string | Yes | Human-readable name shown in the sidebar and editor. |
 | `description` | string | No | Short description shown below the label. |
 | `sidebar_icon` | string | No | Relative path to an image for the **sidebar** action tile only (same path style as `default_display.image`). Omitted or empty → generic “+” tile. **Not** derived from `default_display.image`; set explicitly when you want a tile graphic. Legacy alias: `action_tile_icon`. |
-| `default_display` | object | No | Initial button appearance when dragged onto a slot. Supports `color` (hex), `text` (string), `image` (relative path), optional **`scroll_enabled`** / **`scroll_speed`** (title marquee), and all text-style fields: `show_title`, `text_position`, `text_size`, `text_bold`, `text_italic`, `text_underline`, `text_color`. Text-style fields act as **suggestions** by default (applied only when the user has not set the field); add a companion `<field>_lock: true` to hard-lock a field so the manifest always wins. See [Text Style in default_display](#text-style-in-default_display) and [Text Style Priority Chain](#14-text-style-priority-chain). |
-| `display_states` | object | No | Maps state keys (like `"default"`, `"active"`) to partial display overrides. Used for toggling button images. See [Display States](#6-display-states-and-toggling). |
-| `poll` | object | No | Background display polling config. See [Display Polling](#7-display-polling). |
-| `ui` | array | Yes | List of UI field definitions for the button editor. See [UI Field Types](#5-ui-field-types). Use `[]` for no fields. |
+| `default_display` | object | No | Initial button appearance when dragged onto a slot. Supports `color` (hex), `text` (string), `image` (relative path), optional **`scroll_enabled`** / **`scroll_speed`** (title marquee), and all text-style fields: `show_title`, `text_position`, `text_size`, `text_bold`, `text_italic`, `text_underline`, `text_color`. Text-style fields act as **suggestions** by default (applied only when the user has not set the field); add a companion `<field>_lock: true` to hard-lock a field so the manifest always wins. See [Display states and toggling](core.md#3-display-states-and-toggling) and [Title marquee](core.md#title-marquee-scroll_enabled-and-scroll_speed). |
+| `display_states` | object | No | Maps state keys (like `"default"`, `"active"`) to partial display overrides. Used for toggling button images. See [Display states and toggling](core.md#3-display-states-and-toggling). |
+| `poll` | object | No | Background display polling config. See [Display polling](core.md#4-display-polling). |
+| `ui` | array | Yes | List of UI field definitions for the button editor. See [UI field types](core.md#2-ui-field-types). Use `[]` for no fields. |
 | `title_readonly` | boolean | No | When `true`, the web editor shows the title field as read-only with a **Read-only** badge. Use when the plugin or its poller owns the label (for example live clock text or transport state). The title is still persisted with the button like any other field; this flag is UI-only. |
 | `disableGallary` / `disableGallery` | boolean | No | When `true`, the button editor hides the icon/image picker for that function. Use this for buttons that should not let users browse or replace the displayed image. The current MET current-temperature function uses this to remove the gallery UI. |
-| `autosave` | — | — | Not a function-level field. The editor shows a **Save** button automatically when any field in the `ui` array sets `"autosave": "off"`. See [Common Properties](#common-properties) under UI Field Types. |
+| `autosave` | — | — | Not a function-level field. The editor shows a **Save** button automatically when any field in the `ui` array sets `"autosave": "off"`. See [Common properties](core.md#common-properties) under UI Field Types. |
 
 ### Python Dependencies
 

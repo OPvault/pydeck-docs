@@ -309,7 +309,7 @@ Renders horizontally scrolling text, clipped to the element bounds. When the ren
 
 - **Container:** No
 - **Inherits all text styling** — `font-size`, `color`, `font-weight`, `font-style`, `shadow`, `text-stroke`, etc.
-- **Automatically triggers the animation tick** (~15 FPS) — no `@keyframes` needed. See [Performance Notes](RENDERING.md#performance-notes) in the Animations section.
+- **Automatically triggers the animation tick** (~15 FPS) — no `@keyframes` needed. See [Performance Notes](rendering.md#performance-notes) in the Animations section.
 - Scroll offset is derived from the render timestamp, so no plugin-side state is required.
 
 > **Tip:** Use `<marquee>` for labels that may overflow, such as song titles or long status messages. For text that always fits, prefer `<text>`.
@@ -426,7 +426,7 @@ Styles cascade using CSS-like specificity: `(id count, class count, tag count)`.
 |:---|:---|:---|
 | `animation` | `<name> <duration> [timing] [iteration] [direction]` or `none` | `none` |
 
-See [Animations](RENDERING.md#3-animations) for full details and examples.
+See [Animations](rendering.md#3-animations) for full details and examples.
 
 ### CSS Units
 

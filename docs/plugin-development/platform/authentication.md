@@ -1,4 +1,7 @@
-# Plugin Development — Authentication
+# Authentication and credentials
+
+!!! info "Applies to PDK and classic plugins"
+    Everything on this page uses the same **`~/.config/pydeck/core/credentials.json`** store and the same **`manifest.json`** fields (`credentials`, `oauth`, …). **PDK** plugins (for example official catalog plugins under `no.pydeck.*`) use this exactly like classic `plugin.py` plugins. New work should be **PDK**; see [PDK — Getting started](../pdk/getting-started.md). This guide lives under **Shared platform** in the site nav (not PDK-only).
 
 ## 1. Credentials
 
@@ -231,7 +234,7 @@ def current(config):
 
 ### OAuth Tokens in Credentials
 
-When a plugin uses [OAuth](#9-oauth-integration), the token exchange automatically writes `access_token` and `refresh_token` into the same `credentials.json` entry alongside the `client_id` and `client_secret`:
+When a plugin uses [OAuth](#2-oauth-integration), the token exchange automatically writes `access_token` and `refresh_token` into the same `credentials.json` entry alongside the `client_id` and `client_secret`:
 
 ```json
 {
@@ -335,7 +338,13 @@ When creating your app on the OAuth provider's dashboard, set the redirect URI t
 http://127.0.0.1:8686/oauth/<your_plugin_name>/callback
 ```
 
-For example, a Spotify plugin would use:
+For example, for Spotify register:
+
+```text
+http://127.0.0.1:8686/oauth/no.pydeck.spotify/callback
+```
+
+**Spotify (legacy) plugin**:
 
 ```text
 http://127.0.0.1:8686/oauth/spotify/callback

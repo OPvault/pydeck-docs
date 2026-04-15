@@ -2,6 +2,8 @@
 
 After this page you can add a new color palette to PyDeck as a theme folder and see it in **Settings → Appearance** without touching application code.
 
+Official themes that ship through the marketplace live in the same **[pydeck-plugins](https://github.com/opvault/pydeck-plugins)** catalog repo as plugins. Maintainer steps (regenerate `manifest.json`, promote `stable`, sync from a local install) are documented for theme authors in **[Marketplace catalog workflows](marketplace-catalog.md)** — the same scripts are described in detail under **Plugin development → Catalog tools**.
+
 **On disk:** Theme families live under **`~/.local/share/pydeck/themes/<family>/`** (or **`$XDG_DATA_HOME/pydeck/themes/<family>/`**). On first start after upgrading, PyDeck migrates a legacy checkout **`themes/`** tree into that directory. HTTP routes stay **`/api/themes/<family>/<slot>.css`**.
 
 ---

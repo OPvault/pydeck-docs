@@ -1,7 +1,9 @@
-# Plugin Development — Core
+# Plugin Development — Core (classic execution path)
 
-!!! warning "Classic path only"
-    This chapter documents the **classic** `plugin.py` model, which is **[deprecated for new development](GETTING_STARTED.md)**. Prefer **[PDK](../pdk-development/GETTING_STARTED.md)** for new plugins.
+!!! warning "Classic renderer and `plugin.py` only"
+    This chapter documents the **deprecated classic** model: top-level **`plugin.py`** callables, return dicts with **`display_update`**, and manifest fields that drive PyDeck’s **built-in** text/image button renderer (`default_display`, `display_states`, `poll`, …). **Do not start new plugins here** — use **[PDK — Getting started](../pdk/getting-started.md)**.
+
+    Shared platform topics used by **both** PDK and classic: **[Authentication](../platform/authentication.md)** (credentials and OAuth), **[Web UI and assets](../platform/web-ui-and-assets.md)** (`style.css`, popups, settings HTML), and **[HTTP API reference](../platform/http-api-reference.md)** (REST/WebSocket).
 
 ## 1. plugin.py — Writing Functions
 

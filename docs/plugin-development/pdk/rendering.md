@@ -90,7 +90,7 @@ Color stops with explicit positions are also supported:
 .container { background: linear-gradient(135deg, #ff0000 0%, #00ff00 50%, #0000ff 100%); }
 ```
 
-> **Tip:** For user-configurable gradient backgrounds, see [Gradient Backgrounds](../GRADIENT_BACKGROUNDS.md) and the `_button_gradient` special state key.
+> **Tip:** For user-configurable gradient backgrounds, see [Gradient backgrounds](../../using/gradient-backgrounds.md) and the `_button_gradient` special state key.
 
 ### Image Fit Modes
 

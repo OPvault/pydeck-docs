@@ -1,4 +1,7 @@
-# Plugin Development — UI & Assets
+# Web UI, assets, and editor integration
+
+!!! info "Applies to PDK and classic plugins"
+    **`style.css`**, **`settings.html`**, the **`PyDeck.popup`** helpers, combined plugin CSS at **`/api/plugins/styles.css`**, and logical asset paths are **not** classic-only: **PDK** marketplace plugins use the same web UI and HTTP surface. Button **face** rendering differs (PDK uses templates; classic uses the built-in renderer — see [PDK — Getting started](../pdk/getting-started.md) and [Classic — Core](../classic/core.md) for that split). This guide lives under **Shared platform** in the site nav (not PDK-only).
 
 **Paths:** On disk, each plugin lives under **`~/.local/share/pydeck/plugin/<name>/`** and runtime files under **`~/.local/share/pydeck/storage/<name>/`** (or **`$XDG_DATA_HOME/pydeck/...`**). In `buttons.json` and `display` fields, **`plugins/plugin/...`** and **`plugins/storage/...`** remain the **logical** image paths the core understands.
 

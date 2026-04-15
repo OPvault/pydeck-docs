@@ -1,5 +1,7 @@
 # Plugin Development — Examples & Tips
 
+Official marketplace plugins (for example under **`no.pydeck.*`**) are **PDK** — see [PDK — Getting started](../pdk/getting-started.md). The walkthroughs below use the **classic** `manifest.json` + `plugin.py` layout for illustration.
+
 ## 1. Real-World Plugin Examples
 
 ### Browser — Minimal Plugin (No Credentials)

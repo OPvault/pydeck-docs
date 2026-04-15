@@ -12,34 +12,53 @@ Documentation for [PyDeck](https://github.com/opvault/pydeck) — a Python-power
 
 This repository contains the official developer documentation for PyDeck. It covers how to extend PyDeck through plugins and themes, and how to maintain a plugin catalog for the marketplace.
 
-The docs live in the [`docs/`](./docs/) folder and are published to [docs.pydeck.no](https://docs.pydeck.no) via GitHub Pages. The published **home page** is [`docs/index.md`](./docs/index.md) — it mirrors the MkDocs navigation and links to every guide.
+The docs live in the [`docs/`](./docs/) folder and are published to [docs.pydeck.no](https://docs.pydeck.no) via GitHub Pages. The published **landing page** is [`docs/index.md`](./docs/index.md) (installation and run instructions).
 
 ---
 
 ## Documentation layout
 
-### `docs/pydeck/` — main application (pydeck repo)
+### `docs/` — site root
 
-| Topic | Entry |
+| Page | Path |
 |:---|:---|
-| Marketplace | [`docs/pydeck/MARKETPLACE_REPO.md`](./docs/pydeck/MARKETPLACE_REPO.md) |
-| Classic plugins | [`docs/pydeck/plugin-development/GETTING_STARTED.md`](./docs/pydeck/plugin-development/GETTING_STARTED.md) |
-| PDK plugins | [`docs/pydeck/pdk-development/GETTING_STARTED.md`](./docs/pydeck/pdk-development/GETTING_STARTED.md) |
-| Themes | [`docs/pydeck/theme-development/GETTING_STARTED.md`](./docs/pydeck/theme-development/GETTING_STARTED.md) |
-| Gradient backgrounds | [`docs/pydeck/GRADIENT_BACKGROUNDS.md`](./docs/pydeck/GRADIENT_BACKGROUNDS.md) |
-| Spotify | [`docs/pydeck/SPOTIFY_SETUP.md`](./docs/pydeck/SPOTIFY_SETUP.md) |
-| Discord | [`docs/pydeck/DISCORD_SETUP.md`](./docs/pydeck/DISCORD_SETUP.md) |
+| Installation (home) | [`docs/index.md`](./docs/index.md) |
 
-Additional chapters live alongside those entry points (Core, Auth, API reference, PDK templates/rendering, theme CSS, and so on). Follow links from each getting-started page or open [`mkdocs.yml`](./mkdocs.yml).
+### `docs/using/` — running PyDeck and the marketplace
 
-### `docs/pydeck-plugins/` — catalog repo tools (pydeck-plugins)
+| Topic | Path |
+|:---|:---|
+| Marketplace & catalog | [`docs/using/marketplace.md`](./docs/using/marketplace.md) |
+| Gradient backgrounds | [`docs/using/gradient-backgrounds.md`](./docs/using/gradient-backgrounds.md) |
+| Discord (official plugin) | [`docs/using/discord.md`](./docs/using/discord.md) |
+| Spotify (official plugin) | [`docs/using/spotify.md`](./docs/using/spotify.md) |
+
+### `docs/plugin-development/platform/` — shared by PDK and classic
+
+[`authentication.md`](./docs/plugin-development/platform/authentication.md), [`web-ui-and-assets.md`](./docs/plugin-development/platform/web-ui-and-assets.md), [`http-api-reference.md`](./docs/plugin-development/platform/http-api-reference.md) (credentials, web UI integration, HTTP/WebSocket).
+
+### `docs/plugin-development/pdk/` — PDK (template-driven) plugins
+
+Entry: [`getting-started.md`](./docs/plugin-development/pdk/getting-started.md). Additional chapters: `templates-elements.md`, `rendering.md`, `runtime-examples.md`.
+
+### `docs/plugin-development/classic/` — classic `plugin.py` model (deprecated for new work)
+
+Entry: [`getting-started.md`](./docs/plugin-development/classic/getting-started.md). Additional chapters: `core.md` (classic `plugin.py` and built-in renderer), `examples.md`.
+
+### `docs/plugin-development/catalog/` — [pydeck-plugins](https://github.com/opvault/pydeck-plugins) repo tooling
 
 | File | Description |
 |:---|:---|
-| [`PDK_CREATE.md`](./docs/pydeck-plugins/PDK_CREATE.md) | Scaffold a new PDK plugin (`python -m tools.pdk_create`). |
-| [`GENERATE_MANIFEST.md`](./docs/pydeck-plugins/GENERATE_MANIFEST.md) | Regenerate the root `manifest.json` from the `plugins/` tree. |
-| [`SYNC_FROM_PYDECK.md`](./docs/pydeck-plugins/SYNC_FROM_PYDECK.md) | Sync plugin sources from a local PyDeck checkout into the catalog. |
-| [`RELEASE_STABLE.md`](./docs/pydeck-plugins/RELEASE_STABLE.md) | Promote `canary` to `stable` on the catalog repo. |
+| [`pdk-create.md`](./docs/plugin-development/catalog/pdk-create.md) | Scaffold a new PDK plugin (`python -m tools.pdk_create`). |
+| [`generate-manifest.md`](./docs/plugin-development/catalog/generate-manifest.md) | Regenerate the root `manifest.json` from the `plugins/` tree. |
+| [`sync-from-pydeck.md`](./docs/plugin-development/catalog/sync-from-pydeck.md) | Sync plugin sources from a local PyDeck checkout into the catalog. |
+| [`release-stable.md`](./docs/plugin-development/catalog/release-stable.md) | Promote `canary` to `stable` on the catalog repo. |
+
+### `docs/theme-development/` — UI themes
+
+Entry: [`getting-started.md`](./docs/theme-development/getting-started.md). Additional chapters: `css-reference.md`, `loader-examples.md`, [`marketplace-catalog.md`](./docs/theme-development/marketplace-catalog.md) (how theme releases use the shared `pydeck-plugins` catalog scripts).
+
+Navigation order and labels are defined in [`mkdocs.yml`](./mkdocs.yml).
 
 ---
 
