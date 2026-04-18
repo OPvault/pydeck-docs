@@ -62,6 +62,7 @@ nav:
       - Shared platform:
           - Authentication: plugin-development/platform/authentication.md
           - Web UI & Assets: plugin-development/platform/web-ui-and-assets.md
+          - Press and hold & button events: plugin-development/platform/press-and-hold.md
           - HTTP API Reference: plugin-development/platform/http-api-reference.md
       - PDK development:
           - Getting Started: plugin-development/pdk/getting-started.md

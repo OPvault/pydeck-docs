@@ -54,6 +54,10 @@ def on_press(ctx):
         ctx.state.view = "main"
 ```
 
+#### `on_release(ctx)`
+
+Called when the user **releases** the button (physical button up), after the matching **`on_press`** for that interaction. Define this handler when you need distinct press vs release behavior (for example key-down / key-up in a “press and hold” mode). Manifest UI, **`ctx.config`**, and concurrent handler behavior are described in **[Press and hold & button events](../platform/press-and-hold.md)**.
+
 #### `on_poll(ctx, interval=<ms>)`
 
 Called periodically for live-updating displays. The poll interval is determined by:
