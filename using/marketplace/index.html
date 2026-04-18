@@ -1,0 +1,3182 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for PyDeck">
+      
+      
+      
+        <link rel="canonical" href="https://docs.pydeck.no/using/marketplace/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../gradient-backgrounds/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Marketplace - PyDeck Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pydeck-marketplace-repo-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="PyDeck Docs" class="md-header__button md-logo" aria-label="PyDeck Docs" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PyDeck Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Marketplace
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OPvault/pydeck-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PyDeck Docs" class="md-nav__button md-logo" aria-label="PyDeck Docs" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    PyDeck Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OPvault/pydeck-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using PyDeck
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using PyDeck
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Marketplace
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Marketplace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-two-repo-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Two-Repo Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-plugin-catalog-repo-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The Plugin Catalog Repo — Layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-root-manifestjson-catalog-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Root manifest.json — Catalog Format
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Root manifest.json — Catalog Format">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#top-level-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Top-level fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plugin-entry-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plugin entry fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-entry-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version entry fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-plugin-version-folders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Plugin Version Folders
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Plugin Version Folders">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-files-in-a-version-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required files in a version folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-local-manifestjson-inside-a-version-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The local manifest.json inside a version folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-how-pydeck-installs-a-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. How PyDeck Installs a Plugin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. How PyDeck Installs a Plugin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-fetch-the-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Fetch the catalog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-resolve-the-install-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Resolve the install target
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-list-files-via-the-github-tree-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — List files via the GitHub Tree API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-filter-files-for-the-target-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Filter files for the target version
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-download-each-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Download each file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-causes-install-to-fail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What causes install to fail
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-version-path-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Version Path Rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Version Path Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#correct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correct
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wrong-repo-name-included-in-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wrong — repo name included in path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wrong-path-doesnt-exist-in-repo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wrong — path doesn't exist in repo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-adding-a-new-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Adding a New Plugin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Adding a New Plugin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-the-version-folder-in-the-catalog-repo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Create the version folder in the catalog repo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-add-the-entry-to-the-root-manifestjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Add the entry to the root manifest.json
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-commit-and-push-both-changes-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Commit and push both changes together
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-adding-a-new-version-of-an-existing-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Adding a New Version of an Existing Plugin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Adding a New Version of an Existing Plugin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-the-new-version-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Create the new version folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-update-root-manifestjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Update root manifest.json
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-commit-and-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Commit and push
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-removing-a-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Removing a Plugin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Removing a Plugin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full-removal-plugin-discontinued" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full removal (plugin discontinued)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#temporary-removal-hide-from-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Temporary removal (hide from catalog)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-compatibility-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Compatibility Fields
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Compatibility Fields">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compatible_pydeck_versions-plugin-entry-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compatible_pydeck_versions (plugin entry level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#min_pydeck_version-max_pydeck_version-version-entry-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        min_pydeck_version / max_pydeck_version (version entry level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-how-pydeck-resolves-the-catalog-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. How PyDeck Resolves the Catalog URL
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. How PyDeck Resolves the Catalog URL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-catalog-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-catalog display
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-common-errors-and-fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Common Errors and Fixes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Common Errors and Fixes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-files-found-for-plugin-scope-pluginsslug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No files found for plugin scope: plugins/&lt;slug&gt;
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unknown-plugin-in-this-catalog-slug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unknown plugin in this catalog: &lt;slug&gt;
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-x-does-not-exist-for-plugin-slug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version '&lt;x&gt;' does not exist for plugin '&lt;slug&gt;'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-needs-a-catalog-url-on-rawgithubusercontentcom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install needs a catalog URL on raw.githubusercontent.com
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-silently-installs-an-empty-plugin-no-functions-appear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install silently installs an empty plugin (no functions appear)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gradient-backgrounds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradient backgrounds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Official plugins
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Official plugins
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../discord/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Discord
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spotify/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spotify
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugin development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Plugin development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shared platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Shared platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/platform/authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/platform/web-ui-and-assets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web UI & Assets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/platform/press-and-hold/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Press and hold & button events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/platform/http-api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTTP API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PDK development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PDK development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/pdk/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/catalog/pdk-create/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PDK Plugin Creator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/pdk/templates-elements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates & Elements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/pdk/rendering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rendering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/pdk/runtime-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime & Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classic plugins
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Classic plugins
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/classic/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/classic/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/classic/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples & Tips
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalog tools (pydeck-plugins repo)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Catalog tools (pydeck-plugins repo)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/catalog/generate-manifest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate Manifest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/catalog/release-stable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Stable
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugin-development/catalog/sync-from-pydeck/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sync From PyDeck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Theme development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Theme development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theme-development/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theme-development/css-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theme-development/loader-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Loader & Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../theme-development/marketplace-catalog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Marketplace catalog workflows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-two-repo-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Two-Repo Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-the-plugin-catalog-repo-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. The Plugin Catalog Repo — Layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-root-manifestjson-catalog-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Root manifest.json — Catalog Format
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Root manifest.json — Catalog Format">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#top-level-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Top-level fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plugin-entry-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plugin entry fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-entry-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version entry fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-plugin-version-folders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Plugin Version Folders
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Plugin Version Folders">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#required-files-in-a-version-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Required files in a version folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-local-manifestjson-inside-a-version-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The local manifest.json inside a version folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-how-pydeck-installs-a-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. How PyDeck Installs a Plugin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. How PyDeck Installs a Plugin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#step-1-fetch-the-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 1 — Fetch the catalog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-2-resolve-the-install-target" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 2 — Resolve the install target
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-3-list-files-via-the-github-tree-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 3 — List files via the GitHub Tree API
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-4-filter-files-for-the-target-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 4 — Filter files for the target version
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-5-download-each-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step 5 — Download each file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-causes-install-to-fail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What causes install to fail
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-version-path-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Version Path Rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Version Path Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#correct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Correct
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wrong-repo-name-included-in-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wrong — repo name included in path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wrong-path-doesnt-exist-in-repo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wrong — path doesn't exist in repo
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-adding-a-new-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Adding a New Plugin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Adding a New Plugin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-the-version-folder-in-the-catalog-repo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Create the version folder in the catalog repo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-add-the-entry-to-the-root-manifestjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Add the entry to the root manifest.json
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-commit-and-push-both-changes-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Commit and push both changes together
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Checklist
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-adding-a-new-version-of-an-existing-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Adding a New Version of an Existing Plugin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Adding a New Version of an Existing Plugin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-create-the-new-version-folder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Create the new version folder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-update-root-manifestjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Update root manifest.json
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-commit-and-push" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Commit and push
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-removing-a-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Removing a Plugin
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Removing a Plugin">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#full-removal-plugin-discontinued" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Full removal (plugin discontinued)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#temporary-removal-hide-from-catalog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Temporary removal (hide from catalog)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-compatibility-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Compatibility Fields
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Compatibility Fields">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compatible_pydeck_versions-plugin-entry-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compatible_pydeck_versions (plugin entry level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#min_pydeck_version-max_pydeck_version-version-entry-level" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        min_pydeck_version / max_pydeck_version (version entry level)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-how-pydeck-resolves-the-catalog-url" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. How PyDeck Resolves the Catalog URL
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. How PyDeck Resolves the Catalog URL">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#multi-catalog-display" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multi-catalog display
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-common-errors-and-fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Common Errors and Fixes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Common Errors and Fixes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-files-found-for-plugin-scope-pluginsslug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        No files found for plugin scope: plugins/&lt;slug&gt;
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unknown-plugin-in-this-catalog-slug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unknown plugin in this catalog: &lt;slug&gt;
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#version-x-does-not-exist-for-plugin-slug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Version '&lt;x&gt;' does not exist for plugin '&lt;slug&gt;'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-needs-a-catalog-url-on-rawgithubusercontentcom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install needs a catalog URL on raw.githubusercontent.com
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#install-silently-installs-an-empty-plugin-no-functions-appear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Install silently installs an empty plugin (no functions appear)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="pydeck-marketplace-repo-guide">PyDeck Marketplace Repo Guide<a class="headerlink" href="#pydeck-marketplace-repo-guide" title="Permanent link">&para;</a></h1>
+<p>This guide explains how the <strong>pydeck</strong> app and <strong>pydeck-plugins</strong> catalog fit together, how catalog <code>manifest.json</code> and per-version folders are laid out, and how to add or bump plugins without breaking installs.</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#1-two-repo-architecture">Two-Repo Architecture</a></li>
+<li><a href="#2-the-plugin-catalog-repo--layout">The Plugin Catalog Repo — Layout</a></li>
+<li><a href="#3-root-manifestjson--catalog-format">Root manifest.json — Catalog Format</a></li>
+<li><a href="#4-plugin-version-folders">Plugin Version Folders</a></li>
+<li><a href="#5-how-pydeck-installs-a-plugin">How PyDeck Installs a Plugin</a></li>
+<li><a href="#6-version-path-rules">Version Path Rules</a></li>
+<li><a href="#7-adding-a-new-plugin">Adding a New Plugin</a></li>
+<li><a href="#8-adding-a-new-version-of-an-existing-plugin">Adding a New Version of an Existing Plugin</a></li>
+<li><a href="#9-removing-a-plugin">Removing a Plugin</a></li>
+<li><a href="#10-compatibility-fields">Compatibility Fields</a></li>
+<li><a href="#11-how-pydeck-resolves-the-catalog-url">How PyDeck Resolves the Catalog URL</a></li>
+<li><a href="#12-common-errors-and-fixes">Common Errors and Fixes</a></li>
+</ol>
+<hr />
+<h2 id="1-two-repo-architecture">1. Two-Repo Architecture<a class="headerlink" href="#1-two-repo-architecture" title="Permanent link">&para;</a></h2>
+<p>PyDeck uses two separate GitHub repositories.</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌─────────────────────────────────┐       ┌─────────────────────────────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│  pydeck  (main app repo)        │       │  pydeck-plugins  (catalog repo)     │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│                                 │       │                                     │
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│  start.py  ─── FastAPI app       │       │  manifest.json  ── catalog index    │
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│  marketplace/  ─── installer    │──────▶│  plugins/                           │
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│  ~/.local/share/pydeck/plugin   │       │    &lt;rdnn-plugin-id&gt;/                │
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│    plugins installed here       │       │      &lt;version&gt;/                     │
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│                                 │       │        manifest.json                │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│                                 │       │        plugin.py                    │
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│                                 │       │        ...                          │
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>└─────────────────────────────────┘       └─────────────────────────────────────┘
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>         user runs this                            hosted on GitHub
+</code></pre></div>
+<p><strong>The main app repo (<code>pydeck</code>)</strong> runs on the user's machine. It contains the FastAPI server (served via Uvicorn), the hardware listener, and the web UI. Installed plugins live under <strong><code>~/.local/share/pydeck/plugin/</code></strong> (or <strong><code>$XDG_DATA_HOME/pydeck/plugin/</code></strong>), not inside the git checkout.</p>
+<p><strong>The catalog repo (<code>pydeck-plugins</code>)</strong> is hosted on GitHub. It contains:
+- A root <code>manifest.json</code> that lists every available plugin and its versions.
+- One folder per plugin version with all the plugin's files.</p>
+<p>When a user installs a plugin through the marketplace UI, PyDeck fetches the catalog, reads the plugin's version path, then downloads the files directly from the catalog repo into <strong><code>~/.local/share/pydeck/plugin/&lt;slug&gt;/</code></strong> on the user's machine. The catalog <strong><code>slug</code></strong> is the <strong>RDNN plugin id</strong> (reverse-DNS, e.g. <code>no.pydeck.spotify</code>) and matches the install directory name. PyDeck still resolves older short folder names for official plugins during a transition period.</p>
+<p>The two repos are <strong>independent</strong>. The catalog repo has no code that runs — it is purely a file store and manifest. PyDeck accesses it entirely via the GitHub raw file API and the Git tree API.</p>
+<hr />
+<h2 id="2-the-plugin-catalog-repo-layout">2. The Plugin Catalog Repo — Layout<a class="headerlink" href="#2-the-plugin-catalog-repo-layout" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&lt;catalog-repo-root&gt;/
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── manifest.json                  # ← Root catalog index (REQUIRED)
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>│
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>└── plugins/                       # ← One subfolder per plugin (RDNN id)
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    ├── no.pydeck.browser/
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    │   └── 1.0.0/                 # ← One subfolder per version
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    │       ├── manifest.json
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    │       └── plugin.py
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    │
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    ├── no.pydeck.spotify/
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    │   ├── 1.0.0/
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    │   │   ├── manifest.json
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    │   │   ├── plugin.py
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>    │   │   ├── spotify_client.py
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    │   │   ├── style.css
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    │   │   └── options.json
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    │   └── 1.1.0/
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>    │       ├── manifest.json
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    │       ├── plugin.py
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    │       └── spotify_client.py
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    │
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    └── no.pydeck.clock/
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>        └── 1.0.0/
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>            ├── manifest.json
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>            └── plugin.py
+</code></pre></div>
+<p>Rules:
+- Each plugin gets <strong>one directory</strong> directly under <code>plugins/</code>.
+- The directory name is the plugin's <strong>slug</strong> — an <strong>RDNN plugin id</strong> (reverse-DNS, e.g. <code>no.pydeck.spotify</code>, <code>com.example.widget</code>). It is also the install directory name on the user's machine.
+- Inside the plugin directory, each released version gets <strong>its own subdirectory</strong> named after the version string (e.g. <code>1.0.0</code>).
+- All plugin files for that version live inside the version directory.
+- Version directories are siblings — they do not nest.</p>
+<p>The path <code>plugins/no.pydeck.browser/1.0.0</code> is called the <strong>version path</strong>. The parent <code>plugins/no.pydeck.browser</code> is the <strong>plugin base</strong>.</p>
+<blockquote>
+<p><strong>The <code>plugins/</code> prefix shown above assumes the catalog repo root contains a <code>plugins/</code> directory.</strong> Your actual prefix may differ — what matters is that the <code>path</code> values in <code>manifest.json</code> (see below) exactly match the real directory paths in the repo.</p>
+</blockquote>
+<hr />
+<h2 id="3-root-manifestjson-catalog-format">3. Root <code>manifest.json</code> — Catalog Format<a class="headerlink" href="#3-root-manifestjson-catalog-format" title="Permanent link">&para;</a></h2>
+<p>The root <code>manifest.json</code> at the repo root is the single file PyDeck fetches first. It must be valid JSON.</p>
+<h3 id="full-example">Full example<a class="headerlink" href="#full-example" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">&quot;schema_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Official · Stable&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="nt">&quot;generated_at&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2026-04-03T00:00:00Z&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="nt">&quot;plugins&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Browser&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">      </span><span class="nt">&quot;slug&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;no.pydeck.browser&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">      </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;utilities&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">      </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Open URLs in the default browser&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">      </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PyDeck Team&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">      </span><span class="nt">&quot;latest&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">      </span><span class="nt">&quot;icon_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugins/no.pydeck.browser/icon.png&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">      </span><span class="nt">&quot;compatible_pydeck_versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;1.0.0&quot;</span><span class="p">],</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">      </span><span class="nt">&quot;versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">          </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">          </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugins/no.pydeck.browser/1.0.0&quot;</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">      </span><span class="p">]</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Spotify&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">      </span><span class="nt">&quot;slug&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;no.pydeck.spotify&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="w">      </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;media&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="w">      </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Control Spotify playback via the Web API&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="w">      </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PyDeck Team&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="w">      </span><span class="nt">&quot;latest&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.1.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="w">      </span><span class="nt">&quot;icon_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugins/no.pydeck.spotify/icon.png&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="w">      </span><span class="nt">&quot;compatible_pydeck_versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;1.0.0&quot;</span><span class="p">],</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="w">      </span><span class="nt">&quot;versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="w">          </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="w">          </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugins/no.pydeck.spotify/1.0.0&quot;</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="w">        </span><span class="p">},</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a><span class="w">          </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.1.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="w">          </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugins/no.pydeck.spotify/1.1.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a><span class="w">          </span><span class="nt">&quot;min_pydeck_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="w">      </span><span class="p">]</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="top-level-fields">Top-level fields<a class="headerlink" href="#top-level-fields" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>schema_version</code></td>
+<td style="text-align: left;">integer</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Catalog schema version. Use <code>1</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>label</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Display name for this catalog. When set, it appears as a badge next to the catalog URL in the sources list (e.g. <code>"Official · Stable"</code>, <code>"Official · Beta"</code>) <strong>and</strong> as a small pill on each plugin card when more than one catalog is loaded simultaneously — so users can tell which catalog a plugin comes from. If omitted, the repo name is derived from the URL as a fallback label.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>generated_at</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">ISO 8601 timestamp. Informational only.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plugins</code></td>
+<td style="text-align: left;">array</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">Array of plugin entries. See below.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="plugin-entry-fields">Plugin entry fields<a class="headerlink" href="#plugin-entry-fields" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>name</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">Human-readable display name (e.g. <code>"Spotify"</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>slug</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">Machine identifier. Must match the plugin folder name under <code>plugins/</code> in the catalog repo, and becomes the install folder name under <strong><code>~/.local/share/pydeck/plugin/&lt;slug&gt;/</code></strong> on the user's machine. Lowercase, no spaces.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>category</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">Category label used for filtering (e.g. <code>"media"</code>, <code>"utilities"</code>, <code>"system"</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>summary</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">One-line description shown in the marketplace card.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>author</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">Author name.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>latest</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">The version string that should be installed by default. Must match a <code>version</code> value in the <code>versions</code> array.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>icon_path</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">Repo-relative path to the plugin's icon image (e.g. <code>"plugins/spotify/icon.png"</code>). The image is shown in the marketplace card.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>compatible_pydeck_versions</code></td>
+<td style="text-align: left;">array of strings</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">List of PyDeck version strings this plugin is compatible with. Used for filtering.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>versions</code></td>
+<td style="text-align: left;">array</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">Array of version entries. Must contain at least one entry.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="version-entry-fields">Version entry fields<a class="headerlink" href="#version-entry-fields" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>version</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">Semantic version string (e.g. <code>"1.0.0"</code>). Must be unique within the plugin's <code>versions</code> array.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>path</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">Repo-relative path to the version folder (e.g. <code>"plugins/spotify/1.1.0"</code>). <strong>This path must exactly match the real directory in the repo.</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>min_pydeck_version</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Minimum PyDeck version required for this plugin version.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_pydeck_version</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Maximum PyDeck version supported by this plugin version.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-plugin-version-folders">4. Plugin Version Folders<a class="headerlink" href="#4-plugin-version-folders" title="Permanent link">&para;</a></h2>
+<p>Each version folder contains the actual plugin files that get installed on the user's machine. After install, the contents of the version folder are placed flat inside <strong><code>~/.local/share/pydeck/plugin/&lt;slug&gt;/</code></strong> on the user's machine — the version directory itself is not included.</p>
+<p><strong>Repo structure:</strong>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>plugins/spotify/1.1.0/
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>├── manifest.json
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>├── plugin.py
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>├── spotify_client.py
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>└── style.css
+</code></pre></div></p>
+<p><strong>After install on user's machine:</strong>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>~/.local/share/pydeck/plugin/spotify/
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>├── manifest.json
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>├── plugin.py
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>├── spotify_client.py
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>└── style.css
+</code></pre></div></p>
+<p>The version directory name (<code>1.1.0</code>) is stripped. Everything inside it lands at the root of the plugin folder.</p>
+<h3 id="required-files-in-a-version-folder">Required files in a version folder<a class="headerlink" href="#required-files-in-a-version-folder" title="Permanent link">&para;</a></h3>
+<p>For <strong>classic plugins</strong>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>manifest.json</code></td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">Local plugin manifest (different from the catalog root <code>manifest.json</code>). Declares functions, UI, credentials, OAuth, and permissions.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plugin.py</code></td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+<td style="text-align: left;">Python functions called on button press.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>style.css</code></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Custom CSS. Automatically served by the core.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>options.json</code></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Extra marketplace metadata (features, tags).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>img/</code></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Image assets served via the plugin image API.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>*.py</code></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Additional Python helper modules.</td>
+</tr>
+</tbody>
+</table>
+<p>For <strong>PDK plugins</strong>, the version folder contains the full PDK directory structure (<code>manifest.json</code>, <code>src/</code>, <code>assets/</code>, etc.). See <a href="../../plugin-development/pdk/getting-started/#3-plugin-directory-structure">PDK Getting Started</a> for the full layout.</p>
+<h3 id="the-local-manifestjson-inside-a-version-folder">The local <code>manifest.json</code> inside a version folder<a class="headerlink" href="#the-local-manifestjson-inside-a-version-folder" title="Permanent link">&para;</a></h3>
+<p>This is <strong>not</strong> the same format as the root catalog <code>manifest.json</code>. It is the plugin's own metadata file read by the running PyDeck app after install:</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Spotify&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.1.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Control Spotify playback via the Web API&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PyDeck Team&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span><span class="nt">&quot;slug&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span><span class="nt">&quot;entrypoint&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugin.py&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">  </span><span class="nt">&quot;python_dependencies&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;requests&quot;</span><span class="p">],</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">  </span><span class="nt">&quot;credentials&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;client_id&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Client ID&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;text&quot;</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;client_secret&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Client Secret&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;password&quot;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">  </span><span class="p">],</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">  </span><span class="nt">&quot;permissions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="nt">&quot;urllib.request&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;urlopen&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;Request&quot;</span><span class="p">]</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">  </span><span class="p">},</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">  </span><span class="nt">&quot;functions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span><span class="nt">&quot;play_pause&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Play / Pause&quot;</span><span class="p">,</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">      </span><span class="nt">&quot;ui&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="p">}</span>
+</code></pre></div>
+<p>For <strong><code>manifest.json</code></strong> (<code>functions</code>, <code>ui</code>, credentials, permissions, and classic-only <strong><code>default_display</code> / <code>display_states</code> / <code>poll</code></strong>): see <a href="../../plugin-development/pdk/getting-started/">PDK — Getting started</a> for layout and PDK behaviour, <a href="../../plugin-development/platform/authentication/">Authentication</a> and <a href="../../plugin-development/platform/http-api-reference/">HTTP API reference</a> for shared platform details, and <a href="../../plugin-development/classic/core/">Classic — Core</a> for the <strong>deprecated</strong> <code>plugin.py</code> return contract and built-in button renderer.</p>
+<hr />
+<h2 id="5-how-pydeck-installs-a-plugin">5. How PyDeck Installs a Plugin<a class="headerlink" href="#5-how-pydeck-installs-a-plugin" title="Permanent link">&para;</a></h2>
+<p>Understanding this flow is critical for maintaining the catalog repo correctly.</p>
+<h3 id="step-1-fetch-the-catalog">Step 1 — Fetch the catalog<a class="headerlink" href="#step-1-fetch-the-catalog" title="Permanent link">&para;</a></h3>
+<p>PyDeck fetches the root <code>manifest.json</code> from a URL like:
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>https://raw.githubusercontent.com/opvault/pydeck-plugins/stable/manifest.json
+</code></pre></div></p>
+<h3 id="step-2-resolve-the-install-target">Step 2 — Resolve the install target<a class="headerlink" href="#step-2-resolve-the-install-target" title="Permanent link">&para;</a></h3>
+<p>From the catalog entry, PyDeck reads:
+- <code>slug</code> → used as the install directory name (<code>~/.local/share/pydeck/plugin/&lt;slug&gt;/</code>)
+- The chosen <code>version.path</code> (e.g. <code>plugins/spotify/1.1.0</code>)</p>
+<p>It splits the path into:
+- <strong>plugin base</strong>: everything except the last segment → <code>plugins/spotify</code>
+- <strong>selected version</strong>: the last segment → <code>1.1.0</code>
+- <strong>other version names</strong>: all version strings in the <code>versions</code> array</p>
+<h3 id="step-3-list-files-via-the-github-tree-api">Step 3 — List files via the GitHub Tree API<a class="headerlink" href="#step-3-list-files-via-the-github-tree-api" title="Permanent link">&para;</a></h3>
+<p>PyDeck calls the GitHub Git Tree API:
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>GET https://api.github.com/repos/&lt;owner&gt;/&lt;repo&gt;/git/trees/&lt;ref&gt;?recursive=1
+</code></pre></div></p>
+<p>This returns a list of every file path in the repo (relative to the repo root).</p>
+<h3 id="step-4-filter-files-for-the-target-version">Step 4 — Filter files for the target version<a class="headerlink" href="#step-4-filter-files-for-the-target-version" title="Permanent link">&para;</a></h3>
+<p>PyDeck keeps every path that:
+- Starts with <code>plugins/spotify/</code> (the plugin base + <code>/</code>)
+- Is <strong>not</strong> inside another version directory (e.g. <code>plugins/spotify/1.0.0/...</code> is excluded when installing <code>1.1.0</code>)</p>
+<p>Files directly under the plugin base that are not inside any version subdirectory are also included (e.g. <code>plugins/spotify/icon.png</code>).</p>
+<h3 id="step-5-download-each-file">Step 5 — Download each file<a class="headerlink" href="#step-5-download-each-file" title="Permanent link">&para;</a></h3>
+<p>PyDeck downloads each matching file from:
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>https://raw.githubusercontent.com/&lt;owner&gt;/&lt;repo&gt;/&lt;ref&gt;/&lt;path&gt;
+</code></pre></div></p>
+<p>The version prefix is stripped before writing — so <code>plugins/spotify/1.1.0/plugin.py</code> in the catalog is saved on disk as <strong><code>~/.local/share/pydeck/plugin/spotify/plugin.py</code></strong>. In <code>buttons.json</code> and manifests, image paths may still use the <strong>logical</strong> prefix <code>plugins/plugin/spotify/...</code>; PyDeck resolves those to the data directory.</p>
+<h3 id="what-causes-install-to-fail">What causes install to fail<a class="headerlink" href="#what-causes-install-to-fail" title="Permanent link">&para;</a></h3>
+<p>The most common install failure:</p>
+<blockquote>
+<p><code>FileNotFoundError: No files found for plugin scope: plugins/spotify</code></p>
+</blockquote>
+<p><strong>Cause:</strong> The GitHub Tree API returned zero files starting with <code>plugins/spotify/</code>. This happens when:
+1. The version folder referenced in <code>path</code> does not exist in the repo, <strong>or</strong>
+2. The <code>path</code> value in the catalog <code>manifest.json</code> does not match the actual directory structure in the repo.</p>
+<p><strong>Fix:</strong> Either add the missing files, or remove/correct the entry in <code>manifest.json</code>.</p>
+<hr />
+<h2 id="6-version-path-rules">6. Version Path Rules<a class="headerlink" href="#6-version-path-rules" title="Permanent link">&para;</a></h2>
+<p>The <code>path</code> value in each version entry is the most important field to get right. It must:</p>
+<ol>
+<li><strong>Be relative to the repo root</strong> — no leading slash, no <code>https://</code>, no branch name.</li>
+<li><strong>Match the actual directory in the repo exactly</strong> — case-sensitive on GitHub.</li>
+<li><strong>Include only one level of versioning</strong> — <code>plugins/spotify/1.1.0</code>, not <code>plugins/spotify/releases/1.1.0</code>.</li>
+<li><strong>Not end with a slash</strong> — <code>plugins/spotify/1.1.0</code>, not <code>plugins/spotify/1.1.0/</code>.</li>
+</ol>
+<h3 id="correct">Correct<a class="headerlink" href="#correct" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.1.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugins/spotify/1.1.0&quot;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>Files exist in the repo at <code>plugins/spotify/1.1.0/manifest.json</code>, <code>plugins/spotify/1.1.0/plugin.py</code>, etc.</p>
+<h3 id="wrong-repo-name-included-in-path">Wrong — repo name included in path<a class="headerlink" href="#wrong-repo-name-included-in-path" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pydeck-plugins/plugins/browser/1.0.0&quot;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>Paths returned by the GitHub Tree API are relative to the repo root — the repo name is not part of the path.</p>
+<h3 id="wrong-path-doesnt-exist-in-repo">Wrong — path doesn't exist in repo<a class="headerlink" href="#wrong-path-doesnt-exist-in-repo" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span><span class="w"> </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugins/browser/1.0.0&quot;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>If <code>plugins/browser/1.0.0/</code> doesn't exist as a real directory in the repo, the install will fail with "No files found for plugin scope".</p>
+<hr />
+<h2 id="7-adding-a-new-plugin">7. Adding a New Plugin<a class="headerlink" href="#7-adding-a-new-plugin" title="Permanent link">&para;</a></h2>
+<h3 id="1-create-the-version-folder-in-the-catalog-repo">1. Create the version folder in the catalog repo<a class="headerlink" href="#1-create-the-version-folder-in-the-catalog-repo" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>plugins/&lt;slug&gt;/&lt;version&gt;/
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>├── manifest.json   ← local plugin manifest
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>├── plugin.py
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>└── (any other files)
+</code></pre></div>
+<p>If you have a plugin icon, place it at <code>plugins/&lt;slug&gt;/icon.png</code> (or any path, as long as it matches <code>icon_path</code> in the catalog manifest).</p>
+<h3 id="2-add-the-entry-to-the-root-manifestjson">2. Add the entry to the root <code>manifest.json</code><a class="headerlink" href="#2-add-the-entry-to-the-root-manifestjson" title="Permanent link">&para;</a></h3>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">{</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My Plugin&quot;</span><span class="p">,</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="nt">&quot;slug&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;my_plugin&quot;</span><span class="p">,</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">  </span><span class="nt">&quot;category&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;utilities&quot;</span><span class="p">,</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">  </span><span class="nt">&quot;summary&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Does something useful&quot;</span><span class="p">,</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">  </span><span class="nt">&quot;author&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Your Name&quot;</span><span class="p">,</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">  </span><span class="nt">&quot;latest&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">  </span><span class="nt">&quot;icon_path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugins/my_plugin/icon.png&quot;</span><span class="p">,</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">  </span><span class="nt">&quot;compatible_pydeck_versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;1.0.0&quot;</span><span class="p">],</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">  </span><span class="nt">&quot;versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">      </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugins/my_plugin/1.0.0&quot;</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="3-commit-and-push-both-changes-together">3. Commit and push both changes together<a class="headerlink" href="#3-commit-and-push-both-changes-together" title="Permanent link">&para;</a></h3>
+<p>The catalog <code>manifest.json</code> and the version folder files must be committed and pushed in the same operation (or at least before any install is attempted). If <code>manifest.json</code> references a version path that hasn't been pushed yet, installs will fail.</p>
+<h3 id="checklist">Checklist<a class="headerlink" href="#checklist" title="Permanent link">&para;</a></h3>
+<ul>
+<li>[ ] <code>plugins/&lt;slug&gt;/&lt;version&gt;/</code> directory exists in the repo</li>
+<li>[ ] <code>plugins/&lt;slug&gt;/&lt;version&gt;/manifest.json</code> exists and is valid JSON with at minimum <code>name</code>, <code>version</code>, <code>description</code>, <code>author</code> fields</li>
+<li>[ ] <code>plugins/&lt;slug&gt;/&lt;version&gt;/plugin.py</code> exists</li>
+<li>[ ] Root <code>manifest.json</code> has a new entry for the plugin with <code>slug</code>, <code>latest</code>, <code>versions[].path</code> matching the directory above</li>
+<li>[ ] Icon file exists at the path specified in <code>icon_path</code> (or remove the field)</li>
+<li>[ ] Changes are pushed to the branch referenced by the catalog URL (usually <code>main</code>)</li>
+</ul>
+<hr />
+<h2 id="8-adding-a-new-version-of-an-existing-plugin">8. Adding a New Version of an Existing Plugin<a class="headerlink" href="#8-adding-a-new-version-of-an-existing-plugin" title="Permanent link">&para;</a></h2>
+<h3 id="1-create-the-new-version-folder">1. Create the new version folder<a class="headerlink" href="#1-create-the-new-version-folder" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>plugins/&lt;slug&gt;/&lt;new_version&gt;/
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>├── manifest.json   ← update the version field inside to match
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>├── plugin.py
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>└── ...
+</code></pre></div>
+<h3 id="2-update-root-manifestjson">2. Update root <code>manifest.json</code><a class="headerlink" href="#2-update-root-manifestjson" title="Permanent link">&para;</a></h3>
+<p>Add the new version to the <code>versions</code> array <strong>and</strong> update <code>latest</code> if this is the new recommended version:</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="p">{</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">&quot;slug&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;spotify&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="nt">&quot;latest&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.1.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">  </span><span class="nt">&quot;versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">      </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugins/spotify/1.0.0&quot;</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">      </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.1.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugins/spotify/1.1.0&quot;</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="p">}</span>
+</code></pre></div>
+<p>Keep the old version entry so users who have it installed can still fetch metadata for it (used by the update checker). Do not delete old version folders from the repo unless you want to break installs of that specific version.</p>
+<h3 id="3-commit-and-push">3. Commit and push<a class="headerlink" href="#3-commit-and-push" title="Permanent link">&para;</a></h3>
+<p>Push the new version folder and the updated <code>manifest.json</code> together.</p>
+<hr />
+<h2 id="9-removing-a-plugin">9. Removing a Plugin<a class="headerlink" href="#9-removing-a-plugin" title="Permanent link">&para;</a></h2>
+<h3 id="full-removal-plugin-discontinued">Full removal (plugin discontinued)<a class="headerlink" href="#full-removal-plugin-discontinued" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Delete the plugin's entry from the root <code>manifest.json</code> <code>plugins</code> array.</li>
+<li>Optionally delete the <code>plugins/&lt;slug&gt;/</code> directory from the repo (only do this if you are sure no users have it installed and no other references exist).</li>
+<li>Commit and push.</li>
+</ol>
+<p>If <code>manifest.json</code> no longer lists the plugin, PyDeck's catalog will not show it. Existing installs on user machines are unaffected until the user uninstalls.</p>
+<h3 id="temporary-removal-hide-from-catalog">Temporary removal (hide from catalog)<a class="headerlink" href="#temporary-removal-hide-from-catalog" title="Permanent link">&para;</a></h3>
+<p>Remove the entry from <code>manifest.json</code> without deleting the files. The files remain in the repo but the plugin won't appear in the marketplace.</p>
+<hr />
+<h2 id="10-compatibility-fields">10. Compatibility Fields<a class="headerlink" href="#10-compatibility-fields" title="Permanent link">&para;</a></h2>
+<h3 id="compatible_pydeck_versions-plugin-entry-level"><code>compatible_pydeck_versions</code> (plugin entry level)<a class="headerlink" href="#compatible_pydeck_versions-plugin-entry-level" title="Permanent link">&para;</a></h3>
+<p>Used for catalog search filtering. When a user's PyDeck version is not in this list, the plugin may be hidden or marked incompatible in the UI.</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">&quot;compatible_pydeck_versions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;1.1.0&quot;</span><span class="p">]</span>
+</code></pre></div>
+<h3 id="min_pydeck_version-max_pydeck_version-version-entry-level"><code>min_pydeck_version</code> / <code>max_pydeck_version</code> (version entry level)<a class="headerlink" href="#min_pydeck_version-max_pydeck_version-version-entry-level" title="Permanent link">&para;</a></h3>
+<p>Used by PyDeck's update checker to determine which versions of a plugin are valid for the running PyDeck version. If the user's PyDeck version is outside this range, that plugin version won't be offered as an upgrade.</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="p">{</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;2.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;plugins/spotify/2.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">  </span><span class="nt">&quot;min_pydeck_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.2.0&quot;</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="p">}</span>
+</code></pre></div>
+<p>This is optional. If omitted, the version is considered compatible with all PyDeck versions.</p>
+<hr />
+<h2 id="11-how-pydeck-resolves-the-catalog-url">11. How PyDeck Resolves the Catalog URL<a class="headerlink" href="#11-how-pydeck-resolves-the-catalog-url" title="Permanent link">&para;</a></h2>
+<p>PyDeck aggregates catalog URLs from all of the following sources in order (duplicates dropped):</p>
+<ol>
+<li><strong>Environment variable</strong> <code>PYDECK_MARKETPLACE_MANIFEST_URL</code> — comma-separated list of URLs.</li>
+<li><strong>Config file</strong> <code>~/.config/pydeck/core/config.json</code> → <code>marketplace_manifest_urls</code> (list of strings).</li>
+<li><strong>Config file</strong> (legacy) → <code>marketplace_manifest_url</code> (single string).</li>
+<li><strong>Built-in default</strong> — the URL compiled into <code>start.py</code> as <code>_DEFAULT_MARKETPLACE_MANIFEST_URLS</code>. This is <strong>always</strong> appended and cannot be disabled — it is the official PyDeck catalog.</li>
+</ol>
+<p>All resolved URLs are loaded together. Adding your own catalog does not replace the built-in default; plugins from all catalogs are merged into a single list (first slug wins if the same plugin appears in multiple catalogs).</p>
+<h3 id="multi-catalog-display">Multi-catalog display<a class="headerlink" href="#multi-catalog-display" title="Permanent link">&para;</a></h3>
+<p>When more than one catalog is active, each plugin card in the marketplace shows a <strong>repo label pill</strong> so users can tell which catalog a plugin comes from:</p>
+<ul>
+<li>The pill text is taken from the catalog's <code>label</code> field in its root <code>manifest.json</code>.</li>
+<li>If <code>label</code> is absent, PyDeck falls back to extracting the repo name from the <code>raw.githubusercontent.com</code> URL (e.g. <code>pydeck-plugins</code>).</li>
+<li>The pill is only shown when two or more catalogs are loaded — it is hidden when only the built-in default catalog is active.</li>
+</ul>
+<p>Set a clear <code>label</code> in your catalog's <code>manifest.json</code> to give users a readable source indicator:</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">{</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="nt">&quot;schema_version&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;My Community Plugins&quot;</span><span class="p">,</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span><span class="err">...</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="p">}</span>
+</code></pre></div>
+<p>The catalog URL must be a <code>raw.githubusercontent.com</code> URL pointing to the <code>manifest.json</code> file:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>https://raw.githubusercontent.com/&lt;owner&gt;/&lt;repo&gt;/&lt;branch&gt;/manifest.json
+</code></pre></div>
+<p>PyDeck derives the GitHub owner, repo, and branch from this URL and uses them for <strong>all</strong> API calls (tree API and raw file downloads). The catalog URL and the plugin files must be in the <strong>same repo and branch</strong>.</p>
+<p>GitHub repo page URLs (e.g. <code>https://github.com/owner/repo</code>) are automatically converted to raw manifest URLs pointing to <code>main</code> branch when entered in the UI.</p>
+<hr />
+<h2 id="12-common-errors-and-fixes">12. Common Errors and Fixes<a class="headerlink" href="#12-common-errors-and-fixes" title="Permanent link">&para;</a></h2>
+<h3 id="no-files-found-for-plugin-scope-pluginsslug"><code>No files found for plugin scope: plugins/&lt;slug&gt;</code><a class="headerlink" href="#no-files-found-for-plugin-scope-pluginsslug" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> The <code>path</code> in <code>manifest.json</code> points to a version folder that has no files in the repo tree (either the folder doesn't exist, or the path is wrong).</p>
+<p><strong>Fix:</strong>
+- Verify the folder <code>plugins/&lt;slug&gt;/&lt;version&gt;/</code> exists in the repo and has been pushed.
+- Verify the <code>path</code> value in <code>manifest.json</code> exactly matches the folder path relative to the repo root.
+- If the plugin was removed intentionally, remove its entry from <code>manifest.json</code>.</p>
+<h3 id="unknown-plugin-in-this-catalog-slug"><code>Unknown plugin in this catalog: &lt;slug&gt;</code><a class="headerlink" href="#unknown-plugin-in-this-catalog-slug" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> The <code>slug</code> sent in the install request does not match any plugin entry in the fetched catalog manifest.</p>
+<p><strong>Fix:</strong> Verify the <code>slug</code> field in <code>manifest.json</code> is spelled correctly and has no extra whitespace.</p>
+<h3 id="version-x-does-not-exist-for-plugin-slug"><code>Version '&lt;x&gt;' does not exist for plugin '&lt;slug&gt;'</code><a class="headerlink" href="#version-x-does-not-exist-for-plugin-slug" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> The version string requested for install is not present in the plugin's <code>versions</code> array.</p>
+<p><strong>Fix:</strong> Add the version entry (and its files) or correct the <code>latest</code> field to point to a version that exists.</p>
+<h3 id="install-needs-a-catalog-url-on-rawgithubusercontentcom"><code>Install needs a catalog URL on raw.githubusercontent.com</code><a class="headerlink" href="#install-needs-a-catalog-url-on-rawgithubusercontentcom" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> The catalog URL is not a <code>raw.githubusercontent.com</code> URL. PyDeck cannot derive the owner/repo/branch to download plugin files.</p>
+<p><strong>Fix:</strong> Configure the catalog URL as <code>https://raw.githubusercontent.com/&lt;owner&gt;/&lt;repo&gt;/&lt;branch&gt;/manifest.json</code>. GitHub repo page URLs are accepted in the settings UI and converted automatically.</p>
+<h3 id="install-silently-installs-an-empty-plugin-no-functions-appear">Install silently installs an empty plugin (no functions appear)<a class="headerlink" href="#install-silently-installs-an-empty-plugin-no-functions-appear" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> The version folder exists but is missing <code>manifest.json</code> or <code>plugin.py</code>.</p>
+<p><strong>Fix:</strong> Add both required files to the version folder and push.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

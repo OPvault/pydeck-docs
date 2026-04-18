@@ -1,0 +1,2904 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for PyDeck">
+      
+      
+      
+        <link rel="canonical" href="https://docs.pydeck.no/plugin-development/pdk/runtime-examples/">
+      
+      
+        <link rel="prev" href="../rendering/">
+      
+      
+        <link rel="next" href="../../classic/getting-started/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Runtime & Examples - PyDeck Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pdk-development-runtime-examples" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="PyDeck Docs" class="md-header__button md-logo" aria-label="PyDeck Docs" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PyDeck Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Runtime & Examples
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OPvault/pydeck-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="PyDeck Docs" class="md-nav__button md-logo" aria-label="PyDeck Docs" data-md-component="logo">
+      
+  <img src="../../../assets/logo.png" alt="logo">
+
+    </a>
+    PyDeck Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OPvault/pydeck-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using PyDeck
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using PyDeck
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../using/marketplace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Marketplace
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../using/gradient-backgrounds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradient backgrounds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Official plugins
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Official plugins
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../using/discord/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Discord
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../using/spotify/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spotify
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugin development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Plugin development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Shared platform
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Shared platform
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../platform/authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../platform/web-ui-and-assets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web UI & Assets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../platform/press-and-hold/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Press and hold & button events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../platform/http-api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTTP API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PDK development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    PDK development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalog/pdk-create/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PDK Plugin Creator
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templates-elements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates & Elements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rendering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rendering
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime & Examples
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime & Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-event-handlers-sharedpy-handlerpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Event Handlers (shared.py / handler.py)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Event Handlers (shared.py / handler.py)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-ctx-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The ctx Object
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The ctx Object">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#state-attribute-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        State Attribute Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event-handlers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Handlers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event Handlers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#on_loadctx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        on_load(ctx)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on_pressctx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        on_press(ctx)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on_releasectx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        on_release(ctx)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on_pollctx-intervalms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        on_poll(ctx, interval=&lt;ms&gt;)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#template-switching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template Switching
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-function-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-Function Modules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Per-Function Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#per-function-state-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-Function State Isolation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-manifestjson-for-pdk-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. manifest.json for PDK Plugins
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. manifest.json for PDK Plugins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#with-manifestjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        With manifest.json
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-generated-manifest-no-manifestjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-Generated Manifest (no manifest.json)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-state-interpolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. State Interpolation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. State Interpolation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#in-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In Templates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#in-css" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In CSS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#special-state-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Special State Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-real-world-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Real-World Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Real-World Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#clock-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clock Plugin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weather-plugin-multi-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weather Plugin (Multi-Function)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-tips-and-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Tips and Best Practices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Tips and Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naming-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naming Conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-key-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        State Key Conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keep-templates-small" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keep Templates Small
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-css-variables-for-theming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use CSS Variables for Theming
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pick-up-the-users-button-colour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pick Up the User's Button Colour
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-spacer-for-flexible-layouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use spacer for Flexible Layouts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leverage-em-units" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leverage em Units
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poll-interval-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poll Interval Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debugging
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Classic plugins
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Classic plugins
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classic/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classic/core/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../classic/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples & Tips
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Catalog tools (pydeck-plugins repo)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Catalog tools (pydeck-plugins repo)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalog/generate-manifest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Generate Manifest
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalog/release-stable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Release Stable
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../catalog/sync-from-pydeck/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sync From PyDeck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Theme development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Theme development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../theme-development/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../theme-development/css-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../theme-development/loader-examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Loader & Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../theme-development/marketplace-catalog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Marketplace catalog workflows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-event-handlers-sharedpy-handlerpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Event Handlers (shared.py / handler.py)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Event Handlers (shared.py / handler.py)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-ctx-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The ctx Object
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The ctx Object">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#state-attribute-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        State Attribute Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#event-handlers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Handlers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event Handlers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#on_loadctx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        on_load(ctx)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on_pressctx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        on_press(ctx)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on_releasectx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        on_release(ctx)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#on_pollctx-intervalms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        on_poll(ctx, interval=&lt;ms&gt;)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#template-switching" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template Switching
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#per-function-modules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-Function Modules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Per-Function Modules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#per-function-state-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-Function State Isolation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-manifestjson-for-pdk-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. manifest.json for PDK Plugins
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. manifest.json for PDK Plugins">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#with-manifestjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        With manifest.json
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auto-generated-manifest-no-manifestjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Auto-Generated Manifest (no manifest.json)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-state-interpolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. State Interpolation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. State Interpolation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#in-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In Templates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#in-css" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        In CSS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#special-state-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Special State Keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-real-world-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Real-World Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Real-World Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#clock-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Clock Plugin
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#weather-plugin-multi-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Weather Plugin (Multi-Function)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-tips-and-best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Tips and Best Practices
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Tips and Best Practices">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#naming-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Naming Conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#state-key-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        State Key Conventions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keep-templates-small" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keep Templates Small
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-css-variables-for-theming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use CSS Variables for Theming
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pick-up-the-users-button-colour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pick Up the User's Button Colour
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#use-spacer-for-flexible-layouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Use spacer for Flexible Layouts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#leverage-em-units" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Leverage em Units
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-assets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image Assets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#poll-interval-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Poll Interval Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debugging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debugging
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="pdk-development-runtime-examples">PDK Development — Runtime &amp; Examples<a class="headerlink" href="#pdk-development-runtime-examples" title="Permanent link">&para;</a></h1>
+<hr />
+<h2 id="1-event-handlers-sharedpy-handlerpy">1. Event Handlers (shared.py / handler.py)<a class="headerlink" href="#1-event-handlers-sharedpy-handlerpy" title="Permanent link">&para;</a></h2>
+<p>PDK plugins use event-driven handlers instead of per-function callables. All handlers receive a single <code>ctx</code> argument — a <code>PDKContext</code> object.</p>
+<h3 id="the-ctx-object">The <code>ctx</code> Object<a class="headerlink" href="#the-ctx-object" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>ctx.state</code></td>
+<td style="text-align: left;">dict-like (supports attribute access)</td>
+<td style="text-align: left;">Persistent state shared between events and available to templates via <code>{key}</code> interpolation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ctx.config</code></td>
+<td style="text-align: left;">dict</td>
+<td style="text-align: left;">Per-button configuration from the UI fields. Read-only snapshot.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ctx.credentials</code></td>
+<td style="text-align: left;">dict</td>
+<td style="text-align: left;">Plugin credentials from <code>credentials.json</code> (Settings → Credentials).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ctx.device_id</code></td>
+<td style="text-align: left;">str</td>
+<td style="text-align: left;">Identifier for the Stream Deck device that triggered the event.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ctx.plugin_name</code></td>
+<td style="text-align: left;">str</td>
+<td style="text-align: left;">The plugin's directory name.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ctx.plugin_dir</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;">Absolute path to the plugin's own directory (<code>~/.local/share/pydeck/plugin/&lt;name&gt;/</code> by default, or <code>$XDG_DATA_HOME/pydeck/plugin/&lt;name&gt;/</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ctx.storage_path</code></td>
+<td style="text-align: left;">Path</td>
+<td style="text-align: left;">Absolute path to the plugin's persistent storage directory (<code>~/.local/share/pydeck/storage/&lt;name&gt;/</code>). Use this for runtime-generated files (e.g. downloaded images). Files here survive plugin updates.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ctx.refresh()</code></td>
+<td style="text-align: left;">method</td>
+<td style="text-align: left;">Mark the display as needing a re-render.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="state-attribute-access">State Attribute Access<a class="headerlink" href="#state-attribute-access" title="Permanent link">&para;</a></h4>
+<p><code>ctx.state</code> supports both dict-style and attribute-style access:</p>
+<div class="language-python highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;temperature&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">22</span>      <span class="c1"># dict style</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="mi">22</span>         <span class="c1"># attribute style (equivalent)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">temp</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">temperature</span>       <span class="c1"># attribute read</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">temp</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;temperature&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># dict .get() with default</span>
+</code></pre></div>
+<h3 id="event-handlers">Event Handlers<a class="headerlink" href="#event-handlers" title="Permanent link">&para;</a></h3>
+<h4 id="on_loadctx"><code>on_load(ctx)</code><a class="headerlink" href="#on_loadctx" title="Permanent link">&para;</a></h4>
+<p>Called once when the runtime is first initialised. Use it to set initial state values.</p>
+<div class="language-python highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_load</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="s2">&quot;clock&quot;</span>
+</code></pre></div>
+<h4 id="on_pressctx"><code>on_press(ctx)</code><a class="headerlink" href="#on_pressctx" title="Permanent link">&para;</a></h4>
+<p>Called when the user presses the button.</p>
+<div class="language-python highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_press</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;view&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;main&quot;</span><span class="p">:</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="s2">&quot;detail&quot;</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="s2">&quot;main&quot;</span>
+</code></pre></div>
+<h4 id="on_releasectx"><code>on_release(ctx)</code><a class="headerlink" href="#on_releasectx" title="Permanent link">&para;</a></h4>
+<p>Called when the user <strong>releases</strong> the button (physical button up), after the matching <strong><code>on_press</code></strong> for that interaction. Define this handler when you need distinct press vs release behavior (for example key-down / key-up in a “press and hold” mode). Manifest UI, <strong><code>ctx.config</code></strong>, and concurrent handler behavior are described in <strong><a href="../../platform/press-and-hold/">Press and hold &amp; button events</a></strong>.</p>
+<h4 id="on_pollctx-intervalms"><code>on_poll(ctx, interval=&lt;ms&gt;)</code><a class="headerlink" href="#on_pollctx-intervalms" title="Permanent link">&para;</a></h4>
+<p>Called periodically for live-updating displays. The poll interval is determined by:</p>
+<ol>
+<li><strong>Default argument</strong> — set the <code>interval</code> parameter default on <code>on_poll</code>:
+   <div class="language-python highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_poll</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">):</span>  <span class="c1"># poll every 5 seconds</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="o">...</span>
+</code></pre></div></li>
+<li><strong>Module-level variable</strong> — set <code>poll_interval</code> at the top of <code>src/shared.py</code>:
+   <div class="language-python highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">poll_interval</span> <span class="o">=</span> <span class="mi">5000</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_poll</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="o">...</span>
+</code></pre></div></li>
+</ol>
+<p>The interval is in <strong>milliseconds</strong>. If neither is set, polling is disabled.</p>
+<h3 id="template-switching">Template Switching<a class="headerlink" href="#template-switching" title="Permanent link">&para;</a></h3>
+<p>Set <code>ctx.state._template</code> to the name of any template defined in <code>template.xml</code> to change which template renders the button:</p>
+<div class="language-python highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_press</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="s2">&quot;detail&quot;</span>  <span class="c1"># switch to the &quot;detail&quot; template</span>
+</code></pre></div>
+<p>This is how plugins implement multi-view buttons (e.g. a weather plugin that toggles between current temperature and high/low detail).</p>
+<h3 id="per-function-modules">Per-Function Modules<a class="headerlink" href="#per-function-modules" title="Permanent link">&para;</a></h3>
+<p>Multi-function plugins can place each function's handlers in a separate Python file inside a subdirectory (see <a href="../getting-started/#3-plugin-directory-structure">Plugin Directory Structure</a>). For example, a weather plugin with <code>weather</code> and <code>forecast</code> functions:</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>~/.local/share/pydeck/plugin/weather/
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>├── src/
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>│   ├── shared.py               # Shared helpers (fallback handlers)
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>│   └── functions/
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>│       ├── weather/
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>│       │   └── handler.py      # on_load, on_press, on_poll for &quot;weather&quot;
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>│       └── forecast/
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>│           └── handler.py      # on_load, on_press, on_poll for &quot;forecast&quot;
+</code></pre></div>
+<p>When an event fires for a specific function, the runtime resolves handlers in this order:</p>
+<ol>
+<li><strong>Function module</strong> — the <code>handler.py</code> file in the matching subdirectory (<code>src/functions/&lt;func&gt;/handler.py</code>).</li>
+<li><strong>Root module</strong> — the root <code>src/shared.py</code> (fallback if the function module doesn't define the handler).</li>
+</ol>
+<p>Each function module's <code>on_load</code> is called automatically at startup, initialising that function's state independently.</p>
+<h4 id="per-function-state-isolation">Per-Function State Isolation<a class="headerlink" href="#per-function-state-isolation" title="Permanent link">&para;</a></h4>
+<p>Each function gets its own isolated state dict. This prevents <code>_template</code>, display variables, and internal data from colliding between functions sharing the same plugin:</p>
+<div class="language-python highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># src/functions/weather/handler.py</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_load</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="s2">&quot;weather&quot;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">line1</span> <span class="o">=</span> <span class="s2">&quot;...&quot;</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1"># src/functions/forecast/handler.py</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_load</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="s2">&quot;forecast&quot;</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="s2">&quot;...&quot;</span>
+</code></pre></div>
+<p>Both functions can use <code>ctx.state._template</code> without overwriting each other because each operates on a separate state. The root <code>src/shared.py</code> can hold shared utility functions that the per-function modules import.</p>
+<hr />
+<h2 id="2-manifestjson-for-pdk-plugins">2. manifest.json for PDK Plugins<a class="headerlink" href="#2-manifestjson-for-pdk-plugins" title="Permanent link">&para;</a></h2>
+<h3 id="with-manifestjson">With manifest.json<a class="headerlink" href="#with-manifestjson" title="Permanent link">&para;</a></h3>
+<p>If your PDK plugin includes a <code>manifest.json</code>, it is loaded normally and augmented with <code>pdk: true</code> on the plugin and each function entry. This is the simplest approach — the manifest works identically to a classic plugin's manifest, but the button face is rendered by PDK instead of the core.</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;pdk-weather&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1.0.0&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Weather display powered by met.no&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="nt">&quot;functions&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="nt">&quot;weather&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">      </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Weather&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">      </span><span class="nt">&quot;description&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Current weather conditions&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">      </span><span class="nt">&quot;ui&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">          </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;input&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="w">          </span><span class="nt">&quot;id&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;location&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">          </span><span class="nt">&quot;label&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Location&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">          </span><span class="nt">&quot;placeholder&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Oslo&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">          </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;&quot;</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">      </span><span class="p">]</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong><code>sidebar_icon</code> (and other install-dir assets):</strong> use a path <strong>relative to the plugin package</strong>, e.g. <strong><code>assets/icons/PlayPause.png</code></strong> or <strong><code>img/icon.png</code></strong>. The web UI resolves these using the plugin id. You do <strong>not</strong> need the legacy logical prefix <code>plugins/plugin/&lt;id&gt;/...</code> for new PDK manifests (that form remains supported for older plugins).</p>
+<h3 id="auto-generated-manifest-no-manifestjson">Auto-Generated Manifest (no manifest.json)<a class="headerlink" href="#auto-generated-manifest-no-manifestjson" title="Permanent link">&para;</a></h3>
+<p>If <code>manifest.json</code> is absent, the core generates one automatically:</p>
+<ul>
+<li><strong>From templates</strong> — each <code>&lt;template&gt;</code> becomes a function entry. The template's <code>title</code>, <code>description</code>, and <code>icon</code> attributes map to <code>label</code>, <code>description</code>, and <code>sidebar_icon</code>.</li>
+<li><strong>From <code>&lt;settings&gt;</code></strong> — <code>&lt;field&gt;</code> elements inside a template become the function's <code>ui</code> array.</li>
+<li><strong>From poll detection</strong> — if <code>on_poll</code> has an <code>interval</code> default kwarg or the module has a <code>poll_interval</code> variable, a <code>poll</code> entry is added to each function.</li>
+</ul>
+<h3 id="key-fields">Key Fields<a class="headerlink" href="#key-fields" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Source</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>pdk</code></td>
+<td style="text-align: left;">Auto-set</td>
+<td style="text-align: left;">Always <code>true</code> for PDK plugins.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>python_dependencies</code></td>
+<td style="text-align: left;">manifest.json</td>
+<td style="text-align: left;">Pip packages as a JSON array.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>credentials</code></td>
+<td style="text-align: left;">manifest.json</td>
+<td style="text-align: left;">Credential field names.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>functions.*.poll</code></td>
+<td style="text-align: left;"><code>on_poll</code> interval detection</td>
+<td style="text-align: left;"><code>{ "function": "on_poll", "interval_ms": &lt;value&gt; }</code>.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-state-interpolation">3. State Interpolation<a class="headerlink" href="#3-state-interpolation" title="Permanent link">&para;</a></h2>
+<p>PDK templates use <code>{key}</code> syntax to inject values from the render state into text content, attributes, and even CSS.</p>
+<h3 id="in-templates">In Templates<a class="headerlink" href="#in-templates" title="Permanent link">&para;</a></h3>
+<p>Interpolation works in:</p>
+<ul>
+<li><strong>Text content</strong>: <code>&lt;text&gt;{temperature}°C&lt;/text&gt;</code></li>
+<li><strong>Attributes</strong>: <code>width</code>, <code>height</code>, <code>value</code>, <code>src</code>, <code>class</code></li>
+</ul>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">&lt;img</span><span class="w"> </span><span class="na">src=</span><span class="s">&quot;{icon_src}&quot;</span><span class="w"> </span><span class="na">width=</span><span class="s">&quot;{icon_w}&quot;</span><span class="w"> </span><span class="na">height=</span><span class="s">&quot;{icon_h}&quot;</span><span class="w"> </span><span class="na">fit=</span><span class="s">&quot;contain&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;{text_class}&quot;</span><span class="nt">&gt;</span>{display_value}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nt">&lt;progress</span><span class="w"> </span><span class="na">value=</span><span class="s">&quot;{percent}&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+</code></pre></div>
+<h3 id="in-css">In CSS<a class="headerlink" href="#in-css" title="Permanent link">&para;</a></h3>
+<p>State values are interpolated in the stylesheet before parsing. This enables dynamic theming:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">:</span><span class="nd">root</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="nv">--bg</span><span class="p">:</span><span class="w"> </span><span class="err">{</span><span class="n">_button_color</span><span class="p">}</span><span class="o">;</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="err">}</span>
+</code></pre></div>
+<p>The variable <code>_button_color</code> is automatically injected by the core with the user's configured button background colour.</p>
+<h3 id="special-state-keys">Special State Keys<a class="headerlink" href="#special-state-keys" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Key</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>_template</code></td>
+<td style="text-align: left;">Controls which template is rendered. Set in handlers to switch views.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>_button_color</code></td>
+<td style="text-align: left;">Injected by the core — the user's chosen button background colour (hex string).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>_button_gradient</code></td>
+<td style="text-align: left;">Injected by the core — a CSS gradient string (e.g. <code>linear-gradient(135deg, #ff0000 0%, #0000ff 100%)</code>). Falls back to <code>_button_color</code> when no gradient is set. See <a href="../../../using/gradient-backgrounds/">Gradient backgrounds</a>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h3>
+<p>At render time, the engine:</p>
+<ol>
+<li>Deep-copies the template tree (so interpolation doesn't mutate the parse cache).</li>
+<li>Replaces <code>{key}</code> in text content and select attributes with <code>str(state[key])</code>.</li>
+<li>Replaces <code>{key}</code> in the concatenated CSS text before parsing the stylesheet.</li>
+</ol>
+<p>If a <code>{key}</code> has no matching state entry, the placeholder is left as-is.</p>
+<hr />
+<h2 id="4-real-world-examples">4. Real-World Examples<a class="headerlink" href="#4-real-world-examples" title="Permanent link">&para;</a></h2>
+<h3 id="clock-plugin">Clock Plugin<a class="headerlink" href="#clock-plugin" title="Permanent link">&para;</a></h3>
+<p>A simple clock that updates every second, with optional seconds display, 12/24-hour mode, and date line.</p>
+<p><strong><code>~/.local/share/pydeck/plugin/clock/src/functions/clock/template.xml</code></strong></p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">&lt;template</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;clock&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;face&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;label&quot;</span><span class="nt">&gt;</span>{label}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;{time_class}&quot;</span><span class="nt">&gt;</span>{time}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="nt">&lt;/template&gt;</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="nt">&lt;template</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;clock-date&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">  </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;face&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;label&quot;</span><span class="nt">&gt;</span>{label}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">    </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;{time_class}&quot;</span><span class="nt">&gt;</span>{time}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">    </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;divider&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;date&quot;</span><span class="nt">&gt;</span>{date}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">  </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="nt">&lt;/template&gt;</span>
+</code></pre></div>
+<p><strong><code>~/.local/share/pydeck/plugin/clock/src/shared.css</code></strong></p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">:</span><span class="nd">root</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nv">--bg</span><span class="p">:</span><span class="w"> </span><span class="err">{</span><span class="n">_button_color</span><span class="p">}</span><span class="o">;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="nt">--time-color</span><span class="o">:</span><span class="w"> </span><span class="p">#</span><span class="nn">ffffff</span><span class="o">;</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="nt">--date-color</span><span class="o">:</span><span class="w"> </span><span class="p">#</span><span class="nn">777777</span><span class="o">;</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span><span class="nt">--label-color</span><span class="o">:</span><span class="w"> </span><span class="p">#</span><span class="nn">505050</span><span class="o">;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">  </span><span class="nt">--divider-color</span><span class="o">:</span><span class="w"> </span><span class="p">#</span><span class="nn">333333</span><span class="o">;</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="err">}</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="p">.</span><span class="nc">face</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">  </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--bg</span><span class="p">);</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">  </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">  </span><span class="k">direction</span><span class="p">:</span><span class="w"> </span><span class="kc">column</span><span class="p">;</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">  </span><span class="n">align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">  </span><span class="n">justify</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">  </span><span class="k">gap</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="p">}</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="p">.</span><span class="nc">time</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--time-color</span><span class="p">);</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">  </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">1.7</span><span class="kt">em</span><span class="p">;</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="w">  </span><span class="k">font-weight</span><span class="p">:</span><span class="w"> </span><span class="kc">bold</span><span class="p">;</span>
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="w">  </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="p">}</span>
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>
+<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a><span class="p">.</span><span class="nc">time-sec</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a><span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--time-color</span><span class="p">);</span>
+<a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a><span class="w">  </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">1.1</span><span class="kt">em</span><span class="p">;</span>
+<a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a><span class="w">  </span><span class="k">font-weight</span><span class="p">:</span><span class="w"> </span><span class="kc">bold</span><span class="p">;</span>
+<a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a><span class="w">  </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a><span class="p">}</span>
+<a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a>
+<a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a><span class="p">.</span><span class="nc">date</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a><span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--date-color</span><span class="p">);</span>
+<a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a><span class="w">  </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">0.75</span><span class="kt">em</span><span class="p">;</span>
+<a id="__codelineno-12-35" name="__codelineno-12-35" href="#__codelineno-12-35"></a><span class="w">  </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<a id="__codelineno-12-36" name="__codelineno-12-36" href="#__codelineno-12-36"></a><span class="p">}</span>
+<a id="__codelineno-12-37" name="__codelineno-12-37" href="#__codelineno-12-37"></a>
+<a id="__codelineno-12-38" name="__codelineno-12-38" href="#__codelineno-12-38"></a><span class="p">.</span><span class="nc">label</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-39" name="__codelineno-12-39" href="#__codelineno-12-39"></a><span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--label-color</span><span class="p">);</span>
+<a id="__codelineno-12-40" name="__codelineno-12-40" href="#__codelineno-12-40"></a><span class="w">  </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">0.65</span><span class="kt">em</span><span class="p">;</span>
+<a id="__codelineno-12-41" name="__codelineno-12-41" href="#__codelineno-12-41"></a><span class="w">  </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<a id="__codelineno-12-42" name="__codelineno-12-42" href="#__codelineno-12-42"></a><span class="p">}</span>
+<a id="__codelineno-12-43" name="__codelineno-12-43" href="#__codelineno-12-43"></a>
+<a id="__codelineno-12-44" name="__codelineno-12-44" href="#__codelineno-12-44"></a><span class="p">.</span><span class="nc">divider</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-45" name="__codelineno-12-45" href="#__codelineno-12-45"></a><span class="w">  </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--divider-color</span><span class="p">);</span>
+<a id="__codelineno-12-46" name="__codelineno-12-46" href="#__codelineno-12-46"></a><span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">50</span><span class="kt">%</span><span class="p">;</span>
+<a id="__codelineno-12-47" name="__codelineno-12-47" href="#__codelineno-12-47"></a><span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-12-48" name="__codelineno-12-48" href="#__codelineno-12-48"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong><code>~/.local/share/pydeck/plugin/clock/src/shared.py</code></strong></p>
+<div class="language-python highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">zoneinfo</span><span class="w"> </span><span class="kn">import</span> <span class="n">ZoneInfo</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_load</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">time_class</span> <span class="o">=</span> <span class="s2">&quot;time&quot;</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="s2">&quot;clock&quot;</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_poll</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">interval</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>    <span class="n">tz_name</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;timezone&quot;</span><span class="p">,</span> <span class="s2">&quot;local&quot;</span><span class="p">)</span>
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a>    <span class="k">if</span> <span class="n">tz_name</span> <span class="ow">and</span> <span class="n">tz_name</span> <span class="o">!=</span> <span class="s2">&quot;local&quot;</span><span class="p">:</span>
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a>        <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a>            <span class="n">tz</span> <span class="o">=</span> <span class="n">ZoneInfo</span><span class="p">(</span><span class="n">tz_name</span><span class="p">)</span>
+<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a>        <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
+<a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>            <span class="n">tz</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>        <span class="n">tz</span> <span class="o">=</span> <span class="kc">None</span>
+<a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>
+<a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a>    <span class="n">now</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">tz</span><span class="p">)</span>
+<a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a>    <span class="n">show_sec</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_seconds&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a>    <span class="n">hour_12</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;hour_12&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a>    <span class="n">show_date</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;show_date&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+<a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a>
+<a id="__codelineno-13-30" name="__codelineno-13-30" href="#__codelineno-13-30"></a>    <span class="k">if</span> <span class="n">hour_12</span><span class="p">:</span>
+<a id="__codelineno-13-31" name="__codelineno-13-31" href="#__codelineno-13-31"></a>        <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;%I:%M:%S&quot;</span> <span class="k">if</span> <span class="n">show_sec</span> <span class="k">else</span> <span class="s2">&quot;%I:%M&quot;</span>
+<a id="__codelineno-13-32" name="__codelineno-13-32" href="#__codelineno-13-32"></a>        <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%p&quot;</span><span class="p">)</span>
+<a id="__codelineno-13-33" name="__codelineno-13-33" href="#__codelineno-13-33"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-13-34" name="__codelineno-13-34" href="#__codelineno-13-34"></a>        <span class="n">fmt</span> <span class="o">=</span> <span class="s2">&quot;%H:%M:%S&quot;</span> <span class="k">if</span> <span class="n">show_sec</span> <span class="k">else</span> <span class="s2">&quot;%H:%M&quot;</span>
+<a id="__codelineno-13-35" name="__codelineno-13-35" href="#__codelineno-13-35"></a>        <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-13-36" name="__codelineno-13-36" href="#__codelineno-13-36"></a>
+<a id="__codelineno-13-37" name="__codelineno-13-37" href="#__codelineno-13-37"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">time</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span>
+<a id="__codelineno-13-38" name="__codelineno-13-38" href="#__codelineno-13-38"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">time_class</span> <span class="o">=</span> <span class="s2">&quot;time-sec&quot;</span> <span class="k">if</span> <span class="n">show_sec</span> <span class="k">else</span> <span class="s2">&quot;time&quot;</span>
+<a id="__codelineno-13-39" name="__codelineno-13-39" href="#__codelineno-13-39"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">date</span> <span class="o">=</span> <span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%b </span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-13-40" name="__codelineno-13-40" href="#__codelineno-13-40"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="s2">&quot;clock-date&quot;</span> <span class="k">if</span> <span class="n">show_date</span> <span class="k">else</span> <span class="s2">&quot;clock&quot;</span>
+</code></pre></div>
+<p><strong>Key takeaways:</strong></p>
+<ul>
+<li>No <code>manifest.json</code> — the manifest is auto-generated from the templates.</li>
+<li><code>on_poll</code> with <code>interval=1000</code> updates every second.</li>
+<li><code>ctx.state._template</code> switches between <code>clock</code> and <code>clock-date</code> based on the <code>show_date</code> config.</li>
+<li><code>{time_class}</code> interpolation in the <code>class</code> attribute dynamically switches CSS classes.</li>
+<li><code>{_button_color}</code> in <code>:root</code> picks up the user's button colour setting.</li>
+</ul>
+<hr />
+<h3 id="weather-plugin-multi-function">Weather Plugin (Multi-Function)<a class="headerlink" href="#weather-plugin-multi-function" title="Permanent link">&para;</a></h3>
+<p>A multi-function weather plugin that uses the subdirectory layout. The <code>weather</code> function shows current temperature with a weather icon (toggles to high/low detail on press). The <code>forecast</code> function displays 3 upcoming forecasts. Shared utilities live in <code>src/shared.py</code>.</p>
+<p><strong>Directory structure:</strong></p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>~/.local/share/pydeck/plugin/weather/
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>├── manifest.json           # Shared manifest with both functions
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>└── src/
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>    ├── shared.py           # Shared utilities (geocoding, API, formatting)
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>    ├── shared.css          # Shared styles for both functions
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>    └── functions/
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>        ├── weather/
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>        │   ├── template.xml    # Templates for &quot;weather&quot; function
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>        │   └── handler.py      # Handlers for &quot;weather&quot; function
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>        └── forecast/
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>            ├── template.xml    # Templates for &quot;forecast&quot; function
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>            └── handler.py      # Handlers for &quot;forecast&quot; function
+</code></pre></div>
+<p><strong><code>src/functions/weather/template.xml</code></strong></p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">&lt;template</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;weather&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;bg&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;top&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">      </span><span class="nt">&lt;img</span><span class="w"> </span><span class="na">src=</span><span class="s">&quot;{icon_src}&quot;</span><span class="w"> </span><span class="na">width=</span><span class="s">&quot;{icon_w}&quot;</span><span class="w"> </span><span class="na">height=</span><span class="s">&quot;{icon_h}&quot;</span><span class="w"> </span><span class="na">fit=</span><span class="s">&quot;contain&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;{temp_class}&quot;</span><span class="nt">&gt;</span>{line1}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">    </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;bottom&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">      </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;day&quot;</span><span class="nt">&gt;</span>{line2}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">    </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">  </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="nt">&lt;/template&gt;</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="nt">&lt;template</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;weather-detail&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="w">  </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;bg&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="w">    </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;detail&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="w">      </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;detail-arrows&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="w">        </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;arrow-hi&quot;</span><span class="nt">&gt;</span>{arrow_hi}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="w">        </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;arrow-lo&quot;</span><span class="nt">&gt;</span>{arrow_lo}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="w">      </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="w">      </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;detail-vals&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="w">        </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;{val_hi_class}&quot;</span><span class="nt">&gt;</span>{val_hi}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="w">        </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;{val_lo_class}&quot;</span><span class="nt">&gt;</span>{val_lo}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="w">      </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="w">    </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="w">  </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="nt">&lt;/template&gt;</span>
+</code></pre></div>
+<p><strong><code>src/functions/forecast/template.xml</code></strong></p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">&lt;template</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;forecast&quot;</span><span class="w"> </span><span class="na">title=</span><span class="s">&quot;Multiple Forecasts&quot;</span><span class="w"> </span><span class="na">description=</span><span class="s">&quot;3 upcoming forecasts&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;fc-bg&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;fc-entry&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">      </span><span class="nt">&lt;img</span><span class="w"> </span><span class="na">src=</span><span class="s">&quot;{fc1_icon}&quot;</span><span class="w"> </span><span class="na">width=</span><span class="s">&quot;{fc_iw}&quot;</span><span class="w"> </span><span class="na">height=</span><span class="s">&quot;{fc_ih}&quot;</span><span class="w"> </span><span class="na">fit=</span><span class="s">&quot;contain&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">      </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;{fc1_class}&quot;</span><span class="nt">&gt;</span>{fc1}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">    </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">    </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;fc-entry&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">      </span><span class="nt">&lt;img</span><span class="w"> </span><span class="na">src=</span><span class="s">&quot;{fc2_icon}&quot;</span><span class="w"> </span><span class="na">width=</span><span class="s">&quot;{fc_iw}&quot;</span><span class="w"> </span><span class="na">height=</span><span class="s">&quot;{fc_ih}&quot;</span><span class="w"> </span><span class="na">fit=</span><span class="s">&quot;contain&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">      </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;{fc2_class}&quot;</span><span class="nt">&gt;</span>{fc2}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">    </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">    </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;fc-entry&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="w">      </span><span class="nt">&lt;img</span><span class="w"> </span><span class="na">src=</span><span class="s">&quot;{fc3_icon}&quot;</span><span class="w"> </span><span class="na">width=</span><span class="s">&quot;{fc_iw}&quot;</span><span class="w"> </span><span class="na">height=</span><span class="s">&quot;{fc_ih}&quot;</span><span class="w"> </span><span class="na">fit=</span><span class="s">&quot;contain&quot;</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">      </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">&quot;{fc3_class}&quot;</span><span class="nt">&gt;</span>{fc3}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="w">    </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="w">  </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="nt">&lt;/template&gt;</span>
+</code></pre></div>
+<p><strong><code>src/functions/weather/handler.py</code></strong> (abbreviated)</p>
+<div class="language-python highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">shared</span><span class="w"> </span><span class="kn">import</span> <span class="n">resolve_location</span><span class="p">,</span> <span class="n">fetch_timeseries</span><span class="p">,</span> <span class="n">current_conditions</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">shared</span><span class="w"> </span><span class="kn">import</span> <span class="n">download_icon</span><span class="p">,</span> <span class="n">fmt_temp</span><span class="p">,</span> <span class="n">weather_bg</span><span class="p">,</span> <span class="n">is_wide</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_load</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_temp</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_high</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_low</span> <span class="o">=</span> <span class="mf">0.0</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_icon</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="s2">&quot;main&quot;</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="s2">&quot;weather&quot;</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">line1</span> <span class="o">=</span> <span class="s2">&quot;...&quot;</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_press</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="s2">&quot;detail&quot;</span> <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;view&quot;</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;main&quot;</span> <span class="k">else</span> <span class="s2">&quot;main&quot;</span>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a>    <span class="n">_render</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a>
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_poll</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">60000</span><span class="p">):</span>
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>    <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span> <span class="o">=</span> <span class="n">resolve_location</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="s2">&quot;Oslo&quot;</span><span class="p">))</span>
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a>    <span class="n">ts</span> <span class="o">=</span> <span class="n">fetch_timeseries</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">)</span>
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>    <span class="n">temp</span><span class="p">,</span> <span class="n">high</span><span class="p">,</span> <span class="n">low</span><span class="p">,</span> <span class="n">symbol</span> <span class="o">=</span> <span class="n">current_conditions</span><span class="p">(</span><span class="n">ts</span><span class="p">)</span>
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_temp</span> <span class="o">=</span> <span class="n">temp</span>
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_high</span> <span class="o">=</span> <span class="n">high</span>
+<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_low</span> <span class="o">=</span> <span class="n">low</span>
+<a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_icon</span> <span class="o">=</span> <span class="n">download_icon</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">ctx</span><span class="o">.</span><span class="n">storage_path</span><span class="p">)</span>
+<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a>    <span class="n">_render</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+</code></pre></div>
+<p><strong><code>src/functions/forecast/handler.py</code></strong> (abbreviated)</p>
+<div class="language-python highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">shared</span><span class="w"> </span><span class="kn">import</span> <span class="n">resolve_location</span><span class="p">,</span> <span class="n">fetch_timeseries</span><span class="p">,</span> <span class="n">pick_forecasts</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">shared</span><span class="w"> </span><span class="kn">import</span> <span class="n">download_icon</span><span class="p">,</span> <span class="n">fmt_temp</span><span class="p">,</span> <span class="n">fmt_time</span><span class="p">,</span> <span class="n">weather_bg</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_load</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_forecasts</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="s2">&quot;forecast&quot;</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">fc1</span> <span class="o">=</span> <span class="s2">&quot;...&quot;</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_poll</span><span class="p">(</span><span class="n">ctx</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">60000</span><span class="p">):</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>    <span class="n">lat</span><span class="p">,</span> <span class="n">lon</span> <span class="o">=</span> <span class="n">resolve_location</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;location&quot;</span><span class="p">,</span> <span class="s2">&quot;Oslo&quot;</span><span class="p">))</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>    <span class="n">ts</span> <span class="o">=</span> <span class="n">fetch_timeseries</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="n">lon</span><span class="p">)</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>    <span class="n">interval_h</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">ctx</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;forecast_interval&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>    <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_forecasts</span> <span class="o">=</span> <span class="n">pick_forecasts</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">interval_hours</span><span class="o">=</span><span class="n">interval_h</span><span class="p">)</span>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>    <span class="n">_render</span><span class="p">(</span><span class="n">ctx</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>Key takeaways:</strong></p>
+<ul>
+<li><strong>Multi-function layout</strong> — <code>src/functions/weather/</code> and <code>src/functions/forecast/</code> subdirectories each have their own <code>template.xml</code> and <code>handler.py</code>. The root <code>src/shared.py</code> holds shared utilities (geocoding, API calls, formatting).</li>
+<li><strong>Per-function state</strong> — each function has isolated state. The <code>weather</code> function sets <code>ctx.state._template = "weather"</code> and the <code>forecast</code> function sets <code>ctx.state._template = "forecast"</code> without conflict.</li>
+<li>Two templates in <code>template.xml</code> (<code>weather</code> and <code>weather-detail</code>) — toggled via <code>ctx.state._template</code> on press.</li>
+<li><code>on_poll</code> runs every 60 seconds to fetch fresh weather data.</li>
+<li>Weather icon PNGs are downloaded into <strong><code>~/.local/share/pydeck/storage/weather/</code></strong> at runtime and referenced via <code>{icon_src}</code> using a <strong>storage-relative</strong> <code>src</code> (e.g. <code>clearsky_day.png</code>) returned from your download helper.</li>
+<li>Private state keys prefixed with <code>_</code> (e.g. <code>_temp</code>, <code>_high</code>, <code>_icon</code>) store raw data that isn't displayed directly.</li>
+<li>Dynamic gradient background using state interpolation in <code>shared.css</code>: <code>linear-gradient(180deg, {bg_top}, {bg_bottom})</code>.</li>
+</ul>
+<hr />
+<h2 id="5-tips-and-best-practices">5. Tips and Best Practices<a class="headerlink" href="#5-tips-and-best-practices" title="Permanent link">&para;</a></h2>
+<h3 id="naming-conventions">Naming Conventions<a class="headerlink" href="#naming-conventions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use lowercase with hyphens or underscores for plugin directory names: <code>weather</code>, <code>system-monitor</code>, not <code>pdkWeather</code>.</li>
+<li>Template names should match function names in the manifest (or be descriptive variants like <code>weather-detail</code>).</li>
+</ul>
+<h3 id="state-key-conventions">State Key Conventions<a class="headerlink" href="#state-key-conventions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Prefix private/internal state keys with <code>_</code> (e.g. <code>_temp</code>, <code>_icon_path</code>, <code>_template</code>).</li>
+<li>Use descriptive names for keys that appear in templates (e.g. <code>line1</code>, <code>temperature</code>, <code>percent</code>).</li>
+</ul>
+<h3 id="keep-templates-small">Keep Templates Small<a class="headerlink" href="#keep-templates-small" title="Permanent link">&para;</a></h3>
+<p>Stream Deck buttons are 72–96 px squares. Limit your template to 3–4 elements. Use <code>font-size</code> in <code>em</code> or <code>rem</code> units so text scales with the canvas.</p>
+<h3 id="use-css-variables-for-theming">Use CSS Variables for Theming<a class="headerlink" href="#use-css-variables-for-theming" title="Permanent link">&para;</a></h3>
+<p>Define colours in <code>:root</code> to make themes easy to adjust:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="p">:</span><span class="nd">root</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="nv">--primary</span><span class="p">:</span><span class="w"> </span><span class="mh">#00ff88</span><span class="p">;</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span><span class="nv">--bg</span><span class="p">:</span><span class="w"> </span><span class="mh">#1a1a2e</span><span class="p">;</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="pick-up-the-users-button-colour">Pick Up the User's Button Colour<a class="headerlink" href="#pick-up-the-users-button-colour" title="Permanent link">&para;</a></h3>
+<p>The core injects <code>_button_color</code> into the render state with the hex value of the user's chosen button colour. Use it in your CSS:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="p">:</span><span class="nd">root</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="nv">--bg</span><span class="p">:</span><span class="w"> </span><span class="err">{</span><span class="n">_button_color</span><span class="p">}</span><span class="o">;</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="err">}</span>
+</code></pre></div>
+<h3 id="use-spacer-for-flexible-layouts">Use <code>spacer</code> for Flexible Layouts<a class="headerlink" href="#use-spacer-for-flexible-layouts" title="Permanent link">&para;</a></h3>
+<p>Instead of calculating padding manually, use <code>&lt;spacer /&gt;</code> to push elements apart:</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nt">&lt;box</span><span class="w"> </span><span class="na">style=</span><span class="s">&quot;direction: column;&quot;</span><span class="nt">&gt;</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="nt">&lt;text&gt;</span>Title<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">  </span><span class="nt">&lt;spacer</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">  </span><span class="nt">&lt;text&gt;</span>Footer<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="nt">&lt;/box&gt;</span>
+</code></pre></div>
+<h3 id="leverage-em-units">Leverage <code>em</code> Units<a class="headerlink" href="#leverage-em-units" title="Permanent link">&para;</a></h3>
+<p>Using <code>em</code> for font sizes and spacing makes your layout scale proportionally if the base font size changes:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="p">.</span><span class="nc">time</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">1.7</span><span class="kt">em</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="p">.</span><span class="nc">label</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="mf">0.65</span><span class="kt">em</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<h3 id="image-assets">Image Assets<a class="headerlink" href="#image-assets" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Static images</strong> shipped with your plugin go in <code>assets/icons/</code>. Reference them as <code>&lt;img src="assets/icons/icon.png" /&gt;</code>.</li>
+<li><strong>Runtime-generated files</strong> (e.g. downloaded images) go under <strong><code>~/.local/share/pydeck/storage/&lt;plugin_name&gt;/</code></strong> via <code>ctx.storage_path</code>. Handlers should return <strong><code>src</code> values relative to <code>ctx.storage_path</code></strong> (e.g. <code>_now_playing.jpg</code>, <code>tracks/monaco.png</code>) for use in <code>&lt;img src="{...}" /&gt;</code>. <strong>Legacy:</strong> <code>plugins/storage/&lt;plugin_name&gt;/...</code>, or <code>../../storage/&lt;plugin_name&gt;/...</code> from the install directory, still resolve.</li>
+<li>Files in <code>assets/icons/</code> are replaced on plugin update. Files under <strong><code>~/.local/share/pydeck/storage/</code></strong> survive updates.</li>
+</ul>
+<p>See <a href="../getting-started/#images--img-and-storage">Images — assets/icons/ and storage/</a> for details and a code example.</p>
+<h3 id="poll-interval-selection">Poll Interval Selection<a class="headerlink" href="#poll-interval-selection" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>1000</code> ms (1 second) — for clocks and real-time displays.</li>
+<li><code>10000</code>–<code>60000</code> ms — for API-backed data that doesn't change frequently.</li>
+<li>Avoid very short intervals for network-dependent plugins to prevent rate limiting.</li>
+</ul>
+<h3 id="debugging">Debugging<a class="headerlink" href="#debugging" title="Permanent link">&para;</a></h3>
+<ul>
+<li>If a PDK render fails, the core falls back to a dark red error tile with "ERR" text on the web UI.</li>
+<li>Check the terminal output for <code>PDK render failed for &lt;plugin&gt;/&lt;function&gt;: &lt;error&gt;</code> messages.</li>
+<li>Use <code>print()</code> statements in your handlers during development — they appear in the backend console.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
