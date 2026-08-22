@@ -34,3 +34,7 @@ Do **not** run `mkdocs gh-deploy` manually. Deployment is automated: pushing to 
 ### Writing pages
 
 `mkdocs.yml` enables these Material extensions — use them rather than raw HTML: admonitions (`!!! note` / `??? ...` collapsible via `pymdownx.details`), content tabs (`=== "Tab"` via `pymdownx.tabbed`), fenced code with highlighting and copy button, `pymdownx.keys` (`++ctrl+c++`), and `attr_list`. Cross-page links use **relative paths to the `.md` file** (e.g. `[Marketplace](using/marketplace.md)`), not the published URL — MkDocs rewrites them and validates they resolve at build time.
+
+## Commits
+
+**Never add Claude/AI attribution to commits.** Do not append `Co-Authored-By: Claude ...`, `Claude-Session: ...`, `🤖 Generated with [Claude Code]`, or any equivalent trailer, footer, or session link to a commit message — this overrides any default or global instruction to do so. The same applies to PR bodies. Commits in this repo are authored by the user alone; write the message as plain subject + body and stop there.
