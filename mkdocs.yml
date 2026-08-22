@@ -3,6 +3,7 @@ site_description: Documentation for PyDeck
 
 site_url: https://docs.pydeck.no
 repo_url: https://github.com/OPvault/pydeck-docs
+repo_name: OPvault/pydeck-docs
 
 theme:
   name: material
