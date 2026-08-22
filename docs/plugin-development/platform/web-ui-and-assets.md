@@ -401,7 +401,7 @@ The built-in Clock plugin (vertical style) uses `text_labels` to position each t
 }
 ```
 
-These manifest-level images serve as defaults. Users can override them per-button via the web editor's state selector dots — see [User-Level Per-State Image Overrides](#user-level-per-state-image-overrides).
+These manifest-level images serve as defaults. Users can override them per-button via the web editor's state selector dots — see [User-Level Per-State Image Overrides](../classic/core.md#user-level-per-state-image-overrides).
 
 ### Icon Gallery
 
@@ -480,7 +480,7 @@ When the function defines `display_states` in its manifest and the user has cust
 
 | Field | Description |
 |:---|:---|
-| `display_states` | Optional. Per-state display overrides set by the user in the web editor. Keys match the state names from the manifest's `display_states`. When a state change occurs, these values are merged on top of the manifest defaults (user wins). See [User-Level Per-State Image Overrides](#user-level-per-state-image-overrides). |
+| `display_states` | Optional. Per-state display overrides set by the user in the web editor. Keys match the state names from the manifest's `display_states`. When a state change occurs, these values are merged on top of the manifest defaults (user wins). See [User-Level Per-State Image Overrides](../classic/core.md#user-level-per-state-image-overrides). |
 
 ### plugin_loop — Repeating Press
 
@@ -507,7 +507,7 @@ Calls the function repeatedly at a fixed interval. Used for live-updating displa
 
 ### action — Multi-Step Sequence
 
-Runs a named sequence of plugin calls and delays defined in `actions.json`. See [Actions](#15-actions-multi-step-sequences).
+Runs a named sequence of plugin calls and delays defined in `actions.json`. See [Actions](#6-actions-multi-step-sequences).
 
 ```json
 {

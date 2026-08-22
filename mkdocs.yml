@@ -62,6 +62,7 @@ nav:
       - Shared platform:
           - Authentication: plugin-development/platform/authentication.md
           - Web UI & Assets: plugin-development/platform/web-ui-and-assets.md
+          - Plugin documentation (markdown): plugin-development/platform/documentation.md
           - Press and hold & button events: plugin-development/platform/press-and-hold.md
           - HTTP API Reference: plugin-development/platform/http-api-reference.md
       - PDK development:
@@ -83,4 +84,4 @@ nav:
       - Getting Started: theme-development/getting-started.md
       - CSS Reference: theme-development/css-reference.md
       - Loader & Examples: theme-development/loader-examples.md
-      - Marketplace catalog workflows: theme-development/marketplace-catalog.md
+      - Theme catalog (pydeck-themes repo): theme-development/marketplace-catalog.md

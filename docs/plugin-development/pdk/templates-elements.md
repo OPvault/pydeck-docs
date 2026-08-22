@@ -192,6 +192,75 @@ Renders a text string. The element's text content is its display value.
 - **Default size:** auto (fits text content)
 - **Single-line only** — text is rendered on a single line with no wrapping or multi-line support.
 
+#### `<buttonlabel>` — Button Title
+
+Renders the **button's own Title**, as typed by the user in the button editor —
+not a value from `ctx.state`. Use it when the user should be able to name the
+button themselves.
+
+```xml
+<buttonlabel class="label">Key</buttonlabel>
+```
+
+- **Container:** No
+- **Styled exactly like `<text>`** — same properties, same single-line behaviour.
+
+The element's body is a **fallback**, shown only when the user has left the
+Title field empty. It is *not* the title itself.
+
+##### Falling back to plugin state
+
+The renderer fills `<buttonlabel>` elements **before** state interpolation runs,
+so a `{placeholder}` in the body works as a dynamic default:
+
+```xml
+<buttonlabel class="name">{entity_name}</buttonlabel>
+```
+
+| User's Title | What renders |
+|:---|:---|
+| empty | the interpolated `{entity_name}` from `ctx.state` |
+| `Bedside` | `Bedside` |
+
+This is how a plugin offers "name it yourself, otherwise show something
+sensible" without any handler code.
+
+##### Two things to get right
+
+**Unlock the Title field.** A function whose manifest sets `title_readonly: true`
+renders the editor's Title input read-only, so the user can never fill the
+element. `pdk_create` scaffolds new plugins **with** that flag, so remove it.
+
+**Clear the default title.** If `default_display.text` is non-empty, every new
+button starts with that as its Title — which always wins over the body, so a
+`{placeholder}` fallback would never be visible. Set `"text": ""` when you want
+the fallback to show.
+
+```json
+"functions": {
+  "toggle": {
+    "default_display": { "color": "#1a3a6e", "text": "" }
+  }
+}
+```
+
+##### Multiple slots
+
+A template may contain more than one `<buttonlabel>`. They are filled in
+document order from the button's `text_labels` (`top`, `middle`, `bottom`),
+falling back to the single `text` value. The core reports the count to the
+editor as `pdk_buttonlabel_count` so it can offer the right number of inputs.
+
+!!! warning "Long titles clip — they do not scroll"
+    `<buttonlabel>` is not a `<marquee>`, and the core's title scroller does not
+    apply to it: the label slots are passed to the renderer verbatim. Text wider
+    than the button is cut off. Keep fallbacks short, or size them down in CSS.
+
+!!! note "Hiding the label"
+    There is no state value that suppresses a `<buttonlabel>` — an empty Title
+    just reveals the body fallback. To make it optional, ship a second template
+    without the element and switch via `ctx.state._template`.
+
 #### `<img>` — Image
 
 Displays an image file. The `src` path is resolved relative to the plugin directory.

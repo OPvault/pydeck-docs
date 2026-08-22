@@ -366,22 +366,23 @@ PyDeck resolves the final text style for every rendered button through a three-l
 │                                          is true, otherwise     │
 │                                          suggestion only        │
 │  2. User per-button  display settings ← wins over system       │
-│  1. System Default   (Settings UI)    ← global fallback        │
+│  1. System Default   (built-in)       ← global fallback        │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
 ### Layer 1 — System Default
 
-The **System Default** is a global fallback that applies to every button that has no per-button override. It is configured in the PyDeck web UI under **Settings → Appearance** (scroll down past the theme picker to the text-defaults section).
+The **System Default** is a global fallback that applies to every button that has no per-button override. Today it is effectively the set of built-in values below — the **Settings → Appearance** pane that used to write it was removed, so nothing in the UI changes it any more.
 
-The defaults are stored in `~/.config/pydeck/core/config.json` under the key `text_style_defaults` and can also be read/written via the API:
+The values are still read from `~/.config/pydeck/core/config.json` under the key `text_style_defaults` (any keys left there by an older install are merged over the built-ins) and exposed read-only:
 
 ```text
-GET  /api/settings/text-style   → current system default values
-POST /api/settings/text-style   → update (partial or full)
+GET /api/settings/text-style   → current system default values
 ```
 
-**Default values** (when no system default has been saved):
+The per-button **Title → T↓** popup reads them to fill its placeholders, and `lib/button.py` keeps them as layer 1 of the display merge.
+
+**Built-in values** (and what you get when nothing is stored):
 
 | Field | Value |
 |:---|:---|
@@ -397,7 +398,7 @@ POST /api/settings/text-style   → update (partial or full)
 
 The user can customise text style for each individual button through the **Title → T↓** popup in the button editor. These settings are saved in the button's `display` object inside `buttons.json`. They override the system default for that button.
 
-The user can also configure **multi-position labels** from the Title section by clicking **+ Label**. When multiple labels are configured the button stores a `text_labels` dict instead of a plain `text` string; see [Multi-Position Labels (text_labels)](#multi-position-labels-text_labels) for details.
+The user can also configure **multi-position labels** from the Title section by clicking **+ Label**. When multiple labels are configured the button stores a `text_labels` dict instead of a plain `text` string; see [Multi-Position Labels (text_labels)](../platform/web-ui-and-assets.md#multi-position-labels-text_labels) for details.
 
 ### Layer 3 — Plugin Manifest
 

@@ -19,6 +19,22 @@ PDK plugins use event-driven handlers instead of per-function callables. All han
 | `ctx.storage_path` | Path | Absolute path to the plugin's persistent storage directory (`~/.local/share/pydeck/storage/<name>/`). Use this for runtime-generated files (e.g. downloaded images). Files here survive plugin updates. |
 | `ctx.refresh()` | method | Mark the display as needing a re-render. |
 
+#### Injected `ctx.config` keys
+
+Alongside the user's own UI fields, the core injects a set of underscore-prefixed keys into `ctx.config` on every dispatch. They are part of the plugin contract — read them, don't write them.
+
+| Key | Description |
+|:---|:---|
+| `_button_id` | The button's numeric id in the active profile. |
+| `_button_event` | `"press"` or `"release"` for this invocation. PDK plugins normally use `on_press` / `on_release` instead. See [Press and hold](../platform/press-and-hold.md). |
+| `_function` | The function being dispatched — useful in a `shared.py` helper serving several functions. |
+| `_button_color` | The user's chosen button background colour (hex string). |
+| `_button_gradient` | A CSS gradient string, or `_button_color` when no gradient is set. See [Gradient backgrounds](../../using/gradient-backgrounds.md). |
+| `_button_image` | The user's gallery image for the button, if any. |
+| `_state_images` | Per-state icon paths for a function declaring `display_states` — see [User-picked per-state icons](#user-picked-per-state-icons). |
+
+`_button_color` and `_button_gradient` also reach templates as [special state keys](#special-state-keys); the rest are config-only.
+
 #### State Attribute Access
 
 `ctx.state` supports both dict-style and attribute-style access:
@@ -90,7 +106,7 @@ This is how plugins implement multi-view buttons (e.g. a weather plugin that tog
 
 ### Per-Function Modules
 
-Multi-function plugins can place each function's handlers in a separate Python file inside a subdirectory (see [Plugin Directory Structure](getting-started.md#3-plugin-directory-structure)). For example, a weather plugin with `weather` and `forecast` functions:
+Multi-function plugins can place each function's handlers in a separate Python file inside a subdirectory (see [Plugin Directory Structure](getting-started.md#4-plugin-directory-structure)). For example, a weather plugin with `weather` and `forecast` functions:
 
 ```text
 ~/.local/share/pydeck/plugin/weather/
@@ -176,7 +192,81 @@ If `manifest.json` is absent, the core generates one automatically:
 | `pdk` | Auto-set | Always `true` for PDK plugins. |
 | `python_dependencies` | manifest.json | Pip packages as a JSON array. |
 | `credentials` | manifest.json | Credential field names. |
+| `documentation` | manifest.json | Path to a bundled markdown doc, relative to the plugin folder (e.g. `"DOCS.md"`). Auto-detected from a `DOCS.md`/`README.md` if not declared. |
+| `show_markdown_after_install` | manifest.json | `true` → PyDeck pops the rendered doc up right after install. Defaults to `false`. |
 | `functions.*.poll` | `on_poll` interval detection | `{ "function": "on_poll", "interval_ms": <value> }`. |
+| `functions.*.display_states` | manifest.json | Default icon per state, offered to the user in the editor's icon gallery. Reaches the handler as `ctx.config["_state_images"]` — see below. |
+
+!!! tip "Bundled documentation"
+    Drop a markdown file (e.g. `DOCS.md`) in your plugin folder and reference it
+    with `documentation` to get a rendered setup guide in the marketplace and an
+    optional after-install popup. See
+    [Plugin documentation](../platform/documentation.md).
+
+### User-picked per-state icons
+
+A function that toggles between states — muted/unmuted, on/off — usually wants to draw a **glyph** the user can change, while the template keeps control of the background and the state colours.
+
+Declare the states and their default icons in the manifest, exactly as the classic renderer does:
+
+```json
+"functions": {
+  "toggle_mute": {
+    "label": "Toggle Mute",
+    "display_states": {
+      "default": { "image": "plugins/plugin/no.pydeck.discord/assets/icons/mic.png" },
+      "active":  { "image": "plugins/plugin/no.pydeck.discord/assets/icons/mic_off.png" }
+    }
+  }
+}
+```
+
+The editor then shows **state selector dots** under the icon preview, so the user can pick a different image from the gallery for each state.
+
+For a **PDK** function the core does *not* let that image replace the button face. It resolves the manifest defaults, overlays whatever the user picked, and hands the result to the handler as **`ctx.config["_state_images"]`** — a `{state_key: image_path}` dict. Your handler chooses one and puts it in state; the template draws it:
+
+```python
+_ICON_LIVE = "assets/icons/mic.png"
+_ICON_MUTED = "assets/icons/mic_off.png"
+
+
+def _icon(ctx, state_key: str, fallback: str) -> str:
+    """The user's gallery pick for *state_key*, or the bundled asset."""
+    images = (getattr(ctx, "config", None) or {}).get("_state_images") or {}
+    return str(images.get(state_key) or "").strip() or fallback
+
+
+def on_poll(ctx, interval: int = 10000) -> None:
+    muted = is_muted()
+    ctx.state.icon_src = (
+        _icon(ctx, "active", _ICON_MUTED) if muted
+        else _icon(ctx, "default", _ICON_LIVE)
+    )
+    ctx.state.face_class = "face-active" if muted else ""
+```
+
+```xml
+<template name="toggle_mute">
+  <box class="face {face_class}">
+    <img src="{icon_src}" class="glyph" fit="contain" />
+  </box>
+</template>
+```
+
+Always fall back to a bundled asset: `_state_images` is empty until the manifest declares `display_states`, and a user can clear their pick.
+
+!!! note "Paths use the logical `plugins/plugin/` prefix"
+    Manifest defaults are written as `plugins/plugin/<plugin-id>/…`, the same logical
+    prefix the rest of the manifest uses; the core maps it onto the data home
+    (`~/.local/share/pydeck/plugin/…`) at load time. Bundled fallbacks inside your own
+    handler can stay relative to the plugin directory (`assets/icons/mic.png`).
+
+!!! warning "This is the PDK path only"
+    On the **classic** path a `display_states` image is persisted into the button's
+    `display` and replaces the whole face. Doing that to a PDK button would suppress the
+    template entirely, which is why PDK functions get `_state_images` instead. See
+    [Classic — Core](../classic/core.md#3-display-states-and-toggling) for the classic
+    behaviour.
 
 ---
 
@@ -561,7 +651,7 @@ Using `em` for font sizes and spacing makes your layout scale proportionally if 
 - **Runtime-generated files** (e.g. downloaded images) go under **`~/.local/share/pydeck/storage/<plugin_name>/`** via `ctx.storage_path`. Handlers should return **`src` values relative to `ctx.storage_path`** (e.g. `_now_playing.jpg`, `tracks/monaco.png`) for use in `<img src="{...}" />`. **Legacy:** `plugins/storage/<plugin_name>/...`, or `../../storage/<plugin_name>/...` from the install directory, still resolve.
 - Files in `assets/icons/` are replaced on plugin update. Files under **`~/.local/share/pydeck/storage/`** survive updates.
 
-See [Images — assets/icons/ and storage/](getting-started.md#images--img-and-storage) for details and a code example.
+See [Images — assets/icons/ and storage/](getting-started.md#images-assetsicons-and-storage) for details and a code example.
 
 ### Poll Interval Selection
 

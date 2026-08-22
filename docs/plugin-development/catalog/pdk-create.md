@@ -19,6 +19,7 @@ After generation, restart PyDeck and use the sidebar to add your new plugin to a
 - Python 3.10+
 - A local clone of the [pydeck](https://github.com/opvault/pydeck) app repository (optional if you only use `--pydeck-source` pointing at the live plugin directory)
 - The [pydeck-plugins](https://github.com/opvault/pydeck-plugins) repo checked out (the tool lives there, not in pydeck)
+- **Interactive TUI:** install [Textual](https://github.com/Textualize/textual) from `tools/pdk_create/requirements.txt` (`pip install -r tools/pdk_create/requirements.txt`). If Textual is not installed, the tool uses stdin line prompts instead.
 
 ---
 
@@ -36,7 +37,7 @@ or:
 python3 -m tools.pdk_create
 ```
 
-**Interactive mode** asks for an RDNN **plugin id** (folder name), display name, description, function ids, and preset. It resolves the **plugin root** (the directory whose immediate subfolders are plugin packages) automatically (see below).
+**Interactive mode** opens a **Textual TUI** (when Textual is installed) to set the **plugin root** path, RDNN **plugin id** (folder name), display name, description, function ids, preset, optional post-install script, and overwrite confirmation. It resolves the **plugin root** from env, config, and candidates when possible (see below).
 
 **Non-interactive** example:
 
@@ -46,8 +47,11 @@ python -m tools.pdk_create --non-interactive \
   --plugin-id no.pydeck.my_plugin \
   --name "My Plugin" \
   --functions main,settings \
-  --preset counter
+  --preset counter \
+  --post-install
 ```
+
+Omit `--post-install` if you do not want `scripts/setup.sh` or `post_install_script` in the generated manifest.
 
 Using the pydeck **repository root** (legacy checkout layout; only if `plugins/plugin` still exists there):
 
@@ -73,13 +77,19 @@ Resolution matches **[Sync From PyDeck](sync-from-pydeck.md)**:
 3. **`PYDECK_SOURCE`** — environment variable: path to the plugin root directory
 4. **`PYDECK_ROOT`** — environment variable: repo root; may resolve `$PYDECK_ROOT/plugins/plugin/` when present
 5. **`~/.config/pydeck/pydeck-plugins/path.json`** — key `pydeck_source`, saved when you run `sync_from_pydeck.py` and confirm the path (should point at the plugin root, e.g. `~/.local/share/pydeck/plugin`)
-6. **Built-in candidates** (first existing directory wins), same order as sync:
-   - `~/.local/share/pydeck/plugin`
+6. **Built-in candidates** (first existing directory wins):
    - `~/Documents/GitHub/pydeck/plugins/plugin` (legacy checkout, before migration)
    - `<parent-of-pydeck-plugins>/pydeck/plugins/plugin`
    - `~/pydeck/plugins/plugin`
 
 If nothing is found, interactive mode prompts you to confirm a detected path or enter the full path to the **plugin root**.
+
+!!! warning "The candidate list is legacy-checkout only"
+    Unlike `sync_from_pydeck.py`, `pdk_create`'s built-in candidates do **not** include
+    `~/.local/share/pydeck/plugin`. On a migrated install nothing in step 6 exists, so the
+    path has to come from an earlier step — usually the saved `path.json` that
+    `sync_from_pydeck.py` writes once you confirm the source there. If you have never run
+    the sync, pass `--pydeck-source ~/.local/share/pydeck/plugin` or type it into the TUI.
 
 ---
 
@@ -98,6 +108,7 @@ If nothing is found, interactive mode prompts you to confirm a detected path or 
 | `--functions` | Comma-separated function ids (snake_case); defaults to `main` when omitted in `--non-interactive` mode |
 | `--preset` | `counter` (increments a number on press) or `static` (label-only demo) |
 | `--min-pydeck-version` | Written to `manifest.json` |
+| `--post-install` | Create `scripts/setup.sh` (executable) and set `manifest.json` `post_install_script` for marketplace post-install |
 | `--non-interactive` | Requires `--plugin-id` (or `--slug`), `--name`, and a resolvable plugin root path (`--functions` optional; see above) |
 | `--force` | Overwrite a non-empty existing plugin directory |
 
@@ -121,7 +132,7 @@ Under the plugin root, the tool creates:
 │       └── style.css
 ├── assets/icons/      (.gitkeep)
 ├── assets/fonts/      (.gitkeep)
-├── scripts/setup.sh
+├── scripts/setup.sh   (only if you enable post-install in the TUI or pass `--post-install`)
 └── meta/
     ├── options.json
     └── licenses/LICENSE-main

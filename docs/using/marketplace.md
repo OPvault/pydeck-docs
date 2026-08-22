@@ -7,8 +7,8 @@ This guide explains how the **pydeck** app and **pydeck-plugins** catalog fit to
 ## Table of Contents
 
 1. [Two-Repo Architecture](#1-two-repo-architecture)
-2. [The Plugin Catalog Repo — Layout](#2-the-plugin-catalog-repo--layout)
-3. [Root manifest.json — Catalog Format](#3-root-manifestjson--catalog-format)
+2. [The Plugin Catalog Repo — Layout](#2-the-plugin-catalog-repo-layout)
+3. [Root manifest.json — Catalog Format](#3-root-manifestjson-catalog-format)
 4. [Plugin Version Folders](#4-plugin-version-folders)
 5. [How PyDeck Installs a Plugin](#5-how-pydeck-installs-a-plugin)
 6. [Version Path Rules](#6-version-path-rules)
@@ -23,7 +23,15 @@ This guide explains how the **pydeck** app and **pydeck-plugins** catalog fit to
 
 ## 1. Two-Repo Architecture
 
-PyDeck uses two separate GitHub repositories.
+PyDeck uses two separate GitHub repositories for plugins — plus a third for themes.
+
+!!! info "Themes have their own catalog repo"
+    Everything on this page describes the **plugin** catalog,
+    [`opvault/pydeck-plugins`](https://github.com/opvault/pydeck-plugins). Themes ship
+    from [`opvault/pydeck-themes`](https://github.com/opvault/pydeck-themes), which uses
+    a `themes[]` array instead of `plugins[]` and its own copy of the tooling — see
+    [Themes and the marketplace catalog](../theme-development/marketplace-catalog.md).
+    PyDeck loads both by default.
 
 ```text
 ┌─────────────────────────────────┐       ┌─────────────────────────────────────┐
@@ -170,6 +178,10 @@ The root `manifest.json` at the repo root is the single file PyDeck fetches firs
 | `icon_path` | string | **Yes** | Repo-relative path to the plugin's icon image (e.g. `"plugins/spotify/icon.png"`). The image is shown in the marketplace card. |
 | `compatible_pydeck_versions` | array of strings | **Yes** | List of PyDeck version strings this plugin is compatible with. Used for filtering. |
 | `versions` | array | **Yes** | Array of version entries. Must contain at least one entry. |
+| `pdk` | boolean | No | Which plugin generation the **latest** version is built on: `true` for PDK, `false` for the deprecated classic `plugin.py` layout. The marketplace tags `false` entries as **Classic**. A missing key means "not stated" (an older catalog), which PyDeck keeps distinct from an explicit `false`. |
+| `doc_path` | string | No | Repo-relative path to a markdown file bundled with the latest version (e.g. `"plugins/no.pydeck.discord/2.0.0/DOCS.md"`). When present the card gets a **Docs** button that renders the guide without installing. See [Plugin documentation](../plugin-development/platform/documentation.md). |
+| `show_markdown_after_install` | boolean | No | Only meaningful alongside `doc_path`. When `true`, PyDeck pops the rendered doc up immediately after install instead of only on demand. |
+| `licenses` | array of strings | No | Licence files bundled with the plugin, surfaced in the marketplace card. Omitted when the plugin declares none. |
 
 ### Version entry fields
 
@@ -219,7 +231,7 @@ For **classic plugins**:
 | `img/` | No | Image assets served via the plugin image API. |
 | `*.py` | No | Additional Python helper modules. |
 
-For **PDK plugins**, the version folder contains the full PDK directory structure (`manifest.json`, `src/`, `assets/`, etc.). See [PDK Getting Started](../plugin-development/pdk/getting-started.md#3-plugin-directory-structure) for the full layout.
+For **PDK plugins**, the version folder contains the full PDK directory structure (`manifest.json`, `src/`, `assets/`, etc.). See [PDK Getting Started](../plugin-development/pdk/getting-started.md#4-plugin-directory-structure) for the full layout.
 
 ### The local `manifest.json` inside a version folder
 
@@ -460,7 +472,7 @@ Remove the entry from `manifest.json` without deleting the files. The files rema
 
 ### `compatible_pydeck_versions` (plugin entry level)
 
-Used for catalog search filtering. When a user's PyDeck version is not in this list, the plugin may be hidden or marked incompatible in the UI.
+Used for catalog search filtering, and matched as an **exact string** — `"1.0"` does not match a running `1.0.0`. The filter only applies when the search query carries a PyDeck version, so an unusual value here excludes the plugin from those searches rather than marking it up in the UI.
 
 ```json
 "compatible_pydeck_versions": ["1.0.0", "1.1.0"]
@@ -469,6 +481,8 @@ Used for catalog search filtering. When a user's PyDeck version is not in this l
 ### `min_pydeck_version` / `max_pydeck_version` (version entry level)
 
 Used by PyDeck's update checker to determine which versions of a plugin are valid for the running PyDeck version. If the user's PyDeck version is outside this range, that plugin version won't be offered as an upgrade.
+
+When **no** version of a plugin passes this filter, PyDeck still lists the entry but flags it `incompatible`. Those cards are hidden from the marketplace by default; a **show incompatible** toggle in the marketplace header reveals them, and the choice is remembered in the browser. This is the field that drives that state — not `compatible_pydeck_versions`.
 
 ```json
 {
@@ -489,7 +503,14 @@ PyDeck aggregates catalog URLs from all of the following sources in order (dupli
 1. **Environment variable** `PYDECK_MARKETPLACE_MANIFEST_URL` — comma-separated list of URLs.
 2. **Config file** `~/.config/pydeck/core/config.json` → `marketplace_manifest_urls` (list of strings).
 3. **Config file** (legacy) → `marketplace_manifest_url` (single string).
-4. **Built-in default** — the URL compiled into `start.py` as `_DEFAULT_MARKETPLACE_MANIFEST_URLS`. This is **always** appended and cannot be disabled — it is the official PyDeck catalog.
+4. **Built-in defaults** — the URLs compiled into `start.py` as `_DEFAULT_MARKETPLACE_MANIFEST_URLS`. These are **always** appended and cannot be disabled — they are the official PyDeck catalogs, one for plugins and one for themes:
+
+    ```text
+    https://raw.githubusercontent.com/opvault/pydeck-plugins/stable/manifest.json
+    https://raw.githubusercontent.com/opvault/pydeck-themes/stable/manifest.json
+    ```
+
+A bare GitHub repo URL (`https://github.com/<owner>/<repo>`) is accepted too: PyDeck rewrites it to the raw `manifest.json` on the **`main`** branch.
 
 All resolved URLs are loaded together. Adding your own catalog does not replace the built-in default; plugins from all catalogs are merged into a single list (first slug wins if the same plugin appears in multiple catalogs).
 

@@ -75,7 +75,7 @@ Returns sidebar categories for the Settings page. Built-in categories are always
 |:---|:---|
 | `marketplace` | Marketplace |
 | `device` | Device (brightness, orientation — only shown when a hardware deck is connected) |
-| `appearance` | Appearance (includes text-style defaults) |
+| `appearance` | Appearance (theme picker) |
 | `api` | Credentials (plugin credentials & OAuth) |
 | `updates` | Updates (app updater & version selector) |
 | `licenses` | Licenses |
@@ -133,7 +133,7 @@ This function becomes available at `GET /api/plugins/my_plugin/api/entities`.
 
 **Response:** Whatever the `api_<endpoint>` function returns, serialized as JSON.
 
-This is the mechanism used by the [`api_select` field type](#api_select--dynamic-api-dropdown) to populate dynamic dropdowns. Query parameters sent to the endpoint are automatically merged into the `config` dict, enabling server-side filtering (e.g. scoping an entity list to a specific domain).
+This is the mechanism used by the [`api_select` field type](../classic/core.md#api_select-dynamic-api-dropdown) to populate dynamic dropdowns. Query parameters sent to the endpoint are automatically merged into the `config` dict, enabling server-side filtering (e.g. scoping an entity list to a specific domain).
 
 **Well-known endpoint — `api_record`**
 
@@ -144,7 +144,7 @@ When a function's `ui` contains a `hotkey_recorder` field, the editor calls `GET
 { "success": false, "error":  "Timeout: no key combo was pressed." }
 ```
 
-The `hotkey` string uses `+`-delimited lowercase key names identical to the format accepted by the **Keyboard** plugin's `press_key` function. See the [`hotkey_recorder` field type](#hotkey_recorder--keyboard-shortcut-recorder) for implementation details.
+The `hotkey` string uses `+`-delimited lowercase key names identical to the format accepted by the **Keyboard** plugin's `press_key` function. See the [`hotkey_recorder` field type](../classic/core.md#hotkey_recorder-keyboard-shortcut-recorder) for implementation details.
 
 ### Icons
 
@@ -248,7 +248,7 @@ To save user-level per-state image overrides (for functions that define `display
 }
 ```
 
-When omitted or empty, only the manifest's `display_states` are used during state changes. See [User-Level Per-State Image Overrides](#user-level-per-state-image-overrides).
+When omitted or empty, only the manifest's `display_states` are used during state changes. See [User-Level Per-State Image Overrides](../classic/core.md#user-level-per-state-image-overrides).
 
 **Response:** The normalized button object.
 
@@ -284,7 +284,7 @@ Execute a button press from the web UI and return the result.
 
 ### Actions
 
-The Actions API provides full CRUD access to named multi-step action sequences stored in `~/.config/pydeck/core/actions.json`. Each step is either a plugin call or a delay (see [§15](#15-actions-multi-step-sequences) for the step schema).
+The Actions API provides full CRUD access to named multi-step action sequences stored in `~/.config/pydeck/core/actions.json`. Each step is either a plugin call or a delay (see [§15](web-ui-and-assets.md#6-actions-multi-step-sequences) for the step schema).
 
 #### `GET /api/actions`
 
@@ -1174,7 +1174,7 @@ Emitted whenever something changes on the deck (button press, display update, fo
 | `display_update` | `button`, `device_id` | A button's display was updated (by poller or cross-device sync). GUI should refresh that button's image. |
 | `folder_change` | `device_id` | The active folder changed. GUI should reload all button images. |
 | `postinstall_prompt` | `request_id`, `slug`, `version`, `requires_sudo`, `script_rel_path`, `script_abs_path` | A newly installed plugin has a post-install script awaiting user review. The UI should show the review/approve prompt. |
-| `postinstall_result` | `request_id`, `slug`, `version`, `status`, `exit_code?`, `error?`, `script_abs_path`, `deleted_plugin_on_decline?` | A post-install request was resolved (approved, declined, timed out, or failed). See [Post-Install Scripts](#post-install-scripts) for `status` values. |
+| `postinstall_result` | `request_id`, `slug`, `version`, `status`, `exit_code?`, `error?`, `script_abs_path`, `deleted_plugin_on_decline?` | A post-install request was resolved (approved, declined, timed out, or failed). See [Post-Install Scripts](../classic/getting-started.md#post-install-scripts) for `status` values. |
 
 All events include a `device_id` field so the GUI can scope updates to the correct device. Cross-device sync emits `display_update` events for **all** affected devices simultaneously — a client viewing Device B will see its buttons update live when Device A is pressed.
 

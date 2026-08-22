@@ -61,7 +61,7 @@ python -m tools.pdk_create
 | `static` | Label-style demo — good default to learn the layout |
 | `counter` | Press increments a number — shows `on_press` + state updates |
 
-The tool finds the **plugin root** (default **`~/.local/share/pydeck/plugin`**) using the same rules as `sync_from_pydeck.py` (`--pydeck-source`, `PYDECK_SOURCE`, saved `path.json`, or built-in candidates, including a **legacy checkout** folder **`…/pydeck/plugins/plugin/`** when it still exists under the PyDeck repo). If it cannot resolve the path, it prompts you.
+The tool finds the **plugin root** (on a current install, **`~/.local/share/pydeck/plugin`**) from `--pydeck-source`, `--pydeck-root`, `PYDECK_SOURCE`/`PYDECK_ROOT`, the saved `path.json`, then built-in candidates — which cover only **legacy checkout** folders such as `…/pydeck/plugins/plugin/`. If it cannot resolve the path, it prompts you. See [PDK Plugin Creator](../catalog/pdk-create.md#resolving-the-plugin-root-directory) for the full order.
 
 **One-shot example** (adjust paths):
 

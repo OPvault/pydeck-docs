@@ -11,7 +11,7 @@ Regenerates the root `manifest.json` for the `pydeck-plugins` catalog repo by sc
 3. [Options](#3-options)
 4. [Discovery Logic](#4-discovery-logic)
 5. [Field Priority](#5-field-priority)
-6. [catalog.json — Per-Plugin Metadata](#6-catalogjson--per-plugin-metadata)
+6. [catalog.json — Per-Plugin Metadata](#6-catalogjson-per-plugin-metadata)
 7. [Output Format](#7-output-format)
 8. [Examples](#8-examples)
 
@@ -46,9 +46,14 @@ Run from the repo root. No arguments are required for a standard regeneration.
 
 | Flag | Default | Description |
 |:---|:---|:---|
-| `--label TEXT` | `"Official · Canary"` | The `label` field written into the root manifest. Appears as a badge in PyDeck's marketplace UI when multiple catalogs are active. |
+| `--label TEXT` | `"Official · Testing"` | The `label` field written into the root manifest. Appears as a badge in PyDeck's marketplace UI when multiple catalogs are active. |
 | `--output PATH` | `manifest.json` | Where to write the output. Useful for previewing output to a different file. |
 | `--dry-run` | off | Print the generated JSON to stdout without writing any file. |
+
+!!! warning "Always pass `--label` on `canary` and `stable`"
+    The default is `"Official · Testing"`. Running the script unqualified while on the
+    `canary` or `stable` branch silently demotes that channel's label. See
+    [Release stable](release-stable.md) for the channel model.
 
 ---
 
@@ -59,8 +64,14 @@ Run from the repo root. No arguments are required for a standard regeneration.
 A subdirectory is treated as a version directory if:
 - Its name contains at least one `.`
 - Every segment separated by `.` is a digit (e.g. `1.0.0`, `2.1`, `1.0.1`)
+- It contains at least one file, anywhere below it
 
 Non-matching directories (like `img/`, `__pycache__/`) are ignored.
+
+!!! danger "Empty version directories are deleted"
+    Before scanning, the script **removes from disk** any semver-named directory under
+    `plugins/` that holds no files at all, printing a `PURGE` line for each. A version
+    folder you created but have not populated yet will not survive a regeneration.
 
 ### Version ordering
 
@@ -75,8 +86,20 @@ From each version's `manifest.json`:
 | `name` | `name` (latest version wins) |
 | `description` | `summary` (fallback only — see priority below) |
 | `author` | `author` (latest version wins) |
-| `min_pydeck_version` | `versions[].min_pydeck_version` |
-| `max_pydeck_version` | `versions[].max_pydeck_version` |
+| `min_pydeck_version` | `versions[].min_pydeck_version` (`"1.0.0"` when the key is absent) |
+| `max_pydeck_version` | `versions[].max_pydeck_version` (`"1.0.0"` when the key is absent) |
+| `documentation` (latest version) | `doc_path` (repo-relative path to the markdown file) |
+| `show_markdown_after_install` (latest version) | `show_markdown_after_install` |
+
+!!! warning "An absent `max_pydeck_version` pins the plugin"
+    Only a *missing key* falls back to `"1.0.0"` — an explicit `"max_pydeck_version": null`
+    is copied through as `null` and leaves the range open. Omitting the field entirely
+    caps the plugin at PyDeck 1.0.0, which is rarely what you want.
+
+If the **latest** version's `manifest.json` declares a `documentation` file, the
+plugin entry also gets a `doc_path` (e.g. `plugins/discord/1.1.4/DOCS.md`) plus the
+`show_markdown_after_install` flag, so the marketplace can fetch and render the doc.
+See [Plugin documentation](../platform/documentation.md).
 
 ### Icon detection
 
@@ -86,6 +109,16 @@ The script checks the plugin slug directory for icons in this priority order:
 2. `icon.png`
 
 The first match becomes `icon_path`. If neither exists, a warning is printed and `icon_path` is set to `""`.
+
+### Generation detection (`pdk`)
+
+Every entry carries a `pdk` boolean, read off the **latest** version folder. The check mirrors `lib/plugin.py:_pdk_sources_present()` in the PyDeck core, so the catalog's answer matches what the app decides after install. A version folder counts as PDK when it has any of:
+
+- `src/functions/<fn>/template.xml`
+- a root `plugin.xml` (legacy PDK layout)
+- a subdirectory holding `*.xml`, ignoring `__pycache__`, `img`, `storage`, `node_modules`, `src`, `assets`, `meta`, and `scripts`
+
+Otherwise the entry is `"pdk": false` and the marketplace tags the plugin as **Classic**. Only the catalog can answer this reliably — an installed copy may sit under an RDNN alias holding a different generation than the entry it resolves from.
 
 ---
 
@@ -104,6 +137,7 @@ catalog.json  >  existing root manifest.json  >  version manifest.json  >  built
 | `compatible_pydeck_versions` | ✓ (first) | ✓ (fallback) | — | `["1.0"]` |
 | `name` | — | ✓ (fallback) | ✓ (first) | slug |
 | `author` | — | ✓ (fallback) | ✓ (first) | `"Unknown"` |
+| `licenses` | ✓ (first) | ✓ (fallback) | — | omitted when empty |
 
 This means regenerating the manifest never loses data — as long as the previous `manifest.json` is present, all catalog-only fields are preserved even if no `catalog.json` exists.
 
@@ -127,7 +161,8 @@ plugins/spotify/
 {
   "category": "media",
   "summary": "Control Spotify playback from your Stream Deck",
-  "compatible_pydeck_versions": ["1.0"]
+  "compatible_pydeck_versions": ["1.0"],
+  "licenses": ["LICENSE"]
 }
 ```
 
@@ -136,6 +171,7 @@ plugins/spotify/
 | `category` | string | Category shown in marketplace filter (e.g. `"media"`, `"utilities"`, `"system"`). |
 | `summary` | string | One-line description shown in the marketplace card. Overrides the `description` field from the plugin's `manifest.json`. |
 | `compatible_pydeck_versions` | array of strings | PyDeck versions this plugin is compatible with. |
+| `licenses` | array of strings | Licence files bundled with the plugin, surfaced in the marketplace card. The key is omitted from the entry when the list is empty. |
 
 All fields are optional. Any field present in `catalog.json` takes priority over both the existing root manifest and the plugin's own `manifest.json`.
 
@@ -148,38 +184,39 @@ The generated `manifest.json` follows the standard catalog format:
 ```json
 {
   "schema_version": 1,
-  "label": "Official · Canary",
-  "generated_at": "2026-04-06T12:00:00Z",
+  "label": "Official · Testing",
+  "generated_at": "2026-08-22T12:00:00Z",
   "plugins": [
     {
       "name": "Clock",
       "slug": "no.pydeck.clock",
       "category": "utilities",
-      "summary": "Display a live digital clock on a button",
+      "summary": "Displays the current time with a stylish gradient background",
       "author": "PyDeck Team",
-      "latest": "1.0.1",
+      "latest": "2.0.2",
       "icon_path": "plugins/no.pydeck.clock/icon.svg",
       "compatible_pydeck_versions": ["1.0"],
       "versions": [
         {
-          "version": "1.0.0",
-          "path": "plugins/no.pydeck.clock/1.0.0",
-          "min_pydeck_version": null,
+          "version": "2.0.1",
+          "path": "plugins/no.pydeck.clock/2.0.1",
+          "min_pydeck_version": "1.1.0",
           "max_pydeck_version": null
         },
         {
-          "version": "1.0.1",
-          "path": "plugins/no.pydeck.clock/1.0.1",
-          "min_pydeck_version": null,
+          "version": "2.0.2",
+          "path": "plugins/no.pydeck.clock/2.0.2",
+          "min_pydeck_version": "1.1.0",
           "max_pydeck_version": null
         }
-      ]
+      ],
+      "pdk": true
     }
   ]
 }
 ```
 
-Plugins are sorted alphabetically by `name`. Within a plugin, versions are sorted oldest-first; `latest` always points to the last entry.
+Plugins are sorted alphabetically by `name`. Within a plugin, versions are sorted oldest-first; `latest` always points to the last entry. `doc_path` / `show_markdown_after_install` and `licenses` are added only when they apply, so most entries omit them.
 
 ---
 

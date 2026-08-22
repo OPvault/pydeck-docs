@@ -66,6 +66,8 @@ On first run the script auto-detects the pydeck source path and asks you to conf
 | Flag | Description |
 |:---|:---|
 | `--pydeck-source PATH` | Override the saved source path for this run only. Points to the **plugin root** (`~/.local/share/pydeck/plugin/` by default, or legacy `pydeck/plugins/plugin/`). |
+| `--plugin SLUG` | Sync (or list) only this plugin. Repeatable — pass it once per slug. |
+| `--list-plugins` | Print every source plugin with a **NEW** / **CHANGED** / **UNCHANGED** status, then exit without writing anything. |
 | `--dry-run` | Show what would happen without writing any files. The diff is still printed. |
 | `--no-diff` | Suppress the coloured per-file diff (shown by default for every changed plugin). |
 | `--no-generate` | Skip running `generate_manifest.py` after syncing. |
@@ -222,10 +224,23 @@ Python cache files (`__pycache__/`, `*.pyc`, `*.pyo`) are also excluded from bot
 
 ## 11. Examples
 
+### See what would change, without syncing
+
+```bash
+python sync_from_pydeck.py --list-plugins
+```
+
 ### Standard sync
 
 ```bash
 python sync_from_pydeck.py
+```
+
+### Sync a single plugin
+
+```bash
+python sync_from_pydeck.py --plugin no.pydeck.spotify
+python sync_from_pydeck.py --plugin no.pydeck.spotify --plugin no.pydeck.clock
 ```
 
 ### Preview changes without writing anything

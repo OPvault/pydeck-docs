@@ -1,6 +1,6 @@
 # release_stable.py
 
-Promotes the `canary` branch to `stable` and restores the canary label in one automated step. Run it when canary is ready to ship to stable users.
+Promotes the `canary` branch to `stable` and restores the canary label in one automated step. Run it when canary is ready to ship to stable users. It is the last hop of the `testing` → `canary` → `stable` chain; the first hop is a plain merge.
 
 ---
 
@@ -10,7 +10,7 @@ Promotes the `canary` branch to `stable` and restores the canary label in one au
 2. [Branch Model](#2-branch-model)
 3. [Usage](#3-usage)
 4. [Options](#4-options)
-5. [What It Does — Step by Step](#5-what-it-does--step-by-step)
+5. [What It Does — Step by Step](#5-what-it-does-step-by-step)
 6. [Pre-flight Checks](#6-pre-flight-checks)
 7. [The Label Swap](#7-the-label-swap)
 8. [Examples](#8-examples)
@@ -36,14 +36,17 @@ Every git command and file write is printed as it runs so you can see exactly wh
 
 ## 2. Branch Model
 
-The catalog repo uses two long-lived branches:
+The catalog repo has **three** long-lived branches — parallel release channels of the same catalog, promoted **`testing` → `canary` → `stable`**:
 
 | Branch | Label | Who uses it |
 |:---|:---|:---|
-| `canary` | `"Official · Canary"` | Users who opt in to early releases |
-| `stable` | `"Official · Stable"` | Default install, production users |
+| `testing` | `"Official · Testing"` | The active development line — catalog work lands here first |
+| `canary` | `"Official · Canary"` | Users who opt in to early releases; promoted from `testing` |
+| `stable` | `"Official · Stable"` | Default install, production users; promoted from `canary` |
 
-The only difference between the two branches at any point in time is the `label` field in `manifest.json`. All plugin files and version folders are identical — `stable` is always a fast-forward of `canary`.
+This script automates only the **last** hop. Promoting `testing` → `canary` is a manual merge; remember to regenerate with `--label "Official · Canary"` afterwards, since `generate_manifest.py` defaults to the *testing* label.
+
+Between promotions the only difference between two channels is the `label` field in `manifest.json`. `stable` is always a fast-forward of `canary`.
 
 PyDeck shows the label as a badge next to each catalog source in the marketplace UI, so users can see which channel a plugin comes from.
 
