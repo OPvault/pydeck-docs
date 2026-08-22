@@ -52,11 +52,13 @@ nav:
   - Installation: index.md
 
   - Using PyDeck:
+      - Devices: using/devices.md
+      - Profiles & folders: using/profiles-and-folders.md
+      - Action Builder: using/actions.md
+      - Virtual decks & phone control: using/virtual-decks.md
       - Marketplace: using/marketplace.md
       - Gradient backgrounds: using/gradient-backgrounds.md
-      - Official plugins:
-          - Discord: using/discord.md
-          - Spotify: using/spotify.md
+      - Updating PyDeck: using/updates.md
 
   - Plugin development:
       - Shared platform:

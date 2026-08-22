@@ -2,7 +2,13 @@
 
 **PyDeck** is a Python-powered macro deck you extend with plugins and themes. This page covers installing and running the main [PyDeck](https://github.com/opvault/pydeck) application from a git checkout on **Linux**, **macOS**, and **Windows**.
 
-When the app is running, use the sidebar or jump to [Marketplace & catalog](using/marketplace.md), [PDK development](plugin-development/pdk/getting-started.md) (recommended for new plugins), or [Theme development](theme-development/getting-started.md).
+When the app is running, use the sidebar or jump straight to:
+
+- [Devices](using/devices.md) — supported hardware, multiple decks, brightness and orientation
+- [Profiles & folders](using/profiles-and-folders.md) and the [Action Builder](using/actions.md) — more buttons than you have keys
+- [Virtual decks & phone control](using/virtual-decks.md) — run a deck on a phone or spare screen
+- [Marketplace](using/marketplace.md) — install plugins and themes, and [keep PyDeck itself updated](using/updates.md)
+- [PDK development](plugin-development/pdk/getting-started.md) (recommended for new plugins) or [Theme development](theme-development/getting-started.md)
 
 ## Requirements
 
@@ -109,4 +115,4 @@ powershell -ExecutionPolicy Bypass -File .\uninstall.ps1
 
 This stops and removes the platform's autostart entry (systemd unit / OpenRC script / runit service / s6 service / Upstart job / SysV init script / macOS LaunchAgent / Windows scheduled task), any installed udev rules on Linux, and the virtualenv. Optionally removes your config and logs (you will be asked before anything is deleted).
 
-For device support tables, project layout, and other details, see the [PyDeck README](https://github.com/opvault/pydeck/blob/main/README.md) in the application repository.
+Supported hardware is listed under [Devices](using/devices.md). For project layout and other implementation details, see the [PyDeck README](https://github.com/opvault/pydeck/blob/main/README.md) in the application repository.
