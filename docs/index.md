@@ -8,7 +8,7 @@ When the app is running, use the sidebar or jump straight to:
 - [Profiles & folders](using/profiles-and-folders.md) and the [Action Builder](using/actions.md) — more buttons than you have keys
 - [Virtual decks & phone control](using/virtual-decks.md) — run a deck on a phone or spare screen
 - [Marketplace](using/marketplace.md) — install plugins and themes, and [keep PyDeck itself updated](using/updates.md)
-- [PDK development](plugin-development/pdk/getting-started.md) (recommended for new plugins) or [Theme development](theme-development/getting-started.md)
+- [Plugin development](plugin-development/plugin/getting-started.md) — build your own buttons — or [Theme development](theme-development/getting-started.md)
 
 ## Requirements
 

@@ -82,7 +82,7 @@ Deleting an action from the manager does not clear buttons that reference it —
 | Several existing functions, one key | **Action** |
 | A wait between two calls | **Action** with a delay step |
 | A key that alternates between two behaviours | **Action** with a switch step |
-| New behaviour nothing implements yet | Write a plugin — see [PDK getting started](../plugin-development/pdk/getting-started.md) |
+| New behaviour nothing implements yet | Write a plugin — see [Plugin development — Getting started](../plugin-development/plugin/getting-started.md) |
 
 Anything a plugin exposes as a function can be a step, so the two compose: build the capability as a plugin function, then sequence it in the builder.
 

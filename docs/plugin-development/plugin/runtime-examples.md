@@ -1,4 +1,4 @@
-# PDK Development — Runtime & Examples
+# Plugin Development — Runtime & Examples
 
 ---
 
@@ -150,7 +150,13 @@ Both functions can use `ctx.state._template` without overwriting each other beca
 
 ### With manifest.json
 
-If your PDK plugin includes a `manifest.json`, it is loaded normally and augmented with `pdk: true` on the plugin and each function entry. This is the simplest approach — the manifest works identically to a classic plugin's manifest, but the button face is rendered by PDK instead of the core.
+If your PDK plugin includes a `manifest.json`, it is loaded normally. This is the simplest approach. Every field is documented in the [`manifest.json` reference](../platform/manifest-reference.md); the difference from the core's built-in renderer is that the button face comes from your template.
+
+!!! warning "Do not declare a `pdk` key"
+    The core decides a plugin's generation from its sources — `src/functions/<fn>/template.xml`
+    and friends, as listed under [How PDK plugins are detected](getting-started.md#how-pdk-plugins-are-detected).
+    A `pdk` key in the manifest is ignored, and new plugins should leave it out.
+    `pdk_create` no longer scaffolds it.
 
 ```json
 {
@@ -175,7 +181,7 @@ If your PDK plugin includes a `manifest.json`, it is loaded normally and augment
 }
 ```
 
-**`sidebar_icon` (and other install-dir assets):** use a path **relative to the plugin package**, e.g. **`assets/icons/PlayPause.png`** or **`img/icon.png`**. The web UI resolves these using the plugin id. You do **not** need the legacy logical prefix `plugins/plugin/<id>/...` for new PDK manifests (that form remains supported for older plugins).
+**`sidebar_icon` (and other install-dir assets):** use a path **relative to the plugin package**, e.g. **`assets/icons/PlayPause.png`** or **`img/icon.png`**. The web UI resolves these using the plugin id. You do **not** need the logical prefix `plugins/plugin/<id>/...` for new manifests (that form remains supported).
 
 ### Auto-Generated Manifest (no manifest.json)
 
@@ -189,7 +195,6 @@ If `manifest.json` is absent, the core generates one automatically:
 
 | Field | Source | Description |
 |:---|:---|:---|
-| `pdk` | Auto-set | Always `true` for PDK plugins. |
 | `python_dependencies` | manifest.json | Pip packages as a JSON array. |
 | `credentials` | manifest.json | Credential field names. |
 | `documentation` | manifest.json | Path to a bundled markdown doc, relative to the plugin folder (e.g. `"DOCS.md"`). Auto-detected from a `DOCS.md`/`README.md` if not declared. |
@@ -207,7 +212,7 @@ If `manifest.json` is absent, the core generates one automatically:
 
 A function that toggles between states — muted/unmuted, on/off — usually wants to draw a **glyph** the user can change, while the template keeps control of the background and the state colours.
 
-Declare the states and their default icons in the manifest, exactly as the classic renderer does:
+Declare the states and their default icons in the manifest:
 
 ```json
 "functions": {
@@ -223,7 +228,7 @@ Declare the states and their default icons in the manifest, exactly as the class
 
 The editor then shows **state selector dots** under the icon preview, so the user can pick a different image from the gallery for each state.
 
-For a **PDK** function the core does *not* let that image replace the button face. It resolves the manifest defaults, overlays whatever the user picked, and hands the result to the handler as **`ctx.config["_state_images"]`** — a `{state_key: image_path}` dict. Your handler chooses one and puts it in state; the template draws it:
+The core does *not* let that image replace the button face — that would suppress the template. It resolves the manifest defaults, overlays whatever the user picked, and hands the result to the handler as **`ctx.config["_state_images"]`** — a `{state_key: image_path}` dict. Your handler chooses one and puts it in state; the template draws it:
 
 ```python
 _ICON_LIVE = "assets/icons/mic.png"
@@ -261,12 +266,10 @@ Always fall back to a bundled asset: `_state_images` is empty until the manifest
     (`~/.local/share/pydeck/plugin/…`) at load time. Bundled fallbacks inside your own
     handler can stay relative to the plugin directory (`assets/icons/mic.png`).
 
-!!! warning "This is the PDK path only"
-    On the **classic** path a `display_states` image is persisted into the button's
-    `display` and replaces the whole face. Doing that to a PDK button would suppress the
-    template entirely, which is why PDK functions get `_state_images` instead. See
-    [Classic — Core](../classic/core.md#3-display-states-and-toggling) for the classic
-    behaviour.
+!!! note "How the user's pick is stored"
+    Per-button overrides live in the button's own `display_states` object in
+    `buttons.json` and are merged over the manifest defaults — see
+    [User-level per-state image overrides](../platform/web-ui-and-assets.md#user-level-per-state-image-overrides).
 
 ---
 
@@ -648,7 +651,7 @@ Using `em` for font sizes and spacing makes your layout scale proportionally if 
 ### Image Assets
 
 - **Static images** shipped with your plugin go in `assets/icons/`. Reference them as `<img src="assets/icons/icon.png" />`.
-- **Runtime-generated files** (e.g. downloaded images) go under **`~/.local/share/pydeck/storage/<plugin_name>/`** via `ctx.storage_path`. Handlers should return **`src` values relative to `ctx.storage_path`** (e.g. `_now_playing.jpg`, `tracks/monaco.png`) for use in `<img src="{...}" />`. **Legacy:** `plugins/storage/<plugin_name>/...`, or `../../storage/<plugin_name>/...` from the install directory, still resolve.
+- **Runtime-generated files** (e.g. downloaded images) go under **`~/.local/share/pydeck/storage/<plugin_name>/`** via `ctx.storage_path`. Handlers should return **`src` values relative to `ctx.storage_path`** (e.g. `_now_playing.jpg`, `tracks/monaco.png`) for use in `<img src="{...}" />`. The logical forms `plugins/storage/<plugin_name>/...` and `../../storage/<plugin_name>/...` also resolve.
 - Files in `assets/icons/` are replaced on plugin update. Files under **`~/.local/share/pydeck/storage/`** survive updates.
 
 See [Images — assets/icons/ and storage/](getting-started.md#images-assetsicons-and-storage) for details and a code example.

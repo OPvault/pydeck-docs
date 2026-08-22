@@ -1,6 +1,6 @@
-# PDK Development — Getting Started
+# Plugin Development — Getting Started
 
-When you finish this page you will understand how PDK differs from classic plugins, and you will be able to **scaffold and run** a new PDK plugin using the **PDK Plugin Creator** (recommended). An optional hand-written clock tutorial is included if you want to see every file built step by step.
+When you finish this page you will understand what a PDK plugin is made of, and you will be able to **scaffold and run** one using the **PDK Plugin Creator** (recommended). An optional hand-written clock tutorial is included if you want to see every file built step by step.
 
 **On disk:** Plugins live under **`~/.local/share/pydeck/plugin/<name>/`** (or **`$XDG_DATA_HOME/pydeck/plugin/<name>/`**). Runtime files use **`~/.local/share/pydeck/storage/<name>/`**.
 
@@ -9,13 +9,13 @@ When you finish this page you will understand how PDK differs from classic plugi
 - **`manifest.json` `sidebar_icon`** — use a path **under the install directory**, e.g. **`assets/icons/PlayPause.png`** or **`img/icon.png`**. The web UI resolves these using the plugin id (no `plugins/plugin/...` prefix needed).
 - **`<img src>` in templates** — paths **under the plugin folder** (e.g. `assets/icons/...`) are resolved from the plugin directory. Files under **`ctx.storage_path`** may use a **short path relative to that storage folder** (e.g. `_now_playing.jpg`, `tracks/monaco.png`); the renderer maps them to `~/.local/share/pydeck/storage/<name>/`.
 
-**Legacy (still supported):** the global logical prefixes **`plugins/plugin/...`** and **`plugins/storage/...`**, plus **`../../storage/<name>/...`** from the plugin directory, still resolve for older plugins and for **classic** `buttons.json` image fields — see [Plugin development — Getting started](../classic/getting-started.md).
+**Legacy (still supported):** the global logical prefixes **`plugins/plugin/...`** and **`plugins/storage/...`**, plus **`../../storage/<name>/...`** from the plugin directory, still resolve — the core maps them onto the data home. Manifest `display_states` defaults are conventionally written with the `plugins/plugin/` prefix.
 
 ---
 
 ## 1. What is PDK?
 
-PDK (PyDeck Development Kit) is an alternative plugin format that replaces the classic `manifest.json` + raw `plugin.py` approach with a template-driven model. Instead of relying on PyDeck's built-in text/image/color renderer, PDK plugins define their own button faces using:
+PDK (PyDeck Development Kit) is the plugin format for PyDeck. It is template-driven: instead of relying on PyDeck's built-in text/image/color renderer, PDK plugins define their own button faces using:
 
 - **XML templates** (`template.xml`) — structured markup with tags like `<box>`, `<text>`, `<img>`, and more.
 - **CSS-like stylesheets** (`shared.css`) — full cascade with selectors, variables, units, and shorthand properties.
@@ -23,15 +23,16 @@ PDK (PyDeck Development Kit) is an alternative plugin format that replaces the c
 
 PDK plugins are rendered server-side via Pillow into PNG images at the correct resolution for each Stream Deck model, so the button face can be anything you can draw — gradients, icons, progress bars, dynamic text, and custom layouts.
 
-### PDK vs Classic Plugins
+### What a PDK plugin is made of
 
-| | Classic (built-in renderer) | PDK Plugin |
-|:---|:---|:---|
-| Button face | Text + color + optional image, rendered by the core | Custom template rendered by PDK engine |
-| Appearance definition | `default_display` / `display_states` in manifest | `<template>` blocks + CSS |
-| Logic file | `plugin.py` with per-function callables | `src/shared.py` with event handlers (`on_load`, `on_press`, `on_poll`) |
-| State management | Return dict with `display_update` key | Set `ctx.state.*` attributes, template re-renders automatically |
-| Detection | Has `manifest.json` only | Has `src/functions/` with `template.xml` files |
+| Concern | Where it lives |
+|:---|:---|
+| Button face | A `<template>` block rendered by the PDK engine |
+| Appearance | `<template>` markup + CSS in `src/shared.css` / `src/functions/<name>/style.css` |
+| Logic | `src/shared.py` (and optional `src/functions/<name>/handler.py`) with `on_load`, `on_press`, `on_release`, `on_poll` |
+| State | Set `ctx.state.*` attributes; the template re-renders automatically |
+| Metadata | [`manifest.json`](../platform/manifest-reference.md) — label, UI fields, credentials, permissions |
+| Detection | The plugin has `src/functions/` with `template.xml` files |
 
 ---
 
@@ -101,7 +102,7 @@ If you prefer to **create every file by hand** to learn how they fit together, f
 
 ### Step B: Create `manifest.json`
 
-For PDK plugins you can provide a standard `manifest.json`. The core will augment it with `pdk: true` automatically.
+For PDK plugins you can provide a standard `manifest.json` — see the [manifest reference](../platform/manifest-reference.md). Nothing in it marks the plugin as PDK: the core works that out from the template sources.
 
 ```json
 {
@@ -207,7 +208,7 @@ Restart PyDeck. The `clock` plugin appears in the sidebar. Drag it onto a button
 
 ## 4. Plugin Directory Structure
 
-PDK plugins live under the same **`~/.local/share/pydeck/plugin/<plugin_name>/`** directory as classic plugins (see **`$XDG_DATA_HOME`** above). The folder name **is** the plugin name.
+PDK plugins live under **`~/.local/share/pydeck/plugin/<plugin_name>/`** (see **`$XDG_DATA_HOME`** above). The folder name **is** the plugin name.
 
 ### Standard Layout
 
@@ -311,4 +312,4 @@ A plugin is identified as PDK if its directory contains template XML sources. Th
 1. A `src/functions/` directory containing subdirectories with `template.xml` files, **or**
 2. (Legacy) A root `plugin.xml` file or immediate subdirectories with `.xml` files.
 
-When a PDK plugin is detected, the core routes rendering, press handling, and polling through the PDK engine instead of the classic path. Plugin discovery also requires either a `manifest.json` file or PDK XML sources — directories with neither are ignored.
+When a PDK plugin is detected, the core routes rendering, press handling, and polling through the PDK engine. Plugin discovery requires either a `manifest.json` file or PDK XML sources — directories with neither are ignored.

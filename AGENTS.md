@@ -25,7 +25,7 @@ Do **not** run `mkdocs gh-deploy` manually. Deployment is automated: pushing to 
 
 ## Structure & conventions
 
-- **`docs/`** holds all page content (Markdown). `docs/index.md` is the published landing page (install/run instructions). The content domains: `using/` (running PyDeck + marketplace), `plugin-development/` (split into `platform/` shared docs, `pdk/` template-driven plugins, `classic/` the deprecated `plugin.py` model, and `catalog/` for pydeck-plugins tooling), and `theme-development/`.
+- **`docs/`** holds all page content (Markdown). `docs/index.md` is the published landing page (install/run instructions). The content domains: `using/` (running PyDeck + marketplace), `plugin-development/` (split into `plugin/` for writing a plugin in the template-driven PDK format, `platform/` shared docs — manifest, UI fields, auth, web UI, HTTP API — and `catalog/` for pydeck-plugins tooling), and `theme-development/`.
 - **`mkdocs.yml`** defines the `nav:` tree — section labels and ordering. **Adding or renaming a page requires a matching `nav:` edit**; a new `.md` file alone won't appear in the sidebar.
 - **`site/`** is the build output. It is gitignored and **not** tracked — never edit, commit, or reference files under `site/` (they are regenerated on every build/deploy).
 - **`docs/CNAME`** sets the custom domain (`docs.pydeck.no`); MkDocs copies it into the build so the GitHub Pages domain survives each deploy.

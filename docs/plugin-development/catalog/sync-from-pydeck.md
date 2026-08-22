@@ -200,7 +200,7 @@ diff  home-assistant  (1.1.0 → new)
 | `+` (green) | Line added in the new version |
 | (dim) | Context lines (unchanged, shown for reference) |
 
-New files print a single green notice: `new file: plugin.py  (264 lines)`.  
+New files print a single green notice: `new file: src/shared.py  (264 lines)`.  
 Deleted files print a single red notice: `deleted file: old_helper.py  (40 lines)`.  
 Binary files print: `binary file changed: icon.png`.
 

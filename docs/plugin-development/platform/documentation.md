@@ -6,9 +6,8 @@ installed. This is the recommended home for setup guides, OAuth instructions, an
 troubleshooting tables: the docs travel with the plugin, so they always match the
 version a user actually installed.
 
-This applies to **both** [classic](../classic/getting-started.md) and
-[PDK](../pdk/getting-started.md) plugins — it is driven entirely by two
-`manifest.json` fields.
+It is driven entirely by two [`manifest.json`](manifest-reference.md) fields, so
+any [PDK](../plugin/getting-started.md) plugin can opt in.
 
 ---
 
@@ -36,18 +35,18 @@ Drop the markdown file (commonly `DOCS.md`) next to `manifest.json` in the versi
 folder:
 
 ```text
-plugins/discord/1.1.4/
+plugins/no.pydeck.discord/2.0.0/
 ├── manifest.json
 ├── DOCS.md           ← bundled documentation
-├── plugin.py
+├── src/
 └── ...
 ```
 
-!!! tip "PDK auto-detection"
-    PDK plugins inherit these fields from `manifest.json` as-is. If a PDK plugin
+!!! tip "Auto-detection"
+    If a plugin
     ships a doc file (`DOCS.md`, `README.md`, …) but doesn't declare `documentation`,
     the loader auto-detects it. `show_markdown_after_install` still defaults to
-    `false` unless you set it. See [Runtime & Examples](../pdk/runtime-examples.md).
+    `false` unless you set it. See [Runtime & Examples](../plugin/runtime-examples.md).
 
 ---
 

@@ -42,7 +42,7 @@ PyDeck uses two separate GitHub repositories for plugins — plus a third for th
 │  ~/.local/share/pydeck/plugin   │       │    <rdnn-plugin-id>/                │
 │    plugins installed here       │       │      <version>/                     │
 │                                 │       │        manifest.json                │
-│                                 │       │        plugin.py                    │
+│                                 │       │        src/                         │
 │                                 │       │        ...                          │
 └─────────────────────────────────┘       └─────────────────────────────────────┘
          user runs this                            hosted on GitHub
@@ -70,24 +70,23 @@ The two repos are **independent**. The catalog repo has no code that runs — it
     ├── no.pydeck.browser/
     │   └── 1.0.0/                 # ← One subfolder per version
     │       ├── manifest.json
-    │       └── plugin.py
+    │       └── src/
     │
     ├── no.pydeck.spotify/
-    │   ├── 1.0.0/
+    │   ├── 2.0.3/
     │   │   ├── manifest.json
-    │   │   ├── plugin.py
-    │   │   ├── spotify_client.py
-    │   │   ├── style.css
-    │   │   └── options.json
-    │   └── 1.1.0/
+    │   │   ├── DOCS.md
+    │   │   ├── assets/
+    │   │   └── src/
+    │   └── 2.0.4/
     │       ├── manifest.json
-    │       ├── plugin.py
-    │       └── spotify_client.py
+    │       ├── assets/
+    │       └── src/
     │
     └── no.pydeck.clock/
-        └── 1.0.0/
+        └── 2.0.2/
             ├── manifest.json
-            └── plugin.py
+            └── src/
 ```
 
 Rules:
@@ -178,7 +177,7 @@ The root `manifest.json` at the repo root is the single file PyDeck fetches firs
 | `icon_path` | string | **Yes** | Repo-relative path to the plugin's icon image (e.g. `"plugins/spotify/icon.png"`). The image is shown in the marketplace card. |
 | `compatible_pydeck_versions` | array of strings | **Yes** | List of PyDeck version strings this plugin is compatible with. Used for filtering. |
 | `versions` | array | **Yes** | Array of version entries. Must contain at least one entry. |
-| `pdk` | boolean | No | Which plugin generation the **latest** version is built on: `true` for PDK, `false` for the deprecated classic `plugin.py` layout. The marketplace tags `false` entries as **Classic**. A missing key means "not stated" (an older catalog), which PyDeck keeps distinct from an explicit `false`. |
+| `pdk` | boolean | No | Whether the **latest** version is a [PDK](../plugin-development/plugin/getting-started.md) plugin. `true` for PDK; `false` marks a pre-PDK entry, which the marketplace tags as **Classic**. Computed by the catalog generator from the version folder's sources — it is **not** copied from the plugin's own `manifest.json`. A missing key means "not stated" (an older catalog), which PyDeck keeps distinct from an explicit `false`. |
 | `doc_path` | string | No | Repo-relative path to a markdown file bundled with the latest version (e.g. `"plugins/no.pydeck.discord/2.0.0/DOCS.md"`). When present the card gets a **Docs** button that renders the guide without installing. See [Plugin documentation](../plugin-development/platform/documentation.md). |
 | `show_markdown_after_install` | boolean | No | Only meaningful alongside `doc_path`. When `true`, PyDeck pops the rendered doc up immediately after install instead of only on demand. |
 | `licenses` | array of strings | No | Licence files bundled with the plugin, surfaced in the marketplace card. Omitted when the plugin declares none. |
@@ -200,38 +199,36 @@ Each version folder contains the actual plugin files that get installed on the u
 
 **Repo structure:**
 ```text
-plugins/spotify/1.1.0/
+plugins/no.pydeck.spotify/2.0.4/
 ├── manifest.json
-├── plugin.py
-├── spotify_client.py
-└── style.css
+├── DOCS.md
+├── assets/
+└── src/
 ```
 
 **After install on user's machine:**
 ```text
-~/.local/share/pydeck/plugin/spotify/
+~/.local/share/pydeck/plugin/no.pydeck.spotify/
 ├── manifest.json
-├── plugin.py
-├── spotify_client.py
-└── style.css
+├── DOCS.md
+├── assets/
+└── src/
 ```
 
-The version directory name (`1.1.0`) is stripped. Everything inside it lands at the root of the plugin folder.
+The version directory name (`2.0.4`) is stripped. Everything inside it lands at the root of the plugin folder.
 
 ### Required files in a version folder
 
-For **classic plugins**:
-
 | File | Required | Purpose |
 |:---|:---|:---|
-| `manifest.json` | **Yes** | Local plugin manifest (different from the catalog root `manifest.json`). Declares functions, UI, credentials, OAuth, and permissions. |
-| `plugin.py` | **Yes** | Python functions called on button press. |
-| `style.css` | No | Custom CSS. Automatically served by the core. |
-| `options.json` | No | Extra marketplace metadata (features, tags). |
-| `img/` | No | Image assets served via the plugin image API. |
-| `*.py` | No | Additional Python helper modules. |
+| `manifest.json` | **Yes** | Local plugin manifest (different from the catalog root `manifest.json`). Declares functions, UI fields, credentials, OAuth, and permissions — see [`manifest.json` reference](../plugin-development/platform/manifest-reference.md). |
+| `src/` | **Yes** | The PDK sources: `shared.py`, `shared.css`, and `functions/<name>/template.xml`. |
+| `assets/` | No | Icons and fonts shipped with the plugin. |
+| `DOCS.md` | No | Bundled markdown guide — see [Plugin documentation](../plugin-development/platform/documentation.md). |
+| `meta/options.json` | No | Extra marketplace metadata (features, tags). |
+| `LICENSE-*` | No | Third-party licence texts declared in the manifest's `licenses` array. |
 
-For **PDK plugins**, the version folder contains the full PDK directory structure (`manifest.json`, `src/`, `assets/`, etc.). See [PDK Getting Started](../plugin-development/pdk/getting-started.md#4-plugin-directory-structure) for the full layout.
+See [Plugin development — Getting started](../plugin-development/plugin/getting-started.md#4-plugin-directory-structure) for the full layout.
 
 ### The local `manifest.json` inside a version folder
 
@@ -240,11 +237,10 @@ This is **not** the same format as the root catalog `manifest.json`. It is the p
 ```json
 {
   "name": "Spotify",
-  "version": "1.1.0",
+  "version": "2.0.4",
   "description": "Control Spotify playback via the Web API",
   "author": "PyDeck Team",
-  "slug": "spotify",
-  "entrypoint": "plugin.py",
+  "slug": "no.pydeck.spotify",
   "python_dependencies": ["requests"],
   "credentials": [
     { "id": "client_id", "label": "Client ID", "type": "text" },
@@ -262,7 +258,7 @@ This is **not** the same format as the root catalog `manifest.json`. It is the p
 }
 ```
 
-For **`manifest.json`** (`functions`, `ui`, credentials, permissions, and classic-only **`default_display` / `display_states` / `poll`**): see [PDK — Getting started](../plugin-development/pdk/getting-started.md) for layout and PDK behaviour, [Authentication](../plugin-development/platform/authentication.md) and [HTTP API reference](../plugin-development/platform/http-api-reference.md) for shared platform details, and [Classic — Core](../plugin-development/classic/core.md) for the **deprecated** `plugin.py` return contract and built-in button renderer.
+Every field is documented in the [`manifest.json` reference](../plugin-development/platform/manifest-reference.md); the `ui` array in [UI field types](../plugin-development/platform/ui-fields.md); credentials and OAuth in [Authentication](../plugin-development/platform/authentication.md); and the routes that serve all of it in the [HTTP API reference](../plugin-development/platform/http-api-reference.md).
 
 ---
 
@@ -312,7 +308,7 @@ PyDeck downloads each matching file from:
 https://raw.githubusercontent.com/<owner>/<repo>/<ref>/<path>
 ```
 
-The version prefix is stripped before writing — so `plugins/spotify/1.1.0/plugin.py` in the catalog is saved on disk as **`~/.local/share/pydeck/plugin/spotify/plugin.py`**. In `buttons.json` and manifests, image paths may still use the **logical** prefix `plugins/plugin/spotify/...`; PyDeck resolves those to the data directory.
+The version prefix is stripped before writing — so `plugins/no.pydeck.spotify/2.0.4/src/shared.py` in the catalog is saved on disk as **`~/.local/share/pydeck/plugin/no.pydeck.spotify/src/shared.py`**. In `buttons.json` and manifests, image paths may still use the **logical** prefix `plugins/plugin/spotify/...`; PyDeck resolves those to the data directory.
 
 ### What causes install to fail
 
@@ -343,7 +339,7 @@ The `path` value in each version entry is the most important field to get right.
 { "version": "1.1.0", "path": "plugins/spotify/1.1.0" }
 ```
 
-Files exist in the repo at `plugins/spotify/1.1.0/manifest.json`, `plugins/spotify/1.1.0/plugin.py`, etc.
+Files exist in the repo at `plugins/spotify/1.1.0/manifest.json`, `plugins/spotify/1.1.0/src/shared.py`, etc.
 
 ### Wrong — repo name included in path
 
@@ -370,7 +366,7 @@ If `plugins/browser/1.0.0/` doesn't exist as a real directory in the repo, the i
 ```text
 plugins/<slug>/<version>/
 ├── manifest.json   ← local plugin manifest
-├── plugin.py
+├── src/            ← PDK sources
 └── (any other files)
 ```
 
@@ -405,7 +401,7 @@ The catalog `manifest.json` and the version folder files must be committed and p
 
 - [ ] `plugins/<slug>/<version>/` directory exists in the repo
 - [ ] `plugins/<slug>/<version>/manifest.json` exists and is valid JSON with at minimum `name`, `version`, `description`, `author` fields
-- [ ] `plugins/<slug>/<version>/plugin.py` exists
+- [ ] `plugins/<slug>/<version>/src/` contains the plugin's PDK sources
 - [ ] Root `manifest.json` has a new entry for the plugin with `slug`, `latest`, `versions[].path` matching the directory above
 - [ ] Icon file exists at the path specified in `icon_path` (or remove the field)
 - [ ] Changes are pushed to the branch referenced by the catalog URL (usually `main`)
@@ -419,7 +415,7 @@ The catalog `manifest.json` and the version folder files must be committed and p
 ```text
 plugins/<slug>/<new_version>/
 ├── manifest.json   ← update the version field inside to match
-├── plugin.py
+├── src/
 └── ...
 ```
 
@@ -575,6 +571,6 @@ GitHub repo page URLs (e.g. `https://github.com/owner/repo`) are automatically c
 
 ### Install silently installs an empty plugin (no functions appear)
 
-**Cause:** The version folder exists but is missing `manifest.json` or `plugin.py`.
+**Cause:** The version folder exists but is missing `manifest.json` or its `src/` sources.
 
-**Fix:** Add both required files to the version folder and push.
+**Fix:** Add both to the version folder and push.

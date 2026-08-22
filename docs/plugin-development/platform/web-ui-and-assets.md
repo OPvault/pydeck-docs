@@ -1,7 +1,7 @@
 # Web UI, assets, and editor integration
 
-!!! info "Applies to PDK and classic plugins"
-    **`style.css`**, **`settings.html`**, the **`PyDeck.popup`** helpers, combined plugin CSS at **`/api/plugins/styles.css`**, and logical asset paths are **not** classic-only: **PDK** marketplace plugins use the same web UI and HTTP surface. Button **face** rendering differs (PDK uses templates; classic uses the built-in renderer — see [PDK — Getting started](../pdk/getting-started.md) and [Classic — Core](../classic/core.md) for that split). This guide lives under **Shared platform** in the site nav (not PDK-only).
+!!! info "Shared platform surface"
+    **`style.css`**, **`settings.html`**, the **`PyDeck.popup`** helpers, combined plugin CSS at **`/api/plugins/styles.css`**, and logical asset paths are the **web UI** side of a plugin — separate from how its button **face** is drawn. PDK composes the face from [templates](../plugin/templates-elements.md); everything on this page is about the editor, the browser UI, and the assets both sides share.
 
 **Paths:** On disk, each plugin lives under **`~/.local/share/pydeck/plugin/<name>/`** and runtime files under **`~/.local/share/pydeck/storage/<name>/`** (or **`$XDG_DATA_HOME/pydeck/...`**). In `buttons.json` and `display` fields, **`plugins/plugin/...`** and **`plugins/storage/...`** remain the **logical** image paths the core understands.
 
@@ -258,6 +258,50 @@ Each text-style field has an optional companion boolean `<field>_lock`. When set
 }
 ```
 
+#### Priority chain
+
+PyDeck resolves the final text style for every rendered button through a three-layer merge. Lower layers provide fallback values; higher layers win for any field they explicitly set.
+
+```text
+┌─────────────────────────────────────────────────────────────────┐
+│  Priority (highest → lowest)                                    │
+│                                                                 │
+│  3. Plugin manifest  default_display  ← wins when <field>_lock  │
+│                                          is true, otherwise     │
+│                                          suggestion only        │
+│  2. User per-button  display settings ← wins over system        │
+│  1. System default   (built-in)       ← global fallback         │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**Layer 1 — system default.** A global fallback for every button with no per-button override. The values are read from `~/.config/pydeck/core/config.json` under the key `text_style_defaults` (any keys left there by an older install are merged over the built-ins) and exposed read-only at `GET /api/settings/text-style`. The **Settings → Appearance** pane that used to write them was removed, so nothing in the UI changes them any more. The per-button **Title → T↓** popup reads them to fill its placeholders.
+
+| Field | Built-in value |
+|:---|:---|
+| `show_title` | `true` |
+| `text_position` | `"bottom"` |
+| `text_size` | `0` (auto) |
+| `text_bold` | `false` |
+| `text_italic` | `false` |
+| `text_underline` | `false` |
+| `text_color` | `""` (auto-contrasting) |
+
+**Layer 2 — user per-button settings.** Set through the **Title → T↓** popup in the button editor and saved in the button's `display` object inside `buttons.json`. They override the system default for that button.
+
+**Layer 3 — plugin manifest.** Text-style fields declared inside `default_display` are **suggestions**: applied only when the user has not explicitly set that field. Add `<field>_lock: true` to enforce the manifest value regardless. Only fields **explicitly declared** in the manifest participate at all — omitted fields fall through to layer 2 or 1.
+
+**Worked example.** The system default is `text_position: "top"`, `text_bold: true`. The user sets `text_size: 12` and explicitly saves `text_position: "bottom"` on one button. The plugin declares `text_position: "middle"` and `text_color: "#ffffff"`, neither locked:
+
+| Field | Resolved value | Source |
+|:---|:---|:---|
+| `text_position` | `"bottom"` | User per-button (manifest suggestion overridden) |
+| `text_color` | `"#ffffff"` | Plugin manifest suggestion (user had not set it) |
+| `text_size` | `12` | User per-button |
+| `text_bold` | `true` | System default |
+| All other fields | built-ins | System default |
+
+With `"text_position_lock": true` in the manifest, the resolved `text_position` would be `"middle"` regardless of what the user saved.
+
 ### Multi-Position Labels (text_labels)
 
 `text_labels` lets a button display independent text at up to three positions simultaneously — **top**, **middle**, and **bottom** — each rendered at its own y-coordinate. It replaces the single `text` + `text_position` pair when more than one label is needed.
@@ -401,7 +445,37 @@ The built-in Clock plugin (vertical style) uses `text_labels` to position each t
 }
 ```
 
-These manifest-level images serve as defaults. Users can override them per-button via the web editor's state selector dots — see [User-Level Per-State Image Overrides](../classic/core.md#user-level-per-state-image-overrides).
+These manifest-level images serve as defaults. Users can override them per-button via the web editor's state selector dots — see [User-level per-state image overrides](#user-level-per-state-image-overrides) below.
+
+### User-level per-state image overrides
+
+The web editor lets users customise the image for each state independently. When a function defines `display_states`, the editor shows **state selector dots** below the icon preview. Clicking a dot switches to that state so the user can browse the icon gallery and pick a different image for it.
+
+User overrides are stored on the button itself in a `display_states` field that mirrors the manifest structure:
+
+```json
+{
+  "id": 0,
+  "type": "plugin",
+  "plugin": "no.pydeck.discord",
+  "function": "toggle_mute",
+  "config": {},
+  "display": { "color": "#000000", "text": "" },
+  "display_states": {
+    "default": { "image": "/api/gallery/my_custom_unmuted.png" },
+    "active":  { "image": "/api/gallery/my_custom_muted.png" }
+  }
+}
+```
+
+The core resolves the final per-state image in two steps:
+
+1. **Manifest lookup** — read the state's partial display from the function's `display_states` in `manifest.json`.
+2. **User override merge** — if the button has its own `display_states` entry for that key, those values are merged on top (user wins).
+
+Plugins therefore always define the *default* image for each state, while users can replace it per-button without editing the manifest.
+
+For a **PDK** function the resolved result does **not** replace the button face — that would suppress the template. The core hands it to the handler as **`ctx.config["_state_images"]`**, a `{state_key: image_path}` dict the handler puts into state for the template to draw. See [User-picked per-state icons](../plugin/runtime-examples.md).
 
 ### Icon Gallery
 
@@ -480,7 +554,7 @@ When the function defines `display_states` in its manifest and the user has cust
 
 | Field | Description |
 |:---|:---|
-| `display_states` | Optional. Per-state display overrides set by the user in the web editor. Keys match the state names from the manifest's `display_states`. When a state change occurs, these values are merged on top of the manifest defaults (user wins). See [User-Level Per-State Image Overrides](../classic/core.md#user-level-per-state-image-overrides). |
+| `display_states` | Optional. Per-state display overrides set by the user in the web editor. Keys match the state names from the manifest's `display_states`. When a state change occurs, these values are merged on top of the manifest defaults (user wins). See [User-level per-state image overrides](#user-level-per-state-image-overrides). |
 
 ### plugin_loop — Repeating Press
 

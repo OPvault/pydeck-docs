@@ -118,7 +118,13 @@ Every entry carries a `pdk` boolean, read off the **latest** version folder. The
 - a root `plugin.xml` (legacy PDK layout)
 - a subdirectory holding `*.xml`, ignoring `__pycache__`, `img`, `storage`, `node_modules`, `src`, `assets`, `meta`, and `scripts`
 
-Otherwise the entry is `"pdk": false` and the marketplace tags the plugin as **Classic**. Only the catalog can answer this reliably — an installed copy may sit under an RDNN alias holding a different generation than the entry it resolves from.
+Otherwise the entry is `"pdk": false` — a pre-PDK plugin, which the marketplace tags as **Classic**. Only the catalog can answer this reliably — an installed copy may sit under an RDNN alias holding a different generation than the entry it resolves from.
+
+!!! note "The flag is detected, never copied"
+    The generator reads the version folder's **sources**. It does not copy a `pdk`
+    key out of the plugin's own `manifest.json` — PDK plugins do not declare one, and
+    the core ignores it if they do. See the
+    [`manifest.json` reference](../platform/manifest-reference.md).
 
 ---
 

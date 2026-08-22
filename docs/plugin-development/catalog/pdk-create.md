@@ -1,6 +1,6 @@
 # PDK Plugin Creator
 
-The **PDK plugin creator** is a small Python CLI shipped in the [pydeck-plugins](https://github.com/opvault/pydeck-plugins) repository (`tools/pdk_create`). It scaffolds a new **PDK-format** plugin into your PyDeck **plugin data directory** using the **standard layout** (`src/shared.py`, `src/functions/<name>/template.xml`, `handler.py`, and related files) so you start from working stubs instead of an empty directory. For concepts (PDK vs classic) and a guided first run, see [PDK Development — Getting Started](../pdk/getting-started.md); the quick start there is built around this tool.
+The **PDK plugin creator** is a small Python CLI shipped in the [pydeck-plugins](https://github.com/opvault/pydeck-plugins) repository (`tools/pdk_create`). It scaffolds a new **PDK-format** plugin into your PyDeck **plugin data directory** using the **standard layout** (`src/shared.py`, `src/functions/<name>/template.xml`, `handler.py`, and related files) so you start from working stubs instead of an empty directory. For concepts and a guided first run, see [Plugin development — Getting started](../plugin/getting-started.md); the quick start there is built around this tool.
 
 On a normal install, PyDeck keeps plugins under **`$XDG_DATA_HOME/pydeck/plugin/`** (default **`~/.local/share/pydeck/plugin/`**). The tool writes:
 
@@ -138,4 +138,4 @@ Under the plugin root, the tool creates:
     └── licenses/LICENSE-main
 ```
 
-Edit the generated files, add icons under `assets/icons/` as needed, then iterate. For PDK behavior and APIs, see [PDK Development — Getting Started](../pdk/getting-started.md), [Templates & Elements](../pdk/templates-elements.md), and [Runtime & Examples](../pdk/runtime-examples.md).
+Edit the generated files, add icons under `assets/icons/` as needed, then iterate. For PDK behavior and APIs, see [Plugin development — Getting started](../plugin/getting-started.md), [Templates & Elements](../plugin/templates-elements.md), and [Runtime & Examples](../plugin/runtime-examples.md).

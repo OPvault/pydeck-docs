@@ -62,22 +62,19 @@ nav:
       - Updating PyDeck: using/updates.md
 
   - Plugin development:
+      - Getting Started: plugin-development/plugin/getting-started.md
+      - Plugin Creator: plugin-development/catalog/pdk-create.md
+      - Templates & Elements: plugin-development/plugin/templates-elements.md
+      - Rendering: plugin-development/plugin/rendering.md
+      - Runtime & Examples: plugin-development/plugin/runtime-examples.md
       - Shared platform:
+          - manifest.json Reference: plugin-development/platform/manifest-reference.md
+          - UI Field Types: plugin-development/platform/ui-fields.md
           - Authentication: plugin-development/platform/authentication.md
           - Web UI & Assets: plugin-development/platform/web-ui-and-assets.md
           - Plugin documentation (markdown): plugin-development/platform/documentation.md
           - Press and hold & button events: plugin-development/platform/press-and-hold.md
           - HTTP API Reference: plugin-development/platform/http-api-reference.md
-      - PDK development:
-          - Getting Started: plugin-development/pdk/getting-started.md
-          - PDK Plugin Creator: plugin-development/catalog/pdk-create.md
-          - Templates & Elements: plugin-development/pdk/templates-elements.md
-          - Rendering: plugin-development/pdk/rendering.md
-          - Runtime & Examples: plugin-development/pdk/runtime-examples.md
-      - Classic plugins:
-          - Getting Started: plugin-development/classic/getting-started.md
-          - Core Development: plugin-development/classic/core.md
-          - Examples & Tips: plugin-development/classic/examples.md
       - Catalog tools (pydeck-plugins repo):
           - Generate Manifest: plugin-development/catalog/generate-manifest.md
           - Release Stable: plugin-development/catalog/release-stable.md

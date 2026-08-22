@@ -1,4 +1,4 @@
-# PDK Development — Templates & Elements
+# Plugin Development — Templates & Elements
 
 ---
 
@@ -271,7 +271,7 @@ Displays an image file. The `src` path is resolved relative to the plugin direct
 
 | Attribute | Description |
 |:---|:---|
-| `src` | Path to the image file. **Install-dir assets** resolve relative to the plugin directory (e.g. `assets/icons/<file>`). **Runtime files** under `ctx.storage_path` may use a **short path relative to that storage folder** (e.g. `_art.jpg`, `icons/cache.png`). Supports `{variable}` interpolation. **Legacy:** global logical paths `plugins/plugin/...` / `plugins/storage/...`, and `../../storage/<plugin_name>/...` from the plugin directory, still work. |
+| `src` | Path to the image file. **Install-dir assets** resolve relative to the plugin directory (e.g. `assets/icons/<file>`). **Runtime files** under `ctx.storage_path` may use a **short path relative to that storage folder** (e.g. `_art.jpg`, `icons/cache.png`). Supports `{variable}` interpolation. Global logical paths `plugins/plugin/...` / `plugins/storage/...`, and `../../storage/<plugin_name>/...` from the plugin directory, also resolve. |
 | `fit` | Sizing mode: `cover` (default — fill and crop), `contain` (fit within bounds), or `stretch` (exact size). |
 
 - **Container:** No

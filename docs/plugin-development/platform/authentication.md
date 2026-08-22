@@ -1,7 +1,7 @@
 # Authentication and credentials
 
-!!! info "Applies to PDK and classic plugins"
-    Everything on this page uses the same **`~/.config/pydeck/core/credentials.json`** store and the same **`manifest.json`** fields (`credentials`, `oauth`, …). **PDK** plugins (for example official catalog plugins under `no.pydeck.*`) use this exactly like classic `plugin.py` plugins. New work should be **PDK**; see [PDK — Getting started](../pdk/getting-started.md). This guide lives under **Shared platform** in the site nav (not PDK-only).
+!!! info "One credential store for every plugin"
+    Everything on this page uses the **`~/.config/pydeck/core/credentials.json`** store and the **`manifest.json`** fields (`credentials`, `oauth`, …) documented in the [manifest reference](manifest-reference.md). Official catalog plugins under `no.pydeck.*` use it exactly as described here; see [Plugin development — Getting started](../plugin/getting-started.md) to build one.
 
 ## 1. Credentials
 
@@ -344,7 +344,7 @@ For example, for Spotify register:
 http://127.0.0.1:8686/oauth/no.pydeck.spotify/callback
 ```
 
-**Spotify (legacy) plugin**:
+**Spotify plugin**:
 
 ```text
 http://127.0.0.1:8686/oauth/spotify/callback

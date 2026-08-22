@@ -1,11 +1,11 @@
 # HTTP and WebSocket API reference
 
-!!! info "Applies to PDK and classic plugins"
-    These routes and payloads are how **PyDeck’s core** exposes plugins to the web UI and to integrations. **PDK** handlers run behind the same discovery, forms, credentials, and action APIs as classic `plugin.py` functions. This reference does not document PDK template tags — see [Templates and elements](../pdk/templates-elements.md) and [Rendering](../pdk/rendering.md). This guide lives under **Shared platform** in the site nav (not PDK-only).
+!!! info "Core HTTP surface"
+    These routes and payloads are how **PyDeck’s core** exposes plugins to the web UI and to integrations. Plugin **discovery**, forms, credentials, and action APIs all run through them, whatever your handlers do internally. This reference does not document PDK template tags — see [Templates and elements](../plugin/templates-elements.md) and [Rendering](../plugin/rendering.md).
 
 ## Unified button model in HTTP and WebSocket payloads
 
-Plugin discovery and editor APIs use **one schema** for every installed plugin. JSON may therefore include **`default_display`**, **`display_states`**, and WebSocket events such as **`display_update`** — fields rooted in the **classic built-in renderer** and persisted **`buttons.json`** display object. **PDK** draws the hardware button **face** from **templates** and **`ctx.state`**; those classic-oriented fields still matter for the **web editor**, sidebar metadata, and compatibility, but they are not how PDK composes the PNG face. For return dicts and **`display_update`** semantics on the classic path, see [Classic — Core](../classic/core.md).
+Plugin discovery and editor APIs use **one schema** for every installed plugin. JSON may therefore include **`default_display`**, **`display_states`**, and WebSocket events such as **`display_update`** — fields rooted in the persisted **`buttons.json`** display object. **PDK** draws the hardware button **face** from **templates** and **`ctx.state`**; those display fields still matter for the **web editor**, sidebar metadata, and per-state icons, but they are not how PDK composes the PNG face. See [`manifest.json` reference](manifest-reference.md) for the manifest side and [Web UI and assets](web-ui-and-assets.md) for the `buttons.json` display object.
 
 ## 1. REST API Reference
 
@@ -118,22 +118,22 @@ Serves all plugin `style.css` files concatenated into one stylesheet.
 
 #### `GET /api/plugins/<name>/api/<path:endpoint>`
 
-Generic plugin data API. Any plugin can expose a data function by defining `api_<endpoint>(config)` as a top-level callable in `plugin.py`. It is then reachable at this URL with the plugin's stored credentials merged into `config` automatically.
+Generic plugin data API. Any plugin can expose a data function by defining `api_<endpoint>(config)` as a top-level callable in **`src/shared.py`**. It is then reachable at this URL with the plugin's stored credentials merged into `config` automatically.
 
 **Example — a plugin that exposes an `api_entities` function:**
 
 ```python
-# plugin.py
+# src/shared.py
 def api_entities(config: Dict[str, Any]) -> list:
     client = _get_client(config)
     return client.list_entities()
 ```
 
-This function becomes available at `GET /api/plugins/my_plugin/api/entities`.
+This function becomes available at `GET /api/plugins/<plugin_id>/api/entities`.
 
 **Response:** Whatever the `api_<endpoint>` function returns, serialized as JSON.
 
-This is the mechanism used by the [`api_select` field type](../classic/core.md#api_select-dynamic-api-dropdown) to populate dynamic dropdowns. Query parameters sent to the endpoint are automatically merged into the `config` dict, enabling server-side filtering (e.g. scoping an entity list to a specific domain).
+This is the mechanism used by the [`api_select` field type](ui-fields.md#api_select-dynamic-api-dropdown) to populate dynamic dropdowns. Query parameters sent to the endpoint are automatically merged into the `config` dict, enabling server-side filtering (e.g. scoping an entity list to a specific domain).
 
 **Well-known endpoint — `api_record`**
 
@@ -144,7 +144,7 @@ When a function's `ui` contains a `hotkey_recorder` field, the editor calls `GET
 { "success": false, "error":  "Timeout: no key combo was pressed." }
 ```
 
-The `hotkey` string uses `+`-delimited lowercase key names identical to the format accepted by the **Keyboard** plugin's `press_key` function. See the [`hotkey_recorder` field type](../classic/core.md#hotkey_recorder-keyboard-shortcut-recorder) for implementation details.
+The `hotkey` string uses `+`-delimited lowercase key names identical to the format accepted by the **Keyboard** plugin's `press_key` function. See the [`hotkey_recorder` field type](ui-fields.md#hotkey_recorder-keyboard-shortcut-recorder) for implementation details.
 
 ### Icons
 
@@ -248,7 +248,7 @@ To save user-level per-state image overrides (for functions that define `display
 }
 ```
 
-When omitted or empty, only the manifest's `display_states` are used during state changes. See [User-Level Per-State Image Overrides](../classic/core.md#user-level-per-state-image-overrides).
+When omitted or empty, only the manifest's `display_states` are used during state changes. See [User-level per-state image overrides](web-ui-and-assets.md#user-level-per-state-image-overrides).
 
 **Response:** The normalized button object.
 
@@ -1174,7 +1174,7 @@ Emitted whenever something changes on the deck (button press, display update, fo
 | `display_update` | `button`, `device_id` | A button's display was updated (by poller or cross-device sync). GUI should refresh that button's image. |
 | `folder_change` | `device_id` | The active folder changed. GUI should reload all button images. |
 | `postinstall_prompt` | `request_id`, `slug`, `version`, `requires_sudo`, `script_rel_path`, `script_abs_path` | A newly installed plugin has a post-install script awaiting user review. The UI should show the review/approve prompt. |
-| `postinstall_result` | `request_id`, `slug`, `version`, `status`, `exit_code?`, `error?`, `script_abs_path`, `deleted_plugin_on_decline?` | A post-install request was resolved (approved, declined, timed out, or failed). See [Post-Install Scripts](../classic/getting-started.md#post-install-scripts) for `status` values. |
+| `postinstall_result` | `request_id`, `slug`, `version`, `status`, `exit_code?`, `error?`, `script_abs_path`, `deleted_plugin_on_decline?` | A post-install request was resolved (approved, declined, timed out, or failed). See [Post-install scripts](manifest-reference.md#6-post-install-scripts) for `status` values. |
 
 All events include a `device_id` field so the GUI can scope updates to the correct device. Cross-device sync emits `display_update` events for **all** affected devices simultaneously — a client viewing Device B will see its buttons update live when Device A is pressed.
 
@@ -1213,11 +1213,11 @@ Plugin files on disk:
 ```text
 plugins/
 ├── plugin/                    # Installed plugin code (managed by marketplace)
-│   ├── spotify/
+│   ├── no.pydeck.spotify/
 │   │   ├── manifest.json
-│   │   ├── plugin.py
-│   │   └── img/               # Static assets shipped with the plugin
-│   └── discord/
+│   │   ├── src/               # PDK templates, styles, and handlers
+│   │   └── assets/            # Static assets shipped with the plugin
+│   └── no.pydeck.discord/
 │       └── ...
 └── storage/                   # Runtime-generated files (written by plugins, not replaced on update)
     ├── spotify/

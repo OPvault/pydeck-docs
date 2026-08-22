@@ -1,4 +1,4 @@
-# PDK Development — Rendering
+# Plugin Development — Rendering
 
 ---
 
