@@ -1,2 +1,5 @@
 site/
 .venv/
+
+# Local-only: proof-of-concept design notes, never published.
+docs/poc/
