@@ -1,0 +1,143 @@
+site_name: PyDeck Docs
+site_description: Install, use, and extend PyDeck — the Python-powered Stream Deck controller.
+
+site_url: https://docs.pydeck.no
+repo_url: https://github.com/OPvault/pydeck
+repo_name: OPvault/pydeck
+
+theme:
+  name: material
+  logo: assets/logo.png
+  favicon: assets/logo.png
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: Switch to light mode
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: Switch to dark mode
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.top
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.footer
+    - toc.follow
+    - content.tabs.link
+    - content.code.copy
+    - content.code.annotate
+    - search.suggest
+    - search.highlight
+
+plugins:
+  - search
+  - redirects:
+      redirect_maps:
+        # Old flat structure -> new audience-based tabs (keeps docs.pydeck.no links alive)
+        using/marketplace.md: using/marketplace.md
+        plugin-development/plugin/getting-started.md: plugins/getting-started.md
+        plugin-development/plugin/templates-elements.md: plugins/templates.md
+        plugin-development/plugin/rendering.md: plugins/rendering.md
+        plugin-development/plugin/runtime-examples.md: plugins/runtime.md
+        plugin-development/platform/manifest-reference.md: plugins/manifest.md
+        plugin-development/platform/ui-fields.md: plugins/ui-fields.md
+        plugin-development/platform/authentication.md: plugins/authentication.md
+        plugin-development/platform/web-ui-and-assets.md: plugins/assets.md
+        plugin-development/platform/documentation.md: plugins/documentation.md
+        plugin-development/platform/press-and-hold.md: plugins/events.md
+        plugin-development/platform/http-api-reference.md: reference/http-api.md
+        plugin-development/catalog/pdk-create.md: plugins/pdk-create.md
+        plugin-development/catalog/generate-manifest.md: plugins/publishing.md
+        plugin-development/catalog/release-stable.md: plugins/publishing.md
+        plugin-development/catalog/sync-from-pydeck.md: plugins/publishing.md
+        theme-development/getting-started.md: themes/getting-started.md
+        theme-development/css-reference.md: themes/css-reference.md
+        theme-development/loader-examples.md: themes/examples.md
+        theme-development/marketplace-catalog.md: themes/publishing.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      use_pygments: true
+      pygments_lang_class: true
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - admonition
+  - pymdownx.details
+  - attr_list
+  - md_in_html
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.keys
+  - toc:
+      permalink: true
+
+extra_css:
+  - stylesheets/extra.css
+
+extra_javascript:
+  - javascripts/sheet-drag.js
+
+nav:
+  - Home: index.md
+
+  - Get Started:
+      - Install PyDeck: get-started/install.md
+      - Your first button: get-started/first-button.md
+      - Troubleshooting: get-started/troubleshooting.md
+
+  - Using PyDeck:
+      - Devices: using/devices.md
+      - Profiles & folders: using/profiles-and-folders.md
+      - Action Builder: using/actions.md
+      - Install plugins & themes: using/marketplace.md
+      - Appearance & themes: using/appearance.md
+      - Gradient backgrounds: using/gradient-backgrounds.md
+      - Virtual decks & phone control: using/virtual-decks.md
+      - Keyboard shortcuts: using/keyboard-shortcuts.md
+      - Updating PyDeck: using/updates.md
+
+  - Build Plugins:
+      - Getting started: plugins/getting-started.md
+      - Plugin Creator (scaffold): plugins/pdk-create.md
+      - Templates & elements: plugins/templates.md
+      - Rendering & styling: plugins/rendering.md
+      - Runtime & the ctx object: plugins/runtime.md
+      - Press, hold & events: plugins/events.md
+      - manifest.json reference: plugins/manifest.md
+      - UI field types: plugins/ui-fields.md
+      - Authentication & credentials: plugins/authentication.md
+      - Assets & plugin web UI: plugins/assets.md
+      - Bundled documentation: plugins/documentation.md
+      - Publishing to the catalog: plugins/publishing.md
+
+  - Build Themes:
+      - Getting started: themes/getting-started.md
+      - CSS variable reference: themes/css-reference.md
+      - Examples: themes/examples.md
+      - Publishing themes: themes/publishing.md
+
+  - Reference:
+      - HTTP & WebSocket API: reference/http-api.md
+      - Config & file paths: reference/paths.md
+      - Developer options: reference/developer-options.md
+      - Glossary: reference/glossary.md
+

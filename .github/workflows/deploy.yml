@@ -18,6 +18,9 @@ jobs:
         with:
           python-version: "3.12"
 
-      - run: pip install mkdocs-material
+      - run: pip install -r requirements.txt
 
-      - run: mkdocs gh-deploy --force
+      # Fail the build on any warning (broken links, pages missing from nav).
+      - run: properdocs build --strict
+
+      - run: properdocs gh-deploy --force

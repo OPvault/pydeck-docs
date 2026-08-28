@@ -1,0 +1,6 @@
+# Docs build dependencies (pinned for reproducible CI + local builds).
+# ProperDocs is the maintained community continuation of MkDocs 1.x; it reads
+# the same config and keeps the mkdocs.* plugin/theme APIs working.
+properdocs>=1.6.7,<2
+mkdocs-material>=9.5,<10
+mkdocs-redirects>=1.2
