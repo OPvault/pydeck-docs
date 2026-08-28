@@ -4,6 +4,12 @@ PyDeck runs from a git checkout, so updating means moving that checkout — eith
 
 This page is about updating the **app**. Plugins and themes update separately through the [Marketplace](marketplace.md).
 
+!!! warning "The in-app updater needs `git`"
+    The installer clones with `git` when it is available and falls back to downloading a
+    source archive when it isn't. An archive install is not a git checkout, so **Settings
+    → Updates** has nothing to pull or check out. Update it by re-running the installer
+    instead — see [Install → Updating](../get-started/install.md#updating).
+
 ---
 
 ## Update modes

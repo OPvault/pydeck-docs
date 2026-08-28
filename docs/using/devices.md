@@ -19,8 +19,8 @@ This list is exhaustive: PyDeck enumerates Elgato devices and **skips any produc
 
 !!! note "Linux permissions"
     Reading a Stream Deck over HID needs access to `/dev/hidraw*`. Install the optional
-    udev rules (see [Installation](../index.md#linux)) or run PyDeck as root, otherwise
-    the device enumerates but never opens.
+    udev rules (see [Installation](../get-started/install.md#linux-permissions)) or run PyDeck as root, otherwise
+    the device enumerates but never opens. **macOS and Windows need no extra setup** — they grant HID access automatically.
 
 ---
 

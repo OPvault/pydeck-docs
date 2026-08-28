@@ -23,18 +23,18 @@ To put the same action on a second key, drag **New Action** onto that key and sa
 
 ## Step types
 
-| Step | What it does |
-|:---|:---|
-| **Plugin call** | Runs one plugin function with a saved set of property values. |
-| **Delay** | Waits a whole number of milliseconds before the next step. |
-| **Action** | Runs another named action — actions compose. |
-| **Set image** | Changes the button's image. |
-| **Set text** | Changes the button's text, up to three lines. |
-| **Set color** | Changes the button's background colour. |
-| **Group** | Bundles several steps so they can be nested inside a switch or reordered together. |
-| **Switch** | Runs a *different* option each press, cycling through them. |
+| Step | JSON key | What it does |
+|:---|:---|:---|
+| **Plugin call** | `plugin` | Runs one plugin function with a saved set of property values. |
+| **Delay** | `delay` | Waits a whole number of milliseconds before the next step. |
+| **Action** | `action` | Runs another named action — actions compose. |
+| **Set image** | `set_image` | Changes the button's image. |
+| **Set text** | `set_text` | Changes the button's text, up to three lines. |
+| **Set color** | `set_color` | Changes the button's background colour. |
+| **Group** | `grouped_actions` | Bundles several steps so they can be nested inside a switch or reordered together. |
+| **Switch** | `switch` | Runs a *different* option each press, cycling through them. |
 
-Every step is exactly one of these — a step that mixes, say, a `delay` and a `plugin`, is rejected when saved.
+Every step is **exactly one** of these — a step object carrying, say, both a `delay` and a `plugin` is rejected when saved.
 
 ### Switch steps
 
@@ -82,8 +82,8 @@ Deleting an action from the manager does not clear buttons that reference it —
 | Several existing functions, one key | **Action** |
 | A wait between two calls | **Action** with a delay step |
 | A key that alternates between two behaviours | **Action** with a switch step |
-| New behaviour nothing implements yet | Write a plugin — see [Plugin development — Getting started](../plugin-development/plugin/getting-started.md) |
+| New behaviour nothing implements yet | Write a plugin — see [Plugin development — Getting started](../plugins/getting-started.md) |
 
 Anything a plugin exposes as a function can be a step, so the two compose: build the capability as a plugin function, then sequence it in the builder.
 
-The REST endpoints behind the builder (`GET`/`POST`/`PUT`/`DELETE /api/actions`) and the full step schema are in the [HTTP API reference](../plugin-development/platform/http-api-reference.md).
+The REST endpoints behind the builder (`GET`/`POST`/`PUT`/`DELETE /api/actions`) and the full step schema are in the [HTTP API reference](../reference/http-api.md).

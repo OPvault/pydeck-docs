@@ -96,4 +96,4 @@ Switching profiles cancels any pending auto-return.
 
 ## Under the hood
 
-`folders.json` holds every folder in the profile as a map of folder id → `{name, buttons[]}`. A folder's buttons use the same schema as the profile's root `buttons.json` — see [Web UI & Assets](../plugin-development/platform/web-ui-and-assets.md) for the button object, and the [HTTP API reference](../plugin-development/platform/http-api-reference.md) for the profile and folder endpoints.
+`folders.json` holds every folder in the profile as a map of folder id → `{name, buttons[]}`. A folder's buttons use the same schema as the profile's root `buttons.json` — see [Web UI & Assets](../plugins/assets.md) for the button object, and the [HTTP API reference](../reference/http-api.md) for the profile and folder endpoints.
