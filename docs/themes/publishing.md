@@ -5,9 +5,11 @@ Themes you edit under **`~/.local/share/pydeck/themes/`** are local to your mach
 PyDeck loads both catalogs by default:
 
 ```text
-https://raw.githubusercontent.com/opvault/pydeck-plugins/stable/manifest.json   ← plugins
-https://raw.githubusercontent.com/opvault/pydeck-themes/stable/manifest.json    ← themes
+https://plugins.pydeck.no    ← plugins
+https://themes.pydeck.no     ← themes
 ```
+
+Both are vanity hosts that redirect to the `stable` branch of their repo.
 
 !!! warning "Two catalogs, two repos"
     Themes do **not** live in `pydeck-plugins`. The scripts in the two repos share a
@@ -75,7 +77,7 @@ python generate_manifest.py --output /tmp/preview.json
 
 | Flag | Default | Description |
 |:---|:---|:---|
-| `--label TEXT` | `"Official · Canary"` | The `label` written into the root manifest and shown as a badge in the marketplace UI. |
+| `--label TEXT` | `"Official · Canary"` | The `label` written into the root manifest and shown as a channel badge in the marketplace UI. |
 | `--output PATH` | `manifest.json` | Where to write. |
 | `--dry-run` | off | Print the JSON to stdout without writing. |
 
@@ -196,7 +198,27 @@ Version directories are semver-named and treated as **released**: a change never
 The catalog `label` defaults to `"Official · Canary"`, so pass `--label "Official · Stable"` when generating for the stable channel. There is no `release_stable.py` in this repo — promotion is a pull request from `canary` into `stable`.
 
 !!! note "Not the same as the plugin channels"
-    The plugin catalog has three channels (`testing` → `canary` → `stable`) and automates
-    the last hop with a script. See
-    [Release stable](../plugin-development/catalog/release-stable.md) — that page describes
+    The plugin catalog has three channels (`testing` → `canary` → `stable`), labels them
+    with the bare channel name, declares a `root_url`, and automates the last hop with a
+    script. This repo does none of those. See
+    [Publishing to the catalog](../plugins/publishing.md) — that page describes
     `pydeck-plugins`, not this repo.
+
+!!! warning "The **Official** badge does not come from the label"
+    PyDeck marks a catalog Official from the **URL it was configured with** — a
+    `pydeck.no` host, or a `raw.githubusercontent.com` URL under `OPvault` — and never
+    from anything the manifest says about itself. This repo's labels still carry the
+    `Official · ` prefix for historical reasons; it is cosmetic, and a fork that copied
+    it would gain nothing.
+
+### `root_url` and vanity hosts
+
+This catalog's manifest does **not** declare a `root_url`, so PyDeck resolves entry paths
+against the manifest's own directory. That works for a raw GitHub URL. It does *not* work
+for a manifest served from a bare hostname, where trimming the last path segment leaves
+`https://` with no repo in it.
+
+If you host a theme catalog behind a vanity domain, declare a `root_url` in the root
+manifest pointing at the raw base your files actually live under — see
+[the plugin catalog's `root_url`](../plugins/publishing.md#root_url-where-a-catalogs-files-actually-live)
+for the full explanation.

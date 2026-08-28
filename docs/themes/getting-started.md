@@ -2,7 +2,7 @@
 
 After this page you can add a new color palette to PyDeck as a theme folder and see it in **Settings → Appearance** without touching application code.
 
-Official themes that ship through the marketplace live in their own **[pydeck-themes](https://github.com/opvault/pydeck-themes)** catalog repo — separate from the `pydeck-plugins` plugin catalog, with its own manifest and its own copy of the tooling. Maintainer steps (sync from your local install, regenerate `manifest.json`, promote to `stable`) are documented in **[Marketplace catalog workflows](marketplace-catalog.md)**.
+Official themes that ship through the marketplace live in their own **[pydeck-themes](https://github.com/opvault/pydeck-themes)** catalog repo — separate from the `pydeck-plugins` plugin catalog, with its own manifest and its own copy of the tooling. Maintainer steps (sync from your local install, regenerate `manifest.json`, promote to `stable`) are documented in **[Marketplace catalog workflows](publishing.md)**.
 
 **On disk:** Theme families live under **`~/.local/share/pydeck/themes/<family>/`** (or **`$XDG_DATA_HOME/pydeck/themes/<family>/`**). On first start after upgrading, PyDeck migrates a legacy checkout **`themes/`** tree into that directory. HTTP routes stay **`/api/themes/<family>/<slot>.css`**.
 
@@ -100,9 +100,9 @@ All themes live under **`~/.local/share/pydeck/themes/`** (data home; legacy che
 
 ```text
 ~/.local/share/pydeck/themes/
-├── default/               # Built-in dark/light default
-│   ├── manifest.json
-│   ├── dark.css           # Empty — base variables come from style.css
+├── default/               # Bundled with PyDeck, seeded here on first run
+│   ├── manifest.json      #   labelled "PyDeck", variants "Default" / "Light"
+│   ├── dark.css           #   a handful of overrides; the rest comes from style.css
 │   └── light.css
 ├── nord/                  # Nord palette
 │   ├── manifest.json
@@ -112,6 +112,12 @@ All themes live under **`~/.local/share/pydeck/themes/`** (data home; legacy che
     ├── manifest.json
     └── theme.css          # Single-variant themes use this name
 ```
+
+!!! note "The bundled theme lives with the app"
+    `default/` ships inside the PyDeck install (`app/themes/default/`) and is **copied**
+    into your data directory the first time PyDeck runs, so a fresh install always has a
+    theme to select. Edit the copy in your data directory, not the one in the install —
+    an update overwrites the latter.
 
 ### File Summary
 
@@ -154,12 +160,14 @@ The manifest is a JSON object at the root of the theme folder. It controls how t
 | `scheme` | string | No | For **single-file themes only**. Tells the UI whether this theme is `"dark"` or `"light"` so the correct color-scheme CSS property is applied. Defaults to `"dark"` if omitted. Ignored when `variants` is present. |
 | `variants` | object | No | Maps `"dark"` and/or `"light"` to CSS filenames. When present, the theme shows a dark/light switcher in the UI. Omit it for a single-variant theme. |
 | `variant_labels` | object | No | Custom display labels for each variant key. When omitted, `"dark"` shows as **Dark** and `"light"` shows as **Light**. |
+| `variant_schemes` | object | No | Overrides the *display* scheme a variant slot is filed under, e.g. `{"light": "dark"}` for a theme that ships two dark palettes and uses the `light` slot for the second. Affects the Dark/Light filter in **Settings → Appearance** and the `color-scheme` applied; the filenames still come from `variants`. |
 
 ### Rules
 
 - `label` must be a non-empty string. Themes without it are invisible to the UI.
 - `variants` filenames must be simple basenames — no path separators or `..`.
 - The corresponding CSS file(s) must exist on disk. If a variant's file is missing, that variant is excluded from the discovered list.
-- `scheme` only matters for single-file themes. Multi-variant themes infer the scheme from the variant key (`dark` → `"dark"`, `light` → `"light"`).
+- `scheme` only matters for single-file themes. Multi-variant themes infer the scheme from the variant key (`dark` → `"dark"`, `light` → `"light"`) unless `variant_schemes` says otherwise.
+- A theme with no readable `manifest.json`, or with no variant whose CSS file exists, is skipped entirely.
 
 ---

@@ -9,9 +9,9 @@ PyDeck's entire UI is driven by CSS custom properties defined in `:root`. A them
 | Variable | Purpose | Dark example | Light example |
 |:---|:---|:---|:---|
 | `--bg-0` | Main page/canvas background | `#111111` | `#f0f0f2` |
-| `--bg-1` | Panel / sidebar / header surface | `#1a1a1a` | `#e4e4e8` |
+| `--bg-1` | Panel / sidebar / header surface | `#181818` | `#e4e4e8` |
 | `--bg-2` | Elevated surface (device frame, inputs) | `#242424` | `#d8d8de` |
-| `--bg-3` | Highest surface (active tabs, toggle track) | `#2e2e2e` | `#cacad2` |
+| `--bg-3` | Highest surface (active tabs, toggle track) | `#303030` | `#cacad2` |
 
 Background layers form a depth stack. `--bg-0` is the deepest (furthest back); `--bg-3` is closest to the user.
 
@@ -45,8 +45,8 @@ For light themes, flip the channel:
 
 ```css
 /* Dark */
---border:       rgba(255, 255, 255, 0.1);
---border-focus: rgba(120, 80, 200, 0.5);
+--border:       rgba(255, 255, 255, 0.06);
+--border-focus: rgba(168, 130, 255, 0.45);
 
 /* Light */
 --border:       rgba(0, 0, 0, 0.1);
@@ -63,9 +63,9 @@ For light themes, flip the channel:
 
 ```css
 /* Dark */
---text-0: #ebebeb;
+--text-0: #e3e3e3;
 --text-1: #999999;
---text-2: #555555;
+--text-2: #666666;
 
 /* Light */
 --text-0: #1a1a1c;
@@ -365,34 +365,34 @@ This is the complete list of every variable a theme can set, with the default da
 :root {
     /* ── Background layers ── */
     --bg-0: #111111;     /* main background */
-    --bg-1: #1a1a1a;     /* panels / sidebar / header */
+    --bg-1: #181818;     /* panels / sidebar / header */
     --bg-2: #242424;     /* inputs / device frame */
-    --bg-3: #2e2e2e;     /* active tabs / toggles */
+    --bg-3: #303030;     /* active tabs / toggles */
 
     /* ── Surfaces (semi-transparent overlays) ── */
-    --surface:       rgba(255, 255, 255, 0.05);
-    --surface-hover: rgba(255, 255, 255, 0.09);
+    --surface:       rgba(255, 255, 255, 0.035);
+    --surface-hover: rgba(255, 255, 255, 0.07);
 
     /* ── Borders ── */
-    --border:       rgba(255, 255, 255, 0.09);
+    --border:       rgba(255, 255, 255, 0.06);
     --border-focus: rgba(168, 130, 255, 0.45);
 
     /* ── Text ── */
-    --text-0: #ebebeb;   /* primary */
+    --text-0: #e3e3e3;   /* primary */
     --text-1: #999999;   /* secondary */
-    --text-2: #555555;   /* tertiary / disabled */
+    --text-2: #666666;   /* tertiary / disabled */
 
     /* ── Accent ── */
     --accent:      #a882ff;
     --accent-glow: rgba(168, 130, 255, 0.15);
 
     /* ── Semantic ── */
-    --success: #22c55e;
-    --error:   #ef4444;
+    --success: #4ade80;
+    --error:   #f87171;
 
     /* ── Home Assistant ── */
-    --ha-on:  #22c55e;
-    --ha-off: #555555;
+    --ha-on:  #4ade80;
+    --ha-off: #666666;
 
     /* ── Shape ── */
     --radius:    10px;
@@ -402,6 +402,13 @@ This is the complete list of every variable a theme can set, with the default da
     --font: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 ```
+
+!!! tip "The marketplace previews your palette from these five"
+    A theme's swatch — in **Settings → Appearance** and on its marketplace card — is
+    built from `--bg-0`, `--bg-1`, `--accent`, `--success`, and `--error`, drawn at the
+    theme's own `--radius-sm`. Those are read straight out of your CSS, including for a
+    theme that is not installed yet, so make sure they are set even if you are happy with
+    the defaults for everything else.
 
 A theme's CSS file only needs to declare the variables it actually wants to change. Any variable not listed falls through to the default value from `style.css`.
 
