@@ -1,7 +1,7 @@
 # Web UI, assets, and editor integration
 
 !!! info "Shared platform surface"
-    **`style.css`**, **`settings.html`**, the **`PyDeck.popup`** helpers, combined plugin CSS at **`/api/plugins/styles.css`**, and logical asset paths are the **web UI** side of a plugin — separate from how its button **face** is drawn. PDK composes the face from [templates](../plugin/templates-elements.md); everything on this page is about the editor, the browser UI, and the assets both sides share.
+    **`style.css`**, **`settings.html`**, the **`PyDeck.popup`** helpers, combined plugin CSS at **`/api/plugins/styles.css`**, and logical asset paths are the **web UI** side of a plugin — separate from how its button **face** is drawn. PDK composes the face from [templates](templates.md); everything on this page is about the editor, the browser UI, and the assets both sides share.
 
 **Paths:** On disk, each plugin lives under **`~/.local/share/pydeck/plugin/<name>/`** and runtime files under **`~/.local/share/pydeck/storage/<name>/`** (or **`$XDG_DATA_HOME/pydeck/...`**). In `buttons.json` and `display` fields, **`plugins/plugin/...`** and **`plugins/storage/...`** remain the **logical** image paths the core understands.
 
@@ -130,22 +130,27 @@ Pressing **Escape** closes the popup and resolves with `undefined`.
 
 ---
 
-## 3. Plugin Images — img/ and storage/
+## 3. Plugin Images — bundled assets and storage
 
 PyDeck distinguishes between two types of plugin files:
 
 | Type | Location | Endpoint | Use for |
 |:---|:---|:---|:---|
-| **Static assets** | `~/.local/share/pydeck/plugin/<name>/img/` (logical: `plugins/plugin/<name>/img/`) | `GET /api/plugins/<name>/img/<filename>` | Icons, state images — shipped with the plugin |
-| **Runtime-generated files** | `~/.local/share/pydeck/storage/<name>/` (logical: `plugins/storage/<name>/`) | `GET /api/plugins/<name>/storage/<filename>` | Files the plugin writes at runtime (e.g. downloaded album art) |
+| **Static assets** | `~/.local/share/pydeck/plugin/<id>/assets/icons/` | `GET /api/plugins/<id>/img/<filename>` | Icons, state images — shipped with the plugin |
+| **Runtime-generated files** | `~/.local/share/pydeck/storage/<id>/` (logical: `plugins/storage/<id>/`) | `GET /api/plugins/<id>/storage/<filename>` | Files the plugin writes at runtime (e.g. downloaded album art) |
 
-### Static images — img/
+### Static images — `assets/icons/`
 
-Place bundled image files in **`~/.local/share/pydeck/plugin/my_plugin/img/`**. They are served at:
+Ship bundled images in your plugin's **`assets/icons/`** directory (the PDK layout). Reference them from the manifest by a path **relative to the version folder**, e.g. `assets/icons/PlayPause.png`.
+
+They are served at:
 
 ```text
-GET /api/plugins/<plugin_name>/img/<filename>
+GET /api/plugins/<plugin_id>/img/<filename>
 ```
+
+!!! note "The endpoint is `/img/`, the folder is `assets/icons/`"
+    The serving route is historically named `/img/` and takes a **basename only** — the core resolves it against both `assets/icons/<filename>` (PDK plugins) and a legacy top-level `img/<filename>`. So keep your files in `assets/icons/`; the app finds them.
 
 Supported formats: `.png`, `.jpg`, `.jpeg`, `.gif`, `.bmp`, `.webp`
 
@@ -168,7 +173,7 @@ def _write_runtime_file(data: bytes, name: str) -> str:
 
 Use the returned logical path as `display_update["image"]` — the core fetches it via `GET /api/plugins/my_plugin/storage/<filename>`.
 
-**Why separate?** The `img/` directory ships with the plugin (and is replaced on marketplace update). Files under **`~/.local/share/pydeck/storage/`** survive plugin updates because they live outside the plugin package folder.
+**Why separate?** The `assets/` directory ships with the plugin (and is replaced on marketplace update). Files under **`~/.local/share/pydeck/storage/`** survive plugin updates because they live outside the plugin package folder.
 
 ### Using Images in default_display
 
@@ -177,7 +182,7 @@ Reference images using their relative path from the project root:
 ```json
 {
   "default_display": {
-    "image": "plugins/plugin/my_plugin/img/icon.png",
+    "image": "plugins/plugin/no.pydeck.my-plugin/assets/icons/icon.png",
     "color": "#000000",
     "text": ""
   }
@@ -248,7 +253,7 @@ Each text-style field has an optional companion boolean `<field>_lock`. When set
 "default_display": {
   "color": "#1DB954",
   "text": "",
-  "image": "plugins/plugin/spotify/img/icon.png",
+  "image": "plugins/plugin/no.pydeck.spotify/assets/icons/icon.png",
   "text_position": "middle",
   "text_size": 11,
   "text_bold": false,
@@ -321,13 +326,34 @@ With `"text_position_lock": true` in the manifest, the resolved `text_position` 
 - When `text_labels` is set and non-empty it takes **full priority** over `text` and `text_position`; those fields are ignored by the renderer.
 - Pass `null` (or omit) to fall back to the single-label `text` + `text_position` path.
 
-#### Shared style
+#### Style: shared, or per row
 
-All labels share the same text-style settings (`text_bold`, `text_color`, `text_size`, etc.).
+By default all labels share the button's text-style settings (`text_bold`, `text_color`, `text_size`, and so on).
 
 When `text_size` is `0` (auto) each label finds its own best-fit font size independently — a short label like `"-2:24"` keeps a large font while a long label like `"Bohemian Rhapsody — Queen"` shrinks (or scrolls) to fit. They are **not** forced to a common size driven by the longest label. Set an explicit `text_size` to pin all labels to the same point size.
 
+**Per-row overrides** live in a parallel object, `text_label_styles`, keyed by the same positions:
+
+```json
+"display": {
+  "text_labels":       { "top": "12", "bottom": "Fri 04" },
+  "text_label_styles": { "bottom": { "text_size": 9, "text_color": "#888888" } }
+}
+```
+
+A row holds only the fields it overrides; everything else falls through the usual chain — system defaults, then the button, then the plugin manifest's `default_display`. A row with no entry simply follows the button.
+
+The editor writes this from the small style expander on each Title row. **Only PDK templates honour it** — the built-in renderer draws every label in one style. A PDK template reads the resolved values as `{_button_text_size_1}`, `{_button_text_color_2}`, … — see [Per-row styles](rendering.md#per-row-styles).
+
 #### In display_update
+
+!!! warning "`display_update` is the built-in renderer's protocol, not PDK's"
+    A **PDK** plugin does not return `display_update`. It writes to `ctx.state` and its
+    template draws the face, and a `<buttonlabel>` picks up the button's own labels for
+    it. The `display_update` / `preload_display_updates` return protocol described in the
+    rest of this section belongs to the retired classic plugin format; the core still
+    honours it, and it is documented here because it is what the `display` object in
+    `buttons.json` is made of — but do not build a new plugin on it.
 
 Plugins emit `text_labels` inside `display_update` (or inside a `preload_display_updates` entry) the same way as `text`:
 
@@ -342,7 +368,9 @@ return {
 
 #### In the button editor
 
-Users can add multiple labels from the **Title** section of the button editor by clicking **+ Label**. Each row has its own position selector (top / middle / bottom). A position already used by another row is disabled to prevent duplicates.
+Users can add multiple labels from the **Title** section of the button editor by clicking **+ Label**. Each row has its own position selector (top / middle / bottom); a position already used by another row is disabled to prevent duplicates. Each row also has a collapsed **style expander** (size, colour, bold, italic, underline) which writes `text_label_styles`.
+
+For a **PDK** function, the number of rows the editor offers is not open-ended — it is the count of `<buttonlabel>` elements in the template, capped at three. A template with one label gets one Title row.
 
 #### Marquee scroll in text_labels mode
 
@@ -415,7 +443,7 @@ When playback stops (Spotify closes or no active device) the plugin returns an i
 ```python
 return {
     "display_update": {
-        "image": "plugins/plugin/spotify/img/PlayPause.png",
+        "image": "plugins/plugin/spotify/assets/icons/PlayPause.png",
         "text": "",
         "text_labels": None,
     },
@@ -439,8 +467,8 @@ The built-in Clock plugin (vertical style) uses `text_labels` to position each t
 ```json
 {
   "display_states": {
-    "default": { "image": "plugins/plugin/my_plugin/img/off.png" },
-    "active":  { "image": "plugins/plugin/my_plugin/img/on.png" }
+    "default": { "image": "plugins/plugin/my_plugin/assets/icons/off.png" },
+    "active":  { "image": "plugins/plugin/my_plugin/assets/icons/on.png" }
   }
 }
 ```
@@ -475,7 +503,7 @@ The core resolves the final per-state image in two steps:
 
 Plugins therefore always define the *default* image for each state, while users can replace it per-button without editing the manifest.
 
-For a **PDK** function the resolved result does **not** replace the button face — that would suppress the template. The core hands it to the handler as **`ctx.config["_state_images"]`**, a `{state_key: image_path}` dict the handler puts into state for the template to draw. See [User-picked per-state icons](../plugin/runtime-examples.md).
+For a **PDK** function the resolved result does **not** replace the button face — that would suppress the template. The core hands it to the handler as **`ctx.config["_state_images"]`**, a `{state_key: image_path}` dict the handler puts into state for the template to draw. See [User-picked per-state icons](runtime.md).
 
 ### Icon Gallery
 
@@ -524,7 +552,7 @@ The standard button type. Calls one plugin function on each press.
 {
   "id": 0,
   "type": "plugin",
-  "plugin": "spotify",
+  "plugin": "no.pydeck.spotify",
   "function": "play_pause",
   "config": {},
   "display": {
@@ -541,10 +569,10 @@ When the function defines `display_states` in its manifest and the user has cust
 {
   "id": 3,
   "type": "plugin",
-  "plugin": "discord",
+  "plugin": "no.pydeck.discord",
   "function": "toggle_mute",
   "config": {},
-  "display": { "color": "#000000", "text": "", "image": "plugins/plugin/discord/img/mute_on.png" },
+  "display": { "color": "#000000", "text": "", "image": "plugins/plugin/no.pydeck.discord/assets/icons/mute_on.png" },
   "display_states": {
     "default": { "image": "/api/gallery/custom_unmuted.png" },
     "active":  { "image": "/api/gallery/custom_muted.png" }
@@ -564,7 +592,7 @@ Calls the function repeatedly at a fixed interval. Used for live-updating displa
 {
   "id": 1,
   "type": "plugin_loop",
-  "plugin": "clock",
+  "plugin": "no.pydeck.clock",
   "function": "update_time",
   "interval_ms": 1000,
   "config": {},
@@ -577,7 +605,14 @@ Calls the function repeatedly at a fixed interval. Used for live-updating displa
 
 | Field | Description |
 |:---|:---|
-| `interval_ms` | Positive integer. How often (in milliseconds) the function is called. |
+| `interval_ms` | Positive integer. How often (in milliseconds) the function is called. It is a **top-level** field on the button, not a `config` key, and a `plugin_loop` button without a positive value is rejected when saved. The value is echoed back in the press result so the caller knows the cadence. |
+
+Dispatch is otherwise identical to `plugin` — the same handler, the same injected config keys. Only the repetition differs.
+
+!!! tip "A PDK plugin usually wants `poll`, not `plugin_loop`"
+    `on_poll` with an `interval` runs from the plugin's own manifest and needs nothing
+    from the user. `plugin_loop` is a per-button setting a user chooses. See
+    [`on_poll`](runtime.md#on_pollctx-intervalms).
 
 ### action — Multi-Step Sequence
 
@@ -608,22 +643,28 @@ Actions are named sequences of plugin calls and delays, defined in `~/.config/py
 {
   "actions": {
     "mute_then_deafen": [
-      { "plugin": "discord", "function": "toggle_mute" },
+      { "plugin": "no.pydeck.discord", "function": "toggle_mute" },
       { "delay": 2000 },
-      { "plugin": "discord", "function": "toggle_deafen" }
-    ],
-    "launch_and_play": [
-      { "plugin": "browser", "function": "open_url" },
-      { "delay": 3000 },
-      { "plugin": "spotify", "function": "play_pause" }
+      { "plugin": "no.pydeck.discord", "function": "toggle_deafen" }
     ]
   }
 }
 ```
 
-Each step is either:
-- **Plugin call**: `{ "plugin": "<name>", "function": "<func>" }` — runs the function
-- **Delay**: `{ "delay": <milliseconds> }` — pauses before the next step
+A step is **exactly one** of eight shapes:
+
+| Key | Step |
+|:---|:---|
+| `plugin` (+ `function`, `config`) | Run one plugin function |
+| `delay` | Pause N milliseconds |
+| `action` | Run another named action |
+| `switch` | Cycle through options, one per press |
+| `grouped_actions` | A bundle of steps, nestable inside a switch |
+| `set_image` / `set_text` / `set_color` | Change the button's own face |
+
+A step object carrying two of these is rejected when saved. `delay` is not allowed inside a `switch` or a `grouped_actions` — put the wait in the top-level sequence.
+
+The full step schema and the builder UI are covered in **[Action Builder](../using/actions.md)**.
 
 ### Action Button Toggling
 

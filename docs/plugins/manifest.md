@@ -1,6 +1,6 @@
 # Shared platform — `manifest.json` reference
 
-Every plugin ships a **`manifest.json`**: the file PyDeck reads to discover the plugin, build its sidebar entries, and render the button editor. This page is the field-by-field reference. It applies to every plugin — the [PDK](../plugin/getting-started.md) runtime reads the same manifest and simply draws the button **face** from templates instead of the built-in renderer.
+Every plugin ships a **`manifest.json`**: the file PyDeck reads to discover the plugin, build its sidebar entries, and render the button editor. This page is the field-by-field reference. It applies to every plugin — the [PDK](getting-started.md) runtime reads the same manifest and simply draws the button **face** from templates instead of the built-in renderer.
 
 **Where files live:** each plugin is a folder under **`~/.local/share/pydeck/plugin/<plugin_id>/`** (or **`$XDG_DATA_HOME/pydeck/plugin/<plugin_id>/`** when `XDG_DATA_HOME` is set). Runtime files a plugin writes go under **`~/.local/share/pydeck/storage/<plugin_id>/`**. In `manifest.json`, `buttons.json`, and API payloads, PyDeck also accepts **logical** paths such as `plugins/plugin/...` and `plugins/storage/...`; the core maps them onto the data directory when loading.
 
@@ -9,7 +9,7 @@ Every plugin ships a **`manifest.json`**: the file PyDeck reads to discover the 
 !!! tip "PDK plugins can omit the manifest"
     A PDK plugin without a `manifest.json` gets one generated from its templates,
     `<settings>` blocks, and `on_poll` interval. See
-    [Auto-generated manifest](../plugin/runtime-examples.md) under *Runtime & examples*.
+    [Auto-generated manifest](runtime.md) under *Runtime & examples*.
     Ship a real manifest whenever you need credentials, permissions, dependencies,
     or licences — those cannot be inferred.
 
@@ -31,6 +31,7 @@ Every plugin ships a **`manifest.json`**: the file PyDeck reads to discover the 
   "post_install_script": "scripts/setup.sh",
   "post_install_requires_sudo": false,
   "documentation": "DOCS.md",
+  "changelog": "CHANGELOG.md",
   "functions": { ... }
 }
 ```
@@ -41,7 +42,7 @@ Every plugin ships a **`manifest.json`**: the file PyDeck reads to discover the 
 | `version` | string | No | Semantic version string (e.g. `"1.0.0"`). |
 | `description` | string | No | One-line description shown in the sidebar. |
 | `author` | string | No | Plugin author name. |
-| `min_pydeck_version` / `max_pydeck_version` | string | No | Compatibility range for this plugin version. The catalog generator mirrors these into the marketplace entry — see [Generate Manifest](../catalog/generate-manifest.md). |
+| `min_pydeck_version` / `max_pydeck_version` | string | No | Compatibility range for this plugin version. The catalog generator mirrors these into the marketplace entry — see [Generate Manifest](publishing.md). |
 | `python_dependencies` | array | No | List of pip package names the plugin requires. The backend installs missing packages automatically at startup and restarts itself. See [Python dependencies](#3-python-dependencies). |
 | `licenses` | array | No | Third-party license declarations. Each entry names a license and points to its file inside the plugin folder. Shown in the marketplace as a **Licenses** button. See [Licenses](#5-licenses). |
 | `credentials` | array | No | Credential fields shown under **Settings → Credentials** on the web UI. See [Credentials](authentication.md#1-credentials). |
@@ -52,6 +53,7 @@ Every plugin ships a **`manifest.json`**: the file PyDeck reads to discover the 
 | `post_install_requires_sudo` | boolean | No | When `true`, the user is prompted for their sudo password before the post-install script executes. Defaults to `false`. |
 | `documentation` | string | No | Path to a bundled markdown guide, relative to the plugin folder (e.g. `"DOCS.md"`). Auto-detected from `DOCS.md`/`README.md` when absent. See [Plugin documentation](documentation.md). |
 | `show_markdown_after_install` | boolean | No | Only meaningful alongside `documentation`. When `true`, PyDeck pops the rendered doc up right after install. Defaults to `false`. |
+| `changelog` | string | No | Path to the plugin's changelog, relative to the plugin folder. Defaults to `CHANGELOG.md`, which the catalog picks up whether or not you declare it — so the field only matters if you name the file something else. Every plugin is expected to ship one. See [Changelog](#7-changelog). |
 | `pdk` | boolean | No | **Do not set this in a new plugin.** PyDeck reads the generation off the plugin's *sources*, not the manifest, and ignores a `pdk` key if one is present. Pre-PDK plugins carry `"pdk": false` to flag themselves as classic; a leftover `"pdk": true` still parses but does nothing. |
 | `functions` | object | Yes | Maps function names to their metadata. This is the core of the manifest. |
 
@@ -59,7 +61,7 @@ Every plugin ships a **`manifest.json`**: the file PyDeck reads to discover the 
 
 ## 2. Functions object
 
-Each key in `functions` is a function name. For a **PDK** plugin the key matches a template name and, when you split logic per function, the module directory under `src/functions/<name>/` — see [Plugin directory structure](../plugin/getting-started.md#4-plugin-directory-structure).
+Each key in `functions` is a function name. For a **PDK** plugin the key matches a template name and, when you split logic per function, the module directory under `src/functions/<name>/` — see [Plugin directory structure](getting-started.md#4-plugin-directory-structure).
 
 ```json
 {
@@ -88,13 +90,23 @@ Each key in `functions` is a function name. For a **PDK** plugin the key matches
 | `label` | string | Yes | Human-readable name shown in the sidebar and editor. |
 | `description` | string | No | Short description shown below the label. |
 | `sidebar_icon` | string | No | Image for the **sidebar** action tile only. Use a path relative to the plugin package (e.g. `assets/icons/K.svg`). Omitted or empty → generic “+” tile. **Not** derived from `default_display.image`. Legacy alias: `action_tile_icon`. |
-| `default_display` | object | No | Initial button appearance when dragged onto a slot: `color` (hex), `text` (string), `image` (relative path), optional **`scroll_enabled`** / **`scroll_speed`**, and the text-style fields (`show_title`, `text_position`, `text_size`, `text_bold`, `text_italic`, `text_underline`, `text_color`). Text-style fields are **suggestions** unless you add a companion `<field>_lock: true`. See [Text style in `default_display`](web-ui-and-assets.md#text-style-in-default_display). |
-| `display_states` | object | No | Maps state keys (like `"default"`, `"active"`) to partial display overrides — the per-state icons offered in the editor's gallery. PDK handlers receive the resolved result as `ctx.config["_state_images"]`; see [User-picked per-state icons](../plugin/runtime-examples.md). |
-| `poll` | object | No | Background polling config: `function` (the callable to run, `on_poll` for PDK) and `interval_ms` (default `3000`, minimum `1000`). PDK plugins normally let the core derive this from `on_poll`'s `interval` default — see [Runtime & examples](../plugin/runtime-examples.md). |
-| `ui` | array | Yes | List of UI field definitions for the button editor. See [UI field types](ui-fields.md). Use `[]` for no fields. PDK templates may declare the same fields inline in a `<settings>` block instead — see [Inline settings](../plugin/templates-elements.md). |
+| `default_display` | object | No | Initial button appearance when dragged onto a slot: `color` (hex), `text` (string), `image` (relative path), optional **`scroll_enabled`** / **`scroll_speed`**, and the text-style fields (`show_title`, `text_position`, `text_size`, `text_bold`, `text_italic`, `text_underline`, `text_color`). Text-style fields are **suggestions** unless you add a companion `<field>_lock: true`. See [Text style in `default_display`](assets.md#text-style-in-default_display). |
+| `display_states` | object | No | Maps state keys (like `"default"`, `"active"`) to partial display overrides — the per-state icons offered in the editor's gallery. PDK handlers receive the resolved result as `ctx.config["_state_images"]`; see [User-picked per-state icons](runtime.md). |
+| `poll` | object | No | Background polling config: `function` (the callable to run, `on_poll` for PDK) and `interval_ms` (default `3000`, minimum `1000`). PDK plugins normally let the core derive this from `on_poll`'s `interval` default — see [Runtime & examples](runtime.md). |
+| `ui` | array | Yes | List of UI field definitions for the button editor. See [UI field types](ui-fields.md). Use `[]` for no fields. PDK templates may declare the same fields inline in a `<settings>` block instead — see [Inline settings](templates.md). |
 | `title_readonly` | boolean | No | When `true`, the web editor shows the Title field as read-only with a **Read-only** badge. Use when the plugin or its poller owns the label. The title is still persisted like any other field; this flag is UI-only. |
 | `disableGallary` / `disableGallery` | boolean | No | When `true`, the button editor hides the icon/image picker for that function. Use it for buttons whose image is part of the function's own presentation. |
+| `draws_button_image` | boolean | No | **PDK only.** When `true`, a user-set button icon does *not* replace the PDK face — the template draws the image itself through the reserved `_button_image` key. See [Button-owned faces](rendering.md#35-button-owned-faces). Declaring `display_states` has the same effect. |
+| `gradient` | boolean | No | When `true`, this function's colour picker offers **Solid / Gradient** tabs. The `_button_gradient` render key is available either way — the flag only controls whether the editor UI appears. See [Gradient backgrounds](rendering.md#4-gradient-backgrounds). |
+| `actionable` | boolean | No | When `true`, the function can be used as a step inside an [Action](../using/actions.md). Defaults to `false`. |
+| `log_format` | string | No | Format string used when the function's press result is written to the notification log. |
 | `autosave` | — | — | Not a function-level field. The editor shows a **Save** button automatically when any field in the `ui` array sets `"autosave": "off"`. See [Common properties](ui-fields.md#common-properties). |
+
+!!! note "Two fields the core adds for you"
+    `GET /api/plugins` reports `pdk_buttonlabel_count` and `pdk_buttonlabel_defaults` per
+    function, counted from the `<buttonlabel>` elements in the template (max 3). They
+    drive how many Title rows the button editor offers. Do not put them in
+    `manifest.json` — they are derived from your template and overwritten on load.
 
 ---
 
@@ -165,7 +177,7 @@ If your plugin ships with or relies on third-party code or data that carries its
 }
 ```
 
-The marketplace reads this list and shows a **Licenses** pill button on the plugin card. Clicking it opens a viewer modal. When a plugin declares more than one license, the viewer renders a tab for each entry — clicking a tab loads that license's full text.
+The marketplace reads this list and shows a small **Licenses** button in the plugin card's corner group, beside the docs and changelog buttons. Clicking it opens a viewer modal. When a plugin declares more than one license, the viewer renders a tab for each entry — clicking a tab loads that license's full text.
 
 **Plugin folder layout example** (F1 plugin with two licenses):
 
@@ -243,9 +255,57 @@ Post-install scripts run arbitrary shell commands on the host machine. The revie
 
 ---
 
-## 7. Related reading
+## 7. Changelog
+
+Every plugin ships a `CHANGELOG.md` at the root of its folder, holding **only the
+changes that version introduced**. One bare section — no title, no preamble:
+
+```markdown
+## 2.0.6 — 2026-08-28
+
+### Fixed
+
+- The track label sat off-centre. A percentage width resolves against the
+  parent box rather than its content box, so horizontal padding pushed every
+  full-width child right; the inset is now vertical only.
+- Dropped an invalid `text-anchor` declaration from the shared stylesheet.
+```
+
+That is the whole file. Group entries under `### Added` / `### Changed` /
+`### Fixed` / `### Removed`; only the `##` line is parsed, so the groups are
+free-form and optional.
+
+PyDeck assembles the range it needs by fetching one file per version and joining
+them newest-first. When an update is available, the update badge on the plugin
+card shows every version above the one installed; the changelog button shows the
+full history. Nothing is repeated across versions, and a released version's
+changelog never has to be edited again.
+
+### Rules that matter
+
+- **Head the section with the version:** `## 2.0.6 — 2026-08-28` is the shape
+  PyDeck parses (a leading `v` and `[…]` brackets are tolerated).
+- **One version per file.** Don't accumulate history — the older versions'
+  files are still there and still get shown.
+- **Write for the person deciding whether to upgrade** — what changed for them,
+  not which files you touched. Say why it mattered: "fixed a bug" is not an
+  entry, "buttons went blank on the hardware because the listener dispatches
+  poll without credentials" is.
+- **Name the file something else only if you must**, and then declare it with the
+  `changelog` manifest key. `CHANGELOG.md` is found without any declaration.
+- A version with no changelog is simply skipped when assembling, so coverage
+  does not have to be complete.
+
+While you work, the `CHANGELOG.md` in your **installed** plugin folder acts as the
+draft for whatever ships next: jot bullets into it and `sync_from_pydeck.py` will
+turn them into the published section (or pass `--changelog`). See
+[Publishing](publishing.md).
+
+---
+
+## 8. Related reading
 
 - [UI field types](ui-fields.md) — every field type the `ui` array accepts.
-- [Plugin development — Getting started](../plugin/getting-started.md) — plugin layout, templates, handlers.
+- [Plugin development — Getting started](getting-started.md) — plugin layout, templates, handlers.
 - [Authentication](authentication.md) — `credentials`, `oauth`, and the settings panel.
-- [Web UI and assets](web-ui-and-assets.md) — `style.css`, images, `default_display` text styling.
+- [Web UI and assets](assets.md) — `style.css`, images, `default_display` text styling.

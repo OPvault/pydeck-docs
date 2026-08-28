@@ -1,8 +1,8 @@
 # Shared platform — UI field types
 
-The **`ui`** array in each function definition controls what appears in the button editor panel. Each entry is a field object, and each field's `id` becomes a key on the config your handler reads — **`ctx.config["<id>"]`** in a [PDK](../plugin/getting-started.md) handler.
+The **`ui`** array in each function definition controls what appears in the button editor panel. Each entry is a field object, and each field's `id` becomes a key on the config your handler reads — **`ctx.config["<id>"]`** in a [PDK](getting-started.md) handler.
 
-PDK plugins can declare the same fields **inline** in a template's `<settings>` block instead of in the manifest; the two forms are equivalent. See [Inline settings](../plugin/templates-elements.md) in *Templates & elements*. This page is the reference for the field **types** themselves, in either form.
+PDK plugins can declare the same fields **inline** in a template's `<settings>` block instead of in the manifest; the two forms are equivalent. See [Inline settings](templates.md) in *Templates & elements*. This page is the reference for the field **types** themselves, in either form.
 
 ---
 
@@ -375,7 +375,7 @@ The function must return a JSON-serialisable list. Each item should be a dict co
     Define them at module level in **`src/shared.py`**. They take the merged
     credentials + button config dict and are reachable at
     `GET /api/plugins/<plugin_id>/api/<endpoint>` — see
-    [HTTP API reference](http-api-reference.md).
+    [HTTP API reference](../reference/http-api.md).
 
 ---
 
@@ -418,14 +418,14 @@ This field is visible whenever `forecast_interval` is set to anything other than
 
 !!! note "`visible_if` is declared in `manifest.json`"
     Set it on the field object in the manifest — not on an inline XML
-    `<field>` element. See [Conditional visibility](../plugin/templates-elements.md)
+    `<field>` element. See [Conditional visibility](templates.md)
     in *Templates & elements*.
 
 ---
 
 ## Related reading
 
-- [`manifest.json` reference](manifest-reference.md) — where the `ui` array lives.
-- [Plugin development — Templates & elements](../plugin/templates-elements.md) — inline `<settings>` blocks.
-- [Plugin development — Runtime & examples](../plugin/runtime-examples.md) — reading values off `ctx.config`.
-- [HTTP API reference](http-api-reference.md) — the `api_<endpoint>` route used by `api_select` and `hotkey_recorder`.
+- [`manifest.json` reference](manifest.md) — where the `ui` array lives.
+- [Plugin development — Templates & elements](templates.md) — inline `<settings>` blocks.
+- [Plugin development — Runtime & examples](runtime.md) — reading values off `ctx.config`.
+- [HTTP API reference](../reference/http-api.md) — the `api_<endpoint>` route used by `api_select` and `hotkey_recorder`.

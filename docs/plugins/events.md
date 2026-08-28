@@ -10,9 +10,19 @@ When you finish this page you will know how PyDeck distinguishes **physical butt
 ## 1. How events reach your plugin
 
 - **Button down** — The hardware listener reports a **press**. The core dispatches **`on_press(ctx)`**.
-- **Button up** — The listener reports a **release**. The core calls **`on_release(ctx)`** when your module defines it.
+- **Button up** — The listener reports a **release**. The core dispatches **`on_release(ctx)`** — but only when the button's config sets **`press_mode: "hold"`**.
 
-The **`ctx.config`** your handler reads is the plugin's stored **credentials** merged with the button's saved **UI field values**; the button config wins on key collisions. The core adds runtime keys on top of that merge for each invocation — see [Injected `ctx.config` keys](../plugin/runtime-examples.md).
+!!! warning "`press_mode` is not just your own convention — the core reads it"
+    A release on a button whose config does **not** say `press_mode: "hold"` is dropped
+    before your plugin is reached: the dispatch returns `{"ignored": true}` and
+    `on_release` is never called. So the field id has to be exactly **`press_mode`** and
+    the hold value exactly **`"hold"`** — a select called `mode` with a value of
+    `press_hold` will leave your `on_release` silently dead.
+
+    This is deliberate: an ordinary tap fires one handler, not two, so a plugin that
+    grows an `on_release` does not change behaviour for buttons already out there.
+
+The **`ctx.config`** your handler reads is the plugin's stored **credentials** merged with the button's saved **UI field values**; the button config wins on key collisions. The core adds runtime keys on top of that merge for each invocation — see [Injected `ctx.config` keys](runtime.md).
 
 ---
 
@@ -37,9 +47,9 @@ Add a UI field so users can opt into hold-style behavior. Keep the **default** a
 
 | Manifest key | Role |
 |:---|:---|
-| `id` | Becomes `ctx.config["press_mode"]` in your handler. |
+| `id` | Must be **`press_mode`** — the core reads this exact key to decide whether to deliver a release at all. |
 | `default` | Use **`press`** so existing buttons behave as a single tap on the press edge only. |
-| `options` | `hold` (or any label you choose) means your code should treat **press** and **release** differently when that value is selected. |
+| `options` | The value **`hold`** is the one the core recognises. Label it however you like; the *value* is what matters. |
 
 Field types and editor behavior are documented in [UI field types](ui-fields.md). A PDK template can declare the same field inline in a `<settings>` block instead; either way the value lands on **`ctx.config`**.
 
@@ -67,7 +77,7 @@ def on_release(ctx):
     ...
 ```
 
-Event handler order, **`ctx.state`**, and polling are covered in [Plugin development — Runtime & examples](../plugin/runtime-examples.md).
+Event handler order, **`ctx.state`**, and polling are covered in [Plugin development — Runtime & examples](runtime.md).
 
 ---
 
@@ -88,10 +98,15 @@ Multiple buttons (or repeated edges on different buttons) can be handled **witho
 !!! warning "Manifest-only changes are not enough"
     If you add **`press_mode`** to the manifest but never define **`on_release`**, the button will still feel like a **tap**: the user may select “press and hold,” but your code will not run distinct **release** logic.
 
+!!! warning "…and a handler on its own is not enough either"
+    The reverse also fails silently. Define **`on_release`** without a `press_mode` field
+    the user can set to `hold`, and the core drops every release before it reaches you.
+    You need both halves.
+
 ---
 
 ## 6. Related reading
 
-- [Plugin development — Runtime & examples](../plugin/runtime-examples.md) — `on_press`, `on_release`, `ctx`.
+- [Plugin development — Runtime & examples](runtime.md) — `on_press`, `on_release`, `ctx`.
 - [UI field types](ui-fields.md) — the field types the `press_mode` example uses.
-- [HTTP API reference](http-api-reference.md) — REST/WebSocket payloads around button actions.
+- [HTTP API reference](../reference/http-api.md) — REST/WebSocket payloads around button actions.

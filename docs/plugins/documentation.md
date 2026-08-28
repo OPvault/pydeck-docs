@@ -6,8 +6,8 @@ installed. This is the recommended home for setup guides, OAuth instructions, an
 troubleshooting tables: the docs travel with the plugin, so they always match the
 version a user actually installed.
 
-It is driven entirely by two [`manifest.json`](manifest-reference.md) fields, so
-any [PDK](../plugin/getting-started.md) plugin can opt in.
+It is driven entirely by two [`manifest.json`](manifest.md) fields, so
+any [PDK](getting-started.md) plugin can opt in.
 
 ---
 
@@ -46,7 +46,7 @@ plugins/no.pydeck.discord/2.0.0/
     If a plugin
     ships a doc file (`DOCS.md`, `README.md`, …) but doesn't declare `documentation`,
     the loader auto-detects it. `show_markdown_after_install` still defaults to
-    `false` unless you set it. See [Runtime & Examples](../plugin/runtime-examples.md).
+    `false` unless you set it. See [Runtime & Examples](runtime.md).
 
 ---
 
@@ -55,10 +55,10 @@ plugins/no.pydeck.discord/2.0.0/
 The markdown is **only** surfaced in the marketplace flow — it is not rendered onto
 button faces.
 
-- **In the marketplace** — plugins that bundle a doc get a **Docs** button on their
-  card, and the whole card becomes clickable; either opens the rendered guide in a
-  modal. The doc is fetched straight from the catalog repo, so it can be read
-  **before** installing.
+- **In the marketplace** — plugins that bundle a doc get a small **Docs** button in the
+  card's corner group, beside the changelog and licence buttons. It opens the rendered
+  guide in a modal. The doc is fetched straight from the catalog's raw URL, so it can be
+  read **before** installing, and needs no endpoint on the PyDeck side.
 - **After install** — if `show_markdown_after_install` is `true`, PyDeck reads the
   doc from the freshly installed plugin and pops it up automatically (also after a
   successful post-install script). With the flag off, nothing pops up — the doc is
@@ -73,20 +73,24 @@ schemes, so docs from third-party catalogs can't inject scripts.
 
 ## How it reaches the catalog
 
-When you run [`generate_manifest.py`](../catalog/generate-manifest.md), it reads
+When you run [`generate_manifest.py`](publishing.md), it reads
 `documentation` and `show_markdown_after_install` from the **latest** version's
 `manifest.json` and writes a repo-relative `doc_path` plus
 `show_markdown_after_install` into the plugin's entry in the root `manifest.json`:
 
 ```json
 {
-  "slug": "discord",
-  "latest": "1.1.4",
-  "doc_path": "plugins/discord/1.1.4/DOCS.md",
+  "slug": "no.pydeck.discord",
+  "latest": "2.0.0",
+  "doc_path": "plugins/no.pydeck.discord/2.0.0/DOCS.md",
   "show_markdown_after_install": true,
   "versions": [ ... ]
 }
 ```
+
+`doc_path` is repo-relative. It is resolved against the catalog's **asset base** — the
+manifest's declared `root_url` when it has one, otherwise the directory the manifest
+itself sits in. See [Publishing → root_url](publishing.md#root_url-where-a-catalogs-files-actually-live).
 
 The marketplace uses `doc_path` to fetch and render the guide on demand, and the
 markdown file is downloaded with the plugin like any other file, so the after-install
@@ -96,3 +100,9 @@ popup can read it from disk.
     Older PyDeck versions simply ignore the `documentation` and
     `show_markdown_after_install` fields (and the extra `DOCS.md` file is harmless),
     so adding docs to a plugin is backward-compatible.
+
+!!! tip "`DOCS.md` and `CHANGELOG.md` are different things"
+    `DOCS.md` is the guide — setup, credentials, what each button does — and only the
+    **latest** version's copy is surfaced. `CHANGELOG.md` is per version and holds only
+    that version's changes; the marketplace assembles a range from several of them. See
+    [Changelog](manifest.md#7-changelog).

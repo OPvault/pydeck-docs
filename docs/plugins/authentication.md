@@ -1,7 +1,7 @@
 # Authentication and credentials
 
 !!! info "One credential store for every plugin"
-    Everything on this page uses the **`~/.config/pydeck/core/credentials.json`** store and the **`manifest.json`** fields (`credentials`, `oauth`, …) documented in the [manifest reference](manifest-reference.md). Official catalog plugins under `no.pydeck.*` use it exactly as described here; see [Plugin development — Getting started](../plugin/getting-started.md) to build one.
+    Everything on this page uses the **`~/.config/pydeck/core/credentials.json`** store and the **`manifest.json`** fields (`credentials`, `oauth`, …) documented in the [manifest reference](manifest.md). Official catalog plugins under `no.pydeck.*` use it exactly as described here; see [Plugin development — Getting started](getting-started.md) to build one.
 
 ## 1. Credentials
 
@@ -15,27 +15,34 @@ All credentials live in a single file:
 ~/.config/pydeck/core/credentials.json
 ```
 
-This file is a flat JSON object. Each top-level key is a **plugin name** (matching the folder name under **`~/.local/share/pydeck/plugin/`**), and its value is an object of key–value pairs:
+This file is a flat JSON object. Each top-level key is a **plugin id** (the folder name under **`~/.local/share/pydeck/plugin/`**), and its value is an object of key–value pairs:
 
 ```json
 {
-  "spotify": {
+  "no.pydeck.spotify": {
     "client_id": "abc123def456",
     "client_secret": "secret789",
     "access_token": "BQD...long_token...",
     "refresh_token": "AQB...long_token..."
   },
-  "discord": {
+  "no.pydeck.discord": {
     "client_id": "1234567890",
     "client_secret": "abcdefg"
   },
-  "my_weather_plugin": {
+  "com.example.weather": {
     "api_key": "wk_live_abc123"
   }
 }
 ```
 
 The file is created automatically the first time a user saves credentials through the GUI. If the file doesn't exist yet, the core treats every plugin as having an empty credential set (`{}`).
+
+!!! note "Official plugins with a legacy short slug read from both keys"
+    A handful of official plugins predate reverse-DNS ids, so a long-standing install may
+    have `"spotify"` in `credentials.json` while the catalog now calls it
+    `no.pydeck.spotify`. The core merges **legacy first, then RDNN**, so the newer key
+    wins where both exist, and writes to the RDNN key. Your own plugin only ever has one
+    id, so this never applies to it.
 
 > **Security note:** `credentials.json` stores secrets in plaintext on disk. It lives in the user's home directory under `.config/pydeck/`, which is not world-readable on most systems, but plugins should still encourage users to use app-specific or restricted-scope credentials where possible.
 
@@ -107,7 +114,11 @@ Plugins can add a **custom HTML panel** in **Settings** (gear icon in the deck h
 
 2. Optionally add **`~/.local/share/pydeck/plugin/<your_plugin>/settings.html`**. Static HTML only; no server-side templating.
 
-3. The settings page calls `GET /api/settings/categories` to build the sidebar (built-in categories — **Marketplace**, **Device**, **Appearance**, **Credentials**, **Updates**, and **Licenses** — are always listed first). For each plugin in a category, the UI loads:
+3. The settings page calls `GET /api/settings/categories` to build the sidebar. The
+built-in categories — **Marketplace**, **Device**, **Appearance**, **Keybinds**,
+**Credentials**, **Tokens**, **Updates**, **Licenses**, and **Developer** — come first
+and are grouped in the nav; plugin categories follow, sorted by label. For each plugin in
+a category, the UI loads:
 
 ```text
 GET /api/plugins/<plugin_name>/settings/panel
@@ -238,7 +249,7 @@ When a plugin uses [OAuth](#2-oauth-integration), the token exchange automatical
 
 ```json
 {
-  "spotify": {
+  "no.pydeck.spotify": {
     "client_id": "abc123",
     "client_secret": "secret456",
     "access_token": "BQD...",
@@ -338,17 +349,13 @@ When creating your app on the OAuth provider's dashboard, set the redirect URI t
 http://127.0.0.1:8686/oauth/<your_plugin_name>/callback
 ```
 
-For example, for Spotify register:
+For example, for the Spotify plugin (`no.pydeck.spotify`) register:
 
 ```text
 http://127.0.0.1:8686/oauth/no.pydeck.spotify/callback
 ```
 
-**Spotify plugin**:
-
-```text
-http://127.0.0.1:8686/oauth/spotify/callback
-```
+The `<your_plugin_name>` segment is the plugin's **RDNN id** — the same id as its install directory.
 
 ### Token Refresh
 

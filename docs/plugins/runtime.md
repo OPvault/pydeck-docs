@@ -26,14 +26,16 @@ Alongside the user's own UI fields, the core injects a set of underscore-prefixe
 | Key | Description |
 |:---|:---|
 | `_button_id` | The button's numeric id in the active profile. |
-| `_button_event` | `"press"` or `"release"` for this invocation. PDK plugins normally use `on_press` / `on_release` instead. See [Press and hold](../platform/press-and-hold.md). |
+| `_button_event` | `"press"` or `"release"` for this invocation. PDK plugins normally use `on_press` / `on_release` instead. See [Press and hold](events.md). |
 | `_function` | The function being dispatched — useful in a `shared.py` helper serving several functions. |
 | `_button_color` | The user's chosen button background colour (hex string). |
-| `_button_gradient` | A CSS gradient string, or `_button_color` when no gradient is set. See [Gradient backgrounds](../../using/gradient-backgrounds.md). |
+| `_button_gradient` | A CSS gradient string, or `_button_color` when no gradient is set. See [Gradient backgrounds](../using/gradient-backgrounds.md). |
 | `_button_image` | The user's gallery image for the button, if any. |
 | `_state_images` | Per-state icon paths for a function declaring `display_states` — see [User-picked per-state icons](#user-picked-per-state-icons). |
+| `_device_id` | The device the event came from — the same value as `ctx.device_id`. |
+| `_dev_time` | The instant to render instead of "now" (`YYYY-MM-DDTHH:MM:SS`), or `""`. Only ever non-empty while the emulated clock developer option is on. See [Developer options](../reference/developer-options.md#emulated-clock). |
 
-`_button_color` and `_button_gradient` also reach templates as [special state keys](#special-state-keys); the rest are config-only.
+`_button_color`, `_button_gradient` and `_button_image` also reach templates as [reserved state keys](#reserved-state-keys); the rest are config-only.
 
 #### State Attribute Access
 
@@ -72,7 +74,7 @@ def on_press(ctx):
 
 #### `on_release(ctx)`
 
-Called when the user **releases** the button (physical button up), after the matching **`on_press`** for that interaction. Define this handler when you need distinct press vs release behavior (for example key-down / key-up in a “press and hold” mode). Manifest UI, **`ctx.config`**, and concurrent handler behavior are described in **[Press and hold & button events](../platform/press-and-hold.md)**.
+Called when the user **releases** the button (physical button up), after the matching **`on_press`** for that interaction. Define this handler when you need distinct press vs release behavior (for example key-down / key-up in a “press and hold” mode). Manifest UI, **`ctx.config`**, and concurrent handler behavior are described in **[Press and hold & button events](events.md)**.
 
 #### `on_poll(ctx, interval=<ms>)`
 
@@ -150,7 +152,7 @@ Both functions can use `ctx.state._template` without overwriting each other beca
 
 ### With manifest.json
 
-If your PDK plugin includes a `manifest.json`, it is loaded normally. This is the simplest approach. Every field is documented in the [`manifest.json` reference](../platform/manifest-reference.md); the difference from the core's built-in renderer is that the button face comes from your template.
+If your PDK plugin includes a `manifest.json`, it is loaded normally. This is the simplest approach. Every field is documented in the [`manifest.json` reference](manifest.md); the difference from the core's built-in renderer is that the button face comes from your template.
 
 !!! warning "Do not declare a `pdk` key"
     The core decides a plugin's generation from its sources — `src/functions/<fn>/template.xml`
@@ -181,7 +183,7 @@ If your PDK plugin includes a `manifest.json`, it is loaded normally. This is th
 }
 ```
 
-**`sidebar_icon` (and other install-dir assets):** use a path **relative to the plugin package**, e.g. **`assets/icons/PlayPause.png`** or **`img/icon.png`**. The web UI resolves these using the plugin id. You do **not** need the logical prefix `plugins/plugin/<id>/...` for new manifests (that form remains supported).
+**`sidebar_icon` (and other install-dir assets):** use a path **relative to the plugin package**, e.g. **`assets/icons/PlayPause.png`**. The web UI resolves these using the plugin id. You do **not** need the logical prefix `plugins/plugin/<id>/...` for new manifests (that form remains supported).
 
 ### Auto-Generated Manifest (no manifest.json)
 
@@ -206,7 +208,7 @@ If `manifest.json` is absent, the core generates one automatically:
     Drop a markdown file (e.g. `DOCS.md`) in your plugin folder and reference it
     with `documentation` to get a rendered setup guide in the marketplace and an
     optional after-install popup. See
-    [Plugin documentation](../platform/documentation.md).
+    [Plugin documentation](documentation.md).
 
 ### User-picked per-state icons
 
@@ -269,7 +271,7 @@ Always fall back to a bundled asset: `_state_images` is empty until the manifest
 !!! note "How the user's pick is stored"
     Per-button overrides live in the button's own `display_states` object in
     `buttons.json` and are merged over the manifest defaults — see
-    [User-level per-state image overrides](../platform/web-ui-and-assets.md#user-level-per-state-image-overrides).
+    [User-level per-state image overrides](assets.md#user-level-per-state-image-overrides).
 
 ---
 
@@ -302,13 +304,32 @@ State values are interpolated in the stylesheet before parsing. This enables dyn
 
 The variable `_button_color` is automatically injected by the core with the user's configured button background colour.
 
-### Special State Keys
+### Reserved state keys
 
-| Key | Description |
-|:---|:---|
-| `_template` | Controls which template is rendered. Set in handlers to switch views. |
-| `_button_color` | Injected by the core — the user's chosen button background colour (hex string). |
-| `_button_gradient` | Injected by the core — a CSS gradient string (e.g. `linear-gradient(135deg, #ff0000 0%, #0000ff 100%)`). Falls back to `_button_color` when no gradient is set. See [Gradient backgrounds](../../using/gradient-backgrounds.md). |
+One key is yours to set; the rest are **injected by the core per button at render time**. Read them in templates and stylesheets — never write them from a handler (see the warning below).
+
+| Key | Set by | Description |
+|:---|:---|:---|
+| `_template` | **your handler** | Which template renders. Set it to switch views. |
+| `_button_color` | core | The user's chosen button background colour (hex string). |
+| `_button_gradient` | core | A CSS gradient string (e.g. `linear-gradient(135deg, #ff0000 0%, #0000ff 100%)`). Falls back to `_button_color` when no gradient is set. See [Gradient backgrounds](../using/gradient-backgrounds.md). |
+| `_button_image` | core | The button's own icon path, for a function that declares `draws_button_image` or `display_states`. See [Button-owned faces](rendering.md#35-button-owned-faces). |
+| `_button_label` | core | The button's Title (first label slot), already resolved. `<buttonlabel>` uses this for you. |
+| `_button_label_slots` | core | All label slots in document order, as a list. |
+| `_button_text_size` | core | Title font size in px — never `0`. |
+| `_button_text_color` | core | Title colour — never blank. |
+| `_button_text_weight` | core | `bold` or `normal`. |
+| `_button_text_style` | core | `italic` or `normal`. |
+| `_button_text_decoration` | core | `underline` or `none`. |
+| `_button_scroll_speed` | core | Pixels per second, or `0` when scrolling is off. |
+| `_button_text_*_1` … `_3` | core | The same six style keys per `<buttonlabel>` row. See [Per-row styles](rendering.md#per-row-styles). |
+
+!!! warning "The `_button_*` keys never travel through a handler"
+    PDK state is per **function**, so every button running the same function shares one
+    state dict. A `_button_*` value written from one button's config would simply be
+    overwritten by the next button's poll. The core therefore resolves all of them per
+    button and injects them straight into the render state, bypassing your handler
+    entirely.
 
 ### How It Works
 

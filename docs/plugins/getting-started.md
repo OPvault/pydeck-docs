@@ -6,7 +6,7 @@ When you finish this page you will understand what a PDK plugin is made of, and 
 
 **Paths in PDK (recommended):**
 
-- **`manifest.json` `sidebar_icon`** — use a path **under the install directory**, e.g. **`assets/icons/PlayPause.png`** or **`img/icon.png`**. The web UI resolves these using the plugin id (no `plugins/plugin/...` prefix needed).
+- **`manifest.json` `sidebar_icon`** — use a path **under the install directory**, e.g. **`assets/icons/PlayPause.png`**. The web UI resolves these using the plugin id (no `plugins/plugin/...` prefix needed).
 - **`<img src>` in templates** — paths **under the plugin folder** (e.g. `assets/icons/...`) are resolved from the plugin directory. Files under **`ctx.storage_path`** may use a **short path relative to that storage folder** (e.g. `_now_playing.jpg`, `tracks/monaco.png`); the renderer maps them to `~/.local/share/pydeck/storage/<name>/`.
 
 **Legacy (still supported):** the global logical prefixes **`plugins/plugin/...`** and **`plugins/storage/...`**, plus **`../../storage/<name>/...`** from the plugin directory, still resolve — the core maps them onto the data home. Manifest `display_states` defaults are conventionally written with the `plugins/plugin/` prefix.
@@ -31,7 +31,7 @@ PDK plugins are rendered server-side via Pillow into PNG images at the correct r
 | Appearance | `<template>` markup + CSS in `src/shared.css` / `src/functions/<name>/style.css` |
 | Logic | `src/shared.py` (and optional `src/functions/<name>/handler.py`) with `on_load`, `on_press`, `on_release`, `on_poll` |
 | State | Set `ctx.state.*` attributes; the template re-renders automatically |
-| Metadata | [`manifest.json`](../platform/manifest-reference.md) — label, UI fields, credentials, permissions |
+| Metadata | [`manifest.json`](manifest.md) — label, UI fields, credentials, permissions |
 | Detection | The plugin has `src/functions/` with `template.xml` files |
 
 ---
@@ -40,7 +40,7 @@ PDK plugins are rendered server-side via Pillow into PNG images at the correct r
 
 The **PDK Plugin Creator** lives in the [pydeck-plugins](https://github.com/opvault/pydeck-plugins) repo (`python -m tools.pdk_create`). It writes a full **standard PDK layout** into your **plugin data directory** under **`~/.local/share/pydeck/plugin/<slug>/`** (or `$XDG_DATA_HOME/pydeck/plugin/<slug>/`) — manifest stubs, `src/shared.py`, `src/shared.css`, `src/functions/<id>/template.xml`, `handler.py`, asset folders, and more — so you skip empty-folder setup and start from working code.
 
-Full CLI options, path resolution, and non-interactive examples are in **[PDK Plugin Creator](../catalog/pdk-create.md)**.
+Full CLI options, path resolution, and non-interactive examples are in **[PDK Plugin Creator](pdk-create.md)**.
 
 ### Step 1 — Repos and Python
 
@@ -62,20 +62,20 @@ python -m tools.pdk_create
 | `static` | Label-style demo — good default to learn the layout |
 | `counter` | Press increments a number — shows `on_press` + state updates |
 
-The tool finds the **plugin root** (on a current install, **`~/.local/share/pydeck/plugin`**) from `--pydeck-source`, `--pydeck-root`, `PYDECK_SOURCE`/`PYDECK_ROOT`, the saved `path.json`, then built-in candidates — which cover only **legacy checkout** folders such as `…/pydeck/plugins/plugin/`. If it cannot resolve the path, it prompts you. See [PDK Plugin Creator](../catalog/pdk-create.md#resolving-the-plugin-root-directory) for the full order.
+The tool finds the **plugin root** (on a current install, **`~/.local/share/pydeck/plugin`**) from `--pydeck-source`, `--pydeck-root`, `PYDECK_SOURCE`/`PYDECK_ROOT`, the saved `path.json`, then built-in candidates — which cover only **legacy checkout** folders such as `…/pydeck/plugins/plugin/`. If it cannot resolve the path, it prompts you. See [PDK Plugin Creator](pdk-create.md#resolving-the-plugin-root-directory) for the full order.
 
 **One-shot example** (adjust paths):
 
 ```bash
 python -m tools.pdk_create --non-interactive \
-  --pydeck-root /path/to/pydeck \
-  --slug my_clock \
+  --pydeck-source ~/.local/share/pydeck/plugin \
+  --plugin-id com.example.my_clock \
   --name "My Clock" \
   --functions clock \
   --preset static
 ```
 
-Then edit the generated `template.xml`, `shared.py`, and CSS to match what you want (for a clock, add `on_poll` and time fields — or start from `static` and follow [Templates & Elements](templates-elements.md) and [Runtime & Examples](runtime-examples.md)).
+Then edit the generated `template.xml`, `shared.py`, and CSS to match what you want (for a clock, add `on_poll` and time fields — or start from `static` and follow [Templates & Elements](templates.md) and [Runtime & Examples](runtime.md)).
 
 ### Step 3 — Run PyDeck
 
@@ -85,12 +85,12 @@ Restart **PyDeck**, find your plugin in the sidebar, drag a function onto a butt
 
 ## 3. Tutorial — clock plugin from scratch (optional)
 
-If you prefer to **create every file by hand** to learn how they fit together, follow this minimal clock. It matches what you could evolve from a **static** scaffold after reading [Rendering](rendering.md) and [Runtime & Examples](runtime-examples.md).
+If you prefer to **create every file by hand** to learn how they fit together, follow this minimal clock. It matches what you could evolve from a **static** scaffold after reading [Rendering](rendering.md) and [Runtime & Examples](runtime.md).
 
 ### Step A: Create the plugin folder
 
 ```text
-~/.local/share/pydeck/plugin/clock/
+~/.local/share/pydeck/plugin/com.example.clock/
 ├── manifest.json
 └── src/
     ├── shared.py
@@ -100,9 +100,11 @@ If you prefer to **create every file by hand** to learn how they fit together, f
             └── template.xml
 ```
 
+The folder name **is** the plugin id, so use a [reverse-DNS](manifest.md) name.
+
 ### Step B: Create `manifest.json`
 
-For PDK plugins you can provide a standard `manifest.json` — see the [manifest reference](../platform/manifest-reference.md). Nothing in it marks the plugin as PDK: the core works that out from the template sources.
+For PDK plugins you can provide a standard `manifest.json` — see the [manifest reference](manifest.md). Nothing in it marks the plugin as PDK: the core works that out from the template sources.
 
 ```json
 {
@@ -126,7 +128,7 @@ For PDK plugins you can provide a standard `manifest.json` — see the [manifest
 }
 ```
 
-> **Note:** If you omit `manifest.json`, the core can auto-generate one from your templates. See [manifest.json for PDK Plugins](runtime-examples.md#2-manifestjson-for-pdk-plugins).
+> **Note:** If you omit `manifest.json`, the core can auto-generate one from your templates. See [manifest.json for PDK Plugins](runtime.md#2-manifestjson-for-pdk-plugins).
 
 ### Step C: Create `src/functions/clock/template.xml`
 

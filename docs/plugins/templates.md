@@ -246,15 +246,33 @@ the fallback to show.
 
 ##### Multiple slots
 
-A template may contain more than one `<buttonlabel>`. They are filled in
-document order from the button's `text_labels` (`top`, `middle`, `bottom`),
-falling back to the single `text` value. The core reports the count to the
-editor as `pdk_buttonlabel_count` so it can offer the right number of inputs.
+A template may contain more than one `<buttonlabel>` (up to **three** are used).
+They are filled in document order from the button's `text_labels` (`top`,
+`middle`, `bottom`), falling back to the single `text` value. The core reports
+the count to the editor as `pdk_buttonlabel_count`, which is what decides how
+many Title rows the editor offers, and the element bodies as
+`pdk_buttonlabel_defaults`.
 
-!!! warning "Long titles clip — they do not scroll"
-    `<buttonlabel>` is not a `<marquee>`, and the core's title scroller does not
-    apply to it: the label slots are passed to the renderer verbatim. Text wider
-    than the button is cut off. Keep fallbacks short, or size them down in CSS.
+Each row can also carry its own style — see
+[Per-row styles](rendering.md#per-row-styles) for the `{_button_text_*_1}`
+render keys.
+
+##### Long titles scroll
+
+`<buttonlabel>` draws through the same marquee path as `<marquee>`, so a title
+wider than its box **scrolls** instead of being cropped.
+
+The catch is that a label sized `auto` hugs its own text and therefore can never
+overflow. **An explicit width is what turns scrolling on:**
+
+```css
+.caption { width: 100%; }   /* now a long title scrolls */
+```
+
+Every template written before this behaviour existed is unaffected, because
+`auto` is the default. Scroll speed comes from the button's own Title style via
+`{_button_scroll_speed}`, and a speed of `0` — the user's "don't scroll" setting
+— stands still rather than parking the text off the right edge.
 
 !!! note "Hiding the label"
     There is no state value that suppresses a `<buttonlabel>` — an empty Title
@@ -276,6 +294,8 @@ Displays an image file. The `src` path is resolved relative to the plugin direct
 
 - **Container:** No
 - **Default size:** auto (source image dimensions)
+- **`.svg`** sources are rasterised at the element's own size, so vectors stay crisp.
+- **`.gif`** sources with more than one frame **animate** — the renderer picks the frame for the current timestamp and puts the button on the animation tick. See [Animated GIFs](rendering.md#animated-gifs).
 
 > **Note:** The layout engine does not read the image file to determine intrinsic size — `<img>` without explicit `width` and `height` is treated as 0×0 during layout. The renderer compensates by using the image's natural dimensions at draw time, but this can cause unexpected flex layout results. Always set explicit `width` and `height` on `<img>` for predictable sizing.
 
@@ -378,7 +398,7 @@ Renders horizontally scrolling text, clipped to the element bounds. When the ren
 
 - **Container:** No
 - **Inherits all text styling** — `font-size`, `color`, `font-weight`, `font-style`, `shadow`, `text-stroke`, etc.
-- **Automatically triggers the animation tick** (~15 FPS) — no `@keyframes` needed. See [Performance Notes](rendering.md#performance-notes) in the Animations section.
+- **Automatically triggers the animation tick** (~15 FPS) — no `@keyframes` needed. See [Performance Notes](rendering.md#what-joins-the-animation-tick) in the Animations section.
 - Scroll offset is derived from the render timestamp, so no plugin-side state is required.
 
 > **Tip:** Use `<marquee>` for labels that may overflow, such as song titles or long status messages. For text that always fits, prefer `<text>`.
@@ -448,8 +468,31 @@ Styles cascade using CSS-like specificity: `(id count, class count, tag count)`.
 | `gap` | pixels | `0` |
 | `padding` | shorthand (1–4 values) | `0` |
 | `padding-top/right/bottom/left` | pixels | `0` |
+| `margin` | shorthand (1–4 values) | `0` |
+| `margin-top/right/bottom/left` | pixels | `0` |
 | `width` | pixels, `%`, `em`, `rem`, `auto` | `auto` |
 | `height` | pixels, `%`, `em`, `rem`, `auto` | `auto` |
+
+#### Positioning
+
+| Property | Values | Default |
+|:---|:---|:---|
+| `position` | `static`, `absolute` | `static` |
+| `left` / `right` / `top` / `bottom` | pixels, `%`, `em`, `rem`, `auto` | `auto` |
+
+`position: absolute` takes a child **out of the flex flow** and pins it to the parent's
+content box. It neither consumes main-axis space nor contributes to the parent's
+content-fit size, which is how you stack overlapping layers on one 72 px canvas — the
+hands of an analog clock face, a badge over an icon, a scrim over album art.
+
+```css
+.face  { width: 100%; height: 100%; }
+.hand  { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
+.badge { position: absolute; right: 2; top: 2; }
+```
+
+`left` and `top` win when both sides of an axis are set. With neither set on an axis the
+box pins to the content origin, so a full-size absolute child becomes an overlay layer.
 
 #### Typography
 
@@ -494,6 +537,12 @@ Styles cascade using CSS-like specificity: `(id count, class count, tag count)`.
 | Property | Values | Default |
 |:---|:---|:---|
 | `animation` | `<name> <duration> [timing] [iteration] [direction]` or `none` | `none` |
+| `transition` | `<property> <duration> [timing]` or `none` — `<property>` may be `all` | `none` |
+
+`animation` replays a `@keyframes` block on a loop. `transition` instead eases a property
+between renders: when the value changes from one render to the next, the renderer
+interpolates from the old value to the new one over the duration, so a colour or size
+driven by handler state moves smoothly instead of snapping.
 
 See [Animations](rendering.md#3-animations) for full details and examples.
 
@@ -505,6 +554,25 @@ See [Animations](rendering.md#3-animations) for full details and examples.
 | `em` | Relative to the element's own computed font-size | `font-size: 1.5em;` |
 | `rem` | Relative to the root element's font-size | `font-size: 1.2rem;` |
 | `%` | Relative to parent dimension (width for horizontal, height for vertical; font-size `%` is relative to parent font-size) | `width: 50%;` |
+
+!!! warning "Percentages resolve against the parent's full box, not its content box"
+
+    Unlike CSS, a percentage size is measured against the parent's **outer**
+    width or height — its padding is *not* subtracted first. On a parent that
+    has both an explicit size and padding, `width: 100%` therefore produces a
+    child as wide as the parent itself, offset by the left padding, so it
+    overhangs the right edge by the padding amount. Centred text inside that
+    child ends up visibly off-centre.
+
+    ```css
+    /* 72px button, 3px side padding: the child spans x = 3 … 75 */
+    .overlay { width: 100%; padding: 2 3; }
+    .title   { width: 100%; text-align: center; }   /* centred on x = 39, not 36 */
+    ```
+
+    Keep padding to the axis you are not sizing in percent (`padding: 2 0`
+    above), or drop `width: 100%` and centre the child with `align: center`
+    on the parent instead.
 
 #### Named Font Sizes
 

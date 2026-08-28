@@ -1,6 +1,6 @@
 # PDK Plugin Creator
 
-The **PDK plugin creator** is a small Python CLI shipped in the [pydeck-plugins](https://github.com/opvault/pydeck-plugins) repository (`tools/pdk_create`). It scaffolds a new **PDK-format** plugin into your PyDeck **plugin data directory** using the **standard layout** (`src/shared.py`, `src/functions/<name>/template.xml`, `handler.py`, and related files) so you start from working stubs instead of an empty directory. For concepts and a guided first run, see [Plugin development — Getting started](../plugin/getting-started.md); the quick start there is built around this tool.
+The **PDK plugin creator** is a small Python CLI shipped in the [pydeck-plugins](https://github.com/opvault/pydeck-plugins) repository (`tools/pdk_create`). It scaffolds a new **PDK-format** plugin into your PyDeck **plugin data directory** using the **standard layout** (`src/shared.py`, `src/functions/<name>/template.xml`, `handler.py`, and related files) so you start from working stubs instead of an empty directory. For concepts and a guided first run, see [Plugin development — Getting started](getting-started.md); the quick start there is built around this tool.
 
 On a normal install, PyDeck keeps plugins under **`$XDG_DATA_HOME/pydeck/plugin/`** (default **`~/.local/share/pydeck/plugin/`**). The tool writes:
 
@@ -70,7 +70,7 @@ python -m tools.pdk_create --non-interactive \
 
 The tool must find the directory that contains plugin folders (each child directory is one plugin). On current PyDeck this is **`$XDG_DATA_HOME/pydeck/plugin/`** (default **`~/.local/share/pydeck/plugin/`**). Older documentation referred to **`<pydeck>/plugins/plugin/`**; that path existed only under the app checkout and is **migrated into the data directory on first PyDeck start**, so prefer the `~/.local/share/pydeck/plugin` form.
 
-Resolution matches **[Sync From PyDeck](sync-from-pydeck.md)**:
+Resolution matches **[Sync From PyDeck](publishing.md)**:
 
 1. **`--pydeck-source PATH`** — path directly to the plugin root (e.g. `~/.local/share/pydeck/plugin`)
 2. **`--pydeck-root PATH`** — pydeck repo root; the tool may use `<root>/plugins/plugin/` when that directory still exists (ignored if `--pydeck-source` is set)
@@ -123,6 +123,7 @@ Under the plugin root, the tool creates:
 ```text
 <plugin-root>/<rdnn-id>/
 ├── manifest.json
+├── CHANGELOG.md
 ├── src/
 │   ├── shared.py
 │   ├── shared.css
@@ -138,4 +139,13 @@ Under the plugin root, the tool creates:
     └── licenses/LICENSE-main
 ```
 
-Edit the generated files, add icons under `assets/icons/` as needed, then iterate. For PDK behavior and APIs, see [Plugin development — Getting started](../plugin/getting-started.md), [Templates & Elements](../plugin/templates-elements.md), and [Runtime & Examples](../plugin/runtime-examples.md).
+The generated `manifest.json` declares `"changelog": "CHANGELOG.md"` and seeds the file
+with a first section. Every published plugin version ships one — keep writing into it as
+you work, and `sync_from_pydeck.py` turns what you wrote into the published entry. See
+[Changelog](manifest.md#7-changelog).
+
+The scaffold also sets `title_readonly`, `disableGallery`, and `disableGallary` to `true`
+on each function, on the assumption that the template owns the whole face. Remove
+`title_readonly` if you want a `<buttonlabel>` the user can fill in.
+
+Edit the generated files, add icons under `assets/icons/` as needed, then iterate. For PDK behavior and APIs, see [Plugin development — Getting started](getting-started.md), [Templates & Elements](templates.md), and [Runtime & Examples](runtime.md).
