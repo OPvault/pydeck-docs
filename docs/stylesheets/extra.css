@@ -253,3 +253,417 @@
 .md-footer-meta {
     display: none;
 }
+
+/* ============================================================
+   PyDeck docs — overhaul additions
+   (landing hero, grid cards, custom "screenshot" admonition)
+   ============================================================ */
+
+/* ── Tabs: keep the custom accent underline on the active tab ── */
+.md-tabs__link--active,
+.md-tabs__link:hover {
+    opacity: 1;
+}
+
+/* ── Landing hero ── */
+.pd-hero {
+    text-align: center;
+    padding: 2.5rem 1rem 1.5rem;
+}
+.pd-hero h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.4rem;
+}
+.pd-hero p.pd-tagline {
+    font-size: 1.05rem;
+    color: var(--md-default-fg-color--light);
+    max-width: 40rem;
+    margin: 0 auto 1.4rem;
+}
+.pd-hero .md-button {
+    margin: 0.2rem 0.3rem;
+}
+
+/* ── Screenshots (.pd-shot): centered, capped, softly framed ── */
+.md-typeset img.pd-shot {
+    display: block;
+    margin: 1.4rem auto;
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    box-shadow: var(--md-shadow-z2);
+    /* auto width: never upscale past the image's own pixels — keeps them crisp */
+    width: auto;
+}
+.pd-hero img.pd-shot--hero {
+    margin-top: 2.2rem;
+    max-width: 32rem;
+}
+
+/* ── Grid cards: subtle lift on hover ── */
+.md-typeset .grid.cards > ul > li,
+.md-typeset .grid > .card {
+    transition: border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+}
+.md-typeset .grid.cards > ul > li:hover {
+    border-color: var(--md-accent-fg-color);
+    transform: translateY(-2px);
+    box-shadow: var(--md-shadow-z2);
+}
+
+/* ── Custom "screenshot" admonition (marks where images belong) ── */
+:root {
+    --md-admonition-icon--screenshot: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4M9 2 7.17 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3.17L15 2zm3 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10"/></svg>');
+}
+.md-typeset .admonition.screenshot,
+.md-typeset details.screenshot {
+    border-color: var(--md-accent-fg-color);
+    border-style: dashed;
+}
+.md-typeset .screenshot > .admonition-title,
+.md-typeset .screenshot > summary {
+    background-color: var(--md-accent-fg-color--transparent);
+    border-block-end-color: var(--md-accent-fg-color);
+}
+.md-typeset .screenshot > .admonition-title::before,
+.md-typeset .screenshot > summary::before {
+    background-color: var(--md-accent-fg-color);
+    -webkit-mask-image: var(--md-admonition-icon--screenshot);
+    mask-image: var(--md-admonition-icon--screenshot);
+}
+
+/* ── Mermaid diagrams: center and give them breathing room ── */
+.md-typeset .mermaid {
+    text-align: center;
+    margin: 1.2rem 0;
+}
+
+/* ── Secondary hero button (.md-button, non-primary): make it legible ──
+   Material colors the base button with --md-primary-fg-color, which is
+   near-black in both palettes here. Use readable text + a visible border. */
+.md-typeset .md-button {
+    color: var(--md-default-fg-color);
+    border-color: var(--md-default-fg-color--lighter);
+    border-radius: 10px;
+}
+.md-typeset .md-button:is(:hover, :focus) {
+    color: var(--md-accent-fg-color);
+    border-color: var(--md-accent-fg-color);
+    background-color: var(--md-accent-fg-color--transparent);
+}
+/* keep the primary button's own (already-styled) look on hover */
+.md-typeset .md-button--primary:is(:hover, :focus) {
+    background-color: var(--md-accent-fg-color);
+    color: var(--md-default-bg-color);
+}
+
+/* ── Hero: hide the heading permalink (¶) — it inherits the huge hero font ── */
+.pd-hero .headerlink {
+    display: none;
+}
+
+/* ── Make the whole "grid card" clickable, not just the link inside ──
+   Each card has one link; stretch it to cover the card (Bootstrap-style). */
+.md-typeset .grid.cards > ul > li {
+    position: relative;
+}
+.md-typeset .grid.cards > ul > li:hover {
+    cursor: pointer;
+}
+.md-typeset .grid.cards > ul > li > :last-child a::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+/* ============================================================
+   Mobile / responsive polish
+   ============================================================ */
+
+/* Mermaid diagrams: scroll inside their own box, never the page */
+.md-typeset .mermaid {
+    overflow-x: auto;
+    max-width: 100%;
+}
+.md-typeset .mermaid svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Long inline code / URLs shouldn't push the layout wide on small screens */
+.md-typeset code {
+    overflow-wrap: anywhere;
+}
+
+/* Phones (Material's mobile breakpoint is 76.1875em for the nav;
+   this targets the narrow-screen content experience). */
+@media screen and (max-width: 44.9375em) {
+    .pd-hero {
+        padding: 1.5rem 0.5rem 1rem;
+    }
+    .pd-hero h1 {
+        font-size: 1.9rem;
+    }
+    .pd-hero p.pd-tagline {
+        font-size: 0.95rem;
+    }
+    /* Stack the hero buttons full-width so they're easy tap targets */
+    .pd-hero .md-button {
+        display: block;
+        width: 100%;
+        margin: 0.4rem 0;
+    }
+}
+
+/* Small tablets: keep the hero from getting too large */
+@media screen and (min-width: 45em) and (max-width: 59.9375em) {
+    .pd-hero h1 {
+        font-size: 2.2rem;
+    }
+}
+
+/* ============================================================
+   Mobile: move the header nav bar to the BOTTOM (app-style)
+   Applies below Material's tab breakpoint, where the top-level
+   tabs are hidden and the header is the only nav bar.
+   ============================================================ */
+@media screen and (max-width: 76.1875em) {
+    .md-header {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        /* shadow points upward now that the bar sits at the bottom */
+        box-shadow: 0 -0.2rem 0.5rem rgba(0, 0, 0, 0.35),
+                    0 0 0.05rem rgba(0, 0, 0, 0.25);
+    }
+
+    /* Header is out of flow now: keep page content and footer clear of the bar */
+    .md-container {
+        padding-bottom: 2.4rem;
+    }
+
+    /* Back-to-top button shouldn't sit under the bottom bar */
+    .md-top {
+        margin-top: 0;
+    }
+}
+
+/* ============================================================
+   Mobile: larger, more readable text
+   ============================================================ */
+@media screen and (max-width: 76.1875em) {
+    /* Body copy — Material's default (~0.8rem) is too small on phones */
+    .md-typeset {
+        font-size: 0.9rem;
+        line-height: 1.7;
+    }
+    /* Navigation labels in the drawer — easier to read and tap */
+    .md-nav {
+        font-size: 0.85rem;
+    }
+    .md-nav__title {
+        font-size: 0.95rem;
+    }
+    /* Search input text */
+    .md-search__input {
+        font-size: 0.9rem;
+    }
+}
+
+/* ============================================================
+   Mobile: drawer slides UP from the bottom (bottom sheet)
+   instead of in from the side. Desktop keeps its side sidebar.
+
+   We give the sheet an explicit height so Material's internal
+   absolutely-positioned nav fills it (auto height collapses it),
+   and force full width so it doesn't stay at the 12.1rem drawer
+   width. We only change position/size/transform — Material's own
+   scrollwrap keeps handling the scrolling.
+   ============================================================ */
+@media screen and (max-width: 76.1875em) {
+    .md-sidebar--primary {
+        top: auto !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 80vh !important;
+        max-height: 80vh !important;
+        transform: translateY(100%) !important;
+        border-top-left-radius: 14px;
+        border-top-right-radius: 14px;
+        box-shadow: 0 -0.3rem 0.8rem rgba(0, 0, 0, 0.4);
+        z-index: 6;
+        overflow: hidden;
+    }
+
+    [data-md-toggle="drawer"]:checked ~ .md-container .md-sidebar--primary {
+        transform: translateY(0) !important;
+    }
+
+    /* Make sure the inner wrappers span the full sheet width */
+    .md-sidebar--primary .md-sidebar__scrollwrap,
+    .md-sidebar--primary .md-sidebar__inner,
+    .md-sidebar--primary .md-nav--primary {
+        width: 100%;
+    }
+
+    /* Rounded top corners + a drag-handle affordance on the sheet header */
+    .md-sidebar--primary .md-nav--primary > .md-nav__title {
+        position: relative;
+        border-top-left-radius: 14px;
+        border-top-right-radius: 14px;
+        padding-top: 1rem;
+    }
+    .md-sidebar--primary .md-nav--primary > .md-nav__title::before {
+        content: "";
+        position: absolute;
+        top: 0.4rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2.2rem;
+        height: 0.22rem;
+        border-radius: 0.22rem;
+        background: var(--md-default-fg-color--lighter);
+    }
+}
+
+/* ── Mobile drawer: drop the logo icon and the repo source block ── */
+@media screen and (max-width: 76.1875em) {
+    .md-nav--primary .md-nav__title .md-logo {
+        display: none;
+    }
+    .md-nav--primary > .md-nav__source {
+        display: none;
+    }
+}
+
+/* ── Mobile: header title reads as tappable (opens the drawer) ── */
+@media screen and (max-width: 76.1875em) {
+    .md-header__title {
+        cursor: pointer;
+    }
+}
+
+/* ============================================================
+   Mobile: search as a bottom sheet that slides UP.
+   Input sits at the bottom (thumb reach); results appear above it.
+   Overrides Material's default top-down full-screen search.
+   ============================================================ */
+@media screen and (max-width: 76.1875em) {
+    .md-search__inner {
+        position: fixed !important;
+        top: auto !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 80vh !important;
+        max-height: 80vh !important;
+        opacity: 1 !important;
+        transform: translateY(100%) !important;
+        transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        display: flex;
+        flex-direction: column-reverse; /* form (DOM-first) to the bottom, output above */
+        overflow: hidden;
+        border-top-left-radius: 14px;
+        border-top-right-radius: 14px;
+        box-shadow: 0 -0.3rem 0.8rem rgba(0, 0, 0, 0.4);
+        z-index: 8;
+    }
+
+    [data-md-toggle="search"]:checked ~ .md-header .md-search__inner {
+        transform: translateY(0) !important;
+        height: 80vh !important;
+        width: 100% !important;
+        opacity: 1 !important;
+        transition: transform 0.25s cubic-bezier(0.1, 0.7, 0.1, 1) !important;
+    }
+
+    /* Search field: comfortable tap height, pinned to the bottom of the sheet */
+    .md-search__form {
+        height: 3rem;
+        flex: 0 0 auto;
+        border-radius: 0;
+    }
+
+    /* Results fill the space above the field and scroll */
+    .md-search__output {
+        position: relative !important;
+        top: auto !important;
+        bottom: auto !important;
+        flex: 1 1 auto;
+        min-height: 0;
+        opacity: 1 !important;
+        overflow: hidden;
+    }
+    .md-search__scrollwrap {
+        height: 100% !important;
+        max-height: none !important;
+        width: 100% !important;
+    }
+
+    /* Simple full-screen scrim instead of the radial reveal */
+    .md-search__overlay {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        border-radius: 0 !important;
+        transform: none !important;
+        background-color: rgba(0, 0, 0, 0.55) !important;
+        opacity: 0;
+        transition: opacity 0.25s !important;
+    }
+    [data-md-toggle="search"]:checked ~ .md-header .md-search__overlay {
+        opacity: 1 !important;
+        width: 100% !important;
+        height: 100% !important;
+        transform: none !important;
+    }
+}
+
+/* ── Mobile: align the autocomplete ghost text with the input ──
+   The suggest overlay is height:100% of the (now 3rem) form and centered,
+   but Material fixes the input at 2.4rem, so the ghost text sits lower.
+   Match the input to the form height and center the icons. */
+@media screen and (max-width: 76.1875em) {
+    .md-search__input {
+        height: 3rem;
+    }
+    .md-search__icon[for="__search"] {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    .md-search__options {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+/* ── Mobile: results and input sit flush inside the sheet (no rounded
+   corners creating a gap between them). The sheet itself keeps its
+   rounded top; these inner boxes should be square. ── */
+@media screen and (max-width: 76.1875em) {
+    .md-search__output,
+    .md-search__form {
+        border-radius: 0 !important;
+    }
+}
+
+/* ── Desktop: the search results box is a dropdown under the input, so its
+   TOP corners should be square (meeting the field) while the BOTTOM stays
+   rounded. Desktop only — mobile uses the bottom-sheet layout above. ── */
+@media screen and (min-width: 76.25em) {
+    [data-md-color-scheme="default"] .md-search__output,
+    [data-md-color-scheme="slate"] .md-search__output {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+}
