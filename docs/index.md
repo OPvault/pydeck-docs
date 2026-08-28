@@ -1,118 +1,89 @@
-# Installation
+---
+hide:
+  - navigation
+  - toc
+---
 
-**PyDeck** is a Python-powered macro deck you extend with plugins and themes. This page covers installing and running the main [PyDeck](https://github.com/opvault/pydeck) application from a git checkout on **Linux**, **macOS**, and **Windows**.
+<div class="pd-hero" markdown>
 
-When the app is running, use the sidebar or jump straight to:
+# PyDeck
 
-- [Devices](using/devices.md) — supported hardware, multiple decks, brightness and orientation
-- [Profiles & folders](using/profiles-and-folders.md) and the [Action Builder](using/actions.md) — more buttons than you have keys
-- [Virtual decks & phone control](using/virtual-decks.md) — run a deck on a phone or spare screen
-- [Marketplace](using/marketplace.md) — install plugins and themes, and [keep PyDeck itself updated](using/updates.md)
-- [Plugin development](plugin-development/plugin/getting-started.md) — build your own buttons — or [Theme development](theme-development/getting-started.md)
+<p class="pd-tagline">A Python-powered controller for your Elgato Stream Deck. Runs in your browser, extends with plugins and themes, and even turns a phone or spare screen into a deck.</p>
 
-## Requirements
+[Install PyDeck](get-started/install.md){ .md-button .md-button--primary }
+[Build a plugin](plugins/getting-started.md){ .md-button }
 
-- Python 3.9+
-- Linux, macOS, or Windows (HID access is provided by [`hidapi`](https://pypi.org/project/hidapi/), which ships prebuilt wheels for all three platforms)
-- `libcairo2` system library (required by `cairosvg` for SVG icon rendering)
+![The PyDeck web UI driving a 15-key Stream Deck](assets/hero.png){ .pd-shot .pd-shot--hero }
 
-### Platform notes
+</div>
 
-- **Linux**: hidapi uses `/dev/hidraw` under the hood; unprivileged access requires either running PyDeck as root or installing the optional udev rules shipped with the installer (see [Linux](#linux) below).
-- **macOS**: no extra setup — the system grants HID access to user processes.
-- **Windows**: no extra setup — Stream Deck devices appear as standard HID devices.
+## What is PyDeck?
 
-PyDeck ships platform-specific installers. All of them do the same thing: check Python, create a virtualenv, install dependencies (including `hidapi`), copy default configs to `~/.config/pydeck/core/` (or the platform equivalent), and register an autostart entry for your platform.
+PyDeck is a lightweight web app that drives an [Elgato Stream Deck](get-started/install.md#supported-hardware). It runs on **Linux, macOS, and Windows**, installs with a single command, serves a browser UI at `http://localhost:8686`, and talks to the hardware over USB. Buttons can run built-in **actions** or **plugins** you install from the marketplace — and you can restyle the whole UI with **themes**.
 
-## Install from git
+Unlike Elgato's software, PyDeck ships with **no built-in plugins** and a single built-in theme. Everything else is added from the marketplace or built by you, which keeps the core small and puts you in control.
 
-### Linux
+## Private by default
 
-```bash
-git clone https://github.com/opvault/pydeck.git
-cd pydeck
-sudo bash install.sh
-```
+**No account. No sign-up. No telemetry.** PyDeck runs entirely on your own machine — your buttons, profiles, and settings never leave it. There is nothing to log into and nothing phoning home with your data.
 
-The installer will:
+The only time the **core** reaches the internet is on your terms: to browse and install from the marketplace (files hosted on GitHub) and to check for updates. That's it — no analytics, no tracking.
 
-1. Check your Python version
-2. Create a virtualenv and install dependencies (`fastapi`, `uvicorn`, `pillow`, `cairosvg`, `watchdog`, `hidapi`, and others)
-3. Optionally install udev rules for unprivileged Stream Deck access (opt-in — pass `--with-udev` to auto-install, or answer the prompt)
-4. Detect your init system (systemd, OpenRC, runit, s6, Upstart, SysV)
-5. Create the appropriate service file
-6. Ask if you want PyDeck to start automatically at boot
+It doesn't listen on the network either, unless you ask it to. PyDeck binds to `127.0.0.1` by default, and even with LAN access turned on for phone control, remote requests are **denied by default** — a device has to be paired, and the editor and settings stay reachable only from the machine itself.
 
-### macOS
+!!! note "Plugins you install are their own thing"
+    A plugin you choose to add may talk to an outside service to do its job — the Spotify plugin uses Spotify's API, Discord uses Discord's, Home Assistant talks to your own server, and so on. That traffic is between that plugin and that service, governed by their terms, not PyDeck's. The core neither requires it nor sees it — install only the plugins whose services you're happy to use.
 
-Run the same installer script **without** `sudo` — on macOS it installs a per-user LaunchAgent instead of a system service:
+## Where to next
 
-```bash
-git clone https://github.com/opvault/pydeck.git
-cd pydeck
-bash install.sh
-```
+<div class="grid cards" markdown>
 
-The installer will:
+-   :material-download: **Get Started**
 
-1. Check your Python version
-2. Create a virtualenv and install dependencies
-3. Copy default configs to `~/.config/pydeck/core/`
-4. Write a LaunchAgent to `~/Library/LaunchAgents/com.pydeck.agent.plist` and register it with `launchctl` so PyDeck starts automatically at login
-5. Write logs to `~/Library/Logs/PyDeck/pydeck.log`
+    ---
 
-### Windows
+    Install PyDeck on your computer and press your first button in a couple of minutes.
 
-Run the PowerShell installer from the PyDeck checkout:
+    [:octicons-arrow-right-24: Install PyDeck](get-started/install.md)
 
-```powershell
-git clone https://github.com/opvault/pydeck.git
-cd pydeck
-powershell -ExecutionPolicy Bypass -File .\install.ps1
-```
+-   :material-tune: **Using PyDeck**
 
-The installer will:
+    ---
 
-1. Check for Python 3.9+ (via the `py` launcher, `python`, or `python3`)
-2. Create a virtualenv in `venv\` and install dependencies
-3. Copy default configs to `%USERPROFILE%\.config\pydeck\core\`
-4. Register a Task Scheduler entry named **PyDeck** that starts `pydeck-start.ps1` at user logon
+    Devices, profiles, folders, the Action Builder, phone control, and the marketplace.
 
-Flags:
+    [:octicons-arrow-right-24: Using PyDeck](using/devices.md)
 
-- `-Yes` — answer every prompt with yes (non-interactive install)
-- `-SkipAutostart` — don't register the scheduled task
-- `-Force` — overwrite an existing PyDeck scheduled task without prompting
+-   :material-puzzle: **Build Plugins**
 
-## Running manually
+    ---
 
-```bash
-# Linux / macOS
-bash pydeck-start.sh
-```
+    Write your own buttons with the PDK template engine — templates, rendering, and a Python runtime.
 
-```powershell
-# Windows
-powershell -ExecutionPolicy Bypass -File .\pydeck-start.ps1
-```
+    [:octicons-arrow-right-24: Build a plugin](plugins/getting-started.md)
 
-Then open `http://localhost:8686` in your browser.
+-   :material-palette: **Build Themes**
 
-## Uninstallation
+    ---
 
-```bash
-# Linux
-sudo bash uninstall.sh
+    Restyle the PyDeck UI with a handful of CSS variables and publish to the theme catalog.
 
-# macOS
-bash uninstall.sh
-```
+    [:octicons-arrow-right-24: Build a theme](themes/getting-started.md)
 
-```powershell
-# Windows
-powershell -ExecutionPolicy Bypass -File .\uninstall.ps1
-```
+-   :material-api: **Reference**
 
-This stops and removes the platform's autostart entry (systemd unit / OpenRC script / runit service / s6 service / Upstart job / SysV init script / macOS LaunchAgent / Windows scheduled task), any installed udev rules on Linux, and the virtualenv. Optionally removes your config and logs (you will be asked before anything is deleted).
+    ---
 
-Supported hardware is listed under [Devices](using/devices.md). For project layout and other implementation details, see the [PyDeck README](https://github.com/opvault/pydeck/blob/main/README.md) in the application repository.
+    The full HTTP & WebSocket API, config and file-path layout, and a glossary of PyDeck terms.
+
+    [:octicons-arrow-right-24: API reference](reference/http-api.md)
+
+-   :material-source-repository: **Source code**
+
+    ---
+
+    PyDeck is open source. The app, plugin catalog, and theme catalog each live in their own repo.
+
+    [:octicons-arrow-right-24: PyDeck on GitHub](https://github.com/opvault/pydeck)
+
+</div>
