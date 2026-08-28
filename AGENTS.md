@@ -12,6 +12,8 @@ This is a **documentation-only** repository — a [ProperDocs](https://properdoc
 
 **Consequence for editing:** the commands, flags, file paths, and APIs documented here are defined in those *other* repos. You cannot verify them by grepping this repo. When a page claims e.g. a CLI flag or a config path exists, treat that as an assertion about the `pydeck` / `pydeck-plugins` source — confirm against those repos (or ask) rather than inventing or "fixing" details.
 
+The `docs/internals/` pages and `docs/reference/api-cookbook.md` / `api-tokens.md` were migrated out of the `opvault/pydeck` repo root (where they lived as loose `docs-*.md` files). They describe that repo's `api/` and `lib/` packages at a module-and-function level, so they go stale when that code moves — check them against `opvault/pydeck` before editing.
+
 ## Commands
 
 Dependencies are pinned in `requirements.txt` (`properdocs` + `mkdocs-material` + `mkdocs-redirects`). ProperDocs keeps the `mkdocs.*` plugin and theme APIs, so MkDocs plugins and themes install and load unchanged.
@@ -26,7 +28,7 @@ Do **not** run `properdocs gh-deploy` manually. Deployment is automated: pushing
 
 ## Structure & conventions
 
-- **`docs/`** holds all page content (Markdown). `docs/index.md` is the published landing page. Content is organized by **audience**, one folder per top-level nav tab: `get-started/` (install, first button, troubleshooting — keep it simple, non-technical), `using/` (day-to-day features + marketplace), `plugins/` (technical plugin development, including publishing/catalog tooling), `themes/` (technical theme development + publishing), and `reference/` (HTTP/WebSocket API, config paths, developer options, glossary). Screenshots live under `docs/assets/` and are marked in-page with the `!!! screenshot` admonition.
+- **`docs/`** holds all page content (Markdown). `docs/index.md` is the published landing page. Content is organized by **audience**, one folder per top-level nav tab: `get-started/` (install, first button, troubleshooting — keep it simple, non-technical), `using/` (day-to-day features + marketplace), `plugins/` (technical plugin development, including publishing/catalog tooling), `themes/` (technical theme development + publishing), `reference/` (HTTP/WebSocket API schemas, the API cookbook of worked examples, API tokens, config paths, developer options, glossary), and `internals/` (how the PyDeck server itself is built — for contributors to `opvault/pydeck`, not for plugin or theme authors). Screenshots live under `docs/assets/` and are marked in-page with the `!!! screenshot` admonition.
 - **URL stability:** moving or renaming a page requires an entry in the `redirects` `redirect_maps` block of `properdocs.yml` so existing `docs.pydeck.no` links survive.
 - **`properdocs.yml`** defines the `nav:` tree — section labels and ordering. **Adding or renaming a page requires a matching `nav:` edit**; a new `.md` file alone won't appear in the sidebar.
 - **`site/`** is the build output. It is gitignored and **not** tracked — never edit, commit, or reference files under `site/` (they are regenerated on every build/deploy).

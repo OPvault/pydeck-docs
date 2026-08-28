@@ -3,6 +3,11 @@
 !!! info "Core HTTP surface"
     These routes and payloads are how **PyDeck’s core** exposes plugins to the web UI and to integrations. Plugin **discovery**, forms, credentials, and action APIs all run through them, whatever your handlers do internally. This reference does not document PDK template tags — see [Templates and elements](../plugins/templates.md) and [Rendering](../plugins/rendering.md).
 
+!!! tip "Looking for worked examples?"
+    This page documents the **payload schemas**. For a runnable `curl` example of
+    every endpoint, see the [API cookbook](api-cookbook.md); for creating and
+    scoping a token, [API tokens](api-tokens.md).
+
 ## Unified button model in HTTP and WebSocket payloads
 
 Plugin discovery and editor APIs use **one schema** for every installed plugin. JSON may therefore include **`default_display`**, **`display_states`**, and WebSocket events such as **`display_update`** — fields rooted in the persisted **`buttons.json`** display object. **PDK** draws the hardware button **face** from **templates** and **`ctx.state`**; those display fields still matter for the **web editor**, sidebar metadata, and per-state icons, but they are not how PDK composes the PNG face. See [`manifest.json` reference](../plugins/manifest.md) for the manifest side and [Web UI and assets](../plugins/assets.md) for the `buttons.json` display object.

@@ -137,7 +137,17 @@ nav:
 
   - Reference:
       - HTTP & WebSocket API: reference/http-api.md
+      - API cookbook: reference/api-cookbook.md
+      - API tokens: reference/api-tokens.md
       - Config & file paths: reference/paths.md
       - Developer options: reference/developer-options.md
       - Glossary: reference/glossary.md
+
+  - Internals:
+      - Server architecture: internals/architecture.md
+      - The api/ package: internals/api-layer.md
+      - Route inventory: internals/routes.md
+      - lib/ service modules: internals/lib-services.md
+      - Access control: internals/security.md
+      - Adding endpoints: internals/adding-endpoints.md
 
