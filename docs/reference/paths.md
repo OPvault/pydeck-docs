@@ -36,37 +36,40 @@ The port (`8686`) is fixed. Binding to the LAN does **not** open the API up: rem
 | `PYDECK_ALLOWED_HOSTS` | Comma-separated hostnames accepted in the `Host` header, for a reverse proxy. Without it, only IP literals and `localhost` are accepted (**421** otherwise). |
 | `PYDECK_MARKETPLACE_MANIFEST_URL` | Comma-separated catalog URLs, loaded **in addition to** your saved list. Not editable from the UI. |
 
+## The database
+
+Everything you configure — settings, per-device state, profiles, folders, buttons, plugin credentials, OAuth tokens, actions, pairing and API tokens, virtual decks — lives in **one SQLite file in the data directory**:
+
+```text
+~/.local/share/pydeck/
+├── pydeck.db      # all of the state below (WAL mode; -wal/-shm sidecars appear while PyDeck runs)
+└── secret.key     # the key that unlocks the encrypted columns (0600); absent when the OS keyring holds it
+```
+
+Secrets (passwords, tokens, client secrets) are stored encrypted (AES-256-GCM); pairing tokens are stored only as a SHA-256 digest. Copying `pydeck.db` on its own reveals none of them. Set `PYDECK_DB=/path/to/file.db` to put the database somewhere else.
+
+**Upgrading from the JSON layout.** The first start after upgrading reads the old `~/.config/pydeck/core/` and `devices/` once, imports them into the database, and deletes them. If the import had to skip anything, it logs a warning and keeps them as `core.bak` / `devices.bak` instead so you can look at what was left behind. To preview that import by hand (`--remove` / `--archive` reproduce the two cleanups):
+
+```bash
+venv/bin/python tools/migrate_to_db.py --dry-run
+```
+
+`Settings → Developer` (and `GET /api/settings/developer`) shows the database path a running PyDeck is on.
+
+**Per-device vs. global.** With a specific device active, PyDeck reads that device's own profiles; the first time a device is used, it copies the global profiles in as a starting point. Without a bound device, the global set is used.
+
+**Folders belong to a profile**, not to the install — deleting a profile takes its folders and buttons with it.
+
 ## Config directory
 
-**`~/.config/pydeck/`** on every platform (e.g. `C:\Users\<you>\.config\pydeck\` on Windows). All files are JSON, written atomically. The config directory is a fixed location — it is not affected by `$XDG_CONFIG_HOME`.
+**`~/.config/pydeck/`** still holds the two things that are files rather than rows:
 
 ```text
 ~/.config/pydeck/
-├── core/
-│   ├── config.json            # global settings — see the table below
-│   ├── credentials.json       # plugin credentials (secrets)
-│   ├── paired_tokens.json     # tokens for paired phones / remote decks
-│   ├── virtual_decks.json     # virtual deck definitions
-│   ├── actions.json           # saved Action Builder sequences
-│   └── profiles/
-│       └── <name>/
-│           ├── buttons.json   # button layout for a profile (global fallback)
-│           └── folders.json   # that profile's folders
-├── devices/
-│   └── <device_id>/
-│       ├── config.json        # per-device settings (brightness, orientation)
-│       └── profiles/
-│           └── <name>/
-│               ├── buttons.json   # per-device button layout
-│               └── folders.json
-└── gallery/                   # icons you've uploaded
+└── gallery/                   # icons you've uploaded (core.bak/ and devices.bak/ appear only if an upgrade import had warnings)
 ```
 
-**Per-device vs. global.** When a specific device is active, PyDeck reads that device's `devices/<device_id>/…` files; the first time a device is used, it copies the global profiles in as a starting point. Without a bound device, the global `core/…` paths are used.
-
-**Folders belong to a profile**, not to the install — deleting a profile directory takes its folders with it.
-
-### What's in `core/config.json`
+### Global settings (the `settings` table)
 
 | Key | Meaning |
 |---|---|
