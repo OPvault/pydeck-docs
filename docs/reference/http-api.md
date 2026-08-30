@@ -344,6 +344,13 @@ Render the button at the given slot as a PNG image. Returns `image/png`.
 
 Execute a button press from the web UI and return the result.
 
+The handler runs in the **listener** that owns the deck — the same process, and
+the same code, that a press on the hardware runs in — so the deck and the web
+grid come out of it in the same state. The response is what the listener
+returned. A deck with no listener to ask (a virtual or kiosk deck, or one that
+is unplugged) falls back to running the press in the server. See
+[Two processes](../internals/architecture.md#two-processes).
+
 **Response:**
 
 ```json

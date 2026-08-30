@@ -34,18 +34,43 @@ web GUI, the REST API and the WebSocket stream, renders button previews for the
 browser grid, and runs the background threads (hot-plug scan, display poller,
 display schedule, scroll ticker, PDK animation ticker, app updater).
 
-**The listener** — `run_streamdeck_listener.py`, one subprocess per connected
+**The listener** — `tools/listener.py`, one subprocess per connected
 device, spawned by the server. It owns the HID handle for its device, reads key
 events, dispatches presses, and renders button faces for the hardware.
 
-They communicate over the listener's stdout line protocol. The server parses it
-in `lib/listener_bridge.py` and turns each line into a WebSocket event for the
-browser.
+They communicate over a line protocol on the listener's pipes. The server parses
+the listener's stdout in `lib/devices/listener_bridge.py` and turns each line
+into a WebSocket event for the browser; it writes commands back to the
+listener's stdin.
 
 Because each process keeps its own plugin runtime state and its own poll loop, a
 plugin's `on_poll` runs once per process. A `PRESS:` line from the listener is a
 report, not a request: the listener already executed the press, so the server
 must never dispatch it again.
+
+### A press runs in exactly one process
+
+That process is the listener, whether the key was pressed on the deck or clicked
+in the browser. `POST /api/buttons/<id>/press` does not run the handler in the
+server: it sends `{"cmd": "press", "req": …, "button": N}` down the listener's
+stdin, the listener runs it through the same code a key report runs, and answers
+`CommandResult:{…}` — which the route returns, unchanged, as the response body.
+The browser then learns what moved from the listener's ordinary `PRESS:` report,
+exactly as it does for a press on the hardware.
+
+That is the whole point of the arrangement. **Plugin state — a PDK function's
+`ctx.state` above all — lives in memory, and each process has its own.** A press
+the server executed itself advanced the server's copy, so the web grid animated
+and the deck went on rendering the state from before the press.
+
+The server still holds the complete in-process path, as a fallback, for the
+cases where there is no listener to ask:
+
+| Case | What happens |
+| :--- | :----------- |
+| A virtual or kiosk deck, or a deck that is unplugged | The server runs the press itself and fans out the result |
+| A button the listener has no key for | The listener answers `unmapped`; the server runs it |
+| The listener dies with the command outstanding | An error. The press may already have run over there, and running it again would repeat its side effect |
 
 ## Three layers
 

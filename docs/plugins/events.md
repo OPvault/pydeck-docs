@@ -12,6 +12,14 @@ When you finish this page you will know how PyDeck distinguishes **physical butt
 - **Button down** — The hardware listener reports a **press**. The core dispatches **`on_press(ctx)`**.
 - **Button up** — The listener reports a **release**. The core dispatches **`on_release(ctx)`** — but only when the button's config sets **`press_mode: "hold"`**.
 
+!!! info "A press in the web GUI is the same press"
+    Pressing a button in the browser does not take a second path through your
+    plugin. The request is handed to the listener that owns the deck, which runs
+    it exactly as it runs a key report, in the process that holds the plugin's
+    state — so `on_press` sees one call, `ctx.state` moves once, and the deck and
+    the web grid show the same thing afterwards. Write `on_press` as though the
+    only caller were the hardware.
+
 !!! warning "`press_mode` is not just your own convention — the core reads it"
     A release on a button whose config does **not** say `press_mode: "hold"` is dropped
     before your plugin is reached: the dispatch returns `{"ignored": true}` and
