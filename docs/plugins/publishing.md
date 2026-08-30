@@ -49,7 +49,7 @@ Three different files carry plugin metadata. Mixing them up is the most common c
 | File | Where | Purpose | Edited by |
 |---|---|---|---|
 | `<version>/manifest.json` | inside each version | **Source of truth** — name, version, functions, permissions, etc. | plugin author |
-| `<slug>/catalog.json` | plugin root | Catalog-only overrides: `category`, `compatible_pydeck_versions`, `summary`, `licenses` | maintainer |
+| `<slug>/catalog.json` | plugin root | Catalog-only overrides: `category`, `compatible_pydeck_versions`, `summary`, `licenses`, `compatibility` | maintainer |
 | `<version>/meta/options.json` | inside each version | Marketplace blurb: `description`, `features[]`, `tags[]` | plugin author |
 | `manifest.json` (root) | repo root | The generated catalog index | **never by hand** |
 
@@ -480,6 +480,15 @@ The script checks the plugin slug directory for icons in this priority order:
 
 The first match becomes `icon_path`. If neither exists, a warning is printed and `icon_path` is set to `""`.
 
+#### Platform compatibility
+
+`compatibility` is lifted from the **latest** version's `manifest.json` onto the entry, right
+after `category`, exactly as `min_pydeck_version` is, so the marketplace can classify and
+filter every plugin from the root index alone. A plugin that declares neither gets no
+`compatibility` key and shows as **Unverified** — the generator never invents one. The reserved
+vocabulary and the field shapes are documented on the
+[manifest reference](manifest.md#8-platform-compatibility).
+
 #### The `pdk` marker is a pass-through
 
 `pdk` appears on an entry **only** when the latest version's own `manifest.json` declares
@@ -520,6 +529,7 @@ catalog.json  >  existing root manifest.json  >  version manifest.json  >  built
 | `name` | — | ✓ (fallback) | ✓ (first) | slug |
 | `author` | — | ✓ (fallback) | ✓ (first) | `"Unknown"` |
 | `licenses` | ✓ (first) | ✓ (fallback) | — | omitted when empty |
+| `compatibility` | ✓ (first) | — | ✓ (fallback) | omitted — shown as *Unverified* |
 
 This means regenerating the manifest never loses data — as long as the previous `manifest.json` is present, all catalog-only fields are preserved even if no `catalog.json` exists.
 
@@ -554,6 +564,7 @@ plugins/spotify/
 | `summary` | string | One-line description shown in the marketplace card. Overrides the `description` field from the plugin's `manifest.json`. |
 | `compatible_pydeck_versions` | array of strings | PyDeck versions this plugin is compatible with. |
 | `licenses` | array of strings | Licence files bundled with the plugin, surfaced in the marketplace card. The key is omitted from the entry when the list is empty. |
+| `compatibility` | object | Replaces the plugin's own `compatibility` block outright — for curation when a declaration turns out to be wrong. Same shape as in [`manifest.json`](manifest.md#8-platform-compatibility). |
 
 All fields are optional. Any field present in `catalog.json` takes priority over both the existing root manifest and the plugin's own `manifest.json`.
 

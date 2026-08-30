@@ -54,6 +54,7 @@ Every plugin ships a **`manifest.json`**: the file PyDeck reads to discover the 
 | `documentation` | string | No | Path to a bundled markdown guide, relative to the plugin folder (e.g. `"DOCS.md"`). Auto-detected from `DOCS.md`/`README.md` when absent. See [Plugin documentation](documentation.md). |
 | `show_markdown_after_install` | boolean | No | Only meaningful alongside `documentation`. When `true`, PyDeck pops the rendered doc up right after install. Defaults to `false`. |
 | `changelog` | string | No | Path to the plugin's changelog, relative to the plugin folder. Defaults to `CHANGELOG.md`, which the catalog picks up whether or not you declare it — so the field only matters if you name the file something else. Every plugin is expected to ship one. See [Changelog](#7-changelog). |
+| `compatibility` | object | No | Which platforms the plugin runs on and what it needs from them — `os`, `requires`, `optional`, `min_os_version`. The marketplace classifies the plugin against the user's machine and refuses an incompatible install unless the user overrides. Omit it and the plugin shows as **Unverified**. See [Platform compatibility](#8-platform-compatibility). |
 | `pdk` | boolean | No | **Do not set this in a new plugin.** PyDeck reads the generation off the plugin's *sources*, not the manifest, and ignores a `pdk` key if one is present. Pre-PDK plugins carry `"pdk": false` to flag themselves as classic; a leftover `"pdk": true` still parses but does nothing. |
 | `functions` | object | Yes | Maps function names to their metadata. This is the core of the manifest. |
 
@@ -303,7 +304,51 @@ turn them into the published section (or pass `--changelog`). See
 
 ---
 
-## 8. Related reading
+## 8. Platform compatibility
+
+Some plugins depend on things that only exist on certain platforms — xdotool on X11, MPRIS over D-Bus, AppleScript. Declare that so the marketplace can tell a user *before* they install:
+
+```json
+{
+  "compatibility": {
+    "os": ["linux"],
+    "requires": ["dbus", "mpris"],
+    "optional": ["x11"],
+    "min_os_version": { "windows": "10" }
+  }
+}
+```
+
+| Field | Meaning |
+|:---|:---|
+| `compatibility.os` | OSes the plugin supports: `linux`, `windows`, `macos`. A plugin for every platform lists all three. |
+| `compatibility.requires` | Capabilities that **must** be present or the plugin cannot work. A missing one makes the plugin **incompatible**; the marketplace names what is missing and refuses the install unless the user chooses *Install anyway*. |
+| `compatibility.optional` | Capabilities the plugin uses when present but does not need. Never blocks — use it when the plugin has more than one way to do its job (X11 *or* Wayland, say). |
+| `compatibility.min_os_version` | Per-OS floor, e.g. `{"windows": "11"}` or `{"macos": "13"}`. |
+
+What the plugin is *for* is not part of this block — that is its `category` in the catalog's `catalog.json`, which has its own picker in the marketplace. The marketplace's **Platform tags** filter is derived from `compatibility` (every OS, requirement and optional capability a plugin mentions), so there is no separate tag list to keep in step.
+
+### The reserved vocabulary
+
+These are the tags the compatibility engine can actually check for. Anything else in `requires` is never satisfiable and always reads as missing, so keep `requires` to this list.
+
+| Category | Tags | How PyDeck detects it |
+|:---|:---|:---|
+| Operating system | `linux`, `windows`, `macos` | `sys.platform` |
+| OS version | `windows-10`, `windows-11`, `macos-13`, … | Windows build number (≥ 22000 is 11), `platform.mac_ver()` |
+| Linux session | `x11`, `wayland` | `XDG_SESSION_TYPE` / `WAYLAND_DISPLAY` / `DISPLAY`. `x11` is present under Wayland too when XWayland is running (`DISPLAY` is set) — most X11 tools work through it. |
+| Protocol / subsystem | `dbus`, `mpris`, `evdev`, `xdotool`, `hidraw`, `applescript`, `win32` | Session bus socket, `xdotool`/`osascript` on `PATH`, `evdev` importable, `/dev/hidraw*` |
+| Architecture | `x86_64`, `arm64` | `platform.machine()` |
+
+Probes are cheap on purpose — "on `PATH`", "socket exists" — so a capability means *looks available*, not *verified working*.
+
+### What the user sees
+
+Each catalog card carries a compatibility pill: the declared platform (*Linux · D-Bus · MPRIS*) when it matches, the same greyed and marked *not compatible* with the reason on hover when it does not, or *Unverified* when the plugin never declared anything. Incompatible plugins sink to the bottom and hide behind the existing **Show incompatible** toggle; **Works on my system** narrows the grid to declared matches only; the **Platform tags** group filters by any platform word a plugin declares. The catalog generator lifts `compatibility` onto the root index so none of this needs a download — see [Publishing](publishing.md#platform-compatibility).
+
+---
+
+## 9. Related reading
 
 - [UI field types](ui-fields.md) — every field type the `ui` array accepts.
 - [Plugin development — Getting started](getting-started.md) — plugin layout, templates, handlers.
