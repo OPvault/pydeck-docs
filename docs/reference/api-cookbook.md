@@ -1085,6 +1085,8 @@ Inside `deck_event`, `type` is one of:
 | `error` | `button`, `error`, `device_id` | A button's handler raised |
 | `postinstall_prompt` | `request_id`, `slug`, `version`, `requires_sudo`, script paths | An install is waiting for approval |
 | `postinstall_result` | `request_id`, `slug`, `status`, `exit_code`/`deleted_plugin_on_decline` | That approval finished |
+| `system_packages_prompt` | `request_id`, `slug`, `plugin_name`, `requires_sudo`, `required_pending`, `plan`, `commands` | An install wants OS packages installed first; nothing downloaded yet |
+| `system_packages_result` | `request_id`, `slug`, `status`, `installed`, `services` | That step finished (`succeeded` / `failed` / `declined` / `skipped`) |
 
 `display_update` is emitted often — the poll loop runs every 200 ms per device,
 and animated PDK faces and scrolling labels tick on their own timers. Debounce

@@ -361,6 +361,24 @@ Installing, upgrading and removing plugins and themes.
 | `postinstall_status(id)` / `postinstall_script(id)` | Query a pending post-install request. |
 | `approve_postinstall(id, sudo_password)` / `decline_postinstall(id)` | Run it, or refuse it. |
 | `postinstall_manager` | The `PluginPostInstallManager` instance. |
+| `system_packages_status(id)` | Query a pending or finished system-package request. |
+| `approve_system_packages(id, sudo_password)` / `decline_system_packages(id)` | Run the planned commands and then install the plugin, or refuse them (an optional-only refusal still installs). |
+| `system_package_manager` | The `SystemPackageManager` instance holding pending plans. |
+
+`install_plugin` is two halves. `_prepare_plugin_install` does everything that can refuse
+before a byte lands: catalog lookup, the platform verdict (`marketplace.platform.classify`
+→ 409, no override), the version manifest, and `system_packages` resolution
+(`marketplace.system_packages.resolve` with the probes in `lib.plugins.system_packages`).
+If the plan has anything to install, the request is parked in `system_package_manager`
+and the call returns `system_packages_required`; `_finish_plugin_install` — download,
+cache invalidation, the post-install gate — only runs from `approve_system_packages`
+(or `decline_system_packages` when only optional packages were pending). The
+post-install gate rejects a script that calls a package manager
+(`lib.plugins.postinstall.PackageInstallInScript`) and removes the freshly written
+directory. The two modules split on purpose: `marketplace/system_packages.py` is pure
+(manifest parsing, manager table, resolution against callables) and unit-tested
+without a machine; `lib/plugins/system_packages.py` is the side that probes `PATH`,
+runs `sudo -S`, and writes `plugin_system_packages` / `plugin_services`.
 
 **Cache invalidation is mandatory after files change.** Every operation replaces
 a directory underneath a running server. The PDK parse cache has no staleness

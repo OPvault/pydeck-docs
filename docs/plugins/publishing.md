@@ -487,7 +487,12 @@ after `category`, exactly as `min_pydeck_version` is, so the marketplace can cla
 filter every plugin from the root index alone. A plugin that declares neither gets no
 `compatibility` key and shows as **Unverified** — the generator never invents one. The reserved
 vocabulary and the field shapes are documented on the
-[manifest reference](manifest.md#8-platform-compatibility).
+[manifest reference](manifest.md#9-platform-compatibility).
+
+`system_packages` is deliberately **not** lifted: PyDeck reads it from the version's own
+`manifest.json` when installing, so it may differ between versions. Declare what the
+marketplace should filter on in `compatibility`, and what PyDeck should install in
+[`system_packages`](manifest.md#7-system-packages).
 
 #### The `pdk` marker is a pass-through
 
@@ -564,7 +569,7 @@ plugins/spotify/
 | `summary` | string | One-line description shown in the marketplace card. Overrides the `description` field from the plugin's `manifest.json`. |
 | `compatible_pydeck_versions` | array of strings | PyDeck versions this plugin is compatible with. |
 | `licenses` | array of strings | Licence files bundled with the plugin, surfaced in the marketplace card. The key is omitted from the entry when the list is empty. |
-| `compatibility` | object | Replaces the plugin's own `compatibility` block outright — for curation when a declaration turns out to be wrong. Same shape as in [`manifest.json`](manifest.md#8-platform-compatibility). |
+| `compatibility` | object | Replaces the plugin's own `compatibility` block outright — for curation when a declaration turns out to be wrong. Same shape as in [`manifest.json`](manifest.md#9-platform-compatibility). |
 
 All fields are optional. Any field present in `catalog.json` takes priority over both the existing root manifest and the plugin's own `manifest.json`.
 

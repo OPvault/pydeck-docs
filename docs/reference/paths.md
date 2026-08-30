@@ -38,7 +38,7 @@ The port (`8686`) is fixed. Binding to the LAN does **not** open the API up: rem
 
 ## The database
 
-Everything you configure — settings, per-device state, profiles, folders, buttons, plugin credentials, OAuth tokens, actions, pairing and API tokens, virtual decks — lives in **one SQLite file in the data directory**:
+Everything you configure — settings, per-device state, profiles, folders, buttons, plugin credentials, OAuth tokens, actions, pairing and API tokens, virtual decks — plus what the marketplace did on your behalf (system packages it installed per plugin, services plugins depend on, the post-install script you approved) lives in **one SQLite file in the data directory**:
 
 ```text
 ~/.local/share/pydeck/

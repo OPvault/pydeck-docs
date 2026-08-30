@@ -105,4 +105,4 @@ popup can read it from disk.
     `DOCS.md` is the guide — setup, credentials, what each button does — and only the
     **latest** version's copy is surfaced. `CHANGELOG.md` is per version and holds only
     that version's changes; the marketplace assembles a range from several of them. See
-    [Changelog](manifest.md#7-changelog).
+    [Changelog](manifest.md#8-changelog).

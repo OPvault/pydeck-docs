@@ -51,7 +51,7 @@ python -m tools.pdk_create --non-interactive \
   --post-install
 ```
 
-Omit `--post-install` if you do not want `scripts/setup.sh` or `post_install_script` in the generated manifest.
+Omit `--post-install` if you do not want `scripts/setup.sh` or `post_install_script` in the generated manifest. A post-install script **may not install packages** — PyDeck rejects a script that calls `apt`, `pacman`, `pip install` and the like. Declare OS packages in the manifest's [`system_packages`](manifest.md#7-system-packages) block instead.
 
 Using the pydeck **repository root** (legacy checkout layout; only if `plugins/plugin` still exists there):
 
@@ -142,7 +142,7 @@ Under the plugin root, the tool creates:
 The generated `manifest.json` declares `"changelog": "CHANGELOG.md"` and seeds the file
 with a first section. Every published plugin version ships one — keep writing into it as
 you work, and `sync_from_pydeck.py` turns what you wrote into the published entry. See
-[Changelog](manifest.md#7-changelog).
+[Changelog](manifest.md#8-changelog).
 
 The scaffold also sets `title_readonly`, `disableGallery`, and `disableGallary` to `true`
 on each function, on the assumption that the template owns the whole face. Remove

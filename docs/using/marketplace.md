@@ -17,7 +17,11 @@ The left panel is filters, the middle is the catalog:
 | **Type** | **Plugins** (buttons that *do* things) or **Themes** (restyle the UI). |
 | **Category** | Plugin categories from the catalog — media, utilities, system, and so on. |
 | **Sources** | Shown when more than one catalog is active — filter to one catalog. |
-| **Show incompatible** | Appears only when a plugin declares it needs a different PyDeck version. Off by default. |
+| **Platform** | Shows what PyDeck detected about this machine (*Detected: Linux · Wayland · x86_64*) and a **Works on my system** switch, **on by default**, that only lists plugins whose declared platform matches. Turn it off to also see plugins that never said where they run (marked *Unverified*). |
+| **Platform tags** | Filter by a platform word a plugin declares — `linux`, `x11`, `wayland`, `dbus`, `mpris`, … Tags this machine offers are marked *Detected*. |
+| **Show incompatible** | Appears only when some plugin can't run here — it needs a different PyDeck version, or a different platform (Linux-only on Windows, X11-only on Wayland). Off by default. |
+
+Every plugin card carries a small **compatibility pill**: the platform it declares when that matches yours, *not compatible* with the reason on hover when it doesn't, or *Unverified* when the author declared nothing.
 
 The **refresh** button in the filter header re-fetches every catalog, bypassing the cache.
 
@@ -27,10 +31,13 @@ The **refresh** button in the filter header re-fetches every catalog, bypassing 
 2. Click **Install**. PyDeck downloads it and it appears in the sidebar right away.
 3. To install a specific release instead of the newest, use the **arrow** on the right of the Install button and pick a version from the list.
 
-That's usually all there is to it. Two things can add an extra step:
+That's usually all there is to it. Three things can add an extra step:
 
-- **Extra dependencies.** Some plugins need additional Python packages. PyDeck installs them automatically and then restarts itself — this is normal and only happens once per plugin.
-- **Setup scripts.** A few plugins run a one-time setup script (for example, to install a system helper). PyDeck **will not run it without your approval** — you'll see a prompt showing the script's actual contents. Review it and approve or decline. Declining removes the plugin. Some setup steps need administrator rights, which PyDeck will tell you.
+- **Python dependencies.** Some plugins need additional Python packages. PyDeck installs them automatically and then restarts itself — this is normal and only happens once per plugin.
+- **System packages.** Some plugins need a program from your operating system — `xdotool` for keyboard control on X11, say. If it's already installed, nothing happens. If not, PyDeck opens a **System packages** dialog *before* downloading anything: it lists each package, why the plugin wants it, and the **exact command** it will run with your system's own package manager (`apt`, `dnf`, `pacman`, …). Click **Install** to run it — you'll be asked for your sudo password when the package manager needs it; the password is used for that one step and never stored. Packages marked *optional* can be **skipped** and the plugin installs without them; declining a *required* one cancels the install and leaves nothing behind. PyDeck never removes a system package again — it belongs to your OS, not to the plugin.
+- **Setup scripts.** A few plugins run a one-time setup script (for example, to add you to a system group). PyDeck **will not run it without your approval** — you'll see a prompt showing the script's actual contents. Review it and approve or decline. Declining removes the plugin. Some setup steps need administrator rights, which PyDeck will tell you. Once you've approved a script, an update that ships the identical script won't ask again; a changed script will.
+
+If a plugin **can't run on this machine** — wrong operating system, wrong display session, or a PyDeck version it doesn't support — its card is hidden until you press **Show incompatible**, and even then the button reads **Not compatible** (hover it for the reason). There is no way to force the install.
 
 An install downloads into a staging directory and swaps it into place in one move, so an interrupted download never leaves a half-installed plugin behind.
 
@@ -45,6 +52,8 @@ Cards carry up to three small buttons in the corner:
 | **Licenses** | Third-party licence texts the plugin declares, one tab per licence. |
 
 Plugins that bundle documentation can also pop it up automatically right after install, if the author opted in.
+
+A card can also show a **Local** chip instead of the catalog's badges. That means the installed copy is a version no catalog has published — typically a development checkout — so the catalog can't vouch for it.
 
 ## Using a plugin's buttons
 
@@ -69,7 +78,7 @@ Themes work the same way: switch **Type** to **Themes**, pick one, and click **I
     assembled from several of them. A version whose file can't be fetched doesn't blank
     the modal — everything that did arrive is shown, followed by a note saying how many
     versions are missing.
-- **Remove** — click **Uninstall**. This removes the plugin's files; buttons that used it will need to be reassigned. (Uninstall is hidden while an upgrade is running.)
+- **Remove** — click **Uninstall**. This removes the plugin's files; buttons that used it will need to be reassigned. (Uninstall is hidden while an upgrade is running.) System packages the plugin had you install stay — they're part of your OS. If the plugin enabled a service (an SSH server, say) that no other installed plugin needs any more, PyDeck tells you how to stop it (`sudo systemctl disable --now <service>`) but doesn't do it for you.
 
 To keep the PyDeck **app itself** up to date (separate from plugins), see [Updating PyDeck](updates.md).
 

@@ -116,6 +116,9 @@ Prefix `/api`. Catalogs, installs, and post-install approval.
 | GET | `/api/marketplace/postinstall/script/{request_id}` | `marketplace_install.postinstall_script` |
 | POST | `/api/marketplace/postinstall/decline` | `marketplace_install.decline_postinstall` |
 | POST | `/api/marketplace/postinstall/approve` | `marketplace_install.approve_postinstall` |
+| GET | `/api/marketplace/system-packages/status/{request_id}` | `marketplace_install.system_packages_status` |
+| POST | `/api/marketplace/system-packages/decline` | `marketplace_install.decline_system_packages` |
+| POST | `/api/marketplace/system-packages/approve` | `marketplace_install.approve_system_packages` |
 | POST | `/api/marketplace/theme-install` | `marketplace_install.install_theme` |
 | POST | `/api/marketplace/theme-uninstall` | `marketplace_install.uninstall_theme` |
 | POST | `/api/open-folder` | `server_network.open_in_file_manager` |

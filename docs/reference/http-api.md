@@ -952,8 +952,19 @@ Returns the combined plugin catalog fetched from all configured manifest URLs.
 | `pydeck_version` | The running version, used to mark entries `incompatible`. |
 | `repo_errors` | Present only when at least one catalog failed; a list of `{manifest_url, error}`. |
 
-An entry that has no version compatible with `pydeck_version` is returned with its full
-version list plus `"incompatible": true`, so the UI can offer to show it anyway.
+Each plugin row additionally carries:
+
+| Field | Description |
+|:---|:---|
+| `installed`, `installed_version`, `installed_dir` | Local install state, resolved server-side (legacy slug and RDNN directory names count as the same plugin). |
+| `local` | `true` when the installed version is one **no catalog ever published** — a development checkout. The UI shows a *Local* chip instead of the catalog's Official/channel badges. |
+| `incompatible` | `true` when no version of the entry supports `pydeck_version`. The full version list is still returned. |
+| `platform` | The platform verdict against this machine: `{"status": "compatible" \| "incompatible" \| "unverified", "reason", "missing": [tags], "summary"}`. `summary` is the pill text (`Linux · X11 · xdotool`); `unverified` means the plugin declares no `compatibility` block. |
+| `compatibility` | The plugin's declared block (`os`, `requires`, `optional`, `min_os_version`), when the catalog lifted one. |
+
+Either kind of incompatibility is a **hard block**: the UI disables the Install button and
+`POST /api/marketplace/install` refuses with 409. `system_packages` is *not* on the row — it
+is read from the version's own manifest at install time.
 
 Catalogs are fetched in parallel with TTL + `If-None-Match` caching; pass `refresh=1` to
 bypass the cache. Returns `"configured": false` when no catalogs are configured, and
@@ -1050,6 +1061,49 @@ Download and install a plugin from a manifest URL.
 }
 ```
 
+**Response — 200 (system packages required):**
+
+When the version's manifest declares [`system_packages`](../plugins/manifest.md#7-system-packages) and at least one has to be installed, **nothing is downloaded yet**. The response carries the resolved plan and the exact commands, and a `system_packages_prompt` event goes out on the WebSocket. Call the [system-packages approve/decline endpoints](#post-apimarketplacesystem-packagesapprove) to continue; the plugin install itself happens inside that call.
+
+```json
+{
+  "ok": true,
+  "installed": false,
+  "system_packages_required": true,
+  "request_id": "f0e1…",
+  "slug": "no.pydeck.keyboard",
+  "version": "1.0.8",
+  "plugin_name": "Keyboard",
+  "requires_sudo": true,
+  "required_pending": false,
+  "plan": {
+    "packages": [
+      { "name": "xdotool", "reason": "Faster, layout-aware key injection on X11.",
+        "optional": true, "status": "install", "manager": "pacman", "package": "xdotool",
+        "service": "", "min_version": "", "installed_version": "", "available_version": "",
+        "detail": "Not installed." }
+    ],
+    "to_install": [ … the entries with status "install" … ],
+    "cancel_reason": "",
+    "services": []
+  },
+  "commands": [
+    { "kind": "install", "manager": "pacman", "packages": ["xdotool"], "service": "",
+      "argv": ["pacman", "-S", "--noconfirm", "--needed", "xdotool"],
+      "elevated": true, "display": "sudo pacman -S --noconfirm --needed xdotool" }
+  ],
+  "pkgbuilds": {}
+}
+```
+
+| Field | Description |
+|:---|:---|
+| `requires_sudo` | At least one command is `elevated`; `approve` then needs `sudo_password`. |
+| `required_pending` | A **required** (non-optional) package is among `to_install`. Declining cancels the install; when `false`, declining just skips the optional packages and installs the plugin. |
+| `plan.packages[].status` | `not_applicable`, `satisfied`, `install`, `optional_skipped` here — `unresolvable` / `too_old` never reach a response, they refuse the install (below). |
+| `commands` | In execution order: one `install` per package manager, then one `service` (`systemctl enable --now …` / `brew services start …`) per declared service. `display` is what the UI shows. |
+| `pkgbuilds` | For AUR packages, package name → `PKGBUILD` text fetched for review (`""` when it could not be fetched). |
+
 **Response — 200 (post-install required):**
 
 When the plugin declares a `post_install_script`, the response includes post-install details and a `request_id` for the pending request. The UI should present the review prompt before calling the approve/decline endpoints.
@@ -1068,8 +1122,21 @@ When the plugin declares a `post_install_script`, the response includes post-ins
 }
 ```
 
-**Response — 400** if required fields are missing or the post-install script declaration is invalid.  
+**Response — 400** if required fields are missing, the `system_packages` block is malformed (`… declares invalid system_packages: …`), or the post-install script declaration is invalid. A post-install script that **calls a package manager** is also 400 — the plugin is removed again and the body carries `blocked_tokens` (e.g. `["apt-get", "pip install"]`); package installs must be declared in `system_packages`.  
 **Response — 404** if the manifest URL is unreachable.  
+**Response — 409** if the plugin cannot run here. Two causes, both without an override:
+
+```json
+{ "error": "Keyboard is not compatible with this system: Linux only — this is Windows.",
+  "platform": { "status": "incompatible", "reason": "…", "missing": ["linux"], "summary": "Linux" } }
+```
+
+```json
+{ "error": "SSH Remote cannot be installed on this system. Unmet dependency: OpenSSH server — No package for this system's package manager (apk); the plugin maps it for: apt, dnf, pacman.",
+  "slug": "no.pydeck.ssh",
+  "system_packages": { "packages": [ … ], "to_install": [], "cancel_reason": "Unmet dependency: …", "services": [] } }
+```
+
 **Response — 502** if the download fails.
 
 #### `POST /api/marketplace/uninstall`
@@ -1085,8 +1152,20 @@ Remove an installed plugin by slug.
 **Response:**
 
 ```json
-{ "ok": true, "slug": "spotify" }
+{
+  "ok": true,
+  "slug": "no.pydeck.ssh",
+  "orphaned_services": ["sshd"],
+  "system_packages": [ { "manager": "apt", "package": "openssh-server" } ]
+}
 ```
+
+| Field | Description |
+|:---|:---|
+| `orphaned_services` | Services this plugin had enabled that **no other installed plugin depends on any more**. They are stop *candidates* — PyDeck never stops a service itself; the UI tells the user the `systemctl disable --now` command. |
+| `system_packages` | Packages PyDeck installed for this plugin. They are **not** removed — a system package is shared with the rest of the OS; the list exists so a cleanup can be done by hand. |
+
+Uninstalling also forgets the plugin's approved post-install script, so a reinstall asks again.
 
 #### `GET /api/marketplace/postinstall/status/{request_id}`
 
@@ -1224,6 +1303,71 @@ Approve and execute a pending post-install script.
 **Response — 404** if the request ID is unknown.
 
 When the sudo password is incorrect, the response has status `200` with `"status": "bad_password"` so the UI can re-prompt.
+
+#### `GET /api/marketplace/system-packages/status/{request_id}`
+
+Status of a pending or finished system-package request (see the *system packages required* install response).
+
+**Response — pending:** `{"found": true, "status": "pending", …}` plus every field of the install response (`plan`, `commands`, `pkgbuilds`, `requires_sudo`, `required_pending`).
+
+**Response — finished:**
+
+```json
+{
+  "found": true,
+  "request_id": "f0e1…",
+  "slug": "no.pydeck.keyboard",
+  "version": "1.0.8",
+  "status": "succeeded",
+  "error": "",
+  "output": "$ sudo pacman -S --noconfirm --needed xdotool\nresolving dependencies...\n",
+  "installed": [ { "manager": "pacman", "package": "xdotool" } ],
+  "services": []
+}
+```
+
+| `status` value | Description |
+|:---|:---|
+| `pending` | Waiting for the user. |
+| `succeeded` | Every command exited 0; the plugin install went ahead. |
+| `failed` | A command failed; `error` says which step, `output` holds every command's combined output up to and including it. The plugin was not installed. |
+| `bad_password` | The sudo password did not validate. Nothing ran. |
+| `declined` | The user refused required packages; the install was cancelled. |
+| `skipped` | The user refused optional-only packages; the plugin was installed without them. |
+
+Returns `{"found": false, "request_id": "..."}` if the request ID is unknown. Requests live in memory — a restart forgets them.
+
+#### `POST /api/marketplace/system-packages/decline`
+
+Refuse the pending packages.
+
+**Request body:**
+
+```json
+{ "request_id": "f0e1…" }
+```
+
+**Response — 200:** the finished-status object above plus `installed`. With `required_pending: true` the status is `declined` and `installed` is `false`. With only optional packages pending the status is `skipped`, the plugin is installed in the same call, `installed` is `true`, and `install` holds the plugin-install response (which may itself say `postinstall_required`).
+
+**Response — 400** if `request_id` is missing. **404** if unknown.
+
+#### `POST /api/marketplace/system-packages/approve`
+
+Run the planned commands, then install the plugin.
+
+**Request body:**
+
+```json
+{ "request_id": "f0e1…", "sudo_password": "required when requires_sudo is true" }
+```
+
+The password is validated first with `sudo -S -k -v`; a wrong one answers **200** with `"status": "bad_password"` and the request stays pending so the UI can re-prompt. It is then fed on stdin to each elevated command (`sudo -S -k -p ''`), never stored. Commands run in order with a 15-minute timeout each, `DEBIAN_FRONTEND=noninteractive`; the first failure stops the sequence.
+
+**Response — 200 (succeeded):** the finished-status object with `"installed": true` and `install` holding the plugin-install response — the plugin's files are downloaded inside this call, so `install` may report `postinstall_required` with its own `request_id`. PyDeck records the installed packages (`plugin_system_packages`) and the plugin's services (`plugin_services`).
+
+**Response — 200 (failed):** `"status": "failed"`, `"installed": false`, with `error` and `output`.
+
+**Response — 400** if `request_id` is missing, `sudo_password` is not a string, or it is required but empty. **404** if the request ID is unknown.
 
 ---
 
@@ -1605,6 +1749,8 @@ Emitted whenever something changes on the deck (button press, display update, fo
 | `profile_change` | — | The active profile changed. GUI should reload the profile tabs and every button image. |
 | `postinstall_prompt` | `request_id`, `slug`, `version`, `requires_sudo`, `script_rel_path`, `script_abs_path` | A newly installed plugin has a post-install script awaiting user review. |
 | `postinstall_result` | `request_id`, `slug`, `version`, `status`, `exit_code?`, `error?`, `script_abs_path`, `deleted_plugin_on_decline?` | A post-install request was resolved (approved, declined, timed out, or failed). See [Post-install scripts](../plugins/manifest.md#6-post-install-scripts) for `status` values. |
+| `system_packages_prompt` | `request_id`, `slug`, `version`, `plugin_name`, `requires_sudo`, `required_pending`, `plan`, `commands` | An install is waiting for the user to approve system packages; nothing has been downloaded. Same payload as the install response minus `pkgbuilds`. See [System packages](../plugins/manifest.md#7-system-packages). |
+| `system_packages_result` | `request_id`, `slug`, `version`, `status`, `error`, `installed`, `services` | That request finished: `succeeded`, `failed`, `declined` or `skipped` (`bad_password` is not broadcast — the request is still pending). |
 
 Most events include a `device_id` field so the GUI can scope updates to the correct device. Cross-device sync emits `display_update` events for **all** affected devices simultaneously — a client viewing Device B will see its buttons update live when Device A is pressed.
 
