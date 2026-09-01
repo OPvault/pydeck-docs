@@ -1,0 +1,3591 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Install, use, and extend PyDeck — the Python-powered Stream Deck controller.">
+      
+      
+      
+        <link rel="canonical" href="https://docs.pydeck.no/plugins/rendering/">
+      
+      
+        <link rel="prev" href="../templates/">
+      
+      
+        <link rel="next" href="../runtime/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.png">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Rendering & styling - PyDeck Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#plugin-development-rendering" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="PyDeck Docs" class="md-header__button md-logo" aria-label="PyDeck Docs" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PyDeck Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Rendering & styling
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OPvault/pydeck" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OPvault/pydeck
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../get-started/install/" class="md-tabs__link">
+          
+  
+  
+  Get Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../using/devices/" class="md-tabs__link">
+          
+  
+  
+  Using PyDeck
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../getting-started/" class="md-tabs__link">
+          
+  
+  
+  Build Plugins
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../themes/getting-started/" class="md-tabs__link">
+          
+  
+  
+  Build Themes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/http-api/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../internals/architecture/" class="md-tabs__link">
+          
+  
+  
+  Internals
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PyDeck Docs" class="md-nav__button md-logo" aria-label="PyDeck Docs" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    PyDeck Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OPvault/pydeck" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OPvault/pydeck
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Get Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../get-started/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install PyDeck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../get-started/first-button/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your first button
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../get-started/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using PyDeck
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using PyDeck
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Devices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/profiles-and-folders/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles & folders
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/actions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Action Builder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/marketplace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install plugins & themes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/appearance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appearance & themes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/gradient-backgrounds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradient backgrounds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/virtual-decks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Virtual decks & phone control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security, LAN & HTTPS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/keyboard-shortcuts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Keyboard shortcuts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/updates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Updating PyDeck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build Plugins
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Build Plugins
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pdk-create/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugin Creator (scaffold)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates & elements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rendering & styling
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rendering & styling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-layout-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Layout Engine
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Layout Engine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flex-container-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flex Container Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sizing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spacer-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spacer Behaviour
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gap
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-renderer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Renderer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Renderer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backgrounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backgrounds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-fit-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image Fit Modes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-rendering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text Rendering
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Text Rendering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#text-anchor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text Anchor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-stroke" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text Stroke
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emoji-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emoji Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#font-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Font Resolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effects
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-animations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Animations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Animations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keyframes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @keyframes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        animation Property
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="animation Property">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shorthand-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shorthand Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rotate-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rotate Property
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timing-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timing Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete-example-spinning-weather-icon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Example — Spinning Weather Icon
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-joins-the-animation-tick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What joins the animation tick
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animated-gifs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animated GIFs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35-button-owned-faces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Button-owned faces
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36-the-buttons-own-title-style" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 The button's own title style
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6 The button&#39;s own title style">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#per-row-styles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-row styles
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-gradient-backgrounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Gradient backgrounds
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Gradient backgrounds">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#opting-a-function-into-the-editor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opting a function into the editor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-_button_gradient-state-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The _button_gradient state key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-it-in-a-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using it in a template
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data format
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../runtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime & the ctx object
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Press, hold & events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manifest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    manifest.json reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ui-fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UI field types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication & credentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assets & plugin web UI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bundled documentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing to the catalog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build Themes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Build Themes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/css-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS variable reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/publishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing themes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/http-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTTP & WebSocket API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/api-cookbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API cookbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/api-tokens/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API tokens
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/paths/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config & file paths
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/developer-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Internals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Internals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/api-layer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The api/ package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/routes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Route inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/lib-services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lib/ service modules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Access control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/adding-endpoints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adding endpoints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-layout-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Layout Engine
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Layout Engine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#flex-container-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Flex Container Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Alignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sizing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spacer-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spacer Behaviour
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gap
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-renderer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Renderer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Renderer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#backgrounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Backgrounds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#image-fit-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Image Fit Modes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-rendering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text Rendering
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Text Rendering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#text-anchor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text Anchor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-stroke" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Text Stroke
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#emoji-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Emoji Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#font-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Font Resolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effects
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-animations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Animations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Animations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How It Works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keyframes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        @keyframes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        animation Property
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="animation Property">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#shorthand-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shorthand Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rotate-property" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        rotate Property
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#timing-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Timing Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#complete-example-spinning-weather-icon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Complete Example — Spinning Weather Icon
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-joins-the-animation-tick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What joins the animation tick
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animated-gifs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animated GIFs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35-button-owned-faces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Button-owned faces
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36-the-buttons-own-title-style" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 The button's own title style
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6 The button&#39;s own title style">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#per-row-styles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Per-row styles
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-gradient-backgrounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Gradient backgrounds
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Gradient backgrounds">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#opting-a-function-into-the-editor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Opting a function into the editor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-_button_gradient-state-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The _button_gradient state key
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-it-in-a-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using it in a template
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data format
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="plugin-development-rendering">Plugin Development — Rendering<a class="headerlink" href="#plugin-development-rendering" title="Permanent link">&para;</a></h1>
+<hr />
+<h2 id="1-layout-engine">1. Layout Engine<a class="headerlink" href="#1-layout-engine" title="Permanent link">&para;</a></h2>
+<p>PDK uses a simplified flexbox layout engine. Every element is laid out inside a square canvas (typically 72–96 px depending on the Stream Deck model).</p>
+<h3 id="flex-container-model">Flex Container Model<a class="headerlink" href="#flex-container-model" title="Permanent link">&para;</a></h3>
+<p>Any <code>&lt;box&gt;</code> element acts as a flex container. The <code>direction</code> property sets the main axis:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Direction</th>
+<th style="text-align: left;">Main Axis</th>
+<th style="text-align: left;">Cross Axis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>column</code> (default)</td>
+<td style="text-align: left;">Vertical (top to bottom)</td>
+<td style="text-align: left;">Horizontal</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>row</code></td>
+<td style="text-align: left;">Horizontal (left to right)</td>
+<td style="text-align: left;">Vertical</td>
+</tr>
+</tbody>
+</table>
+<h3 id="alignment">Alignment<a class="headerlink" href="#alignment" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Property</th>
+<th style="text-align: left;">Axis</th>
+<th style="text-align: left;">Values</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>justify</code></td>
+<td style="text-align: left;">Main axis</td>
+<td style="text-align: left;"><code>start</code>, <code>center</code>, <code>end</code>, <code>space-between</code>, <code>space-around</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>align</code></td>
+<td style="text-align: left;">Cross axis</td>
+<td style="text-align: left;"><code>start</code>, <code>center</code>, <code>end</code>, <code>stretch</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="sizing">Sizing<a class="headerlink" href="#sizing" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong><code>auto</code></strong> — the element sizes to fit its content (text measurement, child elements, or image dimensions).</li>
+<li><strong>Explicit values</strong> — fixed size in pixels, <code>%</code>, <code>em</code>, or <code>rem</code>.</li>
+</ul>
+<h3 id="spacer-behaviour">Spacer Behaviour<a class="headerlink" href="#spacer-behaviour" title="Permanent link">&para;</a></h3>
+<p>The <code>&lt;spacer&gt;</code> element absorbs all remaining free space on the main axis. Multiple spacers in the same container share the space equally:</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">&lt;box</span><span class="w"> </span><span class="na">style=</span><span class="s">"direction: column;"</span><span class="nt">&gt;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&lt;text&gt;</span>Pinned<span class="w"> </span>to<span class="w"> </span>top<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">&lt;spacer</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">&lt;text&gt;</span>Pinned<span class="w"> </span>to<span class="w"> </span>bottom<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nt">&lt;/box&gt;</span>
+</code></pre></div>
+<h3 id="gap">Gap<a class="headerlink" href="#gap" title="Permanent link">&para;</a></h3>
+<p>The <code>gap</code> property adds spacing between children on the main axis:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">.</span><span class="nc">row</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="k">direction</span><span class="p">:</span><span class="w"> </span><span class="kc">row</span><span class="p">;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="k">gap</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="2-renderer">2. Renderer<a class="headerlink" href="#2-renderer" title="Permanent link">&para;</a></h2>
+<p>The PDK renderer walks the layout tree and paints each element to a Pillow <code>Image</code> in back-to-front order:</p>
+<ol>
+<li><strong>Background</strong> — solid colour or gradient (linear / radial)</li>
+<li><strong>Border</strong> — stroke with optional <code>border-radius</code></li>
+<li><strong>Content</strong> — text, images, shapes (<code>rect</code>, <code>circle</code>, <code>line</code>), progress bars</li>
+<li><strong>Child elements</strong> — recursive rendering</li>
+<li><strong>Effects</strong> — <code>blur</code> and <code>glow</code> applied as post-processing</li>
+</ol>
+<h3 id="backgrounds">Backgrounds<a class="headerlink" href="#backgrounds" title="Permanent link">&para;</a></h3>
+<p>Solid colour:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="mh">#1a1a2e</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>Linear gradient:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nb">linear-gradient</span><span class="p">(</span><span class="mi">180</span><span class="kt">deg</span><span class="p">,</span><span class="w"> </span><span class="mh">#0091fe</span><span class="p">,</span><span class="w"> </span><span class="mh">#02cdf9</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>Radial gradient:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nb">radial-gradient</span><span class="p">(</span><span class="mh">#ffffff</span><span class="p">,</span><span class="w"> </span><span class="mh">#000000</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>Gradient angles follow CSS convention: <code>0deg</code> = bottom-to-top, <code>90deg</code> = left-to-right, <code>180deg</code> = top-to-bottom (default), <code>270deg</code> = right-to-left. Arbitrary angles (e.g. <code>45deg</code>, <code>135deg</code>) are fully supported.</p>
+<p>Color stops with explicit positions are also supported:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nb">linear-gradient</span><span class="p">(</span><span class="mi">135</span><span class="kt">deg</span><span class="p">,</span><span class="w"> </span><span class="mh">#ff0000</span><span class="w"> </span><span class="mi">0</span><span class="kt">%</span><span class="p">,</span><span class="w"> </span><span class="mh">#00ff00</span><span class="w"> </span><span class="mi">50</span><span class="kt">%</span><span class="p">,</span><span class="w"> </span><span class="mh">#0000ff</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Tip:</strong> For user-configurable gradient backgrounds, see <a href="../../using/gradient-backgrounds/">Gradient backgrounds</a> and the <code>_button_gradient</code> special state key.</p>
+</blockquote>
+<h3 id="image-fit-modes">Image Fit Modes<a class="headerlink" href="#image-fit-modes" title="Permanent link">&para;</a></h3>
+<p>The <code>fit</code> attribute on <code>&lt;img&gt;</code> controls how the source image is sized within the element bounds:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Mode</th>
+<th style="text-align: left;">Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>cover</code> (default)</td>
+<td style="text-align: left;">Scale to fill the entire box, cropping excess.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>contain</code></td>
+<td style="text-align: left;">Scale to fit within the box, preserving aspect ratio. The image is centred within the element bounds.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>stretch</code></td>
+<td style="text-align: left;">Stretch to exactly match width and height.</td>
+</tr>
+</tbody>
+</table>
+<p><code>.svg</code> sources are rasterised at the element's own size, so a vector icon stays crisp
+at any box. <code>.gif</code> sources <strong>play</strong> — see <a href="#animated-gifs">Animated GIFs</a> below.</p>
+<h3 id="text-rendering">Text Rendering<a class="headerlink" href="#text-rendering" title="Permanent link">&para;</a></h3>
+<p>Text is rendered using the computed font, and positioned according to <code>text-align</code>:</p>
+<ul>
+<li><code>left</code> — flush left</li>
+<li><code>center</code> (default) — centred horizontally</li>
+<li><code>right</code> — flush right</li>
+</ul>
+<p>Text is always vertically centred within the element's box. Shadow is rendered first (behind the text) when the <code>shadow</code> property is set.</p>
+<h4 id="text-anchor">Text Anchor<a class="headerlink" href="#text-anchor" title="Permanent link">&para;</a></h4>
+<p>The <code>text-anchor</code> property centres the text so that a specific character sits at the horizontal midpoint of the canvas. This is useful for aligning colons in clock displays, decimal points in numbers, or any other fixed reference character:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">.</span><span class="nc">time</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">text-anchor</span><span class="p">:</span><span class="w"> </span><span class="o">:</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>When <code>text-anchor</code> is set and the anchor character exists in the text, <code>text-align</code> is ignored. If the character is not found, <code>text-align</code> applies as normal.</p>
+<h4 id="text-stroke">Text Stroke<a class="headerlink" href="#text-stroke" title="Permanent link">&para;</a></h4>
+<p>The <code>text-stroke</code> property draws an outline around text, rendered behind the fill colour. It works on both <code>&lt;text&gt;</code> and <code>&lt;marquee&gt;</code> elements:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">.</span><span class="nc">title</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">text-stroke</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mh">#000000</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c">/*        width  color */</span>
+</code></pre></div>
+<h4 id="emoji-support">Emoji Support<a class="headerlink" href="#emoji-support" title="Permanent link">&para;</a></h4>
+<p><code>&lt;text&gt;</code> elements support emoji characters. When text contains emoji codepoints, the renderer splits the string into emoji and non-emoji runs, renders each with the appropriate font, and composites them together. The system emoji font is resolved via <code>fc-match</code> and scaled to match the element's <code>font-size</code>.</p>
+<h3 id="font-resolution">Font Resolution<a class="headerlink" href="#font-resolution" title="Permanent link">&para;</a></h3>
+<p>Fonts are resolved in this order:</p>
+<ol>
+<li>If <code>font-family</code> names a non-DejaVu font, resolve via <code>fc-match</code> (fontconfig).</li>
+<li>Fall back to bundled DejaVu Sans variants (<code>Regular</code>, <code>Bold</code>, <code>Oblique</code>, <code>BoldOblique</code>).</li>
+<li>Last resort: Pillow's built-in default font.</li>
+</ol>
+<h3 id="effects">Effects<a class="headerlink" href="#effects" title="Permanent link">&para;</a></h3>
+<p><strong>Shadow</strong> — only applies to <code>&lt;text&gt;</code> elements (drawn behind the text):</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">.</span><span class="nc">title</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">shadow</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mh">#000000</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c">/*        offset-x  offset-y  blur  color */</span>
+</code></pre></div>
+<p><strong>Glow</strong> — coloured glow around an element:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">.</span><span class="nc">active</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">glow</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mh">#00ff88</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c">/*        size  color */</span>
+</code></pre></div>
+<p><strong>Blur</strong> — Gaussian blur applied to the element's region:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">.</span><span class="nc">frosted</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">blur</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="3-animations">3. Animations<a class="headerlink" href="#3-animations" title="Permanent link">&para;</a></h2>
+<p>PDK supports CSS <code>@keyframes</code> animations and the <code>rotate</code> transform. Since PDK renders static PNGs via Pillow (there is no browser or DOM), animations work by re-rendering the button at a higher frame rate (~15 FPS) and computing interpolated property values at each timestamp.</p>
+<h3 id="how-it-works">How It Works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h3>
+<ol>
+<li><code>@keyframes</code> blocks and <code>animation</code> properties are parsed from your CSS.</li>
+<li>A timestamp is passed to the renderer on each frame.</li>
+<li>The animation resolver computes the current position in the animation cycle, applies a timing function, and interpolates keyframe property values.</li>
+<li>Transforms like <code>rotate</code> are applied during Pillow drawing (render to temp layer → rotate → composite).</li>
+<li>The listener re-renders animated buttons on a fast tick (~15 FPS) for the physical deck.</li>
+<li>The server runs its own, slower ticker (~5 FPS) and pushes update events so the browser refreshes the preview.</li>
+</ol>
+<h3 id="keyframes"><code>@keyframes</code><a class="headerlink" href="#keyframes" title="Permanent link">&para;</a></h3>
+<p>Define keyframe animations using standard CSS <code>@keyframes</code> syntax:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">@</span><span class="k">keyframes</span><span class="w"> </span><span class="nt">spin</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">from</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">rotate</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="nt">to</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">rotate</span><span class="p">:</span><span class="w"> </span><span class="mi">360</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="p">}</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="p">@</span><span class="k">keyframes</span><span class="w"> </span><span class="nt">pulse</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span><span class="nt">0</span><span class="o">%</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="mh">#1a1a2e</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">  </span><span class="nt">50</span><span class="o">%</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="mh">#3a2a6e</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">  </span><span class="nt">100</span><span class="o">%</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="mh">#1a1a2e</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>from</code> is an alias for <code>0%</code>, <code>to</code> is an alias for <code>100%</code>.</li>
+<li>You can define any number of percentage stops (e.g. <code>0%</code>, <code>25%</code>, <code>50%</code>, <code>100%</code>).</li>
+<li>Keyframe values are linearly interpolated between stops: numbers numerically, hex
+  colours channel by channel.</li>
+<li><strong>What actually moves</strong> is <code>rotate</code> and any property the renderer reads at draw
+  time — <code>background</code>, <code>color</code>, <code>border-color</code>, <code>border-radius</code>, <code>border-width</code>,
+  <code>width</code>, <code>height</code>, <code>padding</code>, <code>gap</code>, <code>blur</code>. There is no <code>opacity</code> compositing
+  step, so animating <code>opacity</code> parses but changes nothing on the canvas; fade
+  between two colours instead.</li>
+</ul>
+<h3 id="animation-property"><code>animation</code> Property<a class="headerlink" href="#animation-property" title="Permanent link">&para;</a></h3>
+<p>Apply an animation to any element using the <code>animation</code> shorthand:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">.</span><span class="nc">icon</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="k">animation</span><span class="p">:</span><span class="w"> </span><span class="n">spin</span><span class="w"> </span><span class="mi">2</span><span class="kt">s</span><span class="w"> </span><span class="kc">linear</span><span class="w"> </span><span class="kc">infinite</span><span class="p">;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="p">}</span>
+</code></pre></div>
+<h4 id="shorthand-format">Shorthand Format<a class="headerlink" href="#shorthand-format" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>animation: &lt;name&gt; &lt;duration&gt; [timing] [delay] [iteration] [direction]
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Part</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Values</th>
+<th style="text-align: left;">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>name</code></td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Name of a <code>@keyframes</code> block</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>duration</code></td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;"><code>2s</code>, <code>500ms</code>, etc.</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>timing</code></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;"><code>linear</code>, <code>ease</code>, <code>ease-in</code>, <code>ease-out</code>, <code>ease-in-out</code></td>
+<td style="text-align: left;"><code>linear</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>delay</code></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;"><code>0.5s</code>, <code>200ms</code>, etc.</td>
+<td style="text-align: left;"><code>0s</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>iteration</code></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;"><code>infinite</code> or a number (e.g. <code>3</code>)</td>
+<td style="text-align: left;"><code>infinite</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>direction</code></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;"><code>normal</code>, <code>reverse</code>, <code>alternate</code>, <code>alternate-reverse</code></td>
+<td style="text-align: left;"><code>normal</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h4>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c">/* Spin forever at constant speed */</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nt">animation</span><span class="o">:</span><span class="w"> </span><span class="nt">spin</span><span class="w"> </span><span class="nt">2s</span><span class="w"> </span><span class="nt">linear</span><span class="w"> </span><span class="nt">infinite</span><span class="o">;</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c">/* Pulse 3 times with easing */</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="nt">animation</span><span class="o">:</span><span class="w"> </span><span class="nt">pulse</span><span class="w"> </span><span class="nt">1s</span><span class="w"> </span><span class="nt">ease-in-out</span><span class="w"> </span><span class="nt">3</span><span class="o">;</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="c">/* Spin in reverse */</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="nt">animation</span><span class="o">:</span><span class="w"> </span><span class="nt">spin</span><span class="w"> </span><span class="nt">3s</span><span class="w"> </span><span class="nt">linear</span><span class="w"> </span><span class="nt">infinite</span><span class="w"> </span><span class="nt">reverse</span><span class="o">;</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="c">/* Alternate direction (ping-pong) */</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="nt">animation</span><span class="o">:</span><span class="w"> </span><span class="nt">spin</span><span class="w"> </span><span class="nt">2s</span><span class="w"> </span><span class="nt">ease</span><span class="w"> </span><span class="nt">infinite</span><span class="w"> </span><span class="nt">alternate</span><span class="o">;</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="c">/* Start after 500ms delay */</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="nt">animation</span><span class="o">:</span><span class="w"> </span><span class="nt">spin</span><span class="w"> </span><span class="nt">2s</span><span class="w"> </span><span class="nt">linear</span><span class="w"> </span><span class="nt">0</span><span class="p">.</span><span class="nc">5s</span><span class="w"> </span><span class="nt">infinite</span><span class="o">;</span>
+</code></pre></div>
+<h3 id="rotate-property"><code>rotate</code> Property<a class="headerlink" href="#rotate-property" title="Permanent link">&para;</a></h3>
+<p>The <code>rotate</code> property sets a rotation angle in degrees. It can be used statically or animated via <code>@keyframes</code>.</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c">/* Static rotation */</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="p">.</span><span class="nc">tilted</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">rotate</span><span class="p">:</span><span class="w"> </span><span class="mi">15</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="c">/* Animated rotation */</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="p">@</span><span class="k">keyframes</span><span class="w"> </span><span class="nt">spin</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">  </span><span class="nt">from</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">rotate</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">  </span><span class="nt">to</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">rotate</span><span class="p">:</span><span class="w"> </span><span class="mi">360</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="p">}</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="p">.</span><span class="nc">spinning</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">animation</span><span class="p">:</span><span class="w"> </span><span class="n">spin</span><span class="w"> </span><span class="mi">2</span><span class="kt">s</span><span class="w"> </span><span class="kc">linear</span><span class="w"> </span><span class="kc">infinite</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>When <code>rotate</code> is non-zero, the element and all its children are rendered to a temporary RGBA layer, rotated using Pillow's bicubic resampling, and composited back onto the main canvas.</p>
+<h3 id="timing-functions">Timing Functions<a class="headerlink" href="#timing-functions" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Behaviour</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>linear</code></td>
+<td style="text-align: left;">Constant speed, no acceleration</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ease</code></td>
+<td style="text-align: left;">Smooth start and end (S-curve)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ease-in</code></td>
+<td style="text-align: left;">Starts slow, accelerates</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ease-out</code></td>
+<td style="text-align: left;">Starts fast, decelerates</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ease-in-out</code></td>
+<td style="text-align: left;">Starts slow, speeds up, then slows down</td>
+</tr>
+</tbody>
+</table>
+<h3 id="complete-example-spinning-weather-icon">Complete Example — Spinning Weather Icon<a class="headerlink" href="#complete-example-spinning-weather-icon" title="Permanent link">&para;</a></h3>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="p">@</span><span class="k">keyframes</span><span class="w"> </span><span class="nt">spin</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">  </span><span class="nt">from</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">rotate</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span><span class="nt">to</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">rotate</span><span class="p">:</span><span class="w"> </span><span class="mi">360</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="p">}</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="p">.</span><span class="nc">icon-container</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">  </span><span class="k">animation</span><span class="p">:</span><span class="w"> </span><span class="n">spin</span><span class="w"> </span><span class="mi">2</span><span class="kt">s</span><span class="w"> </span><span class="kc">linear</span><span class="w"> </span><span class="kc">infinite</span><span class="p">;</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="p">}</span>
+</code></pre></div>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nt">&lt;template</span><span class="w"> </span><span class="na">name=</span><span class="s">"weather"</span><span class="nt">&gt;</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">"bg"</span><span class="nt">&gt;</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">"icon-container"</span><span class="nt">&gt;</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">      </span><span class="nt">&lt;img</span><span class="w"> </span><span class="na">src=</span><span class="s">"{icon_src}"</span><span class="w"> </span><span class="na">width=</span><span class="s">"24"</span><span class="w"> </span><span class="na">height=</span><span class="s">"24"</span><span class="w"> </span><span class="na">fit=</span><span class="s">"contain"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">    </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">    </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">"temp"</span><span class="nt">&gt;</span>{temperature}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="w">  </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="nt">&lt;/template&gt;</span>
+</code></pre></div>
+<p>The <code>.icon-container</code> box (and its child <code>&lt;img&gt;</code>) will rotate continuously. The physical deck renders at ~15 FPS; the web preview refreshes at ~5 FPS.</p>
+<h3 id="what-joins-the-animation-tick">What joins the animation tick<a class="headerlink" href="#what-joins-the-animation-tick" title="Permanent link">&para;</a></h3>
+<p>A button is put on the fast tick when <strong>any</strong> of these is true for the template it is
+currently rendering — not for the plugin as a whole, so one animated function does not
+drag a plugin's static buttons onto the ticker:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Trigger</th>
+<th style="text-align: left;">Detected from</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">CSS contains <code>@keyframes</code></td>
+<td style="text-align: left;">the template sources — cached</td>
+</tr>
+<tr>
+<td style="text-align: left;">The template contains a <code>&lt;marquee&gt;</code></td>
+<td style="text-align: left;">the template sources — cached</td>
+</tr>
+<tr>
+<td style="text-align: left;">The template has a <code>&lt;buttonlabel&gt;</code> that can scroll <strong>and</strong> the button has a title</td>
+<td style="text-align: left;">the sources (cached) plus the button's live title</td>
+</tr>
+<tr>
+<td style="text-align: left;">An <code>&lt;img&gt;</code> resolves to a multi-frame GIF</td>
+<td style="text-align: left;">the <strong>live state</strong> — deliberately not cached</td>
+</tr>
+</tbody>
+</table>
+<p>Notes:</p>
+<ul>
+<li>The static answers are cached per plugin function. If you add or remove <code>@keyframes</code>
+  or a <code>&lt;marquee&gt;</code>, restart the server.</li>
+<li>The GIF answer is <strong>not</strong> cached, because <code>&lt;img src="{media}" /&gt;</code> is unresolvable
+  without state — the handler may pick a GIF at runtime.</li>
+<li>A handler that points <code>ctx.state._template</code> at a different template is followed: the
+  template actually in state is the one checked.</li>
+<li>The animation tick only re-renders (no <code>on_poll</code> dispatch) — it draws the current
+  state at a new timestamp. Keep the two independent: folding animation into <code>on_poll</code>
+  stalls it behind whatever your poll is waiting for.</li>
+</ul>
+<h3 id="animated-gifs">Animated GIFs<a class="headerlink" href="#animated-gifs" title="Permanent link">&para;</a></h3>
+<p>An <code>&lt;img&gt;</code> whose <code>src</code> resolves to a multi-frame <code>.gif</code> plays. The renderer picks the
+frame for the current render timestamp and the button joins the animation tick, so no
+handler code and no <code>@keyframes</code> are involved:</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nt">&lt;template</span><span class="w"> </span><span class="na">name=</span><span class="s">"media"</span><span class="nt">&gt;</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">"bg"</span><span class="nt">&gt;</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="nt">&lt;img</span><span class="w"> </span><span class="na">src=</span><span class="s">"{art_src}"</span><span class="w"> </span><span class="na">width=</span><span class="s">"72"</span><span class="w"> </span><span class="na">height=</span><span class="s">"72"</span><span class="w"> </span><span class="na">fit=</span><span class="s">"cover"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="nt">&lt;/template&gt;</span>
+</code></pre></div>
+<p><code>art_src</code> may be a bundled asset (<code>assets/icons/spinner.gif</code>) or a file the handler wrote
+under <code>ctx.storage_path</code>. Frame timing comes from the GIF itself.</p>
+<p>Because the detection consults live state, a button showing a still image stays off the
+tick and starts ticking the moment the handler swaps in a GIF.</p>
+<hr />
+<h2 id="35-button-owned-faces">3.5 Button-owned faces<a class="headerlink" href="#35-button-owned-faces" title="Permanent link">&para;</a></h2>
+<p>By default, a <strong>user-set button icon replaces the PDK face entirely</strong> — PyDeck falls back
+to its built-in renderer and your template is not drawn at all. Two manifest flags opt a
+function out of that, so the template keeps control and paints the image itself:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function flag</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>display_states</code></td>
+<td style="text-align: left;">The image is the per-state glyph the user picked. See <a href="../runtime/#user-picked-per-state-icons">User-picked per-state icons</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>draws_button_image</code></td>
+<td style="text-align: left;">The template draws the button's own image as its content — a media tile, an album-art background, an avatar.</td>
+</tr>
+</tbody>
+</table>
+<p>With <code>draws_button_image</code> set, the image path arrives in the render state as the reserved
+key <strong><code>_button_image</code></strong>, resolved per button:</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nt">"functions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="nt">"now_playing"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Now Playing"</span><span class="p">,</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">    </span><span class="nt">"draws_button_image"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="p">}</span>
+</code></pre></div>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nt">&lt;template</span><span class="w"> </span><span class="na">name=</span><span class="s">"now_playing"</span><span class="nt">&gt;</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">"tile"</span><span class="nt">&gt;</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">    </span><span class="nt">&lt;img</span><span class="w"> </span><span class="na">src=</span><span class="s">"{_button_image}"</span><span class="w"> </span><span class="na">width=</span><span class="s">"72"</span><span class="w"> </span><span class="na">height=</span><span class="s">"72"</span><span class="w"> </span><span class="na">fit=</span><span class="s">"cover"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">    </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">"overlay"</span><span class="nt">&gt;</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">      </span><span class="nt">&lt;buttonlabel</span><span class="w"> </span><span class="na">class=</span><span class="s">"caption"</span><span class="nt">&gt;</span>Now<span class="w"> </span>Playing<span class="nt">&lt;/buttonlabel&gt;</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">    </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">  </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="nt">&lt;/template&gt;</span>
+</code></pre></div>
+<div class="admonition note">
+<p class="admonition-title"><code>_button_image</code> never travels through a handler</p>
+<p>PDK state is per <strong>function</strong>, so every button running the same function shares one
+state dict — a value written from one button's config is overwritten by the next
+button's poll. All the <code>_button_*</code> keys are therefore resolved per button at render
+time and injected directly into the render state. Read them in templates and CSS;
+never write them from a handler.</p>
+</div>
+<hr />
+<h2 id="36-the-buttons-own-title-style">3.6 The button's own title style<a class="headerlink" href="#36-the-buttons-own-title-style" title="Permanent link">&para;</a></h2>
+<p>The editor's <strong>Title style</strong> controls (size, colour, bold, italic, underline, scroll
+speed) reach the built-in renderer directly. A PDK template has to read them itself, so
+they are handed over as render keys that are legal CSS tokens by construction:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Key</th>
+<th style="text-align: left;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>_button_text_size</code></td>
+<td style="text-align: left;">Font size in px. Never <code>0</code> — the classic "auto" sentinel resolves to PDK's base size (14).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>_button_text_color</code></td>
+<td style="text-align: left;">Hex colour. Never blank — "auto" resolves to the colour that contrasts with the button's own background.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>_button_text_weight</code></td>
+<td style="text-align: left;"><code>bold</code> or <code>normal</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>_button_text_style</code></td>
+<td style="text-align: left;"><code>italic</code> or <code>normal</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>_button_text_decoration</code></td>
+<td style="text-align: left;"><code>underline</code> or <code>none</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>_button_scroll_speed</code></td>
+<td style="text-align: left;">Pixels per second, or <code>0</code> when the user turned scrolling off.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">.</span><span class="nc">caption</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">    </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="err">{</span><span class="n">_button_text_size</span><span class="p">}</span><span class="o">;</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span><span class="nt">color</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="err">_button_text_color</span><span class="p">}</span><span class="o">;</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="w">    </span><span class="nt">font-weight</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="err">_button_text_weight</span><span class="p">}</span><span class="o">;</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="w">    </span><span class="nt">font-style</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="err">_button_text_style</span><span class="p">}</span><span class="o">;</span>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">    </span><span class="nt">text-decoration</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="err">_button_text_decoration</span><span class="p">}</span><span class="o">;</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="err">}</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Never let one of these interpolate to nothing</p>
+<p>A stylesheet cannot fall back on its own: <code>font-size: ;</code> drops the declaration and
+takes the layout with it. That is exactly why the two classic sentinels
+(<code>text_size: 0</code>, <code>text_color: ""</code>) are resolved <em>before</em> injection rather than passed
+through. Declare <code>default_display.text_size</code> / <code>text_color</code> in the manifest to choose
+where a template starts; those are suggestions, so the user's own choice still wins.</p>
+</div>
+<h3 id="per-row-styles">Per-row styles<a class="headerlink" href="#per-row-styles" title="Permanent link">&para;</a></h3>
+<p>A template with more than one <code>&lt;buttonlabel&gt;</code> gets a <strong>numbered variant of every key
+above</strong>, 1-based in document order — <code>{_button_text_color_1}</code>, <code>{_button_text_size_2}</code>,
+and so on, up to three rows. The un-suffixed keys stay the button-wide style, which is
+what a single-label template wants.</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="p">.</span><span class="nc">line-1</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="err">{</span><span class="n">_button_text_size_1</span><span class="p">}</span><span class="o">;</span><span class="w"> </span><span class="nt">color</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="err">_button_text_color_1</span><span class="p">}</span><span class="o">;</span><span class="w"> </span><span class="err">}</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="p">.</span><span class="nc">line-2</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">font-size</span><span class="p">:</span><span class="w"> </span><span class="err">{</span><span class="n">_button_text_size_2</span><span class="p">}</span><span class="o">;</span><span class="w"> </span><span class="nt">color</span><span class="o">:</span><span class="w"> </span><span class="p">{</span><span class="err">_button_text_color_2</span><span class="p">}</span><span class="o">;</span><span class="w"> </span><span class="err">}</span>
+</code></pre></div>
+<p>The values come from the per-row style expanders in the editor's Title section (stored as
+<code>display.text_label_styles</code>). A row that overrides nothing inherits the whole chain —
+system defaults, the button, then your manifest's <code>default_display</code>. Only PDK honours
+per-row styles; the built-in renderer draws every label in one style.</p>
+<hr />
+<h2 id="4-gradient-backgrounds">4. Gradient backgrounds<a class="headerlink" href="#4-gradient-backgrounds" title="Permanent link">&para;</a></h2>
+<p>Users can give any button a gradient fill through a built-in editor (see <a href="../../using/gradient-backgrounds/">Gradient backgrounds</a> for the editor itself). As a plugin author you decide <strong>which functions expose the gradient editor</strong>, and you read the user's choice through a render-state key.</p>
+<h3 id="opting-a-function-into-the-editor">Opting a function into the editor<a class="headerlink" href="#opting-a-function-into-the-editor" title="Permanent link">&para;</a></h3>
+<p>Add <code>"gradient": true</code> to a function in <code>manifest.json</code>. That function's color picker then shows <strong>Solid / Gradient</strong> tabs; functions without the flag show the solid picker only.</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">{</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span><span class="nt">"functions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">    </span><span class="nt">"gradient_demo"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">      </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Gradient Demo"</span><span class="p">,</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">      </span><span class="nt">"gradient"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">      </span><span class="nt">"default_display"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#1a1a2e"</span><span class="p">,</span><span class="w"> </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Gradient"</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="w">      </span><span class="nt">"ui"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"message"</span><span class="p">,</span><span class="w"> </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Message"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Hello"</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="w">      </span><span class="p">]</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="the-_button_gradient-state-key">The <code>_button_gradient</code> state key<a class="headerlink" href="#the-_button_gradient-state-key" title="Permanent link">&para;</a></h3>
+<p>The core injects two keys into every render, whether or not <code>gradient</code> is enabled:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>When a gradient is set</th>
+<th>Otherwise</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>_button_color</code></td>
+<td>the solid hex color (e.g. <code>#1a1a2e</code>)</td>
+<td>the solid hex color</td>
+</tr>
+<tr>
+<td><code>_button_gradient</code></td>
+<td>a CSS gradient string (e.g. <code>linear-gradient(135deg, #ff0000 0%, #0000ff 100%)</code>)</td>
+<td>falls back to <code>_button_color</code></td>
+</tr>
+</tbody>
+</table>
+<p>Because <code>_button_gradient</code> falls back to a plain color, you can use it unconditionally as a <code>background</code> value — it's always valid CSS, and it's available to <strong>all</strong> plugins regardless of the manifest flag. The flag only controls whether the editor UI appears.</p>
+<h3 id="using-it-in-a-template">Using it in a template<a class="headerlink" href="#using-it-in-a-template" title="Permanent link">&para;</a></h3>
+<p>Interpolate the key into your <code>src/shared.css</code> (or a per-function <code>style.css</code>):</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="p">:</span><span class="nd">root</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nv">--bg</span><span class="p">:</span><span class="w"> </span><span class="err">{</span><span class="n">_button_gradient</span><span class="p">}</span><span class="o">;</span><span class="w"> </span><span class="err">}</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="p">.</span><span class="nc">bg</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="w">  </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="w">  </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--bg</span><span class="p">);</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="w">  </span><span class="k">border-radius</span><span class="p">:</span><span class="w"> </span><span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="p">}</span>
+</code></pre></div>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nt">&lt;template</span><span class="w"> </span><span class="na">name=</span><span class="s">"gradient_demo"</span><span class="w"> </span><span class="na">title=</span><span class="s">"Gradient Demo"</span><span class="nt">&gt;</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">"bg"</span><span class="w"> </span><span class="na">direction=</span><span class="s">"column"</span><span class="w"> </span><span class="na">align=</span><span class="s">"center"</span><span class="w"> </span><span class="na">justify=</span><span class="s">"center"</span><span class="nt">&gt;</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">    </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">"label"</span><span class="nt">&gt;</span>{message}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">  </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="nt">&lt;/template&gt;</span>
+</code></pre></div>
+<h3 id="data-format">Data format<a class="headerlink" href="#data-format" title="Permanent link">&para;</a></h3>
+<p>The user's choice is stored in the button's <code>display.gradient</code> object:</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="p">{</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span><span class="nt">"display"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">    </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#1a1a2e"</span><span class="p">,</span>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">    </span><span class="nt">"gradient"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="w">      </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"linear"</span><span class="p">,</span>
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="w">      </span><span class="nt">"angle"</span><span class="p">:</span><span class="w"> </span><span class="mi">135</span><span class="p">,</span>
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="w">      </span><span class="nt">"stops"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#ff0000"</span><span class="p">,</span><span class="w"> </span><span class="nt">"position"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="w">        </span><span class="p">{</span><span class="w"> </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#0000ff"</span><span class="p">,</span><span class="w"> </span><span class="nt">"position"</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="w">      </span><span class="p">]</span>
+<a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a><span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enabled</code></td>
+<td>boolean</td>
+<td>When <code>false</code>, the solid <code>color</code> is used.</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>string</td>
+<td><code>"linear"</code> or <code>"radial"</code>.</td>
+</tr>
+<tr>
+<td><code>angle</code></td>
+<td>number</td>
+<td>Degrees, 0–360 (linear only). <code>0</code> = bottom-to-top, <code>90</code> = left-to-right, <code>180</code> = top-to-bottom.</td>
+</tr>
+<tr>
+<td><code>stops</code></td>
+<td>array</td>
+<td><code>{color, position}</code> objects; <code>position</code> is 0–100.</td>
+</tr>
+</tbody>
+</table>
+<p>You normally don't read this object directly — use <code>_button_gradient</code> instead. Gradients render server-side with Pillow to both the browser preview and the hardware, with arbitrary angles and position-accurate stops.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../templates/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Templates &amp; elements">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Templates & elements
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../runtime/" class="md-footer__link md-footer__link--next" aria-label="Next: Runtime &amp; the ctx object">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Runtime & the ctx object
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.instant", "navigation.instant.progress", "navigation.footer", "toc.follow", "content.tabs.link", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/sheet-drag.js"></script>
+      
+    
+  </body>
+</html>

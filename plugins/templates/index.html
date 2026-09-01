@@ -1,0 +1,4088 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Install, use, and extend PyDeck — the Python-powered Stream Deck controller.">
+      
+      
+      
+        <link rel="canonical" href="https://docs.pydeck.no/plugins/templates/">
+      
+      
+        <link rel="prev" href="../pdk-create/">
+      
+      
+        <link rel="next" href="../rendering/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.png">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Templates & elements - PyDeck Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#plugin-development-templates-elements" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="PyDeck Docs" class="md-header__button md-logo" aria-label="PyDeck Docs" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PyDeck Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Templates & elements
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OPvault/pydeck" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OPvault/pydeck
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../get-started/install/" class="md-tabs__link">
+          
+  
+  
+  Get Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../using/devices/" class="md-tabs__link">
+          
+  
+  
+  Using PyDeck
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../getting-started/" class="md-tabs__link">
+          
+  
+  
+  Build Plugins
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../themes/getting-started/" class="md-tabs__link">
+          
+  
+  
+  Build Themes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/http-api/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../internals/architecture/" class="md-tabs__link">
+          
+  
+  
+  Internals
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PyDeck Docs" class="md-nav__button md-logo" aria-label="PyDeck Docs" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    PyDeck Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OPvault/pydeck" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OPvault/pydeck
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Get Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../get-started/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install PyDeck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../get-started/first-button/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your first button
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../get-started/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using PyDeck
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using PyDeck
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Devices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/profiles-and-folders/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles & folders
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/actions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Action Builder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/marketplace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install plugins & themes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/appearance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appearance & themes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/gradient-backgrounds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradient backgrounds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/virtual-decks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Virtual decks & phone control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security, LAN & HTTPS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/keyboard-shortcuts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Keyboard shortcuts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/updates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Updating PyDeck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build Plugins
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Build Plugins
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pdk-create/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugin Creator (scaffold)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates & elements
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates & elements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-templatexml-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. template.xml — Templates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. template.xml — Templates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#template-block-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template Block Syntax
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#template-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiple-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiple Templates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inline-settings-ui-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inline Settings (UI Fields)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inline Settings (UI Fields)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#field-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-type-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field Type: group
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-visibility-visible_if" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional Visibility: visible_if
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-elements-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Elements Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Elements Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#element-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Element Tags
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Element Tags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#box-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;box&gt; — Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-text-label" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;text&gt; — Text Label
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#buttonlabel-button-title" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;buttonlabel&gt; — Button Title
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="&lt;buttonlabel&gt; — Button Title">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#falling-back-to-plugin-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Falling back to plugin state
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-things-to-get-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two things to get right
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiple-slots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiple slots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-titles-scroll" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Long titles scroll
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#img-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;img&gt; — Image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rect-rectangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;rect&gt; — Rectangle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#circle-circle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;circle&gt; — Circle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#line-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;line&gt; — Line
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#progress-progress-bar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;progress&gt; — Progress Bar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spacer-flexible-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;spacer&gt; — Flexible Space
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#marquee-scrolling-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;marquee&gt; — Scrolling Text
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-styling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Styling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Styling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selector-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Selector Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#css-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSS Variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specificity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specificity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#positioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typography" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typography
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transform
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#css-units" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSS Units
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CSS Units">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#named-font-sizes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Named Font Sizes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#property-inheritance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Property Inheritance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shorthand-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shorthand Expansion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rendering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rendering & styling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../runtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime & the ctx object
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Press, hold & events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../manifest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    manifest.json reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ui-fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UI field types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication & credentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assets & plugin web UI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bundled documentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing to the catalog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build Themes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Build Themes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/css-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS variable reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/publishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing themes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/http-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTTP & WebSocket API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/api-cookbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API cookbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/api-tokens/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API tokens
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/paths/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config & file paths
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/developer-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Internals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Internals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/api-layer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The api/ package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/routes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Route inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/lib-services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lib/ service modules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Access control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/adding-endpoints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adding endpoints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-templatexml-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. template.xml — Templates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. template.xml — Templates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#template-block-syntax" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template Block Syntax
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#template-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Template Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiple-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiple Templates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inline-settings-ui-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inline Settings (UI Fields)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Inline Settings (UI Fields)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#field-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#field-type-group" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Field Type: group
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#conditional-visibility-visible_if" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conditional Visibility: visible_if
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-elements-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Elements Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Elements Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#common-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Common Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#element-tags" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Element Tags
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Element Tags">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#box-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;box&gt; — Container
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#text-text-label" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;text&gt; — Text Label
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#buttonlabel-button-title" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;buttonlabel&gt; — Button Title
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="&lt;buttonlabel&gt; — Button Title">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#falling-back-to-plugin-state" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Falling back to plugin state
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-things-to-get-right" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two things to get right
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiple-slots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Multiple slots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#long-titles-scroll" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Long titles scroll
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#img-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;img&gt; — Image
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rect-rectangle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;rect&gt; — Rectangle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#circle-circle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;circle&gt; — Circle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#line-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;line&gt; — Line
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#progress-progress-bar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;progress&gt; — Progress Bar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spacer-flexible-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;spacer&gt; — Flexible Space
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#marquee-scrolling-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        &lt;marquee&gt; — Scrolling Text
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-styling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Styling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Styling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#selector-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Selector Types
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#css-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSS Variables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specificity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Specificity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supported-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Supported Properties
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Supported Properties">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#positioning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Positioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#typography" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Typography
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#visual" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Visual
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#transform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Transform
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#css-units" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CSS Units
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CSS Units">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#named-font-sizes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Named Font Sizes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#property-inheritance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Property Inheritance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shorthand-expansion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Shorthand Expansion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="plugin-development-templates-elements">Plugin Development — Templates &amp; Elements<a class="headerlink" href="#plugin-development-templates-elements" title="Permanent link">&para;</a></h1>
+<hr />
+<h2 id="1-templatexml-templates">1. template.xml — Templates<a class="headerlink" href="#1-templatexml-templates" title="Permanent link">&para;</a></h2>
+<p>Each function's <code>template.xml</code> file contains one or more <code>&lt;template&gt;</code> blocks. Each template defines a button face layout that can be selected at runtime.</p>
+<h3 id="template-block-syntax">Template Block Syntax<a class="headerlink" href="#template-block-syntax" title="Permanent link">&para;</a></h3>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nt">&lt;template</span><span class="w"> </span><span class="na">name=</span><span class="s">"my_view"</span><span class="w"> </span><span class="na">title=</span><span class="s">"My View"</span><span class="w"> </span><span class="na">description=</span><span class="s">"Shows something"</span><span class="w"> </span><span class="na">icon=</span><span class="s">"assets/icons/icon.png"</span><span class="nt">&gt;</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">"title"</span><span class="nt">&gt;</span>{heading}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">&lt;img</span><span class="w"> </span><span class="na">src=</span><span class="s">"assets/icons/logo.png"</span><span class="w"> </span><span class="na">width=</span><span class="s">"32"</span><span class="w"> </span><span class="na">height=</span><span class="s">"32"</span><span class="w"> </span><span class="na">fit=</span><span class="s">"contain"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nt">&lt;/template&gt;</span>
+</code></pre></div>
+<h3 id="template-attributes">Template Attributes<a class="headerlink" href="#template-attributes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>name</code></td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Identifier used to select this template. Maps to a function name in the manifest.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>title</code></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Human-readable label shown in the sidebar. Defaults to <code>name</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>description</code></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Short description shown in the UI.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>icon</code></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Path to a sidebar icon image <strong>under the plugin directory</strong> (e.g. <code>assets/icons/foo.png</code>). Auto-generated manifests copy this form into <code>sidebar_icon</code>; use the same style when writing <code>manifest.json</code> by hand (no <code>plugins/plugin/...</code> prefix).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="multiple-templates">Multiple Templates<a class="headerlink" href="#multiple-templates" title="Permanent link">&para;</a></h3>
+<p>A single plugin can define multiple templates. The active template is selected by setting <code>ctx.state._template</code> in your event handler:</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">&lt;template</span><span class="w"> </span><span class="na">name=</span><span class="s">"main"</span><span class="nt">&gt;</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">"bg"</span><span class="nt">&gt;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">"value"</span><span class="nt">&gt;</span>{value}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nt">&lt;/template&gt;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="nt">&lt;template</span><span class="w"> </span><span class="na">name=</span><span class="s">"detail"</span><span class="nt">&gt;</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">"bg"</span><span class="nt">&gt;</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">"label"</span><span class="nt">&gt;</span>{detail_line1}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">"label"</span><span class="nt">&gt;</span>{detail_line2}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">  </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="nt">&lt;/template&gt;</span>
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">on_press</span><span class="p">(</span><span class="n">ctx</span><span class="p">):</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="k">if</span> <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"view"</span><span class="p">)</span> <span class="o">==</span> <span class="s2">"main"</span><span class="p">:</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="s2">"detail"</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="s2">"detail"</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">view</span> <span class="o">=</span> <span class="s2">"main"</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        <span class="n">ctx</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">_template</span> <span class="o">=</span> <span class="s2">"main"</span>
+</code></pre></div>
+<h3 id="inline-settings-ui-fields">Inline Settings (UI Fields)<a class="headerlink" href="#inline-settings-ui-fields" title="Permanent link">&para;</a></h3>
+<p>Templates can embed <code>&lt;settings&gt;</code> blocks with <code>&lt;field&gt;</code> elements to define UI fields. These are equivalent to the <code>ui</code> array in <code>manifest.json</code>.</p>
+<p>Inline <code>&lt;settings&gt;</code> example:</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">&lt;template</span><span class="w"> </span><span class="na">name=</span><span class="s">"weather"</span><span class="w"> </span><span class="na">title=</span><span class="s">"Weather"</span><span class="nt">&gt;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">&lt;settings&gt;</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">type=</span><span class="s">"input"</span><span class="w"> </span><span class="na">id=</span><span class="s">"location"</span><span class="w"> </span><span class="na">label=</span><span class="s">"Location"</span><span class="w"> </span><span class="na">placeholder=</span><span class="s">"Oslo"</span><span class="w"> </span><span class="na">default=</span><span class="s">""</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">type=</span><span class="s">"select"</span><span class="w"> </span><span class="na">id=</span><span class="s">"temperature_unit"</span><span class="w"> </span><span class="na">label=</span><span class="s">"Unit"</span><span class="w"> </span><span class="na">default=</span><span class="s">"C"</span><span class="nt">&gt;</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">      </span><span class="nt">&lt;option</span><span class="w"> </span><span class="na">value=</span><span class="s">"C"</span><span class="w"> </span><span class="na">label=</span><span class="s">"Celsius"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="nt">&lt;option</span><span class="w"> </span><span class="na">value=</span><span class="s">"F"</span><span class="w"> </span><span class="na">label=</span><span class="s">"Fahrenheit"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="nt">&lt;/field&gt;</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">  </span><span class="nt">&lt;/settings&gt;</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">  </span><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">"bg"</span><span class="nt">&gt;</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">    </span><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">"temp"</span><span class="nt">&gt;</span>{temperature}<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">  </span><span class="nt">&lt;/box&gt;</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="nt">&lt;/template&gt;</span>
+</code></pre></div>
+<h4 id="field-attributes">Field Attributes<a class="headerlink" href="#field-attributes" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>type</code></td>
+<td style="text-align: left;">Field type: <code>input</code>, <code>select</code>, <code>checkbox</code>, <code>number</code>, <code>slider</code>, <code>radio</code>, <code>group</code>, etc.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>id</code></td>
+<td style="text-align: left;">Key name — available as <code>ctx.config.get("id")</code> in handlers.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>label</code></td>
+<td style="text-align: left;">Label shown in the button editor UI.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>placeholder</code></td>
+<td style="text-align: left;">Placeholder text for input fields.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>default</code></td>
+<td style="text-align: left;">Default value. Automatically cast: <code>checkbox</code> → boolean, <code>number</code>/<code>slider</code> → numeric.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>visible_if</code></td>
+<td style="text-align: left;">Conditionally show/hide this field based on another field's value (see below).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>fields</code></td>
+<td style="text-align: left;">For <code>group</code> type only — an array of child field definitions rendered inside the group container.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="field-type-group">Field Type: <code>group</code><a class="headerlink" href="#field-type-group" title="Permanent link">&para;</a></h4>
+<p>The <code>group</code> type renders a visual container with nested child fields. Use it to group related settings together:</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"group"</span><span class="p">,</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Advanced Settings"</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nt">"fields"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"checkbox"</span><span class="p">,</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"option_a"</span><span class="p">,</span><span class="w"> </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Option A"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"input"</span><span class="p">,</span><span class="w"> </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"option_b"</span><span class="p">,</span><span class="w"> </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Option B"</span><span class="p">,</span><span class="w"> </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">}</span>
+</code></pre></div>
+<p>In XML settings blocks:</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">&lt;field</span><span class="w"> </span><span class="na">type=</span><span class="s">"group"</span><span class="w"> </span><span class="na">label=</span><span class="s">"Advanced Settings"</span><span class="nt">&gt;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">type=</span><span class="s">"checkbox"</span><span class="w"> </span><span class="na">id=</span><span class="s">"option_a"</span><span class="w"> </span><span class="na">label=</span><span class="s">"Option A"</span><span class="w"> </span><span class="na">default=</span><span class="s">"false"</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">type=</span><span class="s">"input"</span><span class="w"> </span><span class="na">id=</span><span class="s">"option_b"</span><span class="w"> </span><span class="na">label=</span><span class="s">"Option B"</span><span class="w"> </span><span class="na">default=</span><span class="s">""</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="nt">&lt;/field&gt;</span>
+</code></pre></div>
+<h4 id="conditional-visibility-visible_if">Conditional Visibility: <code>visible_if</code><a class="headerlink" href="#conditional-visibility-visible_if" title="Permanent link">&para;</a></h4>
+<p>Fields can be shown or hidden based on another field's value using the <code>visible_if</code> attribute. This is set in <code>manifest.json</code> (not in XML <code>&lt;field&gt;</code> elements):</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"checkbox"</span><span class="p">,</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"show_details"</span><span class="p">,</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Show details"</span><span class="p">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="nt">"visible_if"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"field"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mode"</span><span class="p">,</span><span class="w"> </span><span class="nt">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"advanced"</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Key</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>field</code></td>
+<td style="text-align: left;">The <code>id</code> of the field to watch.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>value</code></td>
+<td style="text-align: left;">Show this field when the watched field equals this value.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>not_value</code></td>
+<td style="text-align: left;">Show this field when the watched field does <strong>not</strong> equal this value. Use <code>not_value</code> instead of <code>value</code> for inverse conditions.</td>
+</tr>
+</tbody>
+</table>
+<p>Example using <code>not_value</code>:</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"checkbox"</span><span class="p">,</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"exclude_current"</span><span class="p">,</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Skip current time"</span><span class="p">,</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nt">"visible_if"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"field"</span><span class="p">:</span><span class="w"> </span><span class="s2">"forecast_interval"</span><span class="p">,</span><span class="w"> </span><span class="nt">"not_value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"24"</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="p">}</span>
+</code></pre></div>
+<p>This field is visible whenever <code>forecast_interval</code> is set to anything other than <code>"24"</code>.</p>
+<hr />
+<h2 id="2-elements-reference">2. Elements Reference<a class="headerlink" href="#2-elements-reference" title="Permanent link">&para;</a></h2>
+<p>PDK templates use XML elements. Each element has a tag name, allowed attributes, and default style values.</p>
+<h3 id="common-attributes">Common Attributes<a class="headerlink" href="#common-attributes" title="Permanent link">&para;</a></h3>
+<p>All elements support these attributes:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>class</code></td>
+<td style="text-align: left;">Space-separated CSS class names for styling.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>id</code></td>
+<td style="text-align: left;">Unique identifier for <code>#id</code> CSS selectors.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>width</code></td>
+<td style="text-align: left;">Explicit width (pixels, <code>%</code>, <code>em</code>, <code>rem</code>, or <code>auto</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>height</code></td>
+<td style="text-align: left;">Explicit height (pixels, <code>%</code>, <code>em</code>, <code>rem</code>, or <code>auto</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>style</code></td>
+<td style="text-align: left;">Inline style declarations (highest specificity).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="element-tags">Element Tags<a class="headerlink" href="#element-tags" title="Permanent link">&para;</a></h3>
+<h4 id="box-container"><code>&lt;box&gt;</code> — Container<a class="headerlink" href="#box-container" title="Permanent link">&para;</a></h4>
+<p>The primary layout container. Arranges children using flexbox-like rules.</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">&lt;box</span><span class="w"> </span><span class="na">class=</span><span class="s">"row"</span><span class="w"> </span><span class="na">style=</span><span class="s">"direction: row; gap: 4;"</span><span class="nt">&gt;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">&lt;text&gt;</span>Left<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">&lt;text&gt;</span>Right<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="nt">&lt;/box&gt;</span>
+</code></pre></div>
+<ul>
+<li><strong>Container:</strong> Yes</li>
+<li><strong>Default direction:</strong> <code>column</code></li>
+</ul>
+<h4 id="text-text-label"><code>&lt;text&gt;</code> — Text Label<a class="headerlink" href="#text-text-label" title="Permanent link">&para;</a></h4>
+<p>Renders a text string. The element's text content is its display value.</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">&lt;text</span><span class="w"> </span><span class="na">class=</span><span class="s">"title"</span><span class="w"> </span><span class="na">style=</span><span class="s">"font-size: 18; font-weight: bold;"</span><span class="nt">&gt;</span>{heading}<span class="nt">&lt;/text&gt;</span>
+</code></pre></div>
+<ul>
+<li><strong>Container:</strong> No</li>
+<li><strong>Default size:</strong> auto (fits text content)</li>
+<li><strong>Single-line only</strong> — text is rendered on a single line with no wrapping or multi-line support.</li>
+</ul>
+<h4 id="buttonlabel-button-title"><code>&lt;buttonlabel&gt;</code> — Button Title<a class="headerlink" href="#buttonlabel-button-title" title="Permanent link">&para;</a></h4>
+<p>Renders the <strong>button's own Title</strong>, as typed by the user in the button editor —
+not a value from <code>ctx.state</code>. Use it when the user should be able to name the
+button themselves.</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nt">&lt;buttonlabel</span><span class="w"> </span><span class="na">class=</span><span class="s">"label"</span><span class="nt">&gt;</span>Key<span class="nt">&lt;/buttonlabel&gt;</span>
+</code></pre></div>
+<ul>
+<li><strong>Container:</strong> No</li>
+<li><strong>Styled exactly like <code>&lt;text&gt;</code></strong> — same properties, same single-line behaviour.</li>
+</ul>
+<p>The element's body is a <strong>fallback</strong>, shown only when the user has left the
+Title field empty. It is <em>not</em> the title itself.</p>
+<h5 id="falling-back-to-plugin-state">Falling back to plugin state<a class="headerlink" href="#falling-back-to-plugin-state" title="Permanent link">&para;</a></h5>
+<p>The renderer fills <code>&lt;buttonlabel&gt;</code> elements <strong>before</strong> state interpolation runs,
+so a <code>{placeholder}</code> in the body works as a dynamic default:</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">&lt;buttonlabel</span><span class="w"> </span><span class="na">class=</span><span class="s">"name"</span><span class="nt">&gt;</span>{entity_name}<span class="nt">&lt;/buttonlabel&gt;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">User's Title</th>
+<th style="text-align: left;">What renders</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">empty</td>
+<td style="text-align: left;">the interpolated <code>{entity_name}</code> from <code>ctx.state</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Bedside</code></td>
+<td style="text-align: left;"><code>Bedside</code></td>
+</tr>
+</tbody>
+</table>
+<p>This is how a plugin offers "name it yourself, otherwise show something
+sensible" without any handler code.</p>
+<h5 id="two-things-to-get-right">Two things to get right<a class="headerlink" href="#two-things-to-get-right" title="Permanent link">&para;</a></h5>
+<p><strong>Unlock the Title field.</strong> A function whose manifest sets <code>title_readonly: true</code>
+renders the editor's Title input read-only, so the user can never fill the
+element. <code>pdk_create</code> scaffolds new plugins <strong>with</strong> that flag, so remove it.</p>
+<p><strong>Clear the default title.</strong> If <code>default_display.text</code> is non-empty, every new
+button starts with that as its Title — which always wins over the body, so a
+<code>{placeholder}</code> fallback would never be visible. Set <code>"text": ""</code> when you want
+the fallback to show.</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nt">"functions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">"toggle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nt">"default_display"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#1a3a6e"</span><span class="p">,</span><span class="w"> </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="p">}</span>
+</code></pre></div>
+<h5 id="multiple-slots">Multiple slots<a class="headerlink" href="#multiple-slots" title="Permanent link">&para;</a></h5>
+<p>A template may contain more than one <code>&lt;buttonlabel&gt;</code> (up to <strong>three</strong> are used).
+They are filled in document order from the button's <code>text_labels</code> (<code>top</code>,
+<code>middle</code>, <code>bottom</code>), falling back to the single <code>text</code> value. The core reports
+the count to the editor as <code>pdk_buttonlabel_count</code>, which is what decides how
+many Title rows the editor offers, and the element bodies as
+<code>pdk_buttonlabel_defaults</code>.</p>
+<p>Each row can also carry its own style — see
+<a href="../rendering/#per-row-styles">Per-row styles</a> for the <code>{_button_text_*_1}</code>
+render keys.</p>
+<h5 id="long-titles-scroll">Long titles scroll<a class="headerlink" href="#long-titles-scroll" title="Permanent link">&para;</a></h5>
+<p><code>&lt;buttonlabel&gt;</code> draws through the same marquee path as <code>&lt;marquee&gt;</code>, so a title
+wider than its box <strong>scrolls</strong> instead of being cropped.</p>
+<p>The catch is that a label sized <code>auto</code> hugs its own text and therefore can never
+overflow. <strong>An explicit width is what turns scrolling on:</strong></p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">.</span><span class="nc">caption</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">   </span><span class="c">/* now a long title scrolls */</span>
+</code></pre></div>
+<p>Every template written before this behaviour existed is unaffected, because
+<code>auto</code> is the default. Scroll speed comes from the button's own Title style via
+<code>{_button_scroll_speed}</code>, and a speed of <code>0</code> — the user's "don't scroll" setting
+— stands still rather than parking the text off the right edge.</p>
+<div class="admonition note">
+<p class="admonition-title">Hiding the label</p>
+<p>There is no state value that suppresses a <code>&lt;buttonlabel&gt;</code> — an empty Title
+just reveals the body fallback. To make it optional, ship a second template
+without the element and switch via <code>ctx.state._template</code>.</p>
+</div>
+<h4 id="img-image"><code>&lt;img&gt;</code> — Image<a class="headerlink" href="#img-image" title="Permanent link">&para;</a></h4>
+<p>Displays an image file. The <code>src</code> path is resolved relative to the plugin directory.</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">&lt;img</span><span class="w"> </span><span class="na">src=</span><span class="s">"assets/icons/icon.png"</span><span class="w"> </span><span class="na">width=</span><span class="s">"32"</span><span class="w"> </span><span class="na">height=</span><span class="s">"32"</span><span class="w"> </span><span class="na">fit=</span><span class="s">"contain"</span><span class="w"> </span><span class="nt">/&gt;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>src</code></td>
+<td style="text-align: left;">Path to the image file. <strong>Install-dir assets</strong> resolve relative to the plugin directory (e.g. <code>assets/icons/&lt;file&gt;</code>). <strong>Runtime files</strong> under <code>ctx.storage_path</code> may use a <strong>short path relative to that storage folder</strong> (e.g. <code>_art.jpg</code>, <code>icons/cache.png</code>). Supports <code>{variable}</code> interpolation. Global logical paths <code>plugins/plugin/...</code> / <code>plugins/storage/...</code>, and <code>../../storage/&lt;plugin_name&gt;/...</code> from the plugin directory, also resolve.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>fit</code></td>
+<td style="text-align: left;">Sizing mode: <code>cover</code> (default — fill and crop), <code>contain</code> (fit within bounds), or <code>stretch</code> (exact size).</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Container:</strong> No</li>
+<li><strong>Default size:</strong> auto (source image dimensions)</li>
+<li><strong><code>.svg</code></strong> sources are rasterised at the element's own size, so vectors stay crisp.</li>
+<li><strong><code>.gif</code></strong> sources with more than one frame <strong>animate</strong> — the renderer picks the frame for the current timestamp and puts the button on the animation tick. See <a href="../rendering/#animated-gifs">Animated GIFs</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Note:</strong> The layout engine does not read the image file to determine intrinsic size — <code>&lt;img&gt;</code> without explicit <code>width</code> and <code>height</code> is treated as 0×0 during layout. The renderer compensates by using the image's natural dimensions at draw time, but this can cause unexpected flex layout results. Always set explicit <code>width</code> and <code>height</code> on <code>&lt;img&gt;</code> for predictable sizing.</p>
+</blockquote>
+<h4 id="rect-rectangle"><code>&lt;rect&gt;</code> — Rectangle<a class="headerlink" href="#rect-rectangle" title="Permanent link">&para;</a></h4>
+<p>Draws a filled or stroked rectangle.</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nt">&lt;rect</span><span class="w"> </span><span class="na">width=</span><span class="s">"40"</span><span class="w"> </span><span class="na">height=</span><span class="s">"20"</span><span class="w"> </span><span class="na">fill=</span><span class="s">"#ff0000"</span><span class="w"> </span><span class="na">stroke=</span><span class="s">"#ffffff"</span><span class="w"> </span><span class="na">stroke-width=</span><span class="s">"2"</span><span class="w"> </span><span class="nt">/&gt;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>fill</code></td>
+<td style="text-align: left;">Fill colour (hex or <code>rgb()</code>). Falls back to <code>background</code> style.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>stroke</code></td>
+<td style="text-align: left;">Stroke colour. Falls back to <code>border-color</code> style.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>stroke-width</code></td>
+<td style="text-align: left;">Stroke width in pixels. Default: <code>1</code>.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Container:</strong> No</li>
+</ul>
+<h4 id="circle-circle"><code>&lt;circle&gt;</code> — Circle<a class="headerlink" href="#circle-circle" title="Permanent link">&para;</a></h4>
+<p>Draws a filled or stroked circle.</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nt">&lt;circle</span><span class="w"> </span><span class="na">radius=</span><span class="s">"16"</span><span class="w"> </span><span class="na">fill=</span><span class="s">"#00ff88"</span><span class="w"> </span><span class="nt">/&gt;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>fill</code></td>
+<td style="text-align: left;">Fill colour.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>stroke</code></td>
+<td style="text-align: left;">Stroke colour.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>stroke-width</code></td>
+<td style="text-align: left;">Stroke width. Default: <code>1</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>radius</code></td>
+<td style="text-align: left;">Circle radius in pixels.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Container:</strong> No</li>
+</ul>
+<h4 id="line-line"><code>&lt;line&gt;</code> — Line<a class="headerlink" href="#line-line" title="Permanent link">&para;</a></h4>
+<p>Draws a straight line between two points.</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nt">&lt;line</span><span class="w"> </span><span class="na">x1=</span><span class="s">"0"</span><span class="w"> </span><span class="na">y1=</span><span class="s">"0"</span><span class="w"> </span><span class="na">x2=</span><span class="s">"72"</span><span class="w"> </span><span class="na">y2=</span><span class="s">"72"</span><span class="w"> </span><span class="na">stroke=</span><span class="s">"#ffffff"</span><span class="w"> </span><span class="na">stroke-width=</span><span class="s">"2"</span><span class="w"> </span><span class="nt">/&gt;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>x1</code>, <code>y1</code></td>
+<td style="text-align: left;">Start point coordinates (relative to element position).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>x2</code>, <code>y2</code></td>
+<td style="text-align: left;">End point coordinates.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>stroke</code></td>
+<td style="text-align: left;">Line colour. Falls back to <code>color</code> style.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>stroke-width</code></td>
+<td style="text-align: left;">Line width. Default: <code>1</code>.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Container:</strong> No</li>
+</ul>
+<h4 id="progress-progress-bar"><code>&lt;progress&gt;</code> — Progress Bar<a class="headerlink" href="#progress-progress-bar" title="Permanent link">&para;</a></h4>
+<p>Draws a horizontal progress bar.</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nt">&lt;progress</span><span class="w"> </span><span class="na">value=</span><span class="s">"{percent}"</span><span class="w"> </span><span class="na">fill-color=</span><span class="s">"#00ff88"</span><span class="w"> </span><span class="na">track-color=</span><span class="s">"#333333"</span><span class="w"> </span><span class="nt">/&gt;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>value</code></td>
+<td style="text-align: left;">Progress percentage (0–100). Supports <code>{variable}</code> interpolation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>fill-color</code></td>
+<td style="text-align: left;">Colour of the filled portion. Supports gradients. Default: <code>#00ff88</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>track-color</code></td>
+<td style="text-align: left;">Colour of the track background. Falls back to <code>background</code> style. Default: <code>#333333</code>.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Container:</strong> No</li>
+<li><strong>Default height:</strong> <code>6px</code></li>
+<li><strong>Default border-radius:</strong> <code>3px</code></li>
+</ul>
+<h4 id="spacer-flexible-space"><code>&lt;spacer&gt;</code> — Flexible Space<a class="headerlink" href="#spacer-flexible-space" title="Permanent link">&para;</a></h4>
+<p>Absorbs remaining space in a flex layout. Equivalent to a flex-grow spacer.</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nt">&lt;box</span><span class="w"> </span><span class="na">style=</span><span class="s">"direction: column;"</span><span class="nt">&gt;</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="nt">&lt;text&gt;</span>Top<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">  </span><span class="nt">&lt;spacer</span><span class="w"> </span><span class="nt">/&gt;</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">  </span><span class="nt">&lt;text&gt;</span>Bottom<span class="nt">&lt;/text&gt;</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="nt">&lt;/box&gt;</span>
+</code></pre></div>
+<p>When multiple spacers exist in the same container, the available space is divided equally among them.</p>
+<ul>
+<li><strong>Container:</strong> No</li>
+<li><strong>Default size:</strong> auto (expands to fill)</li>
+</ul>
+<h4 id="marquee-scrolling-text"><code>&lt;marquee&gt;</code> — Scrolling Text<a class="headerlink" href="#marquee-scrolling-text" title="Permanent link">&para;</a></h4>
+<p>Renders horizontally scrolling text, clipped to the element bounds. When the rendered text fits within the box, it behaves identically to <code>&lt;text&gt;</code> (no scrolling). When the text overflows, it scrolls continuously from right to left.</p>
+<div class="language-xml highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nt">&lt;marquee</span><span class="w"> </span><span class="na">class=</span><span class="s">"song-title"</span><span class="w"> </span><span class="na">speed=</span><span class="s">"30"</span><span class="nt">&gt;</span>{track_name}<span class="nt">&lt;/marquee&gt;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Attribute</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>speed</code></td>
+<td style="text-align: left;">Scroll speed in pixels per second. Default: <code>30</code>.</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Container:</strong> No</li>
+<li><strong>Inherits all text styling</strong> — <code>font-size</code>, <code>color</code>, <code>font-weight</code>, <code>font-style</code>, <code>shadow</code>, <code>text-stroke</code>, etc.</li>
+<li><strong>Automatically triggers the animation tick</strong> (~15 FPS) — no <code>@keyframes</code> needed. See <a href="../rendering/#what-joins-the-animation-tick">Performance Notes</a> in the Animations section.</li>
+<li>Scroll offset is derived from the render timestamp, so no plugin-side state is required.</li>
+</ul>
+<blockquote>
+<p><strong>Tip:</strong> Use <code>&lt;marquee&gt;</code> for labels that may overflow, such as song titles or long status messages. For text that always fits, prefer <code>&lt;text&gt;</code>.</p>
+</blockquote>
+<hr />
+<h2 id="3-styling">3. Styling<a class="headerlink" href="#3-styling" title="Permanent link">&para;</a></h2>
+<p>PDK uses a CSS-like styling system. Styles can come from three sources, listed here from lowest to highest precedence (for rules with the same specificity, the higher-precedence source wins):</p>
+<ol>
+<li>Linked stylesheets via <code>&lt;link href="file.css" /&gt;</code> in <code>template.xml</code> (lowest precedence)</li>
+<li><code>src/shared.css</code> file in the plugin's <code>src/</code> directory (auto-loaded)</li>
+<li><code>&lt;style&gt;</code> blocks inside <code>template.xml</code> (highest precedence)</li>
+</ol>
+<p>All sources are concatenated and parsed together. Inline <code>style=""</code> attributes on elements always have the highest specificity regardless of source.</p>
+<h3 id="selector-types">Selector Types<a class="headerlink" href="#selector-types" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Selector</th>
+<th style="text-align: left;">Example</th>
+<th style="text-align: left;">Matches</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Tag</td>
+<td style="text-align: left;"><code>box</code></td>
+<td style="text-align: left;">All <code>&lt;box&gt;</code> elements</td>
+</tr>
+<tr>
+<td style="text-align: left;">Class</td>
+<td style="text-align: left;"><code>.highlight</code></td>
+<td style="text-align: left;">Elements with <code>class="highlight"</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">ID</td>
+<td style="text-align: left;"><code>#main</code></td>
+<td style="text-align: left;">Element with <code>id="main"</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Compound</td>
+<td style="text-align: left;"><code>box.highlight</code></td>
+<td style="text-align: left;"><code>&lt;box&gt;</code> elements with class <code>highlight</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Compound multi-class</td>
+<td style="text-align: left;"><code>.a.b</code></td>
+<td style="text-align: left;">Elements with both classes <code>a</code> and <code>b</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Comma-separated</td>
+<td style="text-align: left;"><code>box, text</code></td>
+<td style="text-align: left;">All <code>&lt;box&gt;</code> and <code>&lt;text&gt;</code> elements</td>
+</tr>
+</tbody>
+</table>
+<h3 id="css-variables">CSS Variables<a class="headerlink" href="#css-variables" title="Permanent link">&para;</a></h3>
+<p>Define variables in <code>:root</code> and reference them with <code>var()</code>:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">:</span><span class="nd">root</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="nv">--primary</span><span class="p">:</span><span class="w"> </span><span class="mh">#1DB954</span><span class="p">;</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">  </span><span class="nv">--bg</span><span class="p">:</span><span class="w"> </span><span class="mh">#222222</span><span class="p">;</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="p">}</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="p">.</span><span class="nc">container</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">  </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--bg</span><span class="p">);</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="w">  </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--primary</span><span class="p">);</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="p">}</span>
+</code></pre></div>
+<p>Variables can also use state interpolation:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="p">:</span><span class="nd">root</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">  </span><span class="nv">--bg</span><span class="p">:</span><span class="w"> </span><span class="err">{</span><span class="n">_button_color</span><span class="p">}</span><span class="o">;</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="err">}</span>
+</code></pre></div>
+<p>This reads <code>_button_color</code> from the render state, allowing the plugin to pick up the user's configured button colour.</p>
+<h3 id="specificity">Specificity<a class="headerlink" href="#specificity" title="Permanent link">&para;</a></h3>
+<p>Styles cascade using CSS-like specificity: <code>(id count, class count, tag count)</code>. Higher specificity wins. When specificity is equal, the rule defined later in the stylesheet takes precedence. Inline <code>style=""</code> attributes have the highest specificity.</p>
+<h3 id="supported-properties">Supported Properties<a class="headerlink" href="#supported-properties" title="Permanent link">&para;</a></h3>
+<h4 id="layout">Layout<a class="headerlink" href="#layout" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Property</th>
+<th style="text-align: left;">Values</th>
+<th style="text-align: left;">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>direction</code></td>
+<td style="text-align: left;"><code>row</code>, <code>column</code></td>
+<td style="text-align: left;"><code>column</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>align</code></td>
+<td style="text-align: left;"><code>start</code>, <code>center</code>, <code>end</code>, <code>stretch</code></td>
+<td style="text-align: left;"><code>start</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>justify</code></td>
+<td style="text-align: left;"><code>start</code>, <code>center</code>, <code>end</code>, <code>space-between</code>, <code>space-around</code></td>
+<td style="text-align: left;"><code>start</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>gap</code></td>
+<td style="text-align: left;">pixels</td>
+<td style="text-align: left;"><code>0</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>padding</code></td>
+<td style="text-align: left;">shorthand (1–4 values)</td>
+<td style="text-align: left;"><code>0</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>padding-top/right/bottom/left</code></td>
+<td style="text-align: left;">pixels</td>
+<td style="text-align: left;"><code>0</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>margin</code></td>
+<td style="text-align: left;">shorthand (1–4 values)</td>
+<td style="text-align: left;"><code>0</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>margin-top/right/bottom/left</code></td>
+<td style="text-align: left;">pixels</td>
+<td style="text-align: left;"><code>0</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>width</code></td>
+<td style="text-align: left;">pixels, <code>%</code>, <code>em</code>, <code>rem</code>, <code>auto</code></td>
+<td style="text-align: left;"><code>auto</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>height</code></td>
+<td style="text-align: left;">pixels, <code>%</code>, <code>em</code>, <code>rem</code>, <code>auto</code></td>
+<td style="text-align: left;"><code>auto</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="positioning">Positioning<a class="headerlink" href="#positioning" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Property</th>
+<th style="text-align: left;">Values</th>
+<th style="text-align: left;">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>position</code></td>
+<td style="text-align: left;"><code>static</code>, <code>absolute</code></td>
+<td style="text-align: left;"><code>static</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>left</code> / <code>right</code> / <code>top</code> / <code>bottom</code></td>
+<td style="text-align: left;">pixels, <code>%</code>, <code>em</code>, <code>rem</code>, <code>auto</code></td>
+<td style="text-align: left;"><code>auto</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>position: absolute</code> takes a child <strong>out of the flex flow</strong> and pins it to the parent's
+content box. It neither consumes main-axis space nor contributes to the parent's
+content-fit size, which is how you stack overlapping layers on one 72 px canvas — the
+hands of an analog clock face, a badge over an icon, a scrim over album art.</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">.</span><span class="nc">face</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span><span class="w"> </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="p">.</span><span class="nc">hand</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">absolute</span><span class="p">;</span><span class="w"> </span><span class="k">left</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="k">top</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span><span class="w"> </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="p">.</span><span class="nc">badge</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">absolute</span><span class="p">;</span><span class="w"> </span><span class="k">right</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="k">top</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p><code>left</code> and <code>top</code> win when both sides of an axis are set. With neither set on an axis the
+box pins to the content origin, so a full-size absolute child becomes an overlay layer.</p>
+<h4 id="typography">Typography<a class="headerlink" href="#typography" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Property</th>
+<th style="text-align: left;">Values</th>
+<th style="text-align: left;">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>font-family</code></td>
+<td style="text-align: left;">Font name (resolved via fontconfig, falls back to DejaVu Sans)</td>
+<td style="text-align: left;"><code>DejaVu Sans</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>font-size</code></td>
+<td style="text-align: left;">pixels, <code>em</code>, <code>rem</code>, <code>%</code>, named sizes</td>
+<td style="text-align: left;"><code>14</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>font-weight</code></td>
+<td style="text-align: left;"><code>normal</code>, <code>bold</code></td>
+<td style="text-align: left;"><code>normal</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>font-style</code></td>
+<td style="text-align: left;"><code>normal</code>, <code>italic</code></td>
+<td style="text-align: left;"><code>normal</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>text-align</code></td>
+<td style="text-align: left;"><code>left</code>, <code>center</code>, <code>right</code></td>
+<td style="text-align: left;"><code>center</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>text-anchor</code></td>
+<td style="text-align: left;">A single character (e.g. <code>:</code>) or <code>none</code></td>
+<td style="text-align: left;"><code>none</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>text-decoration</code></td>
+<td style="text-align: left;"><code>none</code>, <code>underline</code></td>
+<td style="text-align: left;"><code>none</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>color</code></td>
+<td style="text-align: left;">hex, <code>rgb()</code></td>
+<td style="text-align: left;"><code>#ffffff</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="visual">Visual<a class="headerlink" href="#visual" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Property</th>
+<th style="text-align: left;">Values</th>
+<th style="text-align: left;">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>background</code></td>
+<td style="text-align: left;">hex, <code>rgb()</code>, <code>linear-gradient(...)</code>, <code>radial-gradient(...)</code>, <code>transparent</code></td>
+<td style="text-align: left;"><code>transparent</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>border</code></td>
+<td style="text-align: left;">shorthand: <code>&lt;width&gt; &lt;color&gt;</code> or <code>none</code></td>
+<td style="text-align: left;"><code>none</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>border-width</code></td>
+<td style="text-align: left;">pixels</td>
+<td style="text-align: left;"><code>0</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>border-color</code></td>
+<td style="text-align: left;">hex, <code>rgb()</code>, <code>transparent</code></td>
+<td style="text-align: left;"><code>transparent</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>border-radius</code></td>
+<td style="text-align: left;">pixels</td>
+<td style="text-align: left;"><code>0</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="transform">Transform<a class="headerlink" href="#transform" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Property</th>
+<th style="text-align: left;">Values</th>
+<th style="text-align: left;">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>rotate</code></td>
+<td style="text-align: left;">degrees (numeric)</td>
+<td style="text-align: left;"><code>0</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="effects">Effects<a class="headerlink" href="#effects" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Property</th>
+<th style="text-align: left;">Values</th>
+<th style="text-align: left;">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>shadow</code></td>
+<td style="text-align: left;"><code>&lt;offset-x&gt; &lt;offset-y&gt; &lt;blur&gt; &lt;color&gt;</code> or <code>none</code></td>
+<td style="text-align: left;"><code>none</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>glow</code></td>
+<td style="text-align: left;"><code>&lt;size&gt; &lt;color&gt;</code> or <code>none</code></td>
+<td style="text-align: left;"><code>none</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>blur</code></td>
+<td style="text-align: left;">pixels (Gaussian blur radius)</td>
+<td style="text-align: left;"><code>0</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>text-stroke</code></td>
+<td style="text-align: left;"><code>&lt;width&gt; &lt;color&gt;</code> or <code>none</code></td>
+<td style="text-align: left;"><code>none</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="animation">Animation<a class="headerlink" href="#animation" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Property</th>
+<th style="text-align: left;">Values</th>
+<th style="text-align: left;">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>animation</code></td>
+<td style="text-align: left;"><code>&lt;name&gt; &lt;duration&gt; [timing] [iteration] [direction]</code> or <code>none</code></td>
+<td style="text-align: left;"><code>none</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>transition</code></td>
+<td style="text-align: left;"><code>&lt;property&gt; &lt;duration&gt; [timing]</code> or <code>none</code> — <code>&lt;property&gt;</code> may be <code>all</code></td>
+<td style="text-align: left;"><code>none</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>animation</code> replays a <code>@keyframes</code> block on a loop. <code>transition</code> instead eases a property
+between renders: when the value changes from one render to the next, the renderer
+interpolates from the old value to the new one over the duration, so a colour or size
+driven by handler state moves smoothly instead of snapping.</p>
+<p>See <a href="../rendering/#3-animations">Animations</a> for full details and examples.</p>
+<h3 id="css-units">CSS Units<a class="headerlink" href="#css-units" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Unit</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>px</code> (or bare number)</td>
+<td style="text-align: left;">Absolute pixels</td>
+<td style="text-align: left;"><code>font-size: 14px;</code> or <code>font-size: 14;</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>em</code></td>
+<td style="text-align: left;">Relative to the element's own computed font-size</td>
+<td style="text-align: left;"><code>font-size: 1.5em;</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>rem</code></td>
+<td style="text-align: left;">Relative to the root element's font-size</td>
+<td style="text-align: left;"><code>font-size: 1.2rem;</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>%</code></td>
+<td style="text-align: left;">Relative to parent dimension (width for horizontal, height for vertical; font-size <code>%</code> is relative to parent font-size)</td>
+<td style="text-align: left;"><code>width: 50%;</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="admonition-title">Percentages resolve against the parent's full box, not its content box</p>
+<p>Unlike CSS, a percentage size is measured against the parent's <strong>outer</strong>
+width or height — its padding is <em>not</em> subtracted first. On a parent that
+has both an explicit size and padding, <code>width: 100%</code> therefore produces a
+child as wide as the parent itself, offset by the left padding, so it
+overhangs the right edge by the padding amount. Centred text inside that
+child ends up visibly off-centre.</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c">/* 72px button, 3px side padding: the child spans x = 3 … 75 */</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="p">.</span><span class="nc">overlay</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span><span class="w"> </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="p">.</span><span class="nc">title</span><span class="w">   </span><span class="p">{</span><span class="w"> </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span><span class="w"> </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w">   </span><span class="c">/* centred on x = 39, not 36 */</span>
+</code></pre></div>
+<p>Keep padding to the axis you are not sizing in percent (<code>padding: 2 0</code>
+above), or drop <code>width: 100%</code> and centre the child with <code>align: center</code>
+on the parent instead.</p>
+</div>
+<h4 id="named-font-sizes">Named Font Sizes<a class="headerlink" href="#named-font-sizes" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Pixels</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>xx-small</code></td>
+<td style="text-align: left;">7</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>x-small</code></td>
+<td style="text-align: left;">8</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>small</code></td>
+<td style="text-align: left;">10</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>medium</code></td>
+<td style="text-align: left;">14</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>large</code></td>
+<td style="text-align: left;">18</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>x-large</code></td>
+<td style="text-align: left;">22</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>xx-large</code></td>
+<td style="text-align: left;">28</td>
+</tr>
+</tbody>
+</table>
+<p>The keywords <code>smaller</code> and <code>larger</code> scale relative to the parent's font-size by a factor of <code>1.2</code>.</p>
+<h3 id="property-inheritance">Property Inheritance<a class="headerlink" href="#property-inheritance" title="Permanent link">&para;</a></h3>
+<p>The following properties are inherited from parent to child elements (matching CSS behaviour):</p>
+<p><code>color</code>, <code>font-family</code>, <code>font-size</code>, <code>font-weight</code>, <code>font-style</code>, <code>text-align</code>, <code>text-decoration</code>, <code>direction</code></p>
+<h3 id="shorthand-expansion">Shorthand Expansion<a class="headerlink" href="#shorthand-expansion" title="Permanent link">&para;</a></h3>
+<p><strong><code>padding</code></strong> — supports 1–4 value syntax identical to CSS:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nt">padding</span><span class="o">:</span><span class="w"> </span><span class="nt">8</span><span class="o">;</span><span class="w">                </span><span class="c">/* all sides */</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="nt">padding</span><span class="o">:</span><span class="w"> </span><span class="nt">4</span><span class="w"> </span><span class="nt">8</span><span class="o">;</span><span class="w">              </span><span class="c">/* vertical horizontal */</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="nt">padding</span><span class="o">:</span><span class="w"> </span><span class="nt">4</span><span class="w"> </span><span class="nt">8</span><span class="w"> </span><span class="nt">12</span><span class="o">;</span><span class="w">           </span><span class="c">/* top horizontal bottom */</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="nt">padding</span><span class="o">:</span><span class="w"> </span><span class="nt">4</span><span class="w"> </span><span class="nt">8</span><span class="w"> </span><span class="nt">12</span><span class="w"> </span><span class="nt">16</span><span class="o">;</span><span class="w">        </span><span class="c">/* top right bottom left */</span>
+</code></pre></div>
+<p><strong><code>border</code></strong> — <code>&lt;width&gt; &lt;color&gt;</code> or <code>none</code>:</p>
+<div class="language-css highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="nt">border</span><span class="o">:</span><span class="w"> </span><span class="nt">2</span><span class="w"> </span><span class="p">#</span><span class="nn">ffffff</span><span class="o">;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="nt">border</span><span class="o">:</span><span class="w"> </span><span class="nt">none</span><span class="o">;</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../pdk-create/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Plugin Creator (scaffold)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Plugin Creator (scaffold)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../rendering/" class="md-footer__link md-footer__link--next" aria-label="Next: Rendering &amp; styling">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Rendering & styling
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.instant", "navigation.instant.progress", "navigation.footer", "toc.follow", "content.tabs.link", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/sheet-drag.js"></script>
+      
+    
+  </body>
+</html>

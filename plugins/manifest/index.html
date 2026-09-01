@@ -1,0 +1,3466 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Install, use, and extend PyDeck — the Python-powered Stream Deck controller.">
+      
+      
+      
+        <link rel="canonical" href="https://docs.pydeck.no/plugins/manifest/">
+      
+      
+        <link rel="prev" href="../events/">
+      
+      
+        <link rel="next" href="../ui-fields/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.png">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>manifest.json reference - PyDeck Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#shared-platform-manifestjson-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="PyDeck Docs" class="md-header__button md-logo" aria-label="PyDeck Docs" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PyDeck Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              manifest.json reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OPvault/pydeck" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OPvault/pydeck
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../get-started/install/" class="md-tabs__link">
+          
+  
+  
+  Get Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../using/devices/" class="md-tabs__link">
+          
+  
+  
+  Using PyDeck
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../getting-started/" class="md-tabs__link">
+          
+  
+  
+  Build Plugins
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../themes/getting-started/" class="md-tabs__link">
+          
+  
+  
+  Build Themes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/http-api/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../internals/architecture/" class="md-tabs__link">
+          
+  
+  
+  Internals
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PyDeck Docs" class="md-nav__button md-logo" aria-label="PyDeck Docs" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    PyDeck Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OPvault/pydeck" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OPvault/pydeck
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Get Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../get-started/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install PyDeck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../get-started/first-button/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your first button
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../get-started/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using PyDeck
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using PyDeck
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Devices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/profiles-and-folders/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles & folders
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/actions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Action Builder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/marketplace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install plugins & themes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/appearance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appearance & themes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/gradient-backgrounds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradient backgrounds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/virtual-decks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Virtual decks & phone control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security, LAN & HTTPS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/keyboard-shortcuts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Keyboard shortcuts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/updates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Updating PyDeck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build Plugins
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Build Plugins
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../pdk-create/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugin Creator (scaffold)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates & elements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rendering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rendering & styling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../runtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime & the ctx object
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Press, hold & events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    manifest.json reference
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    manifest.json reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-top-level-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Top-level fields
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-functions-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Functions object
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-python-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Python dependencies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Permissions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-licenses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Licenses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-post-install-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Post-install scripts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Post-install scripts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#declaring-a-post-install-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Declaring a post-install script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plugin-folder-layout-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plugin folder layout example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#approvals-are-remembered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Approvals are remembered
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Script constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-system-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. System packages
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. System packages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#package-managers-pydeck-knows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package managers PyDeck knows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-an-entry-is-resolved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How an entry is resolved
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-user-sees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the user sees
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-changelog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Changelog
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Changelog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules that matter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-platform-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Platform compatibility
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Platform compatibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-reserved-vocabulary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The reserved vocabulary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-user-sees_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the user sees
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-related-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Related reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ui-fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UI field types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication & credentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../assets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assets & plugin web UI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bundled documentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../publishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing to the catalog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build Themes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Build Themes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/css-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS variable reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/publishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing themes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/http-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTTP & WebSocket API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/api-cookbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API cookbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/api-tokens/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API tokens
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/paths/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config & file paths
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/developer-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Internals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Internals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/api-layer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The api/ package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/routes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Route inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/lib-services/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lib/ service modules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Access control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../internals/adding-endpoints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adding endpoints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-top-level-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Top-level fields
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-functions-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Functions object
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-python-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Python dependencies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-permissions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Permissions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-licenses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Licenses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-post-install-scripts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Post-install scripts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Post-install scripts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#declaring-a-post-install-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Declaring a post-install script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#plugin-folder-layout-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Plugin folder layout example
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#approvals-are-remembered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Approvals are remembered
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#script-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Script constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-system-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. System packages
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. System packages">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#package-managers-pydeck-knows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Package managers PyDeck knows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-an-entry-is-resolved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How an entry is resolved
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-user-sees" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the user sees
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-changelog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Changelog
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Changelog">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rules-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rules that matter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-platform-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Platform compatibility
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Platform compatibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-reserved-vocabulary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The reserved vocabulary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-user-sees_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the user sees
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-related-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Related reading
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="shared-platform-manifestjson-reference">Shared platform — <code>manifest.json</code> reference<a class="headerlink" href="#shared-platform-manifestjson-reference" title="Permanent link">&para;</a></h1>
+<p>Every plugin ships a <strong><code>manifest.json</code></strong>: the file PyDeck reads to discover the plugin, build its sidebar entries, and render the button editor. This page is the field-by-field reference. It applies to every plugin — the <a href="../getting-started/">PDK</a> runtime reads the same manifest and simply draws the button <strong>face</strong> from templates instead of the built-in renderer.</p>
+<p><strong>Where files live:</strong> each plugin is a folder under <strong><code>~/.local/share/pydeck/plugin/&lt;plugin_id&gt;/</code></strong> (or <strong><code>$XDG_DATA_HOME/pydeck/plugin/&lt;plugin_id&gt;/</code></strong> when <code>XDG_DATA_HOME</code> is set). Runtime files a plugin writes go under <strong><code>~/.local/share/pydeck/storage/&lt;plugin_id&gt;/</code></strong>. In <code>manifest.json</code>, <code>buttons.json</code>, and API payloads, PyDeck also accepts <strong>logical</strong> paths such as <code>plugins/plugin/...</code> and <code>plugins/storage/...</code>; the core maps them onto the data directory when loading.</p>
+<p><strong>Plugin identifiers (RDNN):</strong> the install folder name <strong>is</strong> the plugin id, and it should be a <strong>reverse-DNS</strong> name (RDNN) — e.g. <code>com.example.myplugin</code> or <code>no.pydeck.spotify</code> — so ids stay unique across authors. The manifest <code>name</code> field is the <strong>human-readable title</strong> shown in the UI; it does not have to match the folder name. For official catalog plugins, PyDeck still accepts legacy short folder names (e.g. <code>spotify</code>) and maps them to the canonical RDNN id when resolving paths and credentials.</p>
+<div class="admonition tip">
+<p class="admonition-title">PDK plugins can omit the manifest</p>
+<p>A PDK plugin without a <code>manifest.json</code> gets one generated from its templates,
+<code>&lt;settings&gt;</code> blocks, and <code>on_poll</code> interval. See
+<a href="../runtime/">Auto-generated manifest</a> under <em>Runtime &amp; examples</em>.
+Ship a real manifest whenever you need credentials, permissions, dependencies,
+or licences — those cannot be inferred.</p>
+</div>
+<hr />
+<h2 id="1-top-level-fields">1. Top-level fields<a class="headerlink" href="#1-top-level-fields" title="Permanent link">&para;</a></h2>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Plugin"</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"What the plugin does"</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nt">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your Name"</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="nt">"python_dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">],</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span><span class="nt">"licenses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">],</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="nt">"credentials"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">],</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nt">"oauth"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="nt">"permissions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">  </span><span class="nt">"post_install_script"</span><span class="p">:</span><span class="w"> </span><span class="s2">"scripts/setup.sh"</span><span class="p">,</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span><span class="nt">"post_install_requires_sudo"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span><span class="nt">"system_packages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">],</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span><span class="nt">"compatibility"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="nt">"documentation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"DOCS.md"</span><span class="p">,</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="nt">"changelog"</span><span class="p">:</span><span class="w"> </span><span class="s2">"CHANGELOG.md"</span><span class="p">,</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span><span class="nt">"functions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>name</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Human-readable plugin title shown in the sidebar and marketplace (e.g. <code>"Home Assistant"</code>). The <strong>id</strong> is the install folder name, not this field.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>version</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Semantic version string (e.g. <code>"1.0.0"</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>description</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">One-line description shown in the sidebar.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>author</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Plugin author name.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>min_pydeck_version</code> / <code>max_pydeck_version</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Compatibility range for this plugin version. The catalog generator mirrors these into the marketplace entry — see <a href="../publishing/">Generate Manifest</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>python_dependencies</code></td>
+<td style="text-align: left;">array</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">List of pip package names the plugin requires. The backend installs missing packages automatically at startup and restarts itself. See <a href="#3-python-dependencies">Python dependencies</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>licenses</code></td>
+<td style="text-align: left;">array</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Third-party license declarations. Each entry names a license and points to its file inside the plugin folder. Shown in the marketplace as a <strong>Licenses</strong> button. See <a href="#5-licenses">Licenses</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>credentials</code></td>
+<td style="text-align: left;">array</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Credential fields shown under <strong>Settings → Credentials</strong> on the web UI. See <a href="../authentication/#1-credentials">Credentials</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>settings</code></td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Optional category for a plugin-defined settings panel. See <a href="../authentication/#plugin-settings-panel">Plugin settings panel</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>oauth</code></td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">OAuth2 Authorization Code flow config. See <a href="../authentication/#2-oauth-integration">OAuth</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>permissions</code></td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Module-level permission whitelist for the RPC system. See <a href="#4-permissions">Permissions</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>post_install_script</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Relative path to a <code>.sh</code> script that runs after the plugin is installed from the marketplace, once the user has read and approved it. <strong>Must not install packages</strong> — a script that calls a package manager is rejected and the install fails. See <a href="#6-post-install-scripts">Post-install scripts</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>post_install_requires_sudo</code></td>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">When <code>true</code>, the user is prompted for their sudo password before the post-install script executes. Defaults to <code>false</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>system_packages</code></td>
+<td style="text-align: left;">array</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">OS packages the plugin needs (<code>xdotool</code>, an SSH server, …), named per package manager. PyDeck resolves them against the user's machine before anything is written, shows the exact install command, and runs it only on approval. See <a href="#7-system-packages">System packages</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>documentation</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Path to a bundled markdown guide, relative to the plugin folder (e.g. <code>"DOCS.md"</code>). Auto-detected from <code>DOCS.md</code>/<code>README.md</code> when absent. See <a href="../documentation/">Plugin documentation</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>show_markdown_after_install</code></td>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Only meaningful alongside <code>documentation</code>. When <code>true</code>, PyDeck pops the rendered doc up right after install. Defaults to <code>false</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>changelog</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Path to the plugin's changelog, relative to the plugin folder. Defaults to <code>CHANGELOG.md</code>, which the catalog picks up whether or not you declare it — so the field only matters if you name the file something else. Every plugin is expected to ship one. See <a href="#8-changelog">Changelog</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>compatibility</code></td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Which platforms the plugin runs on and what it needs from them — <code>os</code>, <code>requires</code>, <code>optional</code>, <code>min_os_version</code>. The marketplace classifies the plugin against the user's machine and <strong>refuses</strong> an incompatible install — there is no override. Omit it and the plugin shows as <strong>Unverified</strong>. See <a href="#9-platform-compatibility">Platform compatibility</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pdk</code></td>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;"><strong>Do not set this in a new plugin.</strong> PyDeck reads the generation off the plugin's <em>sources</em>, not the manifest, and ignores a <code>pdk</code> key if one is present. Pre-PDK plugins carry <code>"pdk": false</code> to flag themselves as classic; a leftover <code>"pdk": true</code> still parses but does nothing.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>functions</code></td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Maps function names to their metadata. This is the core of the manifest.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-functions-object">2. Functions object<a class="headerlink" href="#2-functions-object" title="Permanent link">&para;</a></h2>
+<p>Each key in <code>functions</code> is a function name. For a <strong>PDK</strong> plugin the key matches a template name and, when you split logic per function, the module directory under <code>src/functions/&lt;name&gt;/</code> — see <a href="../getting-started/#4-plugin-directory-structure">Plugin directory structure</a>.</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">"functions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">"toggle"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">      </span><span class="nt">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"HA Toggle"</span><span class="p">,</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">      </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Toggle a Home Assistant entity on/off"</span><span class="p">,</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">      </span><span class="nt">"sidebar_icon"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assets/icons/toggle.svg"</span><span class="p">,</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">      </span><span class="nt">"default_display"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">        </span><span class="nt">"color"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#1a3a6e"</span><span class="p">,</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">        </span><span class="nt">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">      </span><span class="nt">"display_states"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">        </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"plugins/plugin/com.example.myplugin/assets/icons/off.png"</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">        </span><span class="nt">"active"</span><span class="p">:</span><span class="w">  </span><span class="p">{</span><span class="w"> </span><span class="nt">"image"</span><span class="p">:</span><span class="w"> </span><span class="s2">"plugins/plugin/com.example.myplugin/assets/icons/on.png"</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">      </span><span class="nt">"poll"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"function"</span><span class="p">:</span><span class="w"> </span><span class="s2">"on_poll"</span><span class="p">,</span><span class="w"> </span><span class="nt">"interval_ms"</span><span class="p">:</span><span class="w"> </span><span class="mi">3000</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">      </span><span class="nt">"ui"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">]</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>label</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Human-readable name shown in the sidebar and editor.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>description</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Short description shown below the label.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sidebar_icon</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Image for the <strong>sidebar</strong> action tile only. Use a path relative to the plugin package (e.g. <code>assets/icons/K.svg</code>). Omitted or empty → generic “+” tile. <strong>Not</strong> derived from <code>default_display.image</code>. Legacy alias: <code>action_tile_icon</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>default_display</code></td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Initial button appearance when dragged onto a slot: <code>color</code> (hex), <code>text</code> (string), <code>image</code> (relative path), optional <strong><code>scroll_enabled</code></strong> / <strong><code>scroll_speed</code></strong>, and the text-style fields (<code>show_title</code>, <code>text_position</code>, <code>text_size</code>, <code>text_bold</code>, <code>text_italic</code>, <code>text_underline</code>, <code>text_color</code>). Text-style fields are <strong>suggestions</strong> unless you add a companion <code>&lt;field&gt;_lock: true</code>. See <a href="../assets/#text-style-in-default_display">Text style in <code>default_display</code></a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>display_states</code></td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Maps state keys (like <code>"default"</code>, <code>"active"</code>) to partial display overrides — the per-state icons offered in the editor's gallery. PDK handlers receive the resolved result as <code>ctx.config["_state_images"]</code>; see <a href="../runtime/">User-picked per-state icons</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>poll</code></td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Background polling config: <code>function</code> (the callable to run, <code>on_poll</code> for PDK) and <code>interval_ms</code> (default <code>3000</code>, floored to <code>100</code> — the deck listener and the server both check poll schedules every 100 ms). PDK plugins normally let the core derive this from <code>on_poll</code>'s <code>interval</code> default — see <a href="../runtime/">Runtime &amp; examples</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ui</code></td>
+<td style="text-align: left;">array</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">List of UI field definitions for the button editor. See <a href="../ui-fields/">UI field types</a>. Use <code>[]</code> for no fields. PDK templates may declare the same fields inline in a <code>&lt;settings&gt;</code> block instead — see <a href="../templates/">Inline settings</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>title_readonly</code></td>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">When <code>true</code>, the web editor shows the Title field as read-only with a <strong>Read-only</strong> badge. Use when the plugin or its poller owns the label. The title is still persisted like any other field; this flag is UI-only.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>disableGallary</code> / <code>disableGallery</code></td>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">When <code>true</code>, the button editor hides the icon/image picker for that function. Use it for buttons whose image is part of the function's own presentation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>draws_button_image</code></td>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;"><strong>PDK only.</strong> When <code>true</code>, a user-set button icon does <em>not</em> replace the PDK face — the template draws the image itself through the reserved <code>_button_image</code> key. See <a href="../rendering/#35-button-owned-faces">Button-owned faces</a>. Declaring <code>display_states</code> has the same effect.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>gradient</code></td>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">When <code>true</code>, this function's colour picker offers <strong>Solid / Gradient</strong> tabs. The <code>_button_gradient</code> render key is available either way — the flag only controls whether the editor UI appears. See <a href="../rendering/#4-gradient-backgrounds">Gradient backgrounds</a>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>actionable</code></td>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">When <code>true</code>, the function can be used as a step inside an <a href="../../using/actions/">Action</a>. Defaults to <code>false</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>log_format</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Format string used when the function's press result is written to the notification log.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>autosave</code></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Not a function-level field. The editor shows a <strong>Save</strong> button automatically when any field in the <code>ui</code> array sets <code>"autosave": "off"</code>. See <a href="../ui-fields/#common-properties">Common properties</a>.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Two fields the core adds for you</p>
+<p><code>GET /api/plugins</code> reports <code>pdk_buttonlabel_count</code> and <code>pdk_buttonlabel_defaults</code> per
+function, counted from the <code>&lt;buttonlabel&gt;</code> elements in the template (max 3). They
+drive how many Title rows the button editor offers. Do not put them in
+<code>manifest.json</code> — they are derived from your template and overwritten on load.</p>
+</div>
+<hr />
+<h2 id="3-python-dependencies">3. Python dependencies<a class="headerlink" href="#3-python-dependencies" title="Permanent link">&para;</a></h2>
+<p>Declares the pip packages your plugin needs. PyDeck reads this list every time the backend starts and automatically installs any package that is not yet present in the venv. If anything is newly installed the process restarts itself so the packages are importable before any plugin code runs.</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">"python_dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"evdev"</span><span class="p">,</span><span class="w"> </span><span class="s2">"requests"</span><span class="p">]</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>python_dependencies</code></td>
+<td style="text-align: left;">array of strings</td>
+<td style="text-align: left;">Pip package names (the same names you would pass to <code>pip install</code>). Import names and pip names may differ — use the pip name (e.g. <code>"pillow"</code>, not <code>"PIL"</code>).</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example — Keyboard plugin</strong> (<code>~/.local/share/pydeck/plugin/no.pydeck.keyboard/manifest.json</code>):</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Keyboard"</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nt">"python_dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"evdev"</span><span class="p">],</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nt">"permissions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nt">"evdev"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"UInput"</span><span class="p">,</span><span class="w"> </span><span class="s2">"ecodes"</span><span class="p">],</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"sleep"</span><span class="p">]</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> <code>python_dependencies</code> is a <strong>pip package list</strong>, while <code>permissions</code> is an <strong>RPC allowlist</strong> (module → callable names). They are independent — a package listed in <code>python_dependencies</code> does not need a matching entry in <code>permissions</code>.</p>
+</blockquote>
+<hr />
+<h2 id="4-permissions">4. Permissions<a class="headerlink" href="#4-permissions" title="Permanent link">&para;</a></h2>
+<p>Declares which standard library modules and functions the plugin uses. Used by the RPC permission system.</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">"permissions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nt">"webbrowser"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"open"</span><span class="p">],</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="nt">"subprocess"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"run"</span><span class="p">],</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="nt">"json"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"dumps"</span><span class="p">,</span><span class="w"> </span><span class="s2">"loads"</span><span class="p">]</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="p">}</span>
+</code></pre></div>
+<p>Each key is a module name, and the value is a list of function/attribute names from that module.</p>
+<hr />
+<h2 id="5-licenses">5. Licenses<a class="headerlink" href="#5-licenses" title="Permanent link">&para;</a></h2>
+<p>If your plugin ships with or relies on third-party code or data that carries its own license, declare each one in a <code>licenses</code> array. Each entry is an object with two fields:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>name</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Human-readable name for the license (e.g. <code>"MIT"</code>, <code>"OpenF1"</code>, <code>"Apache 2.0"</code>). Shown as the tab label in the marketplace viewer.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>file</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Filename of the license text <strong>inside the plugin folder</strong> (e.g. <code>"LICENSE-openf1"</code>). Only files declared here can be served to the UI — no other files are accessible.</td>
+</tr>
+</tbody>
+</table>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">"licenses"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OpenF1"</span><span class="p">,</span><span class="w">     </span><span class="nt">"file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LICENSE-openf1"</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Jolpica F1"</span><span class="p">,</span><span class="w"> </span><span class="nt">"file"</span><span class="p">:</span><span class="w"> </span><span class="s2">"LICENSE-jolpica"</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">}</span>
+</code></pre></div>
+<p>The marketplace reads this list and shows a small <strong>Licenses</strong> button in the plugin card's corner group, beside the docs and changelog buttons. Clicking it opens a viewer modal. When a plugin declares more than one license, the viewer renders a tab for each entry — clicking a tab loads that license's full text.</p>
+<p><strong>Plugin folder layout example</strong> (F1 plugin with two licenses):</p>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>~/.local/share/pydeck/plugin/no.pydeck.f1/
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>├── manifest.json        ← declares both licenses
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>├── src/
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>├── LICENSE-openf1       ← OpenF1 API license
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>└── LICENSE-jolpica      ← Jolpica F1 license
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> The <code>file</code> value must be a plain filename with no path separators. The backend only serves files that appear in the <code>licenses</code> list, so listing a file here is both the declaration and the access grant.</p>
+<p><strong>Tip:</strong> Always include license files when your plugin uses an external API, dataset, or library that requires attribution — it keeps the project legally clean and lets users understand the data sources at a glance.</p>
+</blockquote>
+<hr />
+<h2 id="6-post-install-scripts">6. Post-install scripts<a class="headerlink" href="#6-post-install-scripts" title="Permanent link">&para;</a></h2>
+<p>A plugin can include a shell script that runs once after installation from the marketplace, for setup that neither <code>python_dependencies</code> nor <a href="#7-system-packages"><code>system_packages</code></a> can express — adding the user to a group, writing a config file, registering a udev rule.</p>
+<div class="admonition danger">
+<p class="admonition-title">A post-install script may not install packages</p>
+<p>Package installs belong in the declarative <a href="#7-system-packages"><code>system_packages</code></a> block, where the user sees the exact command and the system's own package manager runs it. Before a script is ever shown for approval, PyDeck scans it (comments stripped) for a package-manager call — <code>apt</code>, <code>apt-get</code>, <code>dpkg</code>, <code>dnf</code>, <code>yum</code>, <code>pacman</code>, <code>zypper</code>, <code>apk</code>, <code>snap</code>, <code>flatpak</code>, <code>brew</code>, <code>winget</code>, <code>choco</code>, <code>scoop</code>, <code>yay</code>, <code>paru</code>, <code>makepkg</code> — or an <code>install</code> verb on <code>pip</code>/<code>pip3</code>/<code>pipx</code>/<code>npm</code>/<code>pnpm</code>/<code>yarn</code>/<code>cargo</code>/<code>gem</code>/<code>port</code>. One hit and the install fails with <strong>400</strong>: the plugin directory is removed again and the response lists the offending tokens as <code>blocked_tokens</code>. This is a text scan, not a sandbox — catalog review is the backstop.</p>
+</div>
+<h3 id="declaring-a-post-install-script">Declaring a post-install script<a class="headerlink" href="#declaring-a-post-install-script" title="Permanent link">&para;</a></h3>
+<p>Add <code>post_install_script</code> to the manifest's top-level object. The value is a relative path (from the plugin root) to a <code>.sh</code> file:</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"My Plugin"</span><span class="p">,</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0"</span><span class="p">,</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Plugin with post-install setup"</span><span class="p">,</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="nt">"author"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Your Name"</span><span class="p">,</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="nt">"post_install_script"</span><span class="p">:</span><span class="w"> </span><span class="s2">"scripts/setup.sh"</span><span class="p">,</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">  </span><span class="nt">"post_install_requires_sudo"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="nt">"functions"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="err">...</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>post_install_script</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Relative path to a <code>.sh</code> file inside the plugin folder. Must not contain <code>..</code>, must not be absolute, and must not be a symlink.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>post_install_requires_sudo</code></td>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">When <code>true</code>, the UI prompts for the user's sudo password before executing the script. Defaults to <code>false</code>.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="plugin-folder-layout-example">Plugin folder layout example<a class="headerlink" href="#plugin-folder-layout-example" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>~/.local/share/pydeck/plugin/com.example.myplugin/
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>├── manifest.json
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>├── src/
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>└── scripts/
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    └── setup.sh          ← post-install script
+</code></pre></div>
+<h3 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h3>
+<ol>
+<li>The user installs the plugin from the marketplace. If the manifest also declares <code>system_packages</code>, that step runs first — the plugin's files are only downloaded once the packages are settled.</li>
+<li>If the manifest declares <code>post_install_script</code>, the script is scanned for package-manager calls (above). If it passes, a <strong>pending post-install request</strong> is created and the UI shows a review prompt.</li>
+<li>The prompt displays the script contents so the user can inspect it before approving.</li>
+<li>If the script requires sudo, the user must provide their password.</li>
+<li>On <strong>Approve</strong>, the script is executed with <code>/bin/bash</code> in the plugin directory. The result (<code>succeeded</code>, <code>failed</code>, or <code>timeout</code>) is reported back.</li>
+<li>On <strong>Decline</strong>, the plugin directory is deleted and the installation is cancelled. Declining always removes the plugin — there is no way to keep a plugin while skipping its post-install script.</li>
+</ol>
+<h3 id="approvals-are-remembered">Approvals are remembered<a class="headerlink" href="#approvals-are-remembered" title="Permanent link">&para;</a></h3>
+<p>When a script runs successfully, PyDeck stores its SHA-256 in the database (<code>plugin_postinstall</code>). An upgrade that ships the <strong>byte-identical</strong> script is not asked about again — the user already read and ran exactly that text. Any change to the script, a declined or failed run, or an uninstall brings the prompt back.</p>
+<h3 id="script-constraints">Script constraints<a class="headerlink" href="#script-constraints" title="Permanent link">&para;</a></h3>
+<ul>
+<li>The path must be relative and stay inside the plugin directory (no <code>..</code> traversal).</li>
+<li>The file must have a <code>.sh</code> extension.</li>
+<li>Symlinks are not allowed.</li>
+<li>No package-manager calls (see the warning above).</li>
+<li>The script runs with a minimal environment (<code>PATH</code>, <code>HOME</code>, <code>LANG</code>) and has a default timeout of 120 seconds.</li>
+<li>If the script times out, the process is killed and the result is reported as <code>timeout</code>.</li>
+</ul>
+<h3 id="security">Security<a class="headerlink" href="#security" title="Permanent link">&para;</a></h3>
+<p>Post-install scripts run arbitrary shell commands on the host machine. The review prompt exists so the user can read the script source before deciding. When <code>post_install_requires_sudo</code> is set, the password is used for a single <code>sudo -S</code> invocation and is not persisted.</p>
+<blockquote>
+<p><strong>Tip:</strong> Keep post-install scripts short, idempotent, and well-commented. Users are more likely to approve a script they can understand at a glance. The official Keyboard plugin's script, for instance, only adds the user to the <code>input</code> group — the <code>xdotool</code> it can use is declared in <code>system_packages</code>.</p>
+</blockquote>
+<hr />
+<h2 id="7-system-packages">7. System packages<a class="headerlink" href="#7-system-packages" title="Permanent link">&para;</a></h2>
+<p>Some plugins need an OS package — <code>xdotool</code> for X11 key injection, an SSH server, a media tool. Declare those in <code>system_packages</code> instead of installing them from a script. PyDeck then:</p>
+<ol>
+<li><strong>Detects</strong> the package managers on the user's <code>PATH</code> and the display session (X11 / Wayland), reusing the <a href="#9-platform-compatibility">platform</a> probes.</li>
+<li><strong>Picks</strong> the entry that applies to this machine and its name on the manager the distro ships with.</li>
+<li><strong>Skips</strong> anything already installed (and new enough), and refuses up front if a required package cannot be provided at all.</li>
+<li><strong>Shows the exact command</strong> it intends to run and installs only when the user approves — with a sudo password typed for that step where the manager needs root.</li>
+</ol>
+<p>Nothing is downloaded until that step is over, so a declined install leaves no plugin behind.</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="p">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">"system_packages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xdotool"</span><span class="p">,</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">      </span><span class="nt">"reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Faster, layout-aware key injection on X11. Without it the plugin falls back to evdev."</span><span class="p">,</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">      </span><span class="nt">"when"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"x11"</span><span class="p">],</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">      </span><span class="nt">"optional"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">      </span><span class="nt">"managers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"apt|dnf|pacman|zypper|apk"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xdotool"</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="p">},</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OpenSSH server"</span><span class="p">,</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">      </span><span class="nt">"reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Lets buttons trigger remote commands over SSH."</span><span class="p">,</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">      </span><span class="nt">"service"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sshd"</span><span class="p">,</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">      </span><span class="nt">"managers"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">        </span><span class="nt">"apt|dnf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openssh-server"</span><span class="p">,</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">        </span><span class="nt">"pacman|zypper|apk|brew"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openssh"</span><span class="p">,</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">        </span><span class="nt">"aur"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"openssh"</span><span class="p">,</span><span class="w"> </span><span class="nt">"min_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9.0"</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="p">}</span>
+</code></pre></div>
+<p>Each entry is one <em>logical</em> dependency with its name on every package manager that carries it.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Required</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>name</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Human-readable name shown in the prompt (<code>"OpenSSH server"</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>reason</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">One line on why the plugin needs it — shown under the package in the prompt. Write it; users approve what they understand.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>managers</code></td>
+<td style="text-align: left;">object</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Package name per manager key. A key may group managers that share a name with a pipe (<code>"apt|dnf": "openssh-server"</code>). The value is either the package name or <code>{"name", "min_version"}</code>. An entry that maps no manager, or names a manager PyDeck does not know, makes the whole manifest invalid (<strong>400</strong> at install).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>optional</code></td>
+<td style="text-align: left;">boolean</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;"><code>false</code> by default. A <strong>required</strong> package that cannot be provided on this machine refuses the install; an optional one is simply skipped, and declining an optional-only list still installs the plugin.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>when</code></td>
+<td style="text-align: left;">array</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Environment tags that must <em>all</em> match for the entry to apply, e.g. <code>["x11"]</code>. <code>x11</code> / <code>wayland</code> mean the <strong>native session</strong> here (a Wayland desktop has XWayland, but a package declared for X11 sessions is not wanted on it); any other tag — <code>linux</code>, <code>x86_64</code>, <code>dbus</code>, … — is looked up in the <a href="#the-reserved-vocabulary">detected capabilities</a>. An entry that does not apply is listed as <em>not needed here</em> and never installed.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>service</code></td>
+<td style="text-align: left;">string</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">A service to enable once the package is in (<code>sshd</code>). PyDeck runs <code>systemctl enable --now &lt;service&gt;</code> on Linux (<code>brew services start</code> on macOS) after the install command, and records that this plugin depends on it.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Names are validated</strong>: a package name must match <code>[A-Za-z0-9][A-Za-z0-9._+@:-]{0,127}</code> (so a manifest cannot smuggle a flag into the command line), a service <code>[A-Za-z0-9][A-Za-z0-9._@-]{0,127}</code>, a <code>min_version</code> <code>[0-9][0-9A-Za-z._+~:-]{0,63}</code>.</p>
+<h3 id="package-managers-pydeck-knows">Package managers PyDeck knows<a class="headerlink" href="#package-managers-pydeck-knows" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Key</th>
+<th style="text-align: left;">OS</th>
+<th style="text-align: left;">Install command</th>
+<th style="text-align: left;">Needs root</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>apt</code></td>
+<td style="text-align: left;">Linux</td>
+<td style="text-align: left;"><code>apt-get install -y</code></td>
+<td style="text-align: left;">yes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>dnf</code></td>
+<td style="text-align: left;">Linux</td>
+<td style="text-align: left;"><code>dnf install -y</code></td>
+<td style="text-align: left;">yes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>pacman</code></td>
+<td style="text-align: left;">Linux</td>
+<td style="text-align: left;"><code>pacman -S --noconfirm --needed</code></td>
+<td style="text-align: left;">yes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>zypper</code></td>
+<td style="text-align: left;">Linux</td>
+<td style="text-align: left;"><code>zypper --non-interactive install</code></td>
+<td style="text-align: left;">yes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>apk</code></td>
+<td style="text-align: left;">Linux</td>
+<td style="text-align: left;"><code>apk add</code></td>
+<td style="text-align: left;">yes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>aur</code></td>
+<td style="text-align: left;">Linux (Arch)</td>
+<td style="text-align: left;"><code>yay -S --noconfirm --needed</code> (or <code>paru</code>, whichever is on <code>PATH</code>)</td>
+<td style="text-align: left;">no — builds from source as the user</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>brew</code></td>
+<td style="text-align: left;">macOS</td>
+<td style="text-align: left;"><code>brew install</code></td>
+<td style="text-align: left;">no</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>winget</code></td>
+<td style="text-align: left;">Windows</td>
+<td style="text-align: left;"><code>winget install -e --accept-package-agreements --accept-source-agreements --id</code></td>
+<td style="text-align: left;">yes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>choco</code></td>
+<td style="text-align: left;">Windows</td>
+<td style="text-align: left;"><code>choco install -y</code></td>
+<td style="text-align: left;">yes</td>
+</tr>
+</tbody>
+</table>
+<p>Which manager is used is decided by what is on <code>PATH</code>, native managers first; <code>/etc/os-release</code> (<code>ID</code> / <code>ID_LIKE</code>) only moves the distro's own manager to the front when several are installed. The AUR is offered only when <code>pacman</code> is present <em>and</em> <code>yay</code> or <code>paru</code> is, and always after <code>pacman</code> — a native package wins. Packages are passed as separate arguments, never through a shell.</p>
+<h3 id="how-an-entry-is-resolved">How an entry is resolved<a class="headerlink" href="#how-an-entry-is-resolved" title="Permanent link">&para;</a></h3>
+<p>Every entry ends up in exactly one state, and the prompt shows all of them:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Status</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>not_applicable</code></td>
+<td style="text-align: left;">A <code>when</code> tag did not match — <em>not needed here</em>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>satisfied</code></td>
+<td style="text-align: left;">Already installed, and at least <code>min_version</code> if one is set.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>install</code></td>
+<td style="text-align: left;">Will be installed (or upgraded, when the installed version is below <code>min_version</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>unresolvable</code></td>
+<td style="text-align: left;"><strong>Required</strong>, but no manager on this machine is mapped. Refuses the install (<strong>409</strong>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>too_old</code></td>
+<td style="text-align: left;"><strong>Required</strong> with <code>min_version</code>, and the repo's candidate is older. Refuses the install (<strong>409</strong>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>optional_skipped</code></td>
+<td style="text-align: left;">Optional and either unresolvable or too old — skipped silently.</td>
+</tr>
+</tbody>
+</table>
+<p>A version PyDeck cannot read counts as "cannot verify", never as "too old". Version strings are compared with epoch and packaging release stripped (<code>1:9.0p1-2</code> → <code>9.0p1</code>).</p>
+<h3 id="what-the-user-sees">What the user sees<a class="headerlink" href="#what-the-user-sees" title="Permanent link">&para;</a></h3>
+<p>If everything is satisfied or not applicable, there is no prompt at all — the plugin just installs. Otherwise the install call returns before touching disk and the browser opens a <strong>System packages</strong> dialog listing each package with its manager, its <code>reason</code>, an <em>optional</em> / <em>service</em> / <em>≥ version</em> tag, the already-installed and not-needed entries greyed out, and the exact command(s) — one install command per manager, then one <code>systemctl enable --now</code> per service. Commands that need root are prefixed <code>sudo</code> and the dialog says a password will be asked for. For an AUR package the <code>PKGBUILD</code> is fetched and shown in a collapsible block, since that is what will build as the user.</p>
+<ul>
+<li><strong>Install</strong> runs the commands in order (each with a 15-minute timeout, <code>DEBIAN_FRONTEND=noninteractive</code>), then downloads the plugin and continues with its post-install script, if any. The password is checked with <code>sudo -v</code> first so a typo re-prompts instead of failing halfway, is passed to each <code>sudo -S</code> on stdin, and is never stored.</li>
+<li><strong>Decline</strong> (required packages pending) cancels the install; nothing was written.</li>
+<li><strong>Skip</strong> (only optional packages pending) installs the plugin without them.</li>
+<li>A failed command stops the sequence; the plugin is not installed, and the output is returned so the user can see what went wrong.</li>
+</ul>
+<p>PyDeck records which packages it installed for which plugin (<code>plugin_system_packages</code>) and which plugins depend on each service (<code>plugin_services</code>). It <strong>never uninstalls a system package</strong> — it is shared with the rest of the OS. Uninstalling a plugin drops its rows; when a service has no dependent plugin left, the UI tells the user they <em>can</em> stop it (<code>sudo systemctl disable --now &lt;service&gt;</code>) but does not do it.</p>
+<div class="admonition note">
+<p class="admonition-title">Not lifted into the catalog</p>
+<p>Unlike <code>compatibility</code>, <code>system_packages</code> is <strong>not</strong> copied onto the catalog's root index. It is read from the version's own <code>manifest.json</code> at install time, so it can differ per version. Use <code>compatibility.requires</code> for what the marketplace should filter on <em>before</em> install, and <code>system_packages</code> for what PyDeck should install.</p>
+</div>
+<hr />
+<h2 id="8-changelog">8. Changelog<a class="headerlink" href="#8-changelog" title="Permanent link">&para;</a></h2>
+<p>Every plugin ships a <code>CHANGELOG.md</code> at the root of its folder, holding <strong>only the
+changes that version introduced</strong>. One bare section — no title, no preamble:</p>
+<div class="language-markdown highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="gu">## 2.0.6 — 2026-08-28</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="gu">### Fixed</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="k">-</span><span class="w"> </span>The track label sat off-centre. A percentage width resolves against the
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>  parent box rather than its content box, so horizontal padding pushed every
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>  full-width child right; the inset is now vertical only.
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="k">-</span><span class="w"> </span>Dropped an invalid <span class="sb">`text-anchor`</span> declaration from the shared stylesheet.
+</code></pre></div>
+<p>That is the whole file. Group entries under <code>### Added</code> / <code>### Changed</code> /
+<code>### Fixed</code> / <code>### Removed</code>; only the <code>##</code> line is parsed, so the groups are
+free-form and optional.</p>
+<p>PyDeck assembles the range it needs by fetching one file per version and joining
+them newest-first. When an update is available, the update badge on the plugin
+card shows every version above the one installed; the changelog button shows the
+full history. Nothing is repeated across versions, and a released version's
+changelog never has to be edited again.</p>
+<h3 id="rules-that-matter">Rules that matter<a class="headerlink" href="#rules-that-matter" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Head the section with the version:</strong> <code>## 2.0.6 — 2026-08-28</code> is the shape
+  PyDeck parses (a leading <code>v</code> and <code>[…]</code> brackets are tolerated).</li>
+<li><strong>One version per file.</strong> Don't accumulate history — the older versions'
+  files are still there and still get shown.</li>
+<li><strong>Write for the person deciding whether to upgrade</strong> — what changed for them,
+  not which files you touched. Say why it mattered: "fixed a bug" is not an
+  entry, "buttons went blank on the hardware because the listener dispatches
+  poll without credentials" is.</li>
+<li><strong>Name the file something else only if you must</strong>, and then declare it with the
+  <code>changelog</code> manifest key. <code>CHANGELOG.md</code> is found without any declaration.</li>
+<li>A version with no changelog is simply skipped when assembling, so coverage
+  does not have to be complete.</li>
+</ul>
+<p>While you work, the <code>CHANGELOG.md</code> in your <strong>installed</strong> plugin folder acts as the
+draft for whatever ships next: jot bullets into it and <code>sync_from_pydeck.py</code> will
+turn them into the published section (or pass <code>--changelog</code>). See
+<a href="../publishing/">Publishing</a>.</p>
+<hr />
+<h2 id="9-platform-compatibility">9. Platform compatibility<a class="headerlink" href="#9-platform-compatibility" title="Permanent link">&para;</a></h2>
+<p>Some plugins depend on things that only exist on certain platforms — xdotool on X11, MPRIS over D-Bus, AppleScript. Declare that so the marketplace can tell a user <em>before</em> they install:</p>
+<div class="language-json highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">  </span><span class="nt">"compatibility"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nt">"os"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"linux"</span><span class="p">],</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="nt">"requires"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"dbus"</span><span class="p">,</span><span class="w"> </span><span class="s2">"mpris"</span><span class="p">],</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span><span class="nt">"optional"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"x11"</span><span class="p">],</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="nt">"min_os_version"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nt">"windows"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10"</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="p">}</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>compatibility.os</code></td>
+<td style="text-align: left;">OSes the plugin supports: <code>linux</code>, <code>windows</code>, <code>macos</code>. A plugin for every platform lists all three.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>compatibility.requires</code></td>
+<td style="text-align: left;">Capabilities that <strong>must</strong> be present or the plugin cannot work. A missing one makes the plugin <strong>incompatible</strong>: the marketplace names what is missing, the Install button is disabled, and <code>POST /api/marketplace/install</code> answers <strong>409</strong> — there is no "install anyway".</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>compatibility.optional</code></td>
+<td style="text-align: left;">Capabilities the plugin uses when present but does not need. Never blocks — use it when the plugin has more than one way to do its job (X11 <em>or</em> Wayland, say).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>compatibility.min_os_version</code></td>
+<td style="text-align: left;">Per-OS floor, e.g. <code>{"windows": "11"}</code> or <code>{"macos": "13"}</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>What the plugin is <em>for</em> is not part of this block — that is its <code>category</code> in the catalog's <code>catalog.json</code>, which has its own picker in the marketplace. The marketplace's <strong>Platform tags</strong> filter is derived from <code>compatibility</code> (every OS, requirement and optional capability a plugin mentions), so there is no separate tag list to keep in step.</p>
+<h3 id="the-reserved-vocabulary">The reserved vocabulary<a class="headerlink" href="#the-reserved-vocabulary" title="Permanent link">&para;</a></h3>
+<p>These are the tags the compatibility engine can actually check for. Anything else in <code>requires</code> is never satisfiable and always reads as missing, so keep <code>requires</code> to this list.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Tags</th>
+<th style="text-align: left;">How PyDeck detects it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Operating system</td>
+<td style="text-align: left;"><code>linux</code>, <code>windows</code>, <code>macos</code></td>
+<td style="text-align: left;"><code>sys.platform</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">OS version</td>
+<td style="text-align: left;"><code>windows-10</code>, <code>windows-11</code>, <code>macos-13</code>, …</td>
+<td style="text-align: left;">Windows build number (≥ 22000 is 11), <code>platform.mac_ver()</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Linux session</td>
+<td style="text-align: left;"><code>x11</code>, <code>wayland</code></td>
+<td style="text-align: left;"><code>XDG_SESSION_TYPE</code> / <code>WAYLAND_DISPLAY</code> / <code>DISPLAY</code>. <code>x11</code> is present under Wayland too when XWayland is running (<code>DISPLAY</code> is set) — most X11 tools work through it.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Protocol / subsystem</td>
+<td style="text-align: left;"><code>dbus</code>, <code>mpris</code>, <code>evdev</code>, <code>xdotool</code>, <code>hidraw</code>, <code>applescript</code>, <code>win32</code></td>
+<td style="text-align: left;">Session bus socket, <code>xdotool</code>/<code>osascript</code> on <code>PATH</code>, <code>evdev</code> importable, <code>/dev/hidraw*</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Architecture</td>
+<td style="text-align: left;"><code>x86_64</code>, <code>arm64</code></td>
+<td style="text-align: left;"><code>platform.machine()</code></td>
+</tr>
+</tbody>
+</table>
+<p>Probes are cheap on purpose — "on <code>PATH</code>", "socket exists" — so a capability means <em>looks available</em>, not <em>verified working</em>.</p>
+<h3 id="what-the-user-sees_1">What the user sees<a class="headerlink" href="#what-the-user-sees_1" title="Permanent link">&para;</a></h3>
+<p>Each catalog card carries a compatibility pill: the declared platform (<em>Linux · D-Bus · MPRIS</em>) when it matches, the same marked <em>not compatible</em> with the reason on hover when it does not, or <em>Unverified</em> when the plugin never declared anything. The <strong>Platform</strong> filter group shows what was detected (<em>Detected: Linux · Wayland · x86_64</em>) and a <strong>Works on my system</strong> switch — on by default — that narrows the grid to declared matches, so unverified plugins only appear once it is turned off. The <strong>Platform tags</strong> group filters by any platform word a plugin declares; tags the machine offers are marked <em>Detected</em>.</p>
+<p>Incompatible plugins — with the platform or with the PyDeck version — are hidden until <strong>Show incompatible</strong> is pressed, and even then their Install / Upgrade button reads <strong>Not compatible</strong>, disabled, with the reason as its tooltip. The server refuses the install regardless of the UI (<strong>409</strong>, with the verdict in the body), so a script cannot get around it either. The catalog generator lifts <code>compatibility</code> onto the root index so none of this needs a download — see <a href="../publishing/#platform-compatibility">Publishing</a>.</p>
+<hr />
+<h2 id="10-related-reading">10. Related reading<a class="headerlink" href="#10-related-reading" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../ui-fields/">UI field types</a> — every field type the <code>ui</code> array accepts.</li>
+<li><a href="../getting-started/">Plugin development — Getting started</a> — plugin layout, templates, handlers.</li>
+<li><a href="../authentication/">Authentication</a> — <code>credentials</code>, <code>oauth</code>, and the settings panel.</li>
+<li><a href="../assets/">Web UI and assets</a> — <code>style.css</code>, images, <code>default_display</code> text styling.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../events/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Press, hold &amp; events">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Press, hold & events
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../ui-fields/" class="md-footer__link md-footer__link--next" aria-label="Next: UI field types">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                UI field types
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.instant", "navigation.instant.progress", "navigation.footer", "toc.follow", "content.tabs.link", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/sheet-drag.js"></script>
+      
+    
+  </body>
+</html>

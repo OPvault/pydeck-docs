@@ -1,0 +1,3720 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Install, use, and extend PyDeck — the Python-powered Stream Deck controller.">
+      
+      
+      
+        <link rel="canonical" href="https://docs.pydeck.no/internals/lib-services/">
+      
+      
+        <link rel="prev" href="../routes/">
+      
+      
+        <link rel="next" href="../security/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.png">
+      <meta name="generator" content="mkdocs-ProperDocs 1.6.7, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>lib/ service modules - PyDeck Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lib-service-modules" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="PyDeck Docs" class="md-header__button md-logo" aria-label="PyDeck Docs" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PyDeck Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              lib/ service modules
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/OPvault/pydeck" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OPvault/pydeck
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../get-started/install/" class="md-tabs__link">
+          
+  
+  
+  Get Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../using/devices/" class="md-tabs__link">
+          
+  
+  
+  Using PyDeck
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../plugins/getting-started/" class="md-tabs__link">
+          
+  
+  
+  Build Plugins
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../themes/getting-started/" class="md-tabs__link">
+          
+  
+  
+  Build Themes
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../reference/http-api/" class="md-tabs__link">
+          
+  
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../architecture/" class="md-tabs__link">
+          
+  
+  
+  Internals
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PyDeck Docs" class="md-nav__button md-logo" aria-label="PyDeck Docs" data-md-component="logo">
+      
+  <img src="../../assets/logo.png" alt="logo">
+
+    </a>
+    PyDeck Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/OPvault/pydeck" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    OPvault/pydeck
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Get Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Get Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../get-started/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install PyDeck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../get-started/first-button/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your first button
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../get-started/troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using PyDeck
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Using PyDeck
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/devices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Devices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/profiles-and-folders/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Profiles & folders
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/actions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Action Builder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/marketplace/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install plugins & themes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/appearance/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appearance & themes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/gradient-backgrounds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradient backgrounds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/virtual-decks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Virtual decks & phone control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Security, LAN & HTTPS
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/keyboard-shortcuts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Keyboard shortcuts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using/updates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Updating PyDeck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build Plugins
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Build Plugins
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/pdk-create/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugin Creator (scaffold)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/templates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Templates & elements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/rendering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rendering & styling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/runtime/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime & the ctx object
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Press, hold & events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/manifest/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    manifest.json reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/ui-fields/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UI field types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/authentication/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Authentication & credentials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/assets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Assets & plugin web UI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/documentation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bundled documentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plugins/publishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing to the catalog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build Themes
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Build Themes
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/css-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CSS variable reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Examples
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../themes/publishing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publishing themes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/http-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HTTP & WebSocket API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/api-cookbook/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API cookbook
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/api-tokens/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API tokens
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/paths/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Config & file paths
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/developer-options/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Developer options
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Internals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Internals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-layer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The api/ package
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../routes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Route inventory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lib/ service modules
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    lib/ service modules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#errorspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        errors.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bootstrappy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bootstrap.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device_registrypy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        device_registry.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#listener_bridgepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        listener_bridge.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server_eventspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        server_events.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#web_renderpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        web_render.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#display_updatespy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        display_updates.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background_taskspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        background_tasks.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#button_servicepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        button_service.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#button_presspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        button_press.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device_servicepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        device_service.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api_scopespy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        api_scopes.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api_tokenspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        api_tokens.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pairingpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pairing.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marketplace_catalogpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        marketplace_catalog.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marketplace_installpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        marketplace_install.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theme_swatchespy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        theme_swatches.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plugin_servicepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plugin_service.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credentials_servicepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        credentials_service.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings_servicepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        settings_service.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updater_servicepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        updater_service.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server_networkpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        server_network.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#icon_gallerypy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        icon_gallery.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#action_servicepy-profile_servicepy-folder_servicepy-theme_servicepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        action_service.py, profile_service.py, folder_service.py, theme_service.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../security/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Access control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adding-endpoints/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Adding endpoints
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#errorspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        errors.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bootstrappy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        bootstrap.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device_registrypy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        device_registry.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#listener_bridgepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        listener_bridge.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server_eventspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        server_events.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#web_renderpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        web_render.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#display_updatespy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        display_updates.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#background_taskspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        background_tasks.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#button_servicepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        button_service.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#button_presspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        button_press.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#device_servicepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        device_service.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api_scopespy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        api_scopes.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api_tokenspy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        api_tokens.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pairingpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        pairing.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marketplace_catalogpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        marketplace_catalog.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#marketplace_installpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        marketplace_install.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#theme_swatchespy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        theme_swatches.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plugin_servicepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        plugin_service.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#credentials_servicepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        credentials_service.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#settings_servicepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        settings_service.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updater_servicepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        updater_service.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#server_networkpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        server_network.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#icon_gallerypy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        icon_gallery.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#action_servicepy-profile_servicepy-folder_servicepy-theme_servicepy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        action_service.py, profile_service.py, folder_service.py, theme_service.py
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="lib-service-modules">lib/ service modules<a class="headerlink" href="#lib-service-modules" title="Permanent link">&para;</a></h1>
+<p>The domain layer. None of these import FastAPI or know that HTTP exists; they
+raise <code>lib/errors.py:ServiceError</code> when something goes wrong and let the route
+layer turn that into a response.</p>
+<p>This document covers the modules introduced or reshaped by the <code>start.py</code> split.
+The older <code>lib/</code> modules — <code>button.py</code>, <code>config.py</code>, <code>streamdeck.py</code>,
+<code>plugin.py</code>, <code>pdk/</code>, <code>folders.py</code>, <code>scroll.py</code>, <code>themes.py</code>, <code>app_updater.py</code>
+and the rest — are unchanged and are described in the pydeck repository's
+<a href="https://github.com/opvault/pydeck/blob/main/AGENTS.md"><code>AGENTS.md</code></a>.</p>
+<h2 id="errorspy">errors.py<a class="headerlink" href="#errorspy" title="Permanent link">&para;</a></h2>
+<div class="language-python highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">ServiceError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">400</span><span class="p">,</span> <span class="n">extra</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">body</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span>
+</code></pre></div>
+<p>Its own module, with no imports, so raising it never drags FastAPI into the
+domain layer or the listener process. See <a href="../api-layer/">The <code>api/</code> package</a> for
+the contract.</p>
+<h2 id="bootstrappy">bootstrap.py<a class="headerlink" href="#bootstrappy" title="Permanent link">&para;</a></h2>
+<p>Startup order. Called only from <code>start.py</code>'s <code>__main__</code> block.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>maybe_restart_for_update()</code></td>
+<td style="text-align: left;">Apply a pending auto-update and re-exec.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>start_services()</code></td>
+<td style="text-align: left;">Icon cache, listeners, hot-plug loop, background tasks, background updater.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>serve(app)</code></td>
+<td style="text-align: left;">Read the configured bind host and run uvicorn on port 8686.</td>
+</tr>
+</tbody>
+</table>
+<p>The bind host is read inside <code>serve()</code>, not at import time, because changing it
+is a restart.</p>
+<h2 id="device_registrypy">device_registry.py<a class="headerlink" href="#device_registrypy" title="Permanent link">&para;</a></h2>
+<p>The set of decks the server knows about, and the mutable state every render path
+reads. This is the module that owns shared server state.</p>
+<p>Data:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Holds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>deck_infos</code></td>
+<td style="text-align: left;">device id to deck geometry, physical and virtual</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>listener_procs</code></td>
+<td style="text-align: left;">device id to listener <code>Popen</code> handle</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>button_image_state</code></td>
+<td style="text-align: left;">device id to slot to runtime image override</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>devices_lock</code></td>
+<td style="text-align: left;">reentrant lock for hot-plug writes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>FALLBACK_DECK_INFO</code></td>
+<td style="text-align: left;">3x2 deck used when nothing is connected</td>
+</tr>
+</tbody>
+</table>
+<p><code>devices_lock</code> is a <code>RLock</code>, not a <code>Lock</code>, so the hot-plug scan can hold it
+across a whole pass while still calling <code>register_deck</code> / <code>unregister_deck</code>,
+which take it themselves.</p>
+<p>Functions:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>profile_generation()</code></td>
+<td style="text-align: left;">Current staleness counter.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>bump_profile_generation()</code></td>
+<td style="text-align: left;">Mark every in-flight poll result stale.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>reset_all_display_state()</code></td>
+<td style="text-align: left;">Bump, then clear images, preloads and scroll for every device. A profile change.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>reset_device_display_state(did)</code></td>
+<td style="text-align: left;">Same, for one device. A folder change.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>selected_device_id()</code> / <code>set_selected_device_id(did)</code></td>
+<td style="text-align: left;">Which deck the editor is pointed at.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>select_first_available_if_unset(did)</code></td>
+<td style="text-align: left;">Adopt <code>did</code> when nothing is selected.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>drop_selection_if(did)</code></td>
+<td style="text-align: left;">Move the selection off <code>did</code> to any other known deck.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>effective_device_id()</code></td>
+<td style="text-align: left;">The device for the current request: the bound context if it names a known deck, else the selection.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>bind_selected_device()</code></td>
+<td style="text-align: left;">Bind the thread's device context to the selection.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>selected_deck_info()</code></td>
+<td style="text-align: left;">Deck geometry for the current request.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>deck_info_from_device(device)</code></td>
+<td style="text-align: left;">Describe a physical deck from HID product id plus a live query.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>deck_info_from_virtual(vdeck)</code></td>
+<td style="text-align: left;">Describe a virtual deck in the same shape.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>register_deck(did, info)</code> / <code>unregister_deck(did)</code></td>
+<td style="text-align: left;">Add or forget a deck.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>get_devices_list()</code></td>
+<td style="text-align: left;">Serialisable list of all decks, with <code>selected</code> flagged.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>register_virtual_decks()</code></td>
+<td style="text-align: left;">Register every saved virtual deck at startup.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>find_physical_devices()</code></td>
+<td style="text-align: left;">Connected hardware, over HID.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The generation counter.</strong> A profile or folder change invalidates every render
+path at once. Anything that started before the change — a poll result in flight,
+a preloaded display update about to come due — must discard itself rather than
+write onto whatever now occupies that slot. Producers snapshot
+<code>profile_generation()</code> before they start and pass it as <code>expected_gen</code>;
+<code>display_updates.commit_display_update</code> re-checks it as close to the write as
+possible.</p>
+<h2 id="listener_bridgepy">listener_bridge.py<a class="headerlink" href="#listener_bridgepy" title="Permanent link">&para;</a></h2>
+<p>Spawns the per-device listener subprocesses and parses their stdout protocol.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>start_listener(device_info)</code></td>
+<td style="text-align: left;">Spawn one listener and bridge its output on a thread.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>start_all_listeners()</code></td>
+<td style="text-align: left;">Detect devices, spawn one each, register virtual decks.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>start_hotplug_loop()</code></td>
+<td style="text-align: left;">Background thread; rescans every <code>HOTPLUG_INTERVAL_S</code> (5s).</td>
+</tr>
+</tbody>
+</table>
+<p>The protocol, parsed line by line in <code>_consume_listener_line</code>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Line</th>
+<th style="text-align: left;">Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>PRESS:{json}</code></td>
+<td style="text-align: left;">Forward a press report to the browser; re-poll the plugin's other buttons in this process.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>DisplayUpdate slot=N image=...</code></td>
+<td style="text-align: left;">Record or clear the runtime image override for that slot, and tell the UI to refetch.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>FolderChange slot=N</code></td>
+<td style="text-align: left;">Reset that device's display state; emit <code>folder_change</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ProfileChange</code></td>
+<td style="text-align: left;">Reset every device's display state; emit <code>profile_change</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Error executing button id=N: ...</code></td>
+<td style="text-align: left;">Emit an <code>error</code> deck event.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>CrossDeviceUpdate:{json}</code></td>
+<td style="text-align: left;">Apply a display update a plugin aimed at a different deck.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>A <code>PRESS:</code> line is a report, not a request.</strong> The listener already executed the
+press before printing it. Dispatching it again would run the handler's side
+effect twice — that shipped once as double Spotify skips. What the server does
+instead is re-poll the pressed plugin's buttons with <code>_force_refresh</code>, so the
+image the browser refetches is already the new one. The comment saying so lives
+in <code>_handle_press_line</code>; leave it there.</p>
+<h2 id="server_eventspy">server_events.py<a class="headerlink" href="#server_eventspy" title="Permanent link">&para;</a></h2>
+<p>The WebSocket fan-out.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>set_event_loop(loop)</code> / <code>get_event_loop()</code></td>
+<td style="text-align: left;">The server's loop, set by <code>start.py</code>'s lifespan hook.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>class WSManager</code> / <code>ws_manager</code></td>
+<td style="text-align: left;">Tracks sockets and whether each is local.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>emit(event, data, *, local_only=False)</code></td>
+<td style="text-align: left;">Broadcast from any thread.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>emit_deck_event(**fields)</code></td>
+<td style="text-align: left;">Shorthand for the <code>deck_event</code> envelope.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>emit_display_update(button, device_id=None, **extra)</code></td>
+<td style="text-align: left;">The "this slot changed" event.</td>
+</tr>
+</tbody>
+</table>
+<p><code>emit()</code> is a no-op before the loop is set, which is why the PDK animation ticker
+waits for <code>get_event_loop()</code> before its first tick.</p>
+<h2 id="web_renderpy">web_render.py<a class="headerlink" href="#web_renderpy" title="Permanent link">&para;</a></h2>
+<p>Button faces as the web grid sees them. The hardware is drawn by the listener;
+this is the browser's copy. Both ask <code>lib/button.py:pdk_owns_face()</code> which
+renderer applies, so a slot is never drawn twice in two styles.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>slot_png(slot, *, hires_scale=1)</code></td>
+<td style="text-align: left;">PNG for one slot of the current request's deck.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>slot_gif(slot)</code></td>
+<td style="text-align: left;">Raw GIF for one slot, or <code>None</code> if it is still.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>slot_png_export(slot, scale)</code></td>
+<td style="text-align: left;">Hi-res PNG plus download filename; gated on <code>export_rightclick</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>deck_grid_payload()</code></td>
+<td style="text-align: left;">Every key preview in one payload, from a single <code>buttons.json</code> read.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>web_slot_png_bytes(...)</code> / <code>web_slot_gif_bytes_if_animated(...)</code></td>
+<td style="text-align: left;">The lower-level forms, taking an explicit button list and deck info.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sorted_buttons()</code> / <code>button_row_for_slot(buttons, slot)</code></td>
+<td style="text-align: left;">Button lookup helpers.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>empty_slot_color()</code></td>
+<td style="text-align: left;">Face colour for an empty slot; lifted to dark grey on a light theme.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>text_style_kwargs(display, plugin, function)</code></td>
+<td style="text-align: left;">Resolve the three-layer text-style chain into render kwargs.</td>
+</tr>
+</tbody>
+</table>
+<p><code>pdk_animated_slots</code> is a module-level set of slots whose PDK face is currently
+animating. It is <strong>re-earned on every render</strong>: <code>web_slot_png_bytes</code> discards the
+slot at the top and re-adds it only if <code>function_animates()</code> still says so, so a
+button that stops moving — or stops being a PDK button at all — drops off the web
+animation ticker by itself.</p>
+<p>The three-layer text-style merge is: system defaults &lt; per-button <code>display</code> &lt;
+plugin manifest <code>default_display</code>, resolved by
+<code>button.resolve_display_for_render()</code>.</p>
+<h2 id="display_updatespy">display_updates.py<a class="headerlink" href="#display_updatespy" title="Permanent link">&para;</a></h2>
+<p>Applying a plugin's <code>display_update</code> to a button, once and safely.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>register_preloads_from_plugin_result(did, btn_id, result)</code></td>
+<td style="text-align: left;">Schedule, or cancel, the timed updates a plugin asked for.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>commit_display_update(did, btn_id, disp, btn=None, expected_gen=None)</code></td>
+<td style="text-align: left;">Persist an update, refresh scroll state, emit. Returns whether it wrote.</td>
+</tr>
+</tbody>
+</table>
+<p>Three producers reach this module — a press result, a poll result, and a preload
+that came due — and all three race a profile or folder change. Two defences:</p>
+<ul>
+<li><code>expected_gen</code> is re-checked as close to the write as possible, in addition to
+  whatever the caller checked.</li>
+<li>The button row is <strong>re-read from the active profile</strong> rather than trusted from
+  whatever the caller was holding when it started. A stale <code>btn</code> from a previous
+  profile cannot write display state onto a button that no longer exists.</li>
+</ul>
+<p>An explicit empty <code>preload_display_updates: []</code> cancels pending preloads — that
+is how a countdown stops when a track stops playing.</p>
+<h2 id="background_taskspy">background_tasks.py<a class="headerlink" href="#background_taskspy" title="Permanent link">&para;</a></h2>
+<p>The four background loops.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Cadence</th>
+<th style="text-align: left;">Does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>start_display_poller()</code></td>
+<td style="text-align: left;">0.2s tick</td>
+<td style="text-align: left;">Calls each button's <code>poll</code> handler at the interval its manifest asks for, per device.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>start_display_schedule_loop()</code></td>
+<td style="text-align: left;">0.05s</td>
+<td style="text-align: left;">Applies preloaded display updates when they come due.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>start_pdk_animation_ticker()</code></td>
+<td style="text-align: left;">0.2s</td>
+<td style="text-align: left;">Nudges the browser to refetch animating PDK faces.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>start_scroll_ticker()</code></td>
+<td style="text-align: left;">0.3s</td>
+<td style="text-align: left;">Advances every marquee and reports which slots moved.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>start_all()</code></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Starts all four.</td>
+</tr>
+</tbody>
+</table>
+<p>Animation and marquee ticks stay independent of the poll cycle on purpose.
+Folding one into the other stalls animation behind slow handlers.</p>
+<p>The poller binds the device context per device per cycle, keys its next-poll
+schedule on <code>(device_id, button_id)</code> so decks sharing slot numbers stay
+independent, and returns early from a device when the generation moves.</p>
+<h2 id="button_servicepy">button_service.py<a class="headerlink" href="#button_servicepy" title="Permanent link">&para;</a></h2>
+<p>Button CRUD, plus the side effects the server owes the UI.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>load_buttons()</code></td>
+<td style="text-align: left;">The active profile's <code>buttons.json</code> payload.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>save_button(btn_id, data)</code></td>
+<td style="text-align: left;">Upsert: edit, falling back to create.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>delete_button(btn_id)</code></td>
+<td style="text-align: left;">Remove, cancelling anything scheduled against the slot.</td>
+</tr>
+</tbody>
+</table>
+<p>Both writes drop the slot's runtime image override before emitting, so a plugin
+that conditionally shows an icon does not keep drawing the old one.</p>
+<h2 id="button_presspy">button_press.py<a class="headerlink" href="#button_presspy" title="Permanent link">&para;</a></h2>
+<p>A press that came from the browser, and its fan-out. <code>press_button(btn_id,
+requested_device_id='')</code> is the whole public surface.</p>
+<p>One press can change more than the button pressed, and the order matters:</p>
+<ol>
+<li>Register any preloads the result asked for.</li>
+<li>Record the pressed button's new runtime image.</li>
+<li>Re-read the button row and refresh its marquee.</li>
+<li>Emit the <code>press</code> event.</li>
+<li>Handle <code>profile_change</code> / <code>folder_change</code>.</li>
+<li>Apply <code>related_updates</code> — other slots the plugin named.</li>
+<li>Re-poll PDK siblings.</li>
+<li>Apply <code>cross_device_updates</code> — slots on another deck.</li>
+</ol>
+<p>Step 7 exists because PDK plugins have no <code>related_states</code>: a press advances only
+the pressed function's state, so sibling buttons of the same plugin would sit
+stale until the poll loop came round. Re-polling them here makes them change
+together with the press.</p>
+<h2 id="device_servicepy">device_service.py<a class="headerlink" href="#device_servicepy" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>list_devices()</code></td>
+<td style="text-align: left;">Every known deck, selected one flagged.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>select_device(did)</code></td>
+<td style="text-align: left;">Point the editor at a deck; return everything the grid needs.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>get_orientation()</code> / <code>set_orientation(raw)</code></td>
+<td style="text-align: left;">Deck rotation; only right angles accepted.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>list_virtual_decks()</code></td>
+<td style="text-align: left;">Saved virtual decks plus the layout presets.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>create_virtual_deck(data)</code></td>
+<td style="text-align: left;">Create one, mirroring a real deck's layout or a preset.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>delete_virtual_deck(deck_id)</code></td>
+<td style="text-align: left;">Delete and move the selection off it.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>welcome_state()</code></td>
+<td style="text-align: left;">First-run state, derived from the device registry.</td>
+</tr>
+</tbody>
+</table>
+<p>Create and delete broadcast <code>devices_changed</code>, because the device list is in the
+header of every page and a deck made in one tab must appear in the others.</p>
+<h2 id="api_scopespy">api_scopes.py<a class="headerlink" href="#api_scopespy" title="Permanent link">&para;</a></h2>
+<p>The scope catalog, and the path-to-scope table an API token is judged against.
+Pure policy: no state, no I/O. Full reference in
+<a href="../../reference/api-tokens/">API tokens</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>SCOPE_GROUPS</code></td>
+<td style="text-align: left;">The catalog, in the order the token editor lists it.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>ALL_SCOPES</code></td>
+<td style="text-align: left;">Every legal <code>group:level</code> string.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>required_scope(method, path)</code></td>
+<td style="text-align: left;">The scope this request needs, or <code>None</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>group_for_path(path)</code></td>
+<td style="text-align: left;">Just the group.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>access_for_method(method)</code></td>
+<td style="text-align: left;"><code>read</code> for GET/HEAD, <code>write</code> otherwise.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>normalize_scopes(raw)</code></td>
+<td style="text-align: left;">Validate a submitted list, dropping unknowns, in catalog order.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>catalog()</code></td>
+<td style="text-align: left;">The catalog as JSON for the editor.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>read_only_scopes()</code></td>
+<td style="text-align: left;">Every <code>:read</code> scope.</td>
+</tr>
+</tbody>
+</table>
+<p><code>required_scope</code> returning <code>None</code> means <strong>refuse</strong>, not "no scope needed". Its
+rule table is ordered and first-match-wins, so a path the table does not cover
+is unreachable by any token — the same deny-by-default shape
+<code>lib/remote_access.py</code> has for the network.</p>
+<p>Two orderings in that table are load-bearing: the <code>/api/settings/updater</code> and
+<code>/api/settings/version-selector</code> rules precede the generic <code>/api/settings/</code>
+rule, and <code>/api/plugins/&lt;n&gt;/api/...</code> precedes the generic <code>/api/plugins/</code> rule.</p>
+<h2 id="api_tokenspy">api_tokens.py<a class="headerlink" href="#api_tokenspy" title="Permanent link">&para;</a></h2>
+<p>Storage and validation for API tokens.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>resolve(secret)</code></td>
+<td style="text-align: left;">The record for a presented token, or <code>None</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>looks_like_api_token(value)</code></td>
+<td style="text-align: left;">Whether a string is <code>pdk_</code>-shaped.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>touch(token_id)</code></td>
+<td style="text-align: left;">Record use, at most once per <code>TOUCH_INTERVAL_S</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>list_tokens()</code> / <code>scope_catalog()</code></td>
+<td style="text-align: left;">What the settings pane renders.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>create_token(data)</code></td>
+<td style="text-align: left;">Mint one; the only time the secret exists.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>update_token(id, data)</code></td>
+<td style="text-align: left;">Rename, or change scopes and deck, without reissuing.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>revoke_token(id)</code></td>
+<td style="text-align: left;">Delete it.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>load_tokens()</code></td>
+<td style="text-align: left;">Every stored record.</td>
+</tr>
+</tbody>
+</table>
+<p>Only a SHA-256 digest is stored, alongside a 10-character display prefix. A
+plain digest is sufficient because the token is 24 random bytes, not a password:
+there is no low-entropy guess to accelerate. <code>resolve()</code> returns <code>None</code> for
+unknown, malformed and expired alike — that difference is only useful to an
+attacker.</p>
+<p>The file is written <code>0o600</code> where the OS supports it, through a temp file and an
+atomic rename, under an <code>RLock</code>.</p>
+<h2 id="pairingpy">pairing.py<a class="headerlink" href="#pairingpy" title="Permanent link">&para;</a></h2>
+<p>The pairing handshake and its tokens. Covered in <a href="../security/">Access control</a>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>start_pairing(deck_id, source, *, local)</code></td>
+<td style="text-align: left;">Generate a sequence and broadcast it to local sockets.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>verify_pairing(deck_id, raw_sequence, user_agent)</code></td>
+<td style="text-align: left;">Score a guess; mint a token on success. Async, because a wrong guess sleeps.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>list_tokens()</code> / <code>revoke_token(token)</code></td>
+<td style="text-align: left;">The settings pane's token list.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>parse_device_name(ua)</code></td>
+<td style="text-align: left;">Human label for a paired device, from its User-Agent.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sequences_match(a, b)</code> / <code>new_pair_sequence()</code></td>
+<td style="text-align: left;">Constant-time compare; <code>secrets</code>-backed generation.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="marketplace_catalogpy">marketplace_catalog.py<a class="headerlink" href="#marketplace_catalogpy" title="Permanent link">&para;</a></h2>
+<p>Where a catalog lives, and what it currently offers.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>normalize_manifest_url(url)</code></td>
+<td style="text-align: left;">Turn a pasted GitHub URL into a raw <code>manifest.json</code> URL, keeping its branch.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>is_official_catalog(url)</code></td>
+<td style="text-align: left;">Whether PyDeck publishes it: a <code>pydeck.no</code> host or an OPvault raw URL.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>catalog_root_url(manifest_url)</code></td>
+<td style="text-align: left;">The <code>root_url</code> the manifest declares, from the manifest cache.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>asset_base(manifest_url)</code></td>
+<td style="text-align: left;">Base that relative entry paths hang off.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>repo_ref(manifest_url)</code></td>
+<td style="text-align: left;">The GitHub repo installs download from, following redirects.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>config_manifest_urls()</code></td>
+<td style="text-align: left;">URLs stored in config only.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>manifest_sources()</code></td>
+<td style="text-align: left;">Active URLs with origin: <code>env</code>, <code>config</code>, or <code>default</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>manifest_urls()</code></td>
+<td style="text-align: left;">Just the URLs, in priority order.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>repos_settings()</code> / <code>save_repos_settings(raw)</code></td>
+<td style="text-align: left;">The sources panel's read and write.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>fetch_catalog_source(url, force)</code></td>
+<td style="text-align: left;">Load one catalog as both a plugin and a theme manifest.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>canonical_install_dir(plugin_ref)</code></td>
+<td style="text-align: left;">Installed dir for a slug, preferring the RDNN copy.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>annotate_installed_plugins(rows)</code></td>
+<td style="text-align: left;">Stamp catalog rows with local install state.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>build_catalog(q, category, refresh)</code></td>
+<td style="text-align: left;">Merge every catalog into one payload. Returns <code>(payload, status)</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Three URLs are in play and they are not interchangeable:</p>
+<ul>
+<li>The <strong>manifest URL</strong> the user configured. The defaults, <code>plugins.pydeck.no</code>
+  and <code>themes.pydeck.no</code>, redirect to the <code>stable</code> branch of the catalog repos.</li>
+<li>The <strong>asset base</strong> that relative paths hang off: the declared <code>root_url</code> if
+  there is one, else the manifest's own directory. Trimming the last path
+  segment is only right for a manifest served from the repo holding the files;
+  on a bare hostname it yields <code>https://</code> with no repo in it, which is why
+  <code>root_url</code> exists.</li>
+<li>The <strong>GitHub repo</strong> installs download from, which a custom domain only names
+  after its redirect. <code>repo_ref()</code> tries the stored URL, then <code>root_url</code>, then
+  the post-redirect URL the manifest cache recorded.</li>
+</ul>
+<p>Officialness is judged only on the configured URL, never on anything the
+manifest says about itself — a catalog vouching for its own officialness would
+be trivially forged.</p>
+<p><code>build_catalog</code> fetches catalogs in parallel (one slow repo must not stall the
+rest) but merges in configured order so priority stays deterministic. It returns
+502 only when every catalog failed; a partial failure returns rows plus
+<code>repo_errors</code>.</p>
+<h2 id="marketplace_installpy">marketplace_install.py<a class="headerlink" href="#marketplace_installpy" title="Permanent link">&para;</a></h2>
+<p>Installing, upgrading and removing plugins and themes.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>install_plugin(manifest_url, slug, version='')</code></td>
+<td style="text-align: left;">Install into <code>plugins/plugin/&lt;slug&gt;/</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>uninstall_plugin(slug)</code></td>
+<td style="text-align: left;">Remove it, clearing caches under every alias.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>install_theme(...)</code> / <code>uninstall_theme(slug)</code></td>
+<td style="text-align: left;">The same for themes.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>installed_documentation(slug)</code></td>
+<td style="text-align: left;">The bundled markdown docs for an installed plugin.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>plugin_install_dir(slug)</code> / <code>theme_install_dir(slug)</code></td>
+<td style="text-align: left;">Safe path resolution; <code>None</code> for an unsafe slug.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>invalidate_plugin_caches(slug)</code></td>
+<td style="text-align: left;">Forget everything cached about a plugin.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>postinstall_status(id)</code> / <code>postinstall_script(id)</code></td>
+<td style="text-align: left;">Query a pending post-install request.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>approve_postinstall(id, sudo_password)</code> / <code>decline_postinstall(id)</code></td>
+<td style="text-align: left;">Run it, or refuse it.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>postinstall_manager</code></td>
+<td style="text-align: left;">The <code>PluginPostInstallManager</code> instance.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>system_packages_status(id)</code></td>
+<td style="text-align: left;">Query a pending or finished system-package request.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>approve_system_packages(id, sudo_password)</code> / <code>decline_system_packages(id)</code></td>
+<td style="text-align: left;">Run the planned commands and then install the plugin, or refuse them (an optional-only refusal still installs).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>system_package_manager</code></td>
+<td style="text-align: left;">The <code>SystemPackageManager</code> instance holding pending plans.</td>
+</tr>
+</tbody>
+</table>
+<p><code>install_plugin</code> is two halves. <code>_prepare_plugin_install</code> does everything that can refuse
+before a byte lands: catalog lookup, the platform verdict (<code>marketplace.platform.classify</code>
+→ 409, no override), the version manifest, and <code>system_packages</code> resolution
+(<code>marketplace.system_packages.resolve</code> with the probes in <code>lib.plugins.system_packages</code>).
+If the plan has anything to install, the request is parked in <code>system_package_manager</code>
+and the call returns <code>system_packages_required</code>; <code>_finish_plugin_install</code> — download,
+cache invalidation, the post-install gate — only runs from <code>approve_system_packages</code>
+(or <code>decline_system_packages</code> when only optional packages were pending). The
+post-install gate rejects a script that calls a package manager
+(<code>lib.plugins.postinstall.PackageInstallInScript</code>) and removes the freshly written
+directory. The two modules split on purpose: <code>marketplace/system_packages.py</code> is pure
+(manifest parsing, manager table, resolution against callables) and unit-tested
+without a machine; <code>lib/plugins/system_packages.py</code> is the side that probes <code>PATH</code>,
+runs <code>sudo -S</code>, and writes <code>plugin_system_packages</code> / <code>plugin_services</code>.</p>
+<p><strong>Cache invalidation is mandatory after files change.</strong> Every operation replaces
+a directory underneath a running server. The PDK parse cache has no staleness
+check at all, and the manifest and PDK-detection caches key on a directory mtime
+that settles before the nested sources finish landing. A read landing in that
+window caches "not PDK" against the final mtime and never recomputes, so every
+button renders blank until a restart.</p>
+<p>Uninstall resolves <code>plugin_ref_aliases(slug)</code> <strong>before</strong> deleting the directory,
+because one plugin answers to several spellings and dropping a single cache key
+leaves the others stale.</p>
+<h2 id="theme_swatchespy">theme_swatches.py<a class="headerlink" href="#theme_swatchespy" title="Permanent link">&para;</a></h2>
+<p>Colour swatches for theme cards in the marketplace.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>parse_css_swatch(css_text)</code></td>
+<td style="text-align: left;">Pull the handful of custom properties a swatch is drawn from.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>swatch_key(asset_base, version_path)</code></td>
+<td style="text-align: left;">Cache key: the exact immutable file location.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>fetch_remote_theme_colors(asset_base, theme_dict)</code></td>
+<td style="text-align: left;">At most two requests: manifest, then the CSS it names.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>enrich_theme_preview_colors(themes, installed, asset_base_for)</code></td>
+<td style="text-align: left;">Fill in <code>colors</code> on every theme row.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>installed_themes_list()</code></td>
+<td style="text-align: left;">Marketplace-installed themes, from their <code>.marketplace.json</code> markers.</td>
+</tr>
+</tbody>
+</table>
+<p>Colours resolve cheapest-source-first: an installed copy on disk, then the
+persistent <code>SWATCH_CACHE</code>, then the network. A swatch is pinned to an immutable
+published version, so once fetched it never needs fetching again. Remote lookups
+are deduplicated by version path, since the same theme usually appears in
+several channels of one repo.</p>
+<p><code>installed_themes_list()</code> skips dot-prefixed directories: those are staging or
+rollback leftovers from an interrupted install and carry a marker without being
+installed themes.</p>
+<p><code>enrich_theme_preview_colors</code> takes <code>asset_base_for</code> as a parameter rather than
+importing it, so the marketplace keeps ownership of the URL rule and this module
+stays independent of it.</p>
+<h2 id="plugin_servicepy">plugin_service.py<a class="headerlink" href="#plugin_servicepy" title="Permanent link">&para;</a></h2>
+<p>What the editor needs to know about installed plugins.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>list_plugins()</code></td>
+<td style="text-align: left;">Every plugin and function, as the sidebar reads it.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>function_form_html(name, func_name)</code></td>
+<td style="text-align: left;">Render one function's manifest <code>ui</code> array to the property form.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>settings_panel_path(name)</code></td>
+<td style="text-align: left;">The plugin's own <code>settings.html</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>image_path(name, filename)</code> / <code>storage_path(name, filename)</code></td>
+<td style="text-align: left;">Plugin assets and runtime files.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>resolve_plugin_img_file(plugin_dir, filename)</code></td>
+<td style="text-align: left;">Basename-only image lookup; accepts <code>img/</code> and <code>assets/icons/</code>.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>combined_styles_css()</code></td>
+<td style="text-align: left;">Every plugin <code>style.css</code>, concatenated.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>call_plugin_api(name, endpoint, query)</code></td>
+<td style="text-align: left;">Invoke a plugin's <code>api_&lt;endpoint&gt;</code> callable.</td>
+</tr>
+</tbody>
+</table>
+<p><code>EMULATED_TIME_FIELD</code> is appended to every function's form while the emulated
+clock developer option is on.</p>
+<p><code>resolve_plugin_img_file</code> accepts only a basename and rejects traversal. It
+probes <code>img/&lt;name&gt;</code> then <code>assets/icons/&lt;name&gt;</code>, because the GUI maps manifest
+paths to <code>.../img/&lt;filename&gt;</code> and drops subdirectories, and PDK plugins commonly
+keep icons under <code>assets/icons/</code>.</p>
+<h2 id="credentials_servicepy">credentials_service.py<a class="headerlink" href="#credentials_servicepy" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>build_credentials(include_secrets=False)</code></td>
+<td style="text-align: left;">Credential listing, one entry per plugin that declares any.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>save_credentials(plugin_name, data)</code></td>
+<td style="text-align: left;">Merge submitted values, leaving masked passwords untouched.</td>
+</tr>
+</tbody>
+</table>
+<p><code>MASK</code> is the bullet string the browser sees for a stored password. Saving
+treats it as "unchanged", so a form round-trip cannot overwrite a secret with
+bullets. Only <code>?secrets=1</code> returns real values.</p>
+<h2 id="settings_servicepy">settings_service.py<a class="headerlink" href="#settings_servicepy" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>settings_categories()</code></td>
+<td style="text-align: left;">Built-in categories plus one per plugin-declared category.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>slugify_category(label)</code></td>
+<td style="text-align: left;">Category label to URL-safe id.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>licenses_index()</code> / <code>license_text(filename)</code></td>
+<td style="text-align: left;">The bundled third-party licences.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>developer_options()</code></td>
+<td style="text-align: left;">Developer flags plus the resolved emulated-clock instant.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>set_developer_option(data)</code></td>
+<td style="text-align: left;">Toggle a flag, or set its value when one is supplied.</td>
+</tr>
+</tbody>
+</table>
+<p><code>BUILTIN_CATEGORIES</code> is an ordered tuple; plugin categories are appended, sorted
+by label. A plugin's chosen <code>category_id</code> is stripped to a safe slug, so two
+plugins naming the same category land in one entry.</p>
+<h2 id="updater_servicepy">updater_service.py<a class="headerlink" href="#updater_servicepy" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>updater_settings()</code> / <code>save_updater_settings(data)</code></td>
+<td style="text-align: left;">Auto-update mode, branch, interval.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>check_for_updates()</code> / <code>perform_update()</code></td>
+<td style="text-align: left;">Check and apply.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>version_selector_settings()</code> / <code>save_version_selector(data)</code></td>
+<td style="text-align: left;">The pin.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>list_releases()</code> / <code>apply_version(version)</code></td>
+<td style="text-align: left;">Available releases, and checking one out.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>deferred_restart()</code></td>
+<td style="text-align: left;">Sleep 1.5s, then restart, so the response flushes first.</td>
+</tr>
+</tbody>
+</table>
+<p>While a version is pinned the auto-updater is blocked, because an update would
+silently undo the pin. <code>apply_version</code> tries the tag as given, then with a <code>v</code>
+prefix.</p>
+<h2 id="server_networkpy">server_network.py<a class="headerlink" href="#server_networkpy" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>network_settings()</code></td>
+<td style="text-align: left;">Bind host, LAN address, port.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>lan_ip()</code></td>
+<td style="text-align: left;">This machine's LAN address, from the routing table. No packet is sent.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>set_host(host)</code></td>
+<td style="text-align: left;">Persist and restart, since uvicorn binds only at startup.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>qrcode_svg(url)</code></td>
+<td style="text-align: left;">An SVG QR code, for pairing without typing an address.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>open_in_file_manager(raw_path)</code></td>
+<td style="text-align: left;">Reveal a path in the desktop file manager.</td>
+</tr>
+</tbody>
+</table>
+<p><code>open_in_file_manager</code> walks up to the nearest existing directory, so a path
+naming a file — or one whose leaf was deleted — still opens something useful.</p>
+<h2 id="icon_gallerypy">icon_gallery.py<a class="headerlink" href="#icon_gallerypy" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Function</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>build_icon_cache()</code></td>
+<td style="text-align: left;">Scan every plugin <code>img/</code> folder once, at startup.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>scan_storage_icons()</code></td>
+<td style="text-align: left;">Scan plugin runtime storage, live.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>scan_user_uploads()</code></td>
+<td style="text-align: left;">Scan the user's gallery, live.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>list_icons()</code></td>
+<td style="text-align: left;">All three merged, uploads first.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>upload_path(filename)</code></td>
+<td style="text-align: left;">Where <code>/api/gallery/&lt;filename&gt;</code> reads from.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>save_upload(filename, data)</code></td>
+<td style="text-align: left;">Store an upload and describe it.</td>
+</tr>
+</tbody>
+</table>
+<p>The three sources are scanned on different schedules deliberately: plugin <code>img/</code>
+folders only change when a plugin is installed, so they are cached once, while
+storage files are written by running plugins and uploads appear mid-session —
+both are re-scanned per request so a new file shows up without a restart.</p>
+<p>Icon names show the bare stem, unless two files in one folder share one
+(<code>icon.png</code> and <code>icon.gif</code>), in which case both show the full filename.</p>
+<h2 id="action_servicepy-profile_servicepy-folder_servicepy-theme_servicepy">action_service.py, profile_service.py, folder_service.py, theme_service.py<a class="headerlink" href="#action_servicepy-profile_servicepy-folder_servicepy-theme_servicepy" title="Permanent link">&para;</a></h2>
+<p>Thin layers over <code>manage_actions.py</code>, <code>profiles.py</code>, <code>folders.py</code> and
+<code>themes.py</code>. Their job is to translate what those raise into the answers the
+REST layer gives — a missing item is 404, a rejected input is 400 — so route
+handlers stay free of <code>try</code>/<code>except</code>.</p>
+<p>Two carry real logic beyond that:</p>
+<p><strong><code>profile_service.change_profile</code></strong> calls
+<code>device_registry.reset_all_display_state()</code> and emits <code>profile_change</code>. A profile
+switch replaces every button at once, so nothing cached from the previous
+profile may still be drawn.</p>
+<p><strong><code>folder_service.change_folder</code></strong> manages the folder stack before switching:
+entering the root clears it, an explicit <code>stack</code> in the body replaces it (a
+breadcrumb jump), and anything else pushes the folder being left. It then calls
+<code>reset_device_display_state()</code> for that one device.</p>
+<p><code>folder_service.upsert_folder</code> picks out only the auto-return keys actually
+present in the body, so saving a folder's name never silently rewrites settings
+the form did not show.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../routes/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Route inventory">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Route inventory
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../security/" class="md-footer__link md-footer__link--next" aria-label="Next: Access control">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Access control
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.top", "navigation.instant", "navigation.instant.progress", "navigation.footer", "toc.follow", "content.tabs.link", "content.code.copy", "content.code.annotate", "search.suggest", "search.highlight"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../javascripts/sheet-drag.js"></script>
+      
+    
+  </body>
+</html>
