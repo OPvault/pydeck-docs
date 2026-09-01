@@ -112,6 +112,7 @@ nav:
       - Appearance & themes: using/appearance.md
       - Gradient backgrounds: using/gradient-backgrounds.md
       - Virtual decks & phone control: using/virtual-decks.md
+      - Security, LAN & HTTPS: using/security.md
       - Keyboard shortcuts: using/keyboard-shortcuts.md
       - Updating PyDeck: using/updates.md
 
