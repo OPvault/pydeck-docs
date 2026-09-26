@@ -13,6 +13,7 @@ PDK plugins use event-driven handlers instead of per-function callables. All han
 | `ctx.state` | dict-like (supports attribute access) | Persistent state shared between events and available to templates via `{key}` interpolation. |
 | `ctx.config` | dict | Per-button configuration from the UI fields. Read-only snapshot. |
 | `ctx.credentials` | dict | The plugin's stored credentials (Settings → Credentials), OAuth tokens included. Populated on **every** dispatch — press, poll, load — in both the server and the hardware listener, so never read a credentials file yourself. |
+| `ctx.settings` | dict | The plugin-wide settings from **Settings → Plugin settings**: every field in the plugin's `plugin-settings.json`, at the user's value or its default. `{}` for a plugin without the file. A copy — writing to it changes nothing stored. See [Plugin settings](plugin-settings.md). |
 | `ctx.save_credentials(updates)` | method | Merge `updates` into the stored credentials — how a plugin persists a refreshed `access_token`/`refresh_token`/`token_expiry`. Setting a token key to `""` drops it (log out). The store is encrypted inside `pydeck.db`; there is no file to write. |
 | `ctx.device_id` | str | Identifier for the Stream Deck device that triggered the event. |
 | `ctx.plugin_name` | str | The plugin's directory name. |

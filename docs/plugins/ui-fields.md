@@ -2,7 +2,7 @@
 
 The **`ui`** array in each function definition controls what appears in the button editor panel. Each entry is a field object, and each field's `id` becomes a key on the config your handler reads — **`ctx.config["<id>"]`** in a [PDK](getting-started.md) handler.
 
-PDK plugins can declare the same fields **inline** in a template's `<settings>` block instead of in the manifest; the two forms are equivalent. See [Inline settings](templates.md) in *Templates & elements*. This page is the reference for the field **types** themselves, in either form.
+PDK plugins can declare the same fields **inline** in a template's `<settings>` block instead of in the manifest; the two forms are equivalent. See [Inline settings](templates.md) in *Templates & elements*. This page is the reference for the field **types** themselves, in either form. The same field objects also declare a plugin's [plugin-wide settings](plugin-settings.md).
 
 ---
 
@@ -16,6 +16,7 @@ Every field type supports these properties:
 | `id` | string | Yes | Unique key within the function. This becomes the config key your handler reads. |
 | `label` | string | Yes | Human-readable label shown above the field. |
 | `default` | any | No | Default value when the button is first created. Cast automatically: `checkbox` → boolean, `number`/`slider` → numeric. |
+| `description` | string | No | One line of help shown under the field. On a `group`, shown above its fields. |
 | `visible_if` | object | No | Conditionally show this field based on another field's value. See [visible_if](#visible_if-conditional-visibility). |
 | `autosave` | string | No | `"on"` (default) saves whenever the field changes. `"off"` disables autosave for this field. If **any** field in the function sets `"autosave": "off"`, the editor shows an explicit **Save** button for the whole function. Use `"off"` for fields that are expensive to apply on every keystroke (e.g. a location input that triggers a network request). |
 
@@ -60,6 +61,7 @@ A number field with optional min/max constraints.
 |:---|:---|
 | `min` | Minimum allowed value. |
 | `max` | Maximum allowed value. |
+| `step` | Increment for the field's arrows and keyboard steps. |
 
 ---
 
@@ -90,6 +92,12 @@ A horizontal slider.
   "default": 50
 }
 ```
+
+| Property | Description |
+|:---|:---|
+| `min` | Left end of the track. Defaults to `0`. |
+| `max` | Right end of the track. Defaults to `100`. |
+| `step` | Distance between stops. Defaults to `1`. |
 
 ---
 

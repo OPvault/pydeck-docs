@@ -125,6 +125,7 @@ nav:
       - Press, hold & events: plugins/events.md
       - manifest.json reference: plugins/manifest.md
       - UI field types: plugins/ui-fields.md
+      - Plugin settings: plugins/plugin-settings.md
       - Authentication & credentials: plugins/authentication.md
       - Assets & plugin web UI: plugins/assets.md
       - Bundled documentation: plugins/documentation.md

@@ -124,6 +124,7 @@ Under the plugin root, the tool creates:
 <plugin-root>/<rdnn-id>/
 ├── manifest.json
 ├── CHANGELOG.md
+├── plugin-settings.json
 ├── src/
 │   ├── shared.py
 │   ├── shared.css
@@ -143,6 +144,12 @@ The generated `manifest.json` declares `"changelog": "CHANGELOG.md"` and seeds t
 with a first section. Every published plugin version ships one — keep writing into it as
 you work, and `sync_from_pydeck.py` turns what you wrote into the published entry. See
 [Changelog](manifest.md#8-changelog).
+
+`plugin-settings.json` is a two-field demo of [plugin settings](plugin-settings.md): a
+**Button label** text field and a **Show the label in capitals** toggle, shown under
+**Settings → Plugin settings**. The generated handlers read them as `ctx.settings` in
+`on_load` and `on_poll`, so changing one relabels every button straight away. Replace
+the fields with your own, or delete the file if the plugin needs no settings.
 
 The scaffold also sets `title_readonly`, `disableGallery`, and `disableGallary` to `true`
 on each function, on the assumption that the template owns the whole face. Remove
