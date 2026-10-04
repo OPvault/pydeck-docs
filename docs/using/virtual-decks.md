@@ -10,8 +10,8 @@ Each virtual deck is two choices:
 
 | View | Opened as | For |
 |:---|:---|:---|
-| **Full screen** | `/?kiosk&device=<deck-id>` | A spare monitor or tablet: the deck fills the browser window. |
-| **Home screen** | `/mobile/<deck-id>` | A phone: a compact view to add to its home screen. |
+| **Home screen** | `/?kiosk&device=<deck-id>` | The deck centered in its frame, as on the PyDeck home screen. |
+| **Full screen** | `/mobile/<deck-id>` | The keys fill the whole window: a phone, or a tablet given over to the deck. |
 
 ---
 
@@ -22,8 +22,8 @@ Each virtual deck is two choices:
 1. Give it a **name**.
 2. Pick its **buttons**: *Use physical deck* (then the deck to mirror) or *Create new virtual
    deck* (then a layout: `mini` 3 × 2, `standard` 5 × 3 or `xl` 8 × 4).
-3. Pick its **view**: *Full screen* or *Home screen*. It starts on Full screen for a mirror and
-   Home screen for a new deck, which you can change.
+3. Pick its **view**: *Home screen* or *Full screen*. It starts on Home screen for a mirror and
+   Full screen for a new deck, which you can change.
 
 The **view** can be switched later from the deck's row in the list. It is the view the deck
 opens in whichever link is used: an old bookmark or QR code for the other view redirects, and a
@@ -141,7 +141,7 @@ It works from another machine too — but only the deck view, and only for a **v
     in either view.
 
 !!! note "Refreshing a paired deck"
-    A full-screen deck drops its token from the address bar, so a refresh goes through the
+    A deck in the Home screen view drops its token from the address bar, so a refresh goes through the
     pairing page, which checks the token this browser saved for that deck and goes straight
     back to it. It only starts pairing, and shows a code on the PyDeck screen, when there is
     no saved token or the token was revoked. Tokens are saved per deck, so pairing a second
