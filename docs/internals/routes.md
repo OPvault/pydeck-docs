@@ -96,7 +96,7 @@ legacy short slug or the canonical RDNN one.
 
 `/api/plugins/{name}/api/{endpoint:path}` is greedy but requires a literal `api`
 segment, so it cannot swallow the `img` or `storage` routes.
-`/api/plugins/styles.css` is three segments and none of the parameterised
+`/api/plugins/styles.css` is three segments and none of the parameterized
 patterns above are shorter than four, so it resolves correctly regardless of
 order — but keep it last in the module anyway.
 
@@ -328,5 +328,5 @@ wraps it in `<h2>`.
 
 Note that `authorize` answers 500, not 400, when the named plugin is not
 installed. `oauth.get_oauth_config` raises `FileNotFoundError` in that case,
-which is not mapped. This matches the behaviour before the split and was left
+which is not mapped. This matches the behavior before the split and was left
 unchanged.

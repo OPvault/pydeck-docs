@@ -11,7 +11,7 @@ Every plugin ships a **`manifest.json`**: the file PyDeck reads to discover the 
     `<settings>` blocks, and `on_poll` interval. See
     [Auto-generated manifest](runtime.md) under *Runtime & examples*.
     Ship a real manifest whenever you need credentials, permissions, dependencies,
-    or licences — those cannot be inferred.
+    or licenses — those cannot be inferred.
 
 ---
 
@@ -101,7 +101,7 @@ Each key in `functions` is a function name. For a **PDK** plugin the key matches
 | `title_readonly` | boolean | No | When `true`, the web editor shows the Title field as read-only with a **Read-only** badge. Use when the plugin or its poller owns the label. The title is still persisted like any other field; this flag is UI-only. |
 | `disableGallary` / `disableGallery` | boolean | No | When `true`, the button editor hides the icon/image picker for that function. Use it for buttons whose image is part of the function's own presentation. |
 | `draws_button_image` | boolean | No | **PDK only.** When `true`, a user-set button icon does *not* replace the PDK face — the template draws the image itself through the reserved `_button_image` key. See [Button-owned faces](rendering.md#35-button-owned-faces). Declaring `display_states` has the same effect. |
-| `gradient` | boolean | No | When `true`, this function's colour picker offers **Solid / Gradient** tabs. The `_button_gradient` render key is available either way — the flag only controls whether the editor UI appears. See [Gradient backgrounds](rendering.md#4-gradient-backgrounds). |
+| `gradient` | boolean | No | When `true`, this function's color picker offers **Solid / Gradient** tabs. The `_button_gradient` render key is available either way — the flag only controls whether the editor UI appears. See [Gradient backgrounds](rendering.md#4-gradient-backgrounds). |
 | `actionable` | boolean | No | When `true`, the function can be used as a step inside an [Action](../using/actions.md). Defaults to `false`. |
 | `log_format` | string | No | Format string used when the function's press result is written to the notification log. |
 | `autosave` | — | — | Not a function-level field. The editor shows a **Save** button automatically when any field in the `ui` array sets `"autosave": "off"`. See [Common properties](ui-fields.md#common-properties). |
@@ -244,7 +244,7 @@ Add `post_install_script` to the manifest's top-level object. The value is a rel
 3. The prompt displays the script contents so the user can inspect it before approving.
 4. If the script requires sudo, the user must provide their password.
 5. On **Approve**, the script is executed with `/bin/bash` in the plugin directory. The result (`succeeded`, `failed`, or `timeout`) is reported back.
-6. On **Decline**, the plugin directory is deleted and the installation is cancelled. Declining always removes the plugin — there is no way to keep a plugin while skipping its post-install script.
+6. On **Decline**, the plugin directory is deleted and the installation is canceled. Declining always removes the plugin — there is no way to keep a plugin while skipping its post-install script.
 
 ### Approvals are remembered
 
@@ -348,7 +348,7 @@ A version PyDeck cannot read counts as "cannot verify", never as "too old". Vers
 
 ### What the user sees
 
-If everything is satisfied or not applicable, there is no prompt at all — the plugin just installs. Otherwise the install call returns before touching disk and the browser opens a **System packages** dialog listing each package with its manager, its `reason`, an *optional* / *service* / *≥ version* tag, the already-installed and not-needed entries greyed out, and the exact command(s) — one install command per manager, then one `systemctl enable --now` per service. Commands that need root are prefixed `sudo` and the dialog says a password will be asked for. For an AUR package the `PKGBUILD` is fetched and shown in a collapsible block, since that is what will build as the user.
+If everything is satisfied or not applicable, there is no prompt at all — the plugin just installs. Otherwise the install call returns before touching disk and the browser opens a **System packages** dialog listing each package with its manager, its `reason`, an *optional* / *service* / *≥ version* tag, the already-installed and not-needed entries grayed out, and the exact command(s) — one install command per manager, then one `systemctl enable --now` per service. Commands that need root are prefixed `sudo` and the dialog says a password will be asked for. For an AUR package the `PKGBUILD` is fetched and shown in a collapsible block, since that is what will build as the user.
 
 - **Install** runs the commands in order (each with a 15-minute timeout, `DEBIAN_FRONTEND=noninteractive`), then downloads the plugin and continues with its post-install script, if any. The password is checked with `sudo -v` first so a typo re-prompts instead of failing halfway, is passed to each `sudo -S` on stdin, and is never stored.
 - **Decline** (required packages pending) cancels the install; nothing was written.
@@ -372,7 +372,7 @@ changes that version introduced**. One bare section — no title, no preamble:
 
 ### Fixed
 
-- The track label sat off-centre. A percentage width resolves against the
+- The track label sat off-center. A percentage width resolves against the
   parent box rather than its content box, so horizontal padding pushed every
   full-width child right; the inset is now vertical only.
 - Dropped an invalid `text-anchor` declaration from the shared stylesheet.

@@ -2,7 +2,7 @@
 
 A **virtual deck** is a Stream Deck with no hardware behind it — a grid of buttons rendered in a browser. It behaves like a real device everywhere else in PyDeck: it appears in the device list, gets its own profiles and folders, and runs the same plugins.
 
-Two flavours:
+Two flavors:
 
 | Type | Opened as | For |
 |:---|:---|:---|
@@ -71,7 +71,7 @@ back.
 Only **virtual** decks can be paired. Handing out a token for a physical deck would make
 a guessed code worth far more than the kiosk it was meant for.
 
-Paired devices are listed under **Settings → Tokens** (and mirrored in **Settings → Device → Paired Devices**), labelled from the browser's user agent and stamped with the pairing time. Each row can be copied or revoked; revoking takes effect on the device's next request and drops its WebSocket.
+Paired devices are listed under **Settings → Tokens** (and mirrored in **Settings → Device → Paired Devices**), labeled from the browser's user agent and stamped with the pairing time. Each row can be copied or revoked; revoking takes effect on the device's next request and drops its WebSocket.
 
 !!! tip "Turn off the pairing popup"
     Both panes have a **Show pairing code popup automatically** toggle if you would

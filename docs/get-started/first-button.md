@@ -21,7 +21,7 @@ If you have more than one Stream Deck plugged in, use the **device switcher** to
 
 Click any square in the grid. The properties panel on the right opens for that key. You have two kinds of things to put on a button:
 
-- **An action** — a sequence you build yourself out of plugin functions, delays, and image/text/colour changes. Actions are part of PyDeck; no installation required.
+- **An action** — a sequence you build yourself out of plugin functions, delays, and image/text/color changes. Actions are part of PyDeck; no installation required.
 - **A plugin function** — a single button from a plugin you've installed (Spotify play/pause, a live clock, a Home Assistant toggle…).
 
 We'll do one of each.

@@ -71,7 +71,7 @@ Functions:
 | `deck_info_from_device(device)` | Describe a physical deck from HID product id plus a live query. |
 | `deck_info_from_virtual(vdeck)` | Describe a virtual deck in the same shape. |
 | `register_deck(did, info)` / `unregister_deck(did)` | Add or forget a deck. |
-| `get_devices_list()` | Serialisable list of all decks, with `selected` flagged. |
+| `get_devices_list()` | Serializable list of all decks, with `selected` flagged. |
 | `register_virtual_decks()` | Register every saved virtual deck at startup. |
 | `find_physical_devices()` | Connected hardware, over HID. |
 
@@ -140,7 +140,7 @@ renderer applies, so a slot is never drawn twice in two styles.
 | `deck_grid_payload()` | Every key preview in one payload, from a single `buttons.json` read. |
 | `web_slot_png_bytes(...)` / `web_slot_gif_bytes_if_animated(...)` | The lower-level forms, taking an explicit button list and deck info. |
 | `sorted_buttons()` / `button_row_for_slot(buttons, slot)` | Button lookup helpers. |
-| `empty_slot_color()` | Face colour for an empty slot; lifted to dark grey on a light theme. |
+| `empty_slot_color()` | Face color for an empty slot; lifted to dark gray on a light theme. |
 | `text_style_kwargs(display, plugin, function)` | Resolve the three-layer text-style chain into render kwargs. |
 
 `pdk_animated_slots` is a module-level set of slots whose PDK face is currently
@@ -201,7 +201,7 @@ Button CRUD, plus the side effects the server owes the UI.
 |:---|:---|
 | `load_buttons()` | The active profile's `buttons.json` payload. |
 | `save_button(btn_id, data)` | Upsert: edit, falling back to create. |
-| `delete_button(btn_id)` | Remove, cancelling anything scheduled against the slot. |
+| `delete_button(btn_id)` | Remove, canceling anything scheduled against the slot. |
 
 Both writes drop the slot's runtime image override before emitting, so a plugin
 that conditionally shows an icon does not keep drawing the old one.
@@ -393,7 +393,7 @@ leaves the others stale.
 
 ## theme_swatches.py
 
-Colour swatches for theme cards in the marketplace.
+Color swatches for theme cards in the marketplace.
 
 | Function | Purpose |
 |:---|:---|
@@ -403,7 +403,7 @@ Colour swatches for theme cards in the marketplace.
 | `enrich_theme_preview_colors(themes, installed, asset_base_for)` | Fill in `colors` on every theme row. |
 | `installed_themes_list()` | Marketplace-installed themes, from their `.marketplace.json` markers. |
 
-Colours resolve cheapest-source-first: an installed copy on disk, then the
+Colors resolve cheapest-source-first: an installed copy on disk, then the
 persistent `SWATCH_CACHE`, then the network. A swatch is pinned to an immutable
 published version, so once fetched it never needs fetching again. Remote lookups
 are deduplicated by version path, since the same theme usually appears in
@@ -456,7 +456,7 @@ bullets. Only `?secrets=1` returns real values.
 |:---|:---|
 | `settings_categories()` | Built-in categories plus one per plugin-declared category. |
 | `slugify_category(label)` | Category label to URL-safe id. |
-| `licenses_index()` / `license_text(filename)` | The bundled third-party licences. |
+| `licenses_index()` / `license_text(filename)` | The bundled third-party licenses. |
 | `developer_options()` | Developer flags plus the resolved emulated-clock instant. |
 | `set_developer_option(data)` | Toggle a flag, or set its value when one is supplied. |
 

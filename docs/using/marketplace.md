@@ -49,7 +49,7 @@ Cards carry up to three small buttons in the corner:
 |---|---|
 | **Docs** | The plugin's bundled guide, fetched straight from the catalog — readable **before** you install. |
 | **Changelog** | The full version history, newest first. |
-| **Licenses** | Third-party licence texts the plugin declares, one tab per licence. |
+| **Licenses** | Third-party license texts the plugin declares, one tab per license. |
 
 Plugins that bundle documentation can also pop it up automatically right after install, if the author opted in.
 
@@ -113,7 +113,7 @@ Stick with **Stable** unless you're helping test new releases. To follow another
 
 Open the **+** button in the filter header to reach **Catalog sources**. The panel lists every active catalog and lets you add more.
 
-Paste any of these shapes into **Add a catalog** — PyDeck normalises them into a raw manifest URL:
+Paste any of these shapes into **Add a catalog** — PyDeck normalizes them into a raw manifest URL:
 
 ```text
 https://raw.githubusercontent.com/owner/repo/branch/manifest.json

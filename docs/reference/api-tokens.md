@@ -18,7 +18,7 @@ You choose four things:
 
 | Field | Meaning |
 |:---|:---|
-| Name | How you will recognise the token later. It is not a secret and not part of the credential. |
+| Name | How you will recognize the token later. It is not a secret and not part of the credential. |
 | Expires | Never, 30 days, 90 days, or 1 year. An expired token stops working; it is not deleted. |
 | Deck | "Any deck" lets the caller pick with `X-Device-Id`. Pinning to one deck makes every request with this token resolve to that deck, and the header is ignored. |
 | Permissions | The scopes, below. |
@@ -91,7 +91,7 @@ imply `buttons:read`.
 | `plugin_api` | read | Calls a plugin's own `api_*` functions — **executes plugin code** |
 | `icons` | read, write | Icon gallery listing and uploads |
 | `themes` | read, write | Installed themes and the active selection |
-| `settings` | read, write | Settings pane data, keybinds, developer options, licences |
+| `settings` | read, write | Settings pane data, keybinds, developer options, licenses |
 | `marketplace` | read, write | Catalogs; writing **installs third-party code** |
 | `updates` | read, write | App updater and pinning; writing **can restart PyDeck** |
 | `network` | read, write | Bind host and QR codes; writing **restarts PyDeck** |

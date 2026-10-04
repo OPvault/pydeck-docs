@@ -39,7 +39,7 @@ PyDeck-specific terms you'll meet across these docs.
 : The in-app browser for installing plugins and themes from the catalogs.
 
 **Pairing token**
-: A 64-character secret a remote device receives after entering the pairing sequence. It authorises that device for one virtual deck, and is the only thing that gets a non-local request past the deny-by-default rule. Revoke them in **Settings → Tokens**. See [Virtual decks & phone control](../using/virtual-decks.md).
+: A 64-character secret a remote device receives after entering the pairing sequence. It authorizes that device for one virtual deck, and is the only thing that gets a non-local request past the deny-by-default rule. Revoke them in **Settings → Tokens**. See [Virtual decks & phone control](../using/virtual-decks.md).
 
 **PDK (PyDeck Development Kit)**
 : The current plugin format: XML `template.xml` files for the button face plus Python handlers. The older "classic" format is retired. See [Build Plugins](../plugins/getting-started.md).

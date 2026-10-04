@@ -198,7 +198,7 @@ deck, or carries an API token holding `events:read`. An API token arrives as
 The same "a presented credential is authoritative" rule applies: a socket that
 presents a bad API token is refused rather than falling back to loopback trust.
 
-An API-authenticated socket is never tagged local, wherever it dialled from —
+An API-authenticated socket is never tagged local, wherever it dialed from —
 its holder is a script, not the person at the machine.
 
 The socket is tagged local or remote at connect time, because the fan-out needs

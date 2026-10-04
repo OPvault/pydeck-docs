@@ -121,7 +121,7 @@ Returns all discovered plugins with their functions.
 | `functions.<fn>.has_ui` | Whether the function has a configurable UI form. |
 | `functions.<fn>.autosave` | The **string** `"off"` when any field in the function's `ui` array sets `"autosave": "off"`, otherwise `"on"`. Not a boolean. |
 | `functions.<fn>.actionable` | When `true`, the function can be used as a step inside an Action sequence. |
-| `functions.<fn>.gradient` | When `true`, the button's colour picker offers gradient tabs for this function. |
+| `functions.<fn>.gradient` | When `true`, the button's color picker offers gradient tabs for this function. |
 | `functions.<fn>.log_format` | Format string for the notification log entry, or `null`. |
 | `functions.<fn>.pdk_buttonlabel_count` | Number of `<buttonlabel>` elements in the function's PDK template (max 3 are used). Drives how many Title rows the editor offers. Derived from the template, not the manifest. |
 | `functions.<fn>.pdk_buttonlabel_defaults` | The body text of those elements, in document order — the per-row fallbacks. |
@@ -147,7 +147,7 @@ Returns sidebar categories for the Settings page. Built-in categories are always
 | `api` | Credentials | Plugin credentials & OAuth |
 | `tokens` | Tokens | Pairing tokens for remote decks |
 | `updates` | Updates | App updater & version selector |
-| `licenses` | Licenses | Third-party licence texts |
+| `licenses` | Licenses | Third-party license texts |
 | `developer` | Developer | [Developer options](developer-options.md) |
 
 **Response:**
@@ -766,7 +766,7 @@ Switch the active device.
 }
 ```
 
-**Response — 404** if the device ID is not recognised.
+**Response — 404** if the device ID is not recognized.
 
 #### `GET /api/devices/orientation`
 
@@ -1015,7 +1015,7 @@ Replaces the **saved** list; the built-in defaults and any `PYDECK_MARKETPLACE_M
 { "manifest_urls": ["https://github.com/me/my-catalog/tree/canary"] }
 ```
 
-Each entry is **normalised to a raw manifest URL** before it is stored, so the shapes
+Each entry is **normalized to a raw manifest URL** before it is stored, so the shapes
 people actually paste all work:
 
 | Input | Stored as |
@@ -1246,7 +1246,7 @@ Returns a preview of the post-install script contents so the user can review it 
 
 #### `POST /api/marketplace/postinstall/decline`
 
-Decline a pending post-install request. The plugin directory is deleted and the installation is cancelled.
+Decline a pending post-install request. The plugin directory is deleted and the installation is canceled.
 
 **Request body:**
 
@@ -1339,7 +1339,7 @@ Status of a pending or finished system-package request (see the *system packages
 | `succeeded` | Every command exited 0; the plugin install went ahead. |
 | `failed` | A command failed; `error` says which step, `output` holds every command's combined output up to and including it. The plugin was not installed. |
 | `bad_password` | The sudo password did not validate. Nothing ran. |
-| `declined` | The user refused required packages; the install was cancelled. |
+| `declined` | The user refused required packages; the install was canceled. |
 | `skipped` | The user refused optional-only packages; the plugin was installed without them. |
 
 Returns `{"found": false, "request_id": "..."}` if the request ID is unknown. Requests live in memory — a restart forgets them.
@@ -1609,7 +1609,7 @@ Check out the pinned release tag and restart.
 
 #### `GET /api/licenses`
 
-Third-party licences of PyDeck's own dependencies, read from `licenses/licenses.json`:
+Third-party licenses of PyDeck's own dependencies, read from `licenses/licenses.json`:
 
 ```json
 {
@@ -1622,9 +1622,9 @@ Third-party licences of PyDeck's own dependencies, read from `licenses/licenses.
 
 #### `GET /api/licenses/file/{filename}`
 
-The raw text of one licence file. The filename is sanitised; only files under the app's `licenses/` directory are served.
+The raw text of one license file. The filename is sanitized; only files under the app's `licenses/` directory are served.
 
-*(A **plugin's** own licences are declared in its manifest and surfaced by the marketplace — see [`licenses`](../plugins/manifest.md#5-licenses).)*
+*(A **plugin's** own licenses are declared in its manifest and surfaced by the marketplace — see [`licenses`](../plugins/manifest.md#5-licenses).)*
 
 ---
 

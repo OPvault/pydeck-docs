@@ -112,7 +112,7 @@ On first run the script auto-detects the pydeck source path and asks you to conf
 | `--plugin SLUG` | Sync (or list) only this plugin. Repeatable — pass it once per slug. |
 | `--list-plugins` | Print every source plugin with a **NEW** / **CHANGED** / **UNCHANGED** status, then exit without writing anything. |
 | `--dry-run` | Show what would happen without writing any files. The diff is still printed. |
-| `--no-diff` | Suppress the coloured per-file diff (shown by default for every changed plugin). |
+| `--no-diff` | Suppress the colored per-file diff (shown by default for every changed plugin). |
 | `--no-generate` | Skip running `generate_manifest.py` after syncing. |
 | `--yes` | Accept the auto-detected or saved source path without prompting. |
 | `--regen-conf` | Re-prompt for the source path and overwrite the saved config. |
@@ -239,7 +239,7 @@ See [Files That Are Always Ignored](#files-that-are-always-ignored).
 
 ### Diff Output
 
-When a plugin has changes, a coloured unified diff is printed before the update line — similar to `git diff`:
+When a plugin has changes, a colored unified diff is printed before the update line — similar to `git diff`:
 
 ```diff
 diff  home-assistant  (1.1.0 → new)
@@ -311,7 +311,7 @@ python sync_from_pydeck.py --plugin no.pydeck.spotify --plugin no.pydeck.clock
 python sync_from_pydeck.py --dry-run
 ```
 
-#### Sync without the coloured diff
+#### Sync without the colored diff
 
 ```bash
 python sync_from_pydeck.py --no-diff
@@ -568,7 +568,7 @@ plugins/spotify/
 | `category` | string | Category shown in marketplace filter (e.g. `"media"`, `"utilities"`, `"system"`). |
 | `summary` | string | One-line description shown in the marketplace card. Overrides the `description` field from the plugin's `manifest.json`. |
 | `compatible_pydeck_versions` | array of strings | PyDeck versions this plugin is compatible with. |
-| `licenses` | array of strings | Licence files bundled with the plugin, surfaced in the marketplace card. The key is omitted from the entry when the list is empty. |
+| `licenses` | array of strings | License files bundled with the plugin, surfaced in the marketplace card. The key is omitted from the entry when the list is empty. |
 | `compatibility` | object | Replaces the plugin's own `compatibility` block outright — for curation when a declaration turns out to be wrong. Same shape as in [`manifest.json`](manifest.md#9-platform-compatibility). |
 
 All fields are optional. Any field present in `catalog.json` takes priority over both the existing root manifest and the plugin's own `manifest.json`.

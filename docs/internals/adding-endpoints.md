@@ -102,7 +102,7 @@ pattern swallow one of my paths, or could one of mine swallow an existing path?
 
 - A group with a distinct literal prefix (`/api/backups/...`) can go anywhere
   before `oauth`.
-- A group with a parameterised first segment (`/api/{something}/...`) has the
+- A group with a parameterized first segment (`/api/{something}/...`) has the
   same problem `oauth` has and must go late, after everything more specific.
 - `oauth` stays last regardless. `/api/{plugin_name}/authorize` matches any
   three-segment path ending in `authorize`.

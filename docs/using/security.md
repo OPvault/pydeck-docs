@@ -221,7 +221,7 @@ they are one set:
 | Source | Set by | Editable in the pane |
 |:---|:---|:---|
 | **Trusted domains** list | You, in Settings → Security | Yes |
-| `PYDECK_ALLOWED_HOSTS` | Whoever starts PyDeck (comma-separated) | No — shown, greyed, for reference |
+| `PYDECK_ALLOWED_HOSTS` | Whoever starts PyDeck (comma-separated) | No — shown, grayed, for reference |
 
 Names are stored lowercase with any port and trailing dot removed. URLs, wildcards
 (`*.home.arpa`), IP literals and `localhost` are refused — the first two because they are

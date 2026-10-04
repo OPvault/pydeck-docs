@@ -203,7 +203,7 @@ button themselves.
 ```
 
 - **Container:** No
-- **Styled exactly like `<text>`** — same properties, same single-line behaviour.
+- **Styled exactly like `<text>`** — same properties, same single-line behavior.
 
 The element's body is a **fallback**, shown only when the user has left the
 Title field empty. It is *not* the title itself.
@@ -269,7 +269,7 @@ overflow. **An explicit width is what turns scrolling on:**
 .caption { width: 100%; }   /* now a long title scrolls */
 ```
 
-Every template written before this behaviour existed is unaffected, because
+Every template written before this behavior existed is unaffected, because
 `auto` is the default. Scroll speed comes from the button's own Title style via
 `{_button_scroll_speed}`, and a speed of `0` — the user's "don't scroll" setting
 — stands still rather than parking the text off the right edge.
@@ -294,7 +294,7 @@ Displays an image file. The `src` path is resolved relative to the plugin direct
 
 - **Container:** No
 - **Default size:** auto (source image dimensions)
-- **`.svg`** sources are rasterised at the element's own size, so vectors stay crisp.
+- **`.svg`** sources are rasterized at the element's own size, so vectors stay crisp.
 - **`.gif`** sources with more than one frame **animate** — the renderer picks the frame for the current timestamp and puts the button on the animation tick. See [Animated GIFs](rendering.md#animated-gifs).
 
 > **Note:** The layout engine does not read the image file to determine intrinsic size — `<img>` without explicit `width` and `height` is treated as 0×0 during layout. The renderer compensates by using the image's natural dimensions at draw time, but this can cause unexpected flex layout results. Always set explicit `width` and `height` on `<img>` for predictable sizing.
@@ -309,8 +309,8 @@ Draws a filled or stroked rectangle.
 
 | Attribute | Description |
 |:---|:---|
-| `fill` | Fill colour (hex or `rgb()`). Falls back to `background` style. |
-| `stroke` | Stroke colour. Falls back to `border-color` style. |
+| `fill` | Fill color (hex or `rgb()`). Falls back to `background` style. |
+| `stroke` | Stroke color. Falls back to `border-color` style. |
 | `stroke-width` | Stroke width in pixels. Default: `1`. |
 
 - **Container:** No
@@ -325,8 +325,8 @@ Draws a filled or stroked circle.
 
 | Attribute | Description |
 |:---|:---|
-| `fill` | Fill colour. |
-| `stroke` | Stroke colour. |
+| `fill` | Fill color. |
+| `stroke` | Stroke color. |
 | `stroke-width` | Stroke width. Default: `1`. |
 | `radius` | Circle radius in pixels. |
 
@@ -344,7 +344,7 @@ Draws a straight line between two points.
 |:---|:---|
 | `x1`, `y1` | Start point coordinates (relative to element position). |
 | `x2`, `y2` | End point coordinates. |
-| `stroke` | Line colour. Falls back to `color` style. |
+| `stroke` | Line color. Falls back to `color` style. |
 | `stroke-width` | Line width. Default: `1`. |
 
 - **Container:** No
@@ -360,8 +360,8 @@ Draws a horizontal progress bar.
 | Attribute | Description |
 |:---|:---|
 | `value` | Progress percentage (0–100). Supports `{variable}` interpolation. |
-| `fill-color` | Colour of the filled portion. Supports gradients. Default: `#00ff88`. |
-| `track-color` | Colour of the track background. Falls back to `background` style. Default: `#333333`. |
+| `fill-color` | Color of the filled portion. Supports gradients. Default: `#00ff88`. |
+| `track-color` | Color of the track background. Falls back to `background` style. Default: `#333333`. |
 
 - **Container:** No
 - **Default height:** `6px`
@@ -450,7 +450,7 @@ Variables can also use state interpolation:
 }
 ```
 
-This reads `_button_color` from the render state, allowing the plugin to pick up the user's configured button colour.
+This reads `_button_color` from the render state, allowing the plugin to pick up the user's configured button color.
 
 ### Specificity
 
@@ -541,7 +541,7 @@ box pins to the content origin, so a full-size absolute child becomes an overlay
 
 `animation` replays a `@keyframes` block on a loop. `transition` instead eases a property
 between renders: when the value changes from one render to the next, the renderer
-interpolates from the old value to the new one over the duration, so a colour or size
+interpolates from the old value to the new one over the duration, so a color or size
 driven by handler state moves smoothly instead of snapping.
 
 See [Animations](rendering.md#3-animations) for full details and examples.
@@ -561,17 +561,17 @@ See [Animations](rendering.md#3-animations) for full details and examples.
     width or height — its padding is *not* subtracted first. On a parent that
     has both an explicit size and padding, `width: 100%` therefore produces a
     child as wide as the parent itself, offset by the left padding, so it
-    overhangs the right edge by the padding amount. Centred text inside that
-    child ends up visibly off-centre.
+    overhangs the right edge by the padding amount. Centered text inside that
+    child ends up visibly off-center.
 
     ```css
     /* 72px button, 3px side padding: the child spans x = 3 … 75 */
     .overlay { width: 100%; padding: 2 3; }
-    .title   { width: 100%; text-align: center; }   /* centred on x = 39, not 36 */
+    .title   { width: 100%; text-align: center; }   /* centered on x = 39, not 36 */
     ```
 
     Keep padding to the axis you are not sizing in percent (`padding: 2 0`
-    above), or drop `width: 100%` and centre the child with `align: center`
+    above), or drop `width: 100%` and center the child with `align: center`
     on the parent instead.
 
 #### Named Font Sizes
@@ -590,7 +590,7 @@ The keywords `smaller` and `larger` scale relative to the parent's font-size by 
 
 ### Property Inheritance
 
-The following properties are inherited from parent to child elements (matching CSS behaviour):
+The following properties are inherited from parent to child elements (matching CSS behavior):
 
 `color`, `font-family`, `font-size`, `font-weight`, `font-style`, `text-align`, `text-decoration`, `direction`
 

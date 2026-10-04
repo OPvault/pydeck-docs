@@ -111,7 +111,7 @@ so raising it does not drag the web framework into the domain layer.
    returns the result.
 5. If the service raised `ServiceError`, the handler registered in
    `api/api.py` renders it as `{"error": ...}` with the error's status code.
-   Otherwise FastAPI serialises the return value.
+   Otherwise FastAPI serializes the return value.
 
 Websockets skip step 2 entirely — HTTP middleware does not run for them — so
 `/ws` repeats the admission check itself in `api/routes/events.py`.

@@ -98,7 +98,7 @@ venv/bin/python tools/migrate_to_db.py --dry-run
 ├── themes/
 │   └── <family>/              # installed theme family, e.g. catppuccin/
 └── cache/
-    └── theme_swatches.json    # marketplace theme colour previews
+    └── theme_swatches.json    # marketplace theme color previews
 ```
 
 Plugin ids are **reverse-DNS** (for example `no.pydeck.spotify`), and the install directory name matches the id. On first run, PyDeck migrates any plugins/themes from an older in-checkout location into this layout automatically, and seeds the bundled default theme into `themes/default/`.

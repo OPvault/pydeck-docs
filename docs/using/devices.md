@@ -15,7 +15,7 @@ PyDeck drives every connected Stream Deck at once. Each device gets its own butt
 | Stream Deck XL | 32 | 8 × 4 | 96 px |
 | Stream Deck XL V2 | 32 | 8 × 4 | 96 px |
 
-This list is exhaustive: PyDeck enumerates Elgato devices and **skips any product id it does not recognise**, so a model that isn't listed above will not appear at all — even though it is plugged in and visible to the OS.
+This list is exhaustive: PyDeck enumerates Elgato devices and **skips any product id it does not recognize**, so a model that isn't listed above will not appear at all — even though it is plugged in and visible to the OS.
 
 !!! note "Linux permissions"
     Reading a Stream Deck over HID needs access to `/dev/hidraw*`. Install the optional

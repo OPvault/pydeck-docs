@@ -86,7 +86,7 @@ Two rules keep the order honest:
 1. **`oauth` is last.** `/api/{plugin_name}/authorize` matches any three-segment
    path ending in `authorize`. Anything registered after it that shares that
    shape would be unreachable.
-2. **Within a router, specific paths go above the parameterised ones that could
+2. **Within a router, specific paths go above the parameterized ones that could
    swallow them.** For example `/api/plugins/styles.css` must not be shadowed by
    a three-segment `/api/plugins/{name}` pattern; there is no such pattern
    today, and adding one would need it registered after `styles.css`.
@@ -207,7 +207,7 @@ Rules encoded here:
   so anything else is a dead end and is refused rather than shown a keypad it
   could never satisfy.
 - A pairing token must name *this* deck. Pairing with one virtual deck is not a
-  licence to drive another.
+  license to drive another.
 
 `_editor_context()` and `_deck_layout()` assemble the shared keys — brightness,
 theme family and slot, deck geometry, orientation, device list — so `index_view`

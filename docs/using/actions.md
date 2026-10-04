@@ -30,7 +30,7 @@ To put the same action on a second key, drag **New Action** onto that key and sa
 | **Action** | `action` | Runs another named action — actions compose. |
 | **Set image** | `set_image` | Changes the button's image. |
 | **Set text** | `set_text` | Changes the button's text, up to three lines. |
-| **Set color** | `set_color` | Changes the button's background colour. |
+| **Set color** | `set_color` | Changes the button's background color. |
 | **Group** | `grouped_actions` | Bundles several steps so they can be nested inside a switch or reordered together. |
 | **Switch** | `switch` | Runs a *different* option each press, cycling through them. |
 
@@ -45,7 +45,7 @@ The position is remembered **per button**, in that button's config, so the same 
 A switch needs **at least two configured options** before it will save.
 
 !!! note "Delays can't go inside a switch or a group"
-    Nested steps allow plugin calls, actions, set-image/text/colour, groups, and further
+    Nested steps allow plugin calls, actions, set-image/text/color, groups, and further
     switches — but not `delay`. Put the wait in the top-level sequence instead.
 
 ---
@@ -81,8 +81,8 @@ Deleting an action from the manager does not clear buttons that reference it —
 |:---|:---|
 | Several existing functions, one key | **Action** |
 | A wait between two calls | **Action** with a delay step |
-| A key that alternates between two behaviours | **Action** with a switch step |
-| New behaviour nothing implements yet | Write a plugin — see [Plugin development — Getting started](../plugins/getting-started.md) |
+| A key that alternates between two behaviors | **Action** with a switch step |
+| New behavior nothing implements yet | Write a plugin — see [Plugin development — Getting started](../plugins/getting-started.md) |
 
 Anything a plugin exposes as a function can be a step, so the two compose: build the capability as a plugin function, then sequence it in the builder.
 

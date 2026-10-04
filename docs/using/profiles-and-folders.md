@@ -62,7 +62,7 @@ Every new folder is created with a **Return Folder** button already on its last 
 
 The **Return Folder** function has a **Return Mode**:
 
-| Mode | Behaviour |
+| Mode | Behavior |
 |:---|:---|
 | `parent` (default) | Pop one level — back to whatever folder you came from. |
 | `root` | Jump straight back to the profile's root page, however deep you are. |

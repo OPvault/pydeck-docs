@@ -56,7 +56,7 @@ The markdown is **only** surfaced in the marketplace flow — it is not rendered
 button faces.
 
 - **In the marketplace** — plugins that bundle a doc get a small **Docs** button in the
-  card's corner group, beside the changelog and licence buttons. It opens the rendered
+  card's corner group, beside the changelog and license buttons. It opens the rendered
   guide in a modal. The doc is fetched straight from the catalog's raw URL, so it can be
   read **before** installing, and needs no endpoint on the PyDeck side.
 - **After install** — if `show_markdown_after_install` is `true`, PyDeck reads the

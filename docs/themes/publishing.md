@@ -132,7 +132,7 @@ Themes are sorted alphabetically by `name`; versions oldest-first, with `latest`
 ## 4. Sync a theme from your local install
 
 ```bash
-python sync_from_pydeck.py                    # coloured diff, prompts on first run
+python sync_from_pydeck.py                    # colored diff, prompts on first run
 python sync_from_pydeck.py --dry-run          # preview only, writes nothing
 python sync_from_pydeck.py --yes --no-diff    # non-interactive
 python sync_from_pydeck.py --pydeck-source ~/some/themes
@@ -144,7 +144,7 @@ python sync_from_pydeck.py --regen-conf       # re-prompt for the source path
 | `--pydeck-source PATH` | Override the saved/auto-detected themes directory for this run. |
 | `--regen-conf` | Re-prompt for the source path and save it again. |
 | `--dry-run` | Show what would happen; write nothing (also suppresses the upstream version bump). |
-| `--no-diff` | Suppress the coloured per-file diff, which is shown by default. |
+| `--no-diff` | Suppress the colored per-file diff, which is shown by default. |
 | `--no-generate` | Skip running `generate_manifest.py` at the end. |
 | `--yes` | Accept the auto-detected/saved path without prompting. |
 
@@ -169,7 +169,7 @@ If a sync ever reports every theme as changed, suspect a new file the installer 
 
 - **`.marketplace.json`** — the install stamp PyDeck writes into every installed theme. Never compared, copied, or diffed; left unfiltered it makes every theme look modified.
 - **`default`** — PyDeck's built-in appearance. It lives in the local themes directory like any other theme, so it is skip-listed to keep every sync from re-adding it.
-- **`catalog.json`, `icon.*`, licence files** — repo-only files, so they never count as "missing from source".
+- **`catalog.json`, `icon.*`, license files** — repo-only files, so they never count as "missing from source".
 
 ---
 

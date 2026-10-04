@@ -27,7 +27,7 @@ Any `<box>` element acts as a flex container. The `direction` property sets the 
 - **`auto`** — the element sizes to fit its content (text measurement, child elements, or image dimensions).
 - **Explicit values** — fixed size in pixels, `%`, `em`, or `rem`.
 
-### Spacer Behaviour
+### Spacer Behavior
 
 The `<spacer>` element absorbs all remaining free space on the main axis. Multiple spacers in the same container share the space equally:
 
@@ -56,7 +56,7 @@ The `gap` property adds spacing between children on the main axis:
 
 The PDK renderer walks the layout tree and paints each element to a Pillow `Image` in back-to-front order:
 
-1. **Background** — solid colour or gradient (linear / radial)
+1. **Background** — solid color or gradient (linear / radial)
 2. **Border** — stroke with optional `border-radius`
 3. **Content** — text, images, shapes (`rect`, `circle`, `line`), progress bars
 4. **Child elements** — recursive rendering
@@ -64,7 +64,7 @@ The PDK renderer walks the layout tree and paints each element to a Pillow `Imag
 
 ### Backgrounds
 
-Solid colour:
+Solid color:
 
 ```css
 .container { background: #1a1a2e; }
@@ -96,13 +96,13 @@ Color stops with explicit positions are also supported:
 
 The `fit` attribute on `<img>` controls how the source image is sized within the element bounds:
 
-| Mode | Behaviour |
+| Mode | Behavior |
 |:---|:---|
 | `cover` (default) | Scale to fill the entire box, cropping excess. |
-| `contain` | Scale to fit within the box, preserving aspect ratio. The image is centred within the element bounds. |
+| `contain` | Scale to fit within the box, preserving aspect ratio. The image is centered within the element bounds. |
 | `stretch` | Stretch to exactly match width and height. |
 
-`.svg` sources are rasterised at the element's own size, so a vector icon stays crisp
+`.svg` sources are rasterized at the element's own size, so a vector icon stays crisp
 at any box. `.gif` sources **play** — see [Animated GIFs](#animated-gifs) below.
 
 ### Text Rendering
@@ -110,14 +110,14 @@ at any box. `.gif` sources **play** — see [Animated GIFs](#animated-gifs) belo
 Text is rendered using the computed font, and positioned according to `text-align`:
 
 - `left` — flush left
-- `center` (default) — centred horizontally
+- `center` (default) — centered horizontally
 - `right` — flush right
 
-Text is always vertically centred within the element's box. Shadow is rendered first (behind the text) when the `shadow` property is set.
+Text is always vertically centered within the element's box. Shadow is rendered first (behind the text) when the `shadow` property is set.
 
 #### Text Anchor
 
-The `text-anchor` property centres the text so that a specific character sits at the horizontal midpoint of the canvas. This is useful for aligning colons in clock displays, decimal points in numbers, or any other fixed reference character:
+The `text-anchor` property centers the text so that a specific character sits at the horizontal midpoint of the canvas. This is useful for aligning colons in clock displays, decimal points in numbers, or any other fixed reference character:
 
 ```css
 .time { text-anchor: :; }
@@ -127,7 +127,7 @@ When `text-anchor` is set and the anchor character exists in the text, `text-ali
 
 #### Text Stroke
 
-The `text-stroke` property draws an outline around text, rendered behind the fill colour. It works on both `<text>` and `<marquee>` elements:
+The `text-stroke` property draws an outline around text, rendered behind the fill color. It works on both `<text>` and `<marquee>` elements:
 
 ```css
 .title { text-stroke: 1 #000000; }
@@ -155,7 +155,7 @@ Fonts are resolved in this order:
 /*        offset-x  offset-y  blur  color */
 ```
 
-**Glow** — coloured glow around an element:
+**Glow** — colored glow around an element:
 
 ```css
 .active { glow: 4 #00ff88; }
@@ -203,12 +203,12 @@ Define keyframe animations using standard CSS `@keyframes` syntax:
 - `from` is an alias for `0%`, `to` is an alias for `100%`.
 - You can define any number of percentage stops (e.g. `0%`, `25%`, `50%`, `100%`).
 - Keyframe values are linearly interpolated between stops: numbers numerically, hex
-  colours channel by channel.
+  colors channel by channel.
 - **What actually moves** is `rotate` and any property the renderer reads at draw
   time — `background`, `color`, `border-color`, `border-radius`, `border-width`,
   `width`, `height`, `padding`, `gap`, `blur`. There is no `opacity` compositing
   step, so animating `opacity` parses but changes nothing on the canvas; fade
-  between two colours instead.
+  between two colors instead.
 
 ### `animation` Property
 
@@ -274,7 +274,7 @@ When `rotate` is non-zero, the element and all its children are rendered to a te
 
 ### Timing Functions
 
-| Function | Behaviour |
+| Function | Behavior |
 |:---|:---|
 | `linear` | Constant speed, no acceleration |
 | `ease` | Smooth start and end (S-curve) |
@@ -400,14 +400,14 @@ key **`_button_image`**, resolved per button:
 
 ## 3.6 The button's own title style
 
-The editor's **Title style** controls (size, colour, bold, italic, underline, scroll
+The editor's **Title style** controls (size, color, bold, italic, underline, scroll
 speed) reach the built-in renderer directly. A PDK template has to read them itself, so
 they are handed over as render keys that are legal CSS tokens by construction:
 
 | Key | Value |
 |:---|:---|
 | `_button_text_size` | Font size in px. Never `0` — the classic "auto" sentinel resolves to PDK's base size (14). |
-| `_button_text_color` | Hex colour. Never blank — "auto" resolves to the colour that contrasts with the button's own background. |
+| `_button_text_color` | Hex color. Never blank — "auto" resolves to the color that contrasts with the button's own background. |
 | `_button_text_weight` | `bold` or `normal` |
 | `_button_text_style` | `italic` or `normal` |
 | `_button_text_decoration` | `underline` or `none` |
@@ -444,7 +444,7 @@ what a single-label template wants.
 
 The values come from the per-row style expanders in the editor's Title section (stored as
 `display.text_label_styles`). A row that overrides nothing inherits the whole chain —
-system defaults, the button, then your manifest's `default_display`. Only PDK honours
+system defaults, the button, then your manifest's `default_display`. Only PDK honors
 per-row styles; the built-in renderer draws every label in one style.
 
 ---

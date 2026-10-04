@@ -81,7 +81,7 @@ Plugins can call these from any inline `onclick` handler or injected script with
 
 ### PyDeck.confirm(message, opts?)
 
-Show a confirmation dialog. Returns `Promise<boolean>` — `true` if confirmed, `false` / `undefined` if cancelled.
+Show a confirmation dialog. Returns `Promise<boolean>` — `true` if confirmed, `false` / `undefined` if canceled.
 
 ```js
 const ok = await PyDeck.confirm('Delete this item?', {
@@ -95,7 +95,7 @@ if (ok) { /* proceed */ }
 
 ### PyDeck.prompt(message, opts?)
 
-Show a text input dialog. Returns `Promise<string|null>` — the trimmed input value, or `null` if cancelled/empty.
+Show a text input dialog. Returns `Promise<string|null>` — the trimmed input value, or `null` if canceled/empty.
 
 ```js
 const name = await PyDeck.prompt('Enter a name:', {
@@ -124,7 +124,7 @@ const choice = await PyDeck.popup({
 });
 ```
 
-Button `style` options: `"primary"` (accent blue), `"danger"` (red), `"secondary"` (default grey).
+Button `style` options: `"primary"` (accent blue), `"danger"` (red), `"secondary"` (default gray).
 
 Pressing **Escape** closes the popup and resolves with `undefined`.
 
@@ -343,7 +343,7 @@ When `text_size` is `0` (auto) each label finds its own best-fit font size indep
 
 A row holds only the fields it overrides; everything else falls through the usual chain — system defaults, then the button, then the plugin manifest's `default_display`. A row with no entry simply follows the button.
 
-The editor writes this from the small style expander on each Title row. **Only PDK templates honour it** — the built-in renderer draws every label in one style. A PDK template reads the resolved values as `{_button_text_size_1}`, `{_button_text_color_2}`, … — see [Per-row styles](rendering.md#per-row-styles).
+The editor writes this from the small style expander on each Title row. **Only PDK templates honor it** — the built-in renderer draws every label in one style. A PDK template reads the resolved values as `{_button_text_size_1}`, `{_button_text_color_2}`, … — see [Per-row styles](rendering.md#per-row-styles).
 
 #### In display_update
 
@@ -352,7 +352,7 @@ The editor writes this from the small style expander on each Title row. **Only P
     template draws the face, and a `<buttonlabel>` picks up the button's own labels for
     it. The `display_update` / `preload_display_updates` return protocol described in the
     rest of this section belongs to the retired classic plugin format; the core still
-    honours it, and it is documented here because it is what the `display` object in
+    honors it, and it is documented here because it is what the `display` object in
     `buttons.json` is made of — but do not build a new plugin on it.
 
 Plugins emit `text_labels` inside `display_update` (or inside a `preload_display_updates` entry) the same way as `text`:
@@ -368,13 +368,13 @@ return {
 
 #### In the button editor
 
-Users can add multiple labels from the **Title** section of the button editor by clicking **+ Label**. Each row has its own position selector (top / middle / bottom); a position already used by another row is disabled to prevent duplicates. Each row also has a collapsed **style expander** (size, colour, bold, italic, underline) which writes `text_label_styles`.
+Users can add multiple labels from the **Title** section of the button editor by clicking **+ Label**. Each row has its own position selector (top / middle / bottom); a position already used by another row is disabled to prevent duplicates. Each row also has a collapsed **style expander** (size, color, bold, italic, underline) which writes `text_label_styles`.
 
 For a **PDK** function, the number of rows the editor offers is not open-ended — it is the count of `<buttonlabel>` elements in the template, capped at three. A template with one label gets one Title row.
 
 #### Marquee scroll in text_labels mode
 
-When `text_labels` is active the core automatically scrolls the **lowest present label** (bottom → middle → top priority) when its text overflows the button width — exactly like the single `text` scroll path. All other labels remain centred and static.
+When `text_labels` is active the core automatically scrolls the **lowest present label** (bottom → middle → top priority) when its text overflows the button width — exactly like the single `text` scroll path. All other labels remain centered and static.
 
 Control scroll speed with `scroll_speed` in the same `display_update`:
 
@@ -477,7 +477,7 @@ These manifest-level images serve as defaults. Users can override them per-butto
 
 ### User-level per-state image overrides
 
-The web editor lets users customise the image for each state independently. When a function defines `display_states`, the editor shows **state selector dots** below the icon preview. Clicking a dot switches to that state so the user can browse the icon gallery and pick a different image for it.
+The web editor lets users customize the image for each state independently. When a function defines `display_states`, the editor shows **state selector dots** below the icon preview. Clicking a dot switches to that state so the user can browse the icon gallery and pick a different image for it.
 
 User overrides are stored on the button itself in a `display_states` field that mirrors the manifest structure:
 
@@ -563,7 +563,7 @@ The standard button type. Calls one plugin function on each press.
 }
 ```
 
-When the function defines `display_states` in its manifest and the user has customised per-state images via the editor, the button also carries a `display_states` field:
+When the function defines `display_states` in its manifest and the user has customized per-state images via the editor, the button also carries a `display_states` field:
 
 ```json
 {

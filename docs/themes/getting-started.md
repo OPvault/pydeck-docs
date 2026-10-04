@@ -101,7 +101,7 @@ All themes live under **`~/.local/share/pydeck/themes/`** (data home; legacy che
 ```text
 ~/.local/share/pydeck/themes/
 ├── default/               # Bundled with PyDeck, seeded here on first run
-│   ├── manifest.json      #   labelled "PyDeck", variants "Default" / "Light"
+│   ├── manifest.json      #   labeled "PyDeck", variants "Default" / "Light"
 │   ├── dark.css           #   a handful of overrides; the rest comes from style.css
 │   └── light.css
 ├── nord/                  # Nord palette

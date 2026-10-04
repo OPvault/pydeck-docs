@@ -28,7 +28,7 @@ When you finish this page you will know how PyDeck distinguishes **physical butt
     `press_hold` will leave your `on_release` silently dead.
 
     This is deliberate: an ordinary tap fires one handler, not two, so a plugin that
-    grows an `on_release` does not change behaviour for buttons already out there.
+    grows an `on_release` does not change behavior for buttons already out there.
 
 The **`ctx.config`** your handler reads is the plugin's stored **credentials** merged with the button's saved **UI field values**; the button config wins on key collisions. The core adds runtime keys on top of that merge for each invocation — see [Injected `ctx.config` keys](runtime.md).
 
@@ -57,7 +57,7 @@ Add a UI field so users can opt into hold-style behavior. Keep the **default** a
 |:---|:---|
 | `id` | Must be **`press_mode`** — the core reads this exact key to decide whether to deliver a release at all. |
 | `default` | Use **`press`** so existing buttons behave as a single tap on the press edge only. |
-| `options` | The value **`hold`** is the one the core recognises. Label it however you like; the *value* is what matters. |
+| `options` | The value **`hold`** is the one the core recognizes. Label it however you like; the *value* is what matters. |
 
 Field types and editor behavior are documented in [UI field types](ui-fields.md). A PDK template can declare the same field inline in a `<settings>` block instead; either way the value lands on **`ctx.config`**.
 

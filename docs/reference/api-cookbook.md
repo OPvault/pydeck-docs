@@ -293,7 +293,7 @@ curl -s -X POST -H "X-API-Key: $TOKEN" -H 'Content-Type: application/json' -d '{
   "display": {"color": "#111111", "text": "Time"}
 }' $PYDECK/api/buttons/4
 
-# Recolour only — text and config survive
+# Recolor only — text and config survive
 curl -s -X POST -H "X-API-Key: $TOKEN" -H 'Content-Type: application/json' \
      -d '{"type":"plugin","plugin":"no.pydeck.clock","function":"clock","display":{"color":"#222222"}}' \
      $PYDECK/api/buttons/4
@@ -821,7 +821,7 @@ back to `false`.
 
 ### `GET /api/licenses` and `GET /api/licenses/file/{filename}` — scope `settings:read`
 
-The bundled third-party licence index, and one licence file as `text/plain`.
+The bundled third-party license index, and one license file as `text/plain`.
 
 ---
 
@@ -937,7 +937,7 @@ judged on the configured URL, never on anything the manifest claims about itself
 
 ### `PUT /api/marketplace/repos` — scope `marketplace:write`
 
-Replaces the configured list (env vars are untouched). Each entry is normalised
+Replaces the configured list (env vars are untouched). Each entry is normalized
 to a raw `manifest.json` URL first, so you can paste a GitHub repo, branch or
 file page.
 
@@ -1106,7 +1106,7 @@ Everything here was confirmed against a running server.
 | **Delete an uploaded icon** | `POST /api/icons/upload` has no counterpart. Uploads accumulate until you delete the file from `~/.config/pydeck/gallery/`. |
 | **Un-dismiss the welcome screen** | `POST /api/welcome/seen` only ever sets it to `true`. |
 | **Manage API tokens** | `/api/tokens/*` is unreachable with a token, by design — a credential that mints credentials is not a scoped credential. Use the GUI on the host. |
-| **Drive OAuth** | `/api/{plugin}/authorize` and `/oauth/{plugin}/callback` are `403` for tokens. They are browser redirect flows; authorise plugins in the GUI. |
+| **Drive OAuth** | `/api/{plugin}/authorize` and `/oauth/{plugin}/callback` are `403` for tokens. They are browser redirect flows; authorize plugins in the GUI. |
 | **Fetch HTML pages** | `/`, `/settings`, `/mobile/...` are `403` for tokens. |
 | **Run an action directly** | There is no "execute action" endpoint. Bind it to a button and press that. |
 | **Send commands over the WebSocket** | The stream is one-way. Frames you send are ignored. |
