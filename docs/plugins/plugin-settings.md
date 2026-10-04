@@ -8,6 +8,12 @@ to refresh. Declare those in **`plugin-settings.json`** and PyDeck gives your pl
 
 The file is optional. A plugin without it does not appear on the page.
 
+!!! note "Needs PyDeck 2.0.0"
+    Plugin settings and the [shared settings](#shared-settings) arrived in PyDeck 2.0.0. A plugin
+    that ships `plugin-settings.json` or reads `ctx.preferences` must declare
+    `"min_pydeck_version": "2.0.0"` in its `manifest.json`. An older PyDeck has no settings page, so
+    its users could never change them.
+
 ---
 
 ## The file
@@ -129,6 +135,68 @@ def api_entities(config):
     host = config["_settings"].get("host", "localhost")
     ...
 ```
+
+---
+
+## Shared settings
+
+Some choices belong to the user rather than to any one plugin. Someone in the US wants °F on the
+weather, the CPU and the GPU alike. PyDeck asks once, in **Shared by all plugins** at the top of
+**Settings → Plugin settings**, and hands the answers to every plugin as **`ctx.preferences`**:
+
+| Key | Values | Default |
+|:---|:---|:---|
+| `temperature_unit` | `"C"`, `"F"`, `"K"` | `"C"` |
+| `time_format` | `"24"`, `"12"` | `"24"` |
+| `time_strftime` | `"%H:%M"` or `"%I:%M %p"`, from `time_format` | `"%H:%M"` |
+| `date_format` | `"dmy_dot"` (DD.MM.YYYY), `"dmy"` (DD/MM/YYYY), `"mdy"` (MM/DD/YYYY), `"iso"` (YYYY-MM-DD) | `"dmy_dot"` |
+| `date_strftime` | The `strftime` pattern for `date_format` | `"%d.%m.%Y"` |
+| `decimal_separator` | `"."`, `","` | `"."` |
+| `color_ok`, `color_warn`, `color_crit` | Lowercase `#rrggbb` colors for a good, worrying or critical value, chosen with a color picker | `#3fb950`, `#d29922`, `#f85149` |
+| `max_fps` | `"5"`, `"10"`, `"15"`, `"20"`, `"30"`: how often animated keys are redrawn on the deck | `"15"` |
+| `reduce_motion` | `true`: no decorative movement on the deck | `false` |
+
+PyDeck applies two of these itself, so you don't have to:
+
+- **`max_fps`** is how often animated keys are redrawn.
+- **`reduce_motion`** stops `@keyframes` animations. One that runs a set number of times is drawn at its last
+  frame, so a press-triggered roll shows its result at once. One that loops forever stands still. `<marquee>`
+  text and GIFs keep moving.
+
+Read `reduce_motion` yourself only for motion PyDeck can't see, such as a face you animate by changing state on
+every poll. The other settings are up to your plugin.
+
+### Following a shared setting
+
+Don't replace a field of your own with a shared setting. Let the field **follow** it: offer the
+option value `"global"`, make it the default, and resolve it with **`ctx.preference(key, value)`**.
+That call returns `value`, unless `value` is empty or `"global"`, in which case it returns the
+shared setting. A button the user set to °C on purpose keeps °C. Every other button changes when
+the shared setting does.
+
+```json
+{
+  "type": "select",
+  "id": "temperature_unit",
+  "label": "Temperature unit",
+  "default": "global",
+  "options": [
+    { "label": "Use global", "value": "global" },
+    { "label": "Celsius (°C)", "value": "C" },
+    { "label": "Fahrenheit (°F)", "value": "F" }
+  ]
+}
+```
+
+```python
+def on_poll(ctx):
+    unit = ctx.preference("temperature_unit", ctx.config.get("temperature_unit"))
+    today = datetime.now().strftime(ctx.preferences.get("date_strftime", "%Y-%m-%d"))
+```
+
+The same works for a field in `plugin-settings.json`: pass `ctx.settings.get(...)` instead.
+`api_<endpoint>` functions get the dict as `config["_preferences"]`. When the user changes a shared
+setting, every plugin's buttons are polled again with `_force_refresh`, as for a plugin setting.
 
 ---
 

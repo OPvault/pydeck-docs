@@ -12,7 +12,7 @@ Every field type supports these properties:
 
 | Property | Type | Required | Description |
 |:---|:---|:---|:---|
-| `type` | string | Yes | One of: `input`, `number`, `checkbox`, `slider`, `select`, `radio`, `group`, `hotkey_recorder`, `api_select` |
+| `type` | string | Yes | One of: `input`, `number`, `checkbox`, `slider`, `color`, `select`, `radio`, `group`, `hotkey_recorder`, `api_select` |
 | `id` | string | Yes | Unique key within the function. This becomes the config key your handler reads. |
 | `label` | string | Yes | Human-readable label shown above the field. |
 | `default` | any | No | Default value when the button is first created. Cast automatically: `checkbox` → boolean, `number`/`slider` → numeric. |
@@ -101,6 +101,24 @@ A horizontal slider.
 
 ---
 
+## color — color picker
+
+```json
+{
+  "type": "color",
+  "id": "accent",
+  "label": "Accent color",
+  "default": "#4f9cf9"
+}
+```
+
+A swatch that opens the same color picker as the button editor's. The value is a lowercase
+`#rrggbb` string. On **Settings → Plugin settings** anything else is refused, so a handler can use
+it as-is; on a button, read it with a fallback, since a button saved before the field existed has
+no value. Needs PyDeck 2.0.0: declare `"min_pydeck_version": "2.0.0"` when you use it.
+
+---
+
 ## select — dropdown
 
 A dropdown menu with predefined options.
@@ -165,6 +183,7 @@ Renders a visual container with nested child fields. Use it to group related set
 | Property | Description |
 |:---|:---|
 | `fields` | Array of child field definitions rendered inside the group container. Child ids stay flat on the config — read them as `ctx.config["show_icon"]`. |
+| `layout` | `"row"` puts the fields side by side, each label beside its control, wrapping when space runs out. Use it for a few short fields, like three `color` swatches. Default: one under the other. |
 
 ---
 
@@ -377,7 +396,7 @@ def api_entities(config: Dict[str, Any]) -> list:
     ]
 ```
 
-The function must return a JSON-serialisable list. Each item should be a dict containing at least the keys referenced by `display.label` and `display.value`.
+The function must return a JSON-serializable list. Each item should be a dict containing at least the keys referenced by `display.label` and `display.value`.
 
 !!! note "`api_<endpoint>` functions are top-level callables"
     Define them at module level in **`src/shared.py`**. They take the merged

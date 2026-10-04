@@ -107,7 +107,7 @@ If nothing is found, interactive mode prompts you to confirm a detected path or 
 | `--version` | Semver |
 | `--functions` | Comma-separated function ids (snake_case); defaults to `main` when omitted in `--non-interactive` mode |
 | `--preset` | `counter` (increments a number on press) or `static` (label-only demo) |
-| `--min-pydeck-version` | Written to `manifest.json` |
+| `--min-pydeck-version` | Written to `manifest.json`. Defaults to `2.0.0`, the first PyDeck with [plugin settings](plugin-settings.md), since the scaffold ships a `plugin-settings.json` |
 | `--post-install` | Create `scripts/setup.sh` (executable) and set `manifest.json` `post_install_script` for marketplace post-install |
 | `--non-interactive` | Requires `--plugin-id` (or `--slug`), `--name`, and a resolvable plugin root path (`--functions` optional; see above) |
 | `--force` | Overwrite a non-empty existing plugin directory |

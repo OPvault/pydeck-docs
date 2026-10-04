@@ -14,6 +14,8 @@ PDK plugins use event-driven handlers instead of per-function callables. All han
 | `ctx.config` | dict | Per-button configuration from the UI fields. Read-only snapshot. |
 | `ctx.credentials` | dict | The plugin's stored credentials (Settings → Credentials), OAuth tokens included. Populated on **every** dispatch — press, poll, load — in both the server and the hardware listener, so never read a credentials file yourself. |
 | `ctx.settings` | dict | The plugin-wide settings from **Settings → Plugin settings**: every field in the plugin's `plugin-settings.json`, at the user's value or its default. `{}` for a plugin without the file. A copy — writing to it changes nothing stored. See [Plugin settings](plugin-settings.md). |
+| `ctx.preferences` | dict | The shared settings from the top of **Settings → Plugin settings**, the same for every plugin: temperature unit, time and date format (with ready `strftime` patterns), decimal separator, status colors, frame rate, reduce motion. A copy. See [Shared settings](plugin-settings.md#shared-settings). |
+| `ctx.preference(key, value)` | method | `value`, unless it is empty or `"global"`, in which case it returns the shared setting `key`. For a field that offers "Use global". |
 | `ctx.save_credentials(updates)` | method | Merge `updates` into the stored credentials — how a plugin persists a refreshed `access_token`/`refresh_token`/`token_expiry`. Setting a token key to `""` drops it (log out). The store is encrypted inside `pydeck.db`; there is no file to write. |
 | `ctx.device_id` | str | Identifier for the Stream Deck device that triggered the event. |
 | `ctx.plugin_name` | str | The plugin's directory name. |
@@ -30,7 +32,7 @@ Alongside the user's own UI fields, the core injects a set of underscore-prefixe
 | `_button_id` | The button's numeric id in the active profile. |
 | `_button_event` | `"press"` or `"release"` for this invocation. PDK plugins normally use `on_press` / `on_release` instead. See [Press and hold](events.md). |
 | `_function` | The function being dispatched — useful in a `shared.py` helper serving several functions. |
-| `_button_color` | The user's chosen button background colour (hex string). |
+| `_button_color` | The user's chosen button background color (hex string). |
 | `_button_gradient` | A CSS gradient string, or `_button_color` when no gradient is set. See [Gradient backgrounds](../using/gradient-backgrounds.md). |
 | `_button_image` | The user's gallery image for the button, if any. |
 | `_state_images` | Per-state icon paths for a function declaring `display_states` — see [User-picked per-state icons](#user-picked-per-state-icons). |
@@ -54,7 +56,7 @@ temp = ctx.state.get("temperature", 0)  # dict .get() with default
 
 #### `on_load(ctx)`
 
-Called once when the runtime is first initialised. Use it to set initial state values.
+Called once when the runtime is first initialized. Use it to set initial state values.
 
 ```python
 def on_load(ctx):
@@ -128,7 +130,7 @@ When an event fires for a specific function, the runtime resolves handlers in th
 1. **Function module** — the `handler.py` file in the matching subdirectory (`src/functions/<func>/handler.py`).
 2. **Root module** — the root `src/shared.py` (fallback if the function module doesn't define the handler).
 
-Each function module's `on_load` is called automatically at startup, initialising that function's state independently.
+Each function module's `on_load` is called automatically at startup, initializing that function's state independently.
 
 #### Per-Function State Isolation
 
@@ -214,7 +216,7 @@ If `manifest.json` is absent, the core generates one automatically:
 
 ### User-picked per-state icons
 
-A function that toggles between states — muted/unmuted, on/off — usually wants to draw a **glyph** the user can change, while the template keeps control of the background and the state colours.
+A function that toggles between states — muted/unmuted, on/off — usually wants to draw a **glyph** the user can change, while the template keeps control of the background and the state colors.
 
 Declare the states and their default icons in the manifest:
 
@@ -304,7 +306,7 @@ State values are interpolated in the stylesheet before parsing. This enables dyn
 }
 ```
 
-The variable `_button_color` is automatically injected by the core with the user's configured button background colour.
+The variable `_button_color` is automatically injected by the core with the user's configured button background color.
 
 ### Reserved state keys
 
@@ -313,13 +315,13 @@ One key is yours to set; the rest are **injected by the core per button at rende
 | Key | Set by | Description |
 |:---|:---|:---|
 | `_template` | **your handler** | Which template renders. Set it to switch views. |
-| `_button_color` | core | The user's chosen button background colour (hex string). |
+| `_button_color` | core | The user's chosen button background color (hex string). |
 | `_button_gradient` | core | A CSS gradient string (e.g. `linear-gradient(135deg, #ff0000 0%, #0000ff 100%)`). Falls back to `_button_color` when no gradient is set. See [Gradient backgrounds](../using/gradient-backgrounds.md). |
 | `_button_image` | core | The button's own icon path, for a function that declares `draws_button_image` or `display_states`. See [Button-owned faces](rendering.md#35-button-owned-faces). |
 | `_button_label` | core | The button's Title (first label slot), already resolved. `<buttonlabel>` uses this for you. |
 | `_button_label_slots` | core | All label slots in document order, as a list. |
 | `_button_text_size` | core | Title font size in px — never `0`. |
-| `_button_text_color` | core | Title colour — never blank. |
+| `_button_text_color` | core | Title color — never blank. |
 | `_button_text_weight` | core | `bold` or `normal`. |
 | `_button_text_style` | core | `italic` or `normal`. |
 | `_button_text_decoration` | core | `underline` or `none`. |
@@ -475,7 +477,7 @@ def on_poll(ctx: Any, interval: int = 1000) -> None:
 - `on_poll` with `interval=1000` updates every second.
 - `ctx.state._template` switches between `clock` and `clock-date` based on the `show_date` config.
 - `{time_class}` interpolation in the `class` attribute dynamically switches CSS classes.
-- `{_button_color}` in `:root` picks up the user's button colour setting.
+- `{_button_color}` in `:root` picks up the user's button color setting.
 
 ---
 
@@ -631,7 +633,7 @@ Stream Deck buttons are 72–96 px squares. Limit your template to 3–4 element
 
 ### Use CSS Variables for Theming
 
-Define colours in `:root` to make themes easy to adjust:
+Define colors in `:root` to make themes easy to adjust:
 
 ```css
 :root {
@@ -640,9 +642,9 @@ Define colours in `:root` to make themes easy to adjust:
 }
 ```
 
-### Pick Up the User's Button Colour
+### Pick Up the User's Button Color
 
-The core injects `_button_color` into the render state with the hex value of the user's chosen button colour. Use it in your CSS:
+The core injects `_button_color` into the render state with the hex value of the user's chosen button color. Use it in your CSS:
 
 ```css
 :root {
