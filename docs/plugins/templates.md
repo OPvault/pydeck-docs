@@ -249,9 +249,14 @@ the fallback to show.
 A template may contain more than one `<buttonlabel>` (up to **three** are used).
 They are filled in document order from the button's `text_labels` (`top`,
 `middle`, `bottom`), falling back to the single `text` value. The core reports
-the count to the editor as `pdk_buttonlabel_count`, which is what decides how
-many Title rows the editor offers, and the element bodies as
-`pdk_buttonlabel_defaults`.
+the count to the editor as `pdk_buttonlabel_count`, which caps how many Title
+rows the user can add (and remove again, down to one), and the element bodies
+as `pdk_buttonlabel_defaults`.
+
+A slot with no title and an empty body renders nothing, and when it is sized
+`auto` it drops out of the layout entirely — `gap` included — so a template can
+offer three lines and still center a single one. Give the bodies no text when a
+blank line should stay blank, and put the default title in `default_display.text`.
 
 Each row can also carry its own style — see
 [Per-row styles](rendering.md#per-row-styles) for the `{_button_text_*_1}`
