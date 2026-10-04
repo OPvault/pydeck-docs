@@ -89,7 +89,7 @@ imply `buttons:read`.
 | `actions` | read, write | Named multi-step action sequences |
 | `plugins` | read | Plugin metadata, property forms, static assets |
 | `plugin_api` | read | Calls a plugin's own `api_*` functions — **executes plugin code** |
-| `icons` | read, write | Icon gallery listing and uploads |
+| `icons` | read, write | Icon gallery listing, uploads and deleting images |
 | `themes` | read, write | Installed themes and the active selection |
 | `settings` | read, write | Settings pane data, keybinds, developer options, licenses |
 | `marketplace` | read, write | Catalogs; writing **installs third-party code** |

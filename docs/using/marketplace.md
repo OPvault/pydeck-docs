@@ -134,7 +134,8 @@ Installed plugins and themes are stored under your data directory, separate from
 
 - Plugins: `~/.local/share/pydeck/plugin/`
 - Themes: `~/.local/share/pydeck/themes/`
-- Data a plugin saves (caches, tokens): `~/.local/share/pydeck/storage/` — this survives updates.
+- Data a plugin saves (caches, tokens): `~/.local/share/pydeck/storage/` — this survives updates. Uninstalling a
+  plugin deletes the images it saved there, so they leave the icon gallery with it.
 
 (PyDeck honors `$XDG_DATA_HOME` if you've set it.) You normally never touch these by hand; the full layout is in [Config & file paths](../reference/paths.md).
 

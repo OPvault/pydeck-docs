@@ -509,6 +509,20 @@ For a **PDK** function the resolved result does **not** replace the button face 
 
 All plugin images are automatically discovered and shown in the Icon Gallery (the image picker in the button editor). Users can browse and select any plugin's icons for any button.
 
+The gallery shows three kinds of image:
+
+- the user's own uploads;
+- images bundled in a plugin's `img/` folder;
+- top-level images a plugin writes to its storage folder at runtime (`ctx.storage_path`), such as downloaded art.
+
+Uploads and storage images have a delete button in the gallery. Bundled images do not, because they ship with the
+plugin and would come back on its next update. When a plugin is uninstalled, its storage images are deleted with it
+and its bundled ones leave the gallery straight away. Other files in its storage folder are kept. Storage left behind
+by a plugin that is no longer installed is not shown.
+
+A plugin that keeps an image in storage should expect the user to delete it: draw it again the next time it is needed,
+rather than assuming it is still there.
+
 The **sidebar** library tile uses only `sidebar_icon` (see functions table), not `default_display.image`.
 
 If a function sets `disableGallary` or `disableGallery` in its manifest, the editor hides the entire **Button Icon** field for that function, including the label and browse button. This is useful for single-purpose buttons where the image is part of the function's own presentation and should not be user-editable.

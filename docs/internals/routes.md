@@ -250,6 +250,7 @@ Prefix `/api`.
 | GET | `/api/icons` | `icon_gallery.list_icons` |
 | GET | `/api/gallery/{filename}` | `icon_gallery.upload_path` |
 | POST | `/api/icons/upload` | `icon_gallery.save_upload` |
+| DELETE | `/api/icons?rel=…` | `icon_gallery.delete_icon` |
 
 Upload returns **201**. It answers 400 for a missing file or empty filename, 415
 for an unsupported extension, 413 for a file over 10 MB.
