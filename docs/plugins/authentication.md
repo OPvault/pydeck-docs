@@ -115,7 +115,7 @@ Plugins can add a **custom HTML panel** in **Settings** (gear icon in the deck h
 2. Optionally add **`~/.local/share/pydeck/plugin/<your_plugin>/settings.html`**. Static HTML only; no server-side templating.
 
 3. The settings page calls `GET /api/settings/categories` to build the sidebar. The
-built-in categories — **Marketplace**, **Device**, **Appearance**, **Keybinds**,
+built-in categories — **Marketplace**, **Devices**, **Appearance**, **Keybinds**,
 **Credentials**, **Tokens**, **Updates**, **Licenses**, and **Developer** — come first
 and are grouped in the nav; plugin categories follow, sorted by label. For each plugin in
 a category, the UI loads:

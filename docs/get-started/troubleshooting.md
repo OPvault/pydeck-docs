@@ -53,7 +53,7 @@ Common problems and how to fix them. If your issue isn't here, check PyDeck's lo
 
 ## I can't reach PyDeck from another device
 
-By default PyDeck binds to `127.0.0.1`, so it's only reachable from the same computer. To control it from a phone or another machine on your network, switch it to listen on your LAN in **Settings → Device → Network** (this binds to `0.0.0.0` and restarts PyDeck). For phone control specifically, see **[Virtual decks & phone control](../using/virtual-decks.md)**, which also covers the pairing step.
+By default PyDeck binds to `127.0.0.1`, so it's only reachable from the same computer. To control it from a phone or another machine on your network, switch it to listen on your LAN in **Settings → Security → Network access** (this binds to `0.0.0.0` and restarts PyDeck). For phone control specifically, see **[Virtual decks & phone control](../using/virtual-decks.md)**, which also covers the pairing step.
 
 **Getting `403 Remote access denied` or `403 Pairing required`?** That is PyDeck working
 as designed. Everything except the pairing handshake is refused for off-box callers, and

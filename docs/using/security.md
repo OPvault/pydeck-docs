@@ -185,6 +185,15 @@ the old CA must install the new one before it will connect again, so it asks fir
 
 ---
 
+## Virtual decks on this computer
+
+A virtual deck opened in a browser on the PyDeck computer by its LAN link arrives from this
+machine's own network address rather than `localhost`, so it is asked to pair. **Open virtual
+decks without pairing on this computer** waives that for virtual decks only. PyDeck recognizes
+"this computer" when a connection's source address is the very address it connected to, which
+only a browser on this machine can produce. Other devices still need a pairing token, and the
+editor and settings stay out of their reach either way.
+
 ## Trusted proxies
 
 If you run a reverse proxy in front of PyDeck — nginx, Caddy, Traefik — it arrives as an
@@ -374,7 +383,7 @@ These predate the Security pane and still describe the old arrangement:
 | Page | Stale in what way |
 |:---|:---|
 | [Devices](devices.md) | Documents the LAN toggle under Settings → Device |
-| [Virtual decks & phone control](virtual-decks.md) | Sends you to Settings → Device → Network; kiosk URLs can be `https` now |
+| [Virtual decks & phone control](virtual-decks.md) | Kiosk URLs can be `https` now |
 | [Access control](../internals/security.md) | Says loopback is the only client trusted without a credential |
 | [Route inventory](../internals/routes.md) | Missing the `/api/tls` and `/api/trusted-*` routes |
 | [HTTP & WebSocket API](../reference/http-api.md) | Same, and has no `security` scope |

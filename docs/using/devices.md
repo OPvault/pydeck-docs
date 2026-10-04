@@ -72,7 +72,7 @@ The brightness slider writes `0`–`100` (default `70`) into the selected device
 
 ### Orientation
 
-**Settings → Device** offers `0`, `90`, `180`, and `270`, for a deck mounted sideways or upside down. The setting rotates the **key images** — both on the hardware and in the web grid, which rotates the whole deck frame and counter-rotates each key so the artwork stays upright.
+**Settings → Devices** offers `0`, `90`, `180`, and `270`, for a deck mounted sideways or upside down. The setting rotates the **key images** — both on the hardware and in the web grid, which rotates the whole deck frame and counter-rotates each key so the artwork stays upright.
 
 Button **numbering does not change**: button id `0` is always the same physical key. After a rotation the listener re-renders every non-blank key, so the change shows up without a restart. Like brightness, orientation is stored per device.
 

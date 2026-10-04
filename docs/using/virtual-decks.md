@@ -2,22 +2,32 @@
 
 A **virtual deck** is a Stream Deck with no hardware behind it — a grid of buttons rendered in a browser. It behaves like a real device everywhere else in PyDeck: it appears in the device list, gets its own profiles and folders, and runs the same plugins.
 
-Two flavors:
+Each virtual deck is two choices:
 
-| Type | Opened as | For |
+- **Buttons:** a mirror of a physical deck you already have (same profiles, folders and
+  buttons, pressed and drawn as one deck), or a new deck with buttons of its own.
+- **View:** how its page is shown. Either view works with either kind of buttons.
+
+| View | Opened as | For |
 |:---|:---|:---|
-| **Mobile / Phone** | `/mobile/<deck-id>` | A phone, over the LAN. Requires pairing. |
-| **Kiosk / Touchscreen** | `/?kiosk&device=<deck-id>` | A spare monitor or tablet on the same machine. |
+| **Full screen** | `/?kiosk&device=<deck-id>` | A spare monitor or tablet: the deck fills the browser window. |
+| **Home screen** | `/mobile/<deck-id>` | A phone: a compact view to add to its home screen. |
 
 ---
 
 ## Creating one
 
-**Settings → Device → Virtual Decks → Add Virtual Deck**:
+**Settings → Devices → Virtual Decks → Add Virtual Deck**:
 
-1. Pick a **type** — Mobile or Kiosk.
-2. Give it a **name**.
-3. Choose a **layout**: `mini` (3 × 2), `standard` (5 × 3), or `xl` (8 × 4) — or clone the grid of a physical device you already own.
+1. Give it a **name**.
+2. Pick its **buttons**: *Use physical deck* (then the deck to mirror) or *Create new virtual
+   deck* (then a layout: `mini` 3 × 2, `standard` 5 × 3 or `xl` 8 × 4).
+3. Pick its **view**: *Full screen* or *Home screen*. It starts on Full screen for a mirror and
+   Home screen for a new deck, which you can change.
+
+The **view** can be switched later from the deck's row in the list. It is the view the deck
+opens in whichever link is used: an old bookmark or QR code for the other view redirects, and a
+page that is already open switches over on its own. Its buttons and pairings stay.
 
 The deck appears in the device tabs immediately, with an empty `main` profile of its own. Its id looks like `vdeck-1a2b3c4d5e6f`.
 
@@ -31,7 +41,7 @@ By default PyDeck binds to `127.0.0.1`, which no other machine can reach. To use
 
 ### 1. Bind to the network
 
-In **Settings → Device → Network**, allow local-network access — this switches the bind from `127.0.0.1` to `0.0.0.0`. **PyDeck restarts itself** when you save.
+In **Settings → Security → Network access**, allow local-network access — this switches the bind from `127.0.0.1` to `0.0.0.0`. **PyDeck restarts itself** when you save.
 
 The same panel shows the LAN address to use, e.g. `http://192.168.1.20:8686`.
 
@@ -78,6 +88,15 @@ Paired devices are listed under **Settings → Tokens** (and mirrored in **Setti
     rather not have the sequence appear over the deck grid. It is a per-browser
     preference, stored locally.
 
+### Opening a virtual deck on this computer without pairing
+
+A browser on the PyDeck computer that follows a virtual deck's LAN link (the one under
+**Settings → Devices**) arrives from this machine's network address, not from `localhost`. So
+it is asked for a pairing code like any phone, and a **mobile** virtual deck asks for one even
+on `localhost`. Turn on **Settings → Security → Virtual decks on this computer → Open virtual
+decks without pairing on this computer** to skip that. It applies to virtual decks only, and only
+to a browser on this computer. Phones, tablets and other computers still have to pair.
+
 ---
 
 ## What a remote client may do
@@ -118,7 +137,15 @@ It works from another machine too — but only the deck view, and only for a **v
     token exactly like a phone does. The kiosk page itself renders the keypad when the
     caller has none; complete the sequence and the token is stored in that browser.
 
-    A kiosk opened **on the PyDeck machine itself** (`localhost`) needs no token at all.
+    A virtual deck opened **on the PyDeck machine itself** (`localhost`) needs no token at all,
+    in either view.
+
+!!! note "Refreshing a paired deck"
+    A full-screen deck drops its token from the address bar, so a refresh goes through the
+    pairing page, which checks the token this browser saved for that deck and goes straight
+    back to it. It only starts pairing, and shows a code on the PyDeck screen, when there is
+    no saved token or the token was revoked. Tokens are saved per deck, so pairing a second
+    deck in the same browser keeps the first one paired.
 
 ---
 
@@ -127,6 +154,15 @@ It works from another machine too — but only the deck view, and only for a **v
 **Can:** run any plugin, use profiles, folders, and actions, hold its own layout per device, and stay in sync live — presses and display updates travel over the same WebSocket the main UI uses.
 
 **Can't:** control hardware brightness (there is no screen to dim), and it has no physical key mapping, so orientation is only a layout choice.
+
+### Image quality
+
+A virtual deck's page draws each key at the deck's native size (72 px on a standard deck) and
+lets the browser stretch it, which looks soft on a large screen. **Settings → Appearance →
+Virtual decks → Image quality** draws the keys at 2×, 3× or 4× instead. That is sharper, and
+more work to draw on every animated frame. It changes a virtual deck's own page only. The
+editor keeps drawing at 1×, and a virtual deck that mirrors a physical one leaves the physical
+deck alone; only the mirror's page gets the sharper keys.
 
 Because each device runs its own polling, a plugin placed on both a physical deck and a virtual one polls twice. See [Devices](devices.md#one-process-per-device).
 
