@@ -14,6 +14,26 @@ This is a **documentation-only** repository — a [ProperDocs](https://properdoc
 
 The `docs/internals/` pages and `docs/reference/api-cookbook.md` / `api-tokens.md` were migrated out of the `opvault/pydeck` repo root (where they lived as loose `docs-*.md` files). They describe that repo's `api/` and `lib/` packages at a module-and-function level, so they go stale when that code moves — check them against `opvault/pydeck` before editing.
 
+## Pull every PyDeck repo before you start
+
+The work spans sibling checkouts in one parent folder (`pydeck`, `pydeck-plugins`, `pydeck-docs`, and
+`pydeck-themes` when it is checked out), and other people push to all of them. Before reading or changing
+anything — at the start of every task — bring every checkout up to date, not just the one you were asked about:
+
+```bash
+git -C ../pydeck pull --ff-only dev dev               # its remote is named `dev`, and so is the branch
+git -C ../pydeck-plugins pull --ff-only origin testing
+git -C ../pydeck-docs pull --ff-only origin main
+git -C ../pydeck-themes pull --ff-only                # only when it is checked out
+```
+
+(Paths are relative to whichever of these repos you are in; drop the `../` for the current one.)
+
+When a pull cannot fast-forward — local commits, or uncommitted changes in the way — stash or commit first, merge
+upstream, resolve, and say what you merged. Never reset or discard someone's work to make a pull go through. A
+generated file is resolved by regenerating it: for `pydeck-plugins/manifest.json`, take upstream's copy and run
+`generate_manifest.py --label "Testing"` again rather than merging it by hand.
+
 ## Commands
 
 Dependencies are pinned in `requirements.txt` (`properdocs` + `mkdocs-material` + `mkdocs-redirects`). ProperDocs keeps the `mkdocs.*` plugin and theme APIs, so MkDocs plugins and themes install and load unchanged.
