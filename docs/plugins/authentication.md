@@ -312,6 +312,7 @@ Replace a simple `"oauth": true` with an object:
 | `scopes` | string | No | Space-separated OAuth scopes to request. |
 | `auth_method` | string | No | How client credentials are sent to the token endpoint. `"basic"` (default) sends Base64-encoded `client_id:client_secret` in the Authorization header. `"post"` sends them as form body fields. |
 | `user_agent` | string | No | `User-Agent` header sent to the token endpoint. Defaults to `PyDeck/1.0`. Set this when the provider requires a specific format — for example, Discord's API requires the `DiscordBot` prefix. |
+| `origin_setting` | string | No | The `id` of one of the plugin's own settings (`plugin-settings.json`). When the user fills that setting with an `http://` or `https://` address, `authorize_url` and `token_url` keep their path and query but are sent to that address instead, so a plugin can be pointed at a self-hosted stand-in for the provider (for example SpotiProxy in front of Spotify). Empty, or anything that is not an address, keeps the URLs as declared. The plugin itself must send its API calls to the same place. |
 
 > **`user_agent` example — Discord:**  
 > Discord's API rejects token requests whose `User-Agent` does not start with `DiscordBot`.  
