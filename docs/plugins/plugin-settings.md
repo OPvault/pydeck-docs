@@ -154,11 +154,13 @@ weather, the CPU and the GPU alike. PyDeck asks once, in **Shared by all plugins
 | `decimal_separator` | `"."`, `","` | `"."` |
 | `color_ok`, `color_warn`, `color_crit` | Lowercase `#rrggbb` colors for a good, worrying or critical value, chosen with a color picker | `#3fb950`, `#d29922`, `#f85149` |
 | `max_fps` | `"5"`, `"10"`, `"15"`, `"20"`, `"30"`: how often animated keys are redrawn on the deck | `"15"` |
+| `scroll_speed` | `"0.5"`, `"0.75"`, `"1"`, `"1.5"`, `"2"`: a multiplier on how fast too-long titles and `<marquee>` text scroll | `"1"` |
 | `reduce_motion` | `true`: no decorative movement on the deck | `false` |
 
-PyDeck applies two of these itself, so you don't have to:
+PyDeck applies three of these itself, so you don't have to:
 
 - **`max_fps`** is how often animated keys are redrawn.
+- **`scroll_speed`** multiplies the speed of every scrolling title and `<marquee>`.
 - **`reduce_motion`** stops `@keyframes` animations. One that runs a set number of times is drawn at its last
   frame, so a press-triggered roll shows its result at once. One that loops forever stands still. `<marquee>`
   text and GIFs keep moving.
