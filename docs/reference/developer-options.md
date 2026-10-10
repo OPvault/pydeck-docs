@@ -53,6 +53,23 @@ Turning the switch off clears the override everywhere, so a stale per-button `de
 
 ---
 
+## Resource usage
+
+Switch on **Show resource usage** to see what PyDeck itself costs the machine, refreshed every two seconds while the pane is open:
+
+| Part | What it shows |
+|:---|:---|
+| **Summary** | PyDeck's CPU (as a share of the machine and of one core), memory, disk I/O and open network connections, added up over every PyDeck process. |
+| **Processes** | The server, one listener per connected deck (named after the deck) and any subprocess a plugin started, each with CPU, memory, threads, disk read/write and connections. |
+| **On disk** | The database, installed plugins, plugin storage, themes, icon uploads and the cache. Measured at most every 30 seconds. |
+| **Whole machine** | CPU, memory, the disk PyDeck's data lives on, and network throughput, for scale. |
+
+CPU is counted per core, so a process keeping two cores busy reads 200%. Operating systems do not count network traffic per process, so PyDeck's own network use is shown as the connections it holds open; the throughput figure is the whole machine's.
+
+The figures come from `GET /api/settings/resource-usage`, which needs the `psutil` package from `requirements.txt` and answers **503** when it is missing.
+
+---
+
 ## Where the settings live
 
 Both options are stored under `developer_options` in `~/.config/pydeck/core/config.json`:
@@ -62,7 +79,8 @@ Both options are stored under `developer_options` in `~/.config/pydeck/core/conf
   "developer_options": {
     "export_rightclick": false,
     "emulated_clock": false,
-    "emulated_clock_time": ""
+    "emulated_clock_time": "",
+    "resource_usage": false
   }
 }
 ```
