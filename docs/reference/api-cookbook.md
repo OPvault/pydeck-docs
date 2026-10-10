@@ -342,10 +342,10 @@ separately by the listener process.
 
 ### `GET /api/buttons/{slot}/image` — scope `buttons:read`
 
-PNG at the deck's native icon size (80×80 on a Mini), `Cache-Control: no-store`.
+Lossless WebP at the deck's native icon size (80×80 on a Mini), `Cache-Control: no-store`.
 
 ```bash
-curl -s -H "X-API-Key: $TOKEN" $PYDECK/api/buttons/0/image -o key0.png
+curl -s -H "X-API-Key: $TOKEN" $PYDECK/api/buttons/0/image -o key0.webp
 ```
 
 ### `GET /api/buttons/{slot}/gif` — scope `buttons:read`
@@ -355,7 +355,7 @@ the file is not multi-frame, or a PDK template owns the face.
 
 ### `GET /api/buttons/{slot}/image/hires?scale=4` — scope `buttons:read`
 
-Same face at `scale`× (clamped 1–10), with a `Content-Disposition` filename.
+Same face at `scale`× (clamped 1–10) as a PNG, with a `Content-Disposition` filename.
 **Requires the `export_rightclick` developer option**, otherwise
 `403 {"error": "Export right-click is not enabled"}`.
 
@@ -366,8 +366,8 @@ requests when polling.
 
 ```json
 {"t": 1787949609905,
- "slots": [{"id": 0, "png_b64": "iVBORw0KGgo..."},
-           {"id": 1, "png_b64": "...", "gif_b64": "..."}]}
+ "slots": [{"id": 0, "webp_b64": "UklGRi4..."},
+           {"id": 1, "webp_b64": "...", "gif_b64": "..."}]}
 ```
 
 `t` is the server's render timestamp in milliseconds. `gif_b64` appears only for
@@ -1178,7 +1178,7 @@ import base64, requests
 S = requests.Session(); S.headers['X-API-Key'] = 'pdk_...'
 grid = S.get('http://127.0.0.1:8686/api/deck/grid').json()
 for slot in grid['slots']:
-    open(f"key{slot['id']}.png", 'wb').write(base64.b64decode(slot['png_b64']))
+    open(f"key{slot['id']}.webp", 'wb').write(base64.b64decode(slot['webp_b64']))
 ```
 
 One request instead of one per key. Scope: `buttons:read`.

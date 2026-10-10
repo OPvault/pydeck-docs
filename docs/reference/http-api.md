@@ -338,7 +338,7 @@ Delete a button by ID.
 
 #### `GET /api/buttons/<slot>/image`
 
-Render the button at the given slot as a PNG image. Returns `image/png`.
+Render the button at the given slot as a lossless WebP image. Returns `image/webp`.
 
 #### `POST /api/buttons/<id>/press`
 
@@ -654,7 +654,7 @@ Remove a folder entry permanently.
 
 #### `GET /api/deck/grid`
 
-Returns a snapshot of every button slot as rendered PNG images (and optionally GIF data). Used by the web UI to refresh the visual deck grid.
+Returns a snapshot of every button slot as rendered lossless WebP images (and optionally GIF data). Used by the web UI to refresh the visual deck grid.
 
 **Response:**
 
@@ -662,8 +662,8 @@ Returns a snapshot of every button slot as rendered PNG images (and optionally G
 {
   "t": 1712345678123,
   "slots": [
-    { "id": 0, "png_b64": "<base64-encoded PNG>" },
-    { "id": 1, "png_b64": "<base64-encoded PNG>", "gif_b64": "<base64-encoded GIF>" }
+    { "id": 0, "webp_b64": "<base64-encoded WebP>" },
+    { "id": 1, "webp_b64": "<base64-encoded WebP>", "gif_b64": "<base64-encoded GIF>" }
   ]
 }
 ```
@@ -672,7 +672,7 @@ Returns a snapshot of every button slot as rendered PNG images (and optionally G
 |:---|:---|
 | `t` | Server timestamp in milliseconds (used by the client to detect stale responses). |
 | `slots[].id` | Button slot index. |
-| `slots[].png_b64` | Base64-encoded PNG of the rendered button. |
+| `slots[].webp_b64` | Base64-encoded lossless WebP of the rendered button. |
 | `slots[].gif_b64` | Base64-encoded GIF, present only when the button is displaying an animated GIF. |
 
 #### `GET /api/buttons/<slot>/gif`
