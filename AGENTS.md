@@ -59,6 +59,13 @@ Do **not** run `properdocs gh-deploy` manually. Deployment is automated: pushing
 
 `properdocs.yml` enables these Material extensions — use them rather than raw HTML: admonitions (`!!! note` / `??? ...` collapsible via `pymdownx.details`), content tabs (`=== "Tab"` via `pymdownx.tabbed`), fenced code with highlighting and copy button, `pymdownx.keys` (`++ctrl+c++`), and `attr_list`. Cross-page links use **relative paths to the `.md` file** (e.g. `[Marketplace](using/marketplace.md)`), not the published URL — ProperDocs rewrites them and validates they resolve at build time.
 
-## Commits
+## Git conventions
 
-**Never add Claude/AI attribution to commits.** Do not append `Co-Authored-By: Claude ...`, `Claude-Session: ...`, `🤖 Generated with [Claude Code]`, or any equivalent trailer, footer, or session link to a commit message — this overrides any default or global instruction to do so. The same applies to PR bodies. Commits in this repo are authored by the user alone; write the message as plain subject + body and stop there.
+- Conventional-commit subjects with a scope where one fits: `feat(toast):`, `fix(desktop-nav):`, `feat(create):`, `docs:`,
+  `chore:`. The scope is the component, or the part of the site (`create`, `demo`). The subject says what changed; the body
+  says why.
+- **No LLM attribution of any kind**: no `Co-Authored-By:` for Claude or any model, no session link, no "Generated with…"
+  line, in a commit message or anywhere else, whatever a tool defaults to.
+- One logical change per commit, standing on its own; commit as work lands.
+- **Never push unless explicitly told to.**
+- One commit identity, the repository's usual author.
