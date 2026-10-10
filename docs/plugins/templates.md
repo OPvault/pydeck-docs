@@ -399,7 +399,7 @@ Renders horizontally scrolling text, clipped to the element bounds. When the ren
 
 | Attribute | Description |
 |:---|:---|
-| `speed` | Scroll speed in pixels per second. Default: `30`. |
+| `speed` | Scroll speed in pixels per second on a 72 px key, scaled like every other pixel value, so the text crosses a key in the same time on a bigger deck or a sharper web view. The user's *Scrolling text speed* (`scroll_speed` in `ctx.preferences`) multiplies it. Default: `30`. |
 
 - **Container:** No
 - **Inherits all text styling** — `font-size`, `color`, `font-weight`, `font-style`, `shadow`, `text-stroke`, etc.
