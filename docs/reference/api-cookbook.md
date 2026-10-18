@@ -311,6 +311,19 @@ Returns the saved button. `400 {"error": "invalid JSON"}` on an unparseable body
 
 Returns the removed button; `404 {"error": "not found"}` if the slot was empty.
 
+### `POST /api/buttons/{slot}/move` — scope `buttons:write`
+
+Moves the button to `to`, swapping it with the button there — one save, so both
+keep their `instance` and whatever their plugin keeps per button.
+
+```bash
+curl -s -X POST -H "X-API-Key: $TOKEN" -H 'Content-Type: application/json' \
+     -d '{"to": 5}' $PYDECK/api/buttons/4/move
+```
+
+Returns the button at its new slot; `404` if `{slot}` was empty, `400` if `to`
+is not a slot number.
+
 ### `POST /api/buttons/{slot}/press` — scope `buttons:write`
 
 Runs the button exactly as a physical press would.

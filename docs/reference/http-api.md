@@ -309,7 +309,11 @@ Create or update a button. Send the full button object as JSON.
 }
 ```
 
-A plugin button may carry a `mapping` — an action its press also runs: `{"action": "Dim lights", "run_original": true}`. With `run_original` `false` the action runs instead of the button's own function. Send it with the rest of the button; leave it out to remove it. A malformed one is a 400.
+Saving to a slot that holds a button updates it: keys you leave out keep their stored values.
+
+A plugin button may carry a `mapping` — an action its press also runs: `{"action": "Dim lights", "run_original": true}`. With `run_original` `false` the action runs instead of the button's own function. Send `"mapping": null` to remove it. A malformed one is a 400.
+
+Every plugin button also has an `instance` — the id plugins key per-button data on (see [`_button_instance`](../plugins/runtime.md#injected-ctxconfig-keys)). The store owns it: it keeps the stored one, and gives a new one when the plugin or function changes, or when the id you send is already another button's — so sending a copy of a button makes a new button. Leave it out, or send what `GET /api/buttons` returned.
 
 To save user-level per-state image overrides (for functions that define `display_states` in their manifest), include a `display_states` field:
 
@@ -337,6 +341,14 @@ When omitted or empty, only the manifest's `display_states` are used during stat
 Delete a button by ID.
 
 **Response:** The removed button object.
+
+#### `POST /api/buttons/<id>/move`
+
+Move a button to another slot of the same page, swapping it with the button there, in one save — what dragging a key on the grid does. Both buttons keep their `instance`, so a running countdown keeps its timer.
+
+**Request body:** `{"to": 5}`
+
+**Response:** The button at its new slot. `404` when there is no button at `<id>`, `400` when `to` is not a slot number from 0.
 
 #### `GET /api/buttons/<slot>/image`
 

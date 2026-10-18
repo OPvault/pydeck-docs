@@ -249,7 +249,7 @@ PDK plugins live under **`~/.local/share/pydeck/plugin/<plugin_name>/`** (see **
 - **Templates** in `src/functions/<func>/template.xml` are discovered and merged. Each function gets its own template file.
 - **Shared styles** in `src/shared.css` are loaded first. Per-function `style.css` files in each function directory are appended after, giving them higher cascade precedence.
 - **Handlers** in `src/functions/<func>/handler.py` take precedence over `src/shared.py` for the matching function. The shared module serves as fallback.
-- **State** is isolated per function — each function gets its own state dict so `_template` and other variables don't collide between functions.
+- **State** is isolated per function, and per button within it — each button gets its own state dict, so `_template` and other variables don't collide between functions, and two buttons of one function with different settings don't draw each other's face. See [Per-Button State](runtime.md#per-button-state).
 
 ### Required Files
 

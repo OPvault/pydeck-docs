@@ -29,7 +29,8 @@ Alongside the user's own UI fields, the core injects a set of underscore-prefixe
 
 | Key | Description |
 |:---|:---|
-| `_button_id` | The button's numeric id in the active profile. |
+| `_button_id` | The button's slot number in the active profile or folder. Another button can take the slot, and the same slot exists in every profile, folder and deck, so it is not an identity. |
+| `_button_instance` | An id that is this one button's and no other's: 32 hex digits. It stays with the button through every save, including a drag to another slot; a copy of the button gets its own, and so does a button switched to another plugin or function, or removed and added again. Key anything you keep per button on it — a timer, a counter — and a button put where another stood never picks up what the old one left. `None` from a dispatch not made for a button. |
 | `_button_event` | `"press"` or `"release"` for this invocation. PDK plugins normally use `on_press` / `on_release` instead. See [Press and hold](events.md). |
 | `_function` | The function being dispatched — useful in a `shared.py` helper serving several functions. |
 | `_button_color` | The user's chosen button background color (hex string). |
@@ -149,6 +150,12 @@ def on_load(ctx):
 ```
 
 Both functions can use `ctx.state._template` without overwriting each other because each operates on a separate state. The root `src/shared.py` can hold shared utility functions that the per-function modules import.
+
+#### Per-Button State
+
+Within a function, each button has its own state too. Every press, poll and render of a button names it by its [`_button_instance`](#injected-ctxconfig-keys), so two buttons running the same function with different settings — two countdowns, two cities — each keep and draw their own `ctx.state`. A button that has not been dispatched yet starts from whatever its function's state holds, which is what `on_load` set.
+
+`ctx.state` is still in memory only, and kept separately by the server and by each deck's listener. Data that has to outlive a restart, or that both processes must agree on, belongs in a file under `ctx.storage_path`, keyed by `_button_instance` — the clock plugin's countdown keeps its timers that way.
 
 ---
 
