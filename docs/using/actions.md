@@ -36,11 +36,11 @@ An action can also run when an ordinary plugin key is pressed — a Spotify play
 - **Every button of a function** — every key running that plugin function, on any deck and profile, now or added later.
 - **One button** — a single key, picked by deck, profile, page and key number.
 
-Each trigger has **Keep the button's own function**. On, the key does its usual job first and the action runs after it. Off, the action runs *instead* — the key's own function is skipped.
+Each trigger has **Keep the button's own function**. On, the key does its usual job first and the action runs after it, in the background — the key's face updates (and animates) straight away, without waiting for the action's delays. Off, the action runs *instead* — the key's own function is skipped.
 
 A single key can also be mapped from the button editor: **Run an action on press**, with the same checkbox. It is the same setting as a "one button" trigger, so it shows in both places; a key carries one such mapping, and mapping it to another action replaces it. Under the field, the editor also names any action that runs for every key of that function.
 
-The action's steps act on the pressed key — a **Set color** colors it, a **Switch** keeps its place per key. Plugin steps get only their own settings, not the key's. If a mapped action fails, the key's own function still counts. A trigger fires on **press** only, never on release.
+The action's steps act on the pressed key — a **Set color** colors it, a **Switch** keeps its place per key. Plugin steps get only their own settings, not the key's. If a mapped action fails, the key's own function still counts, and the failure is written to the PyDeck log. A trigger fires on **press** only, never on release.
 
 ---
 
