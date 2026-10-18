@@ -369,7 +369,7 @@ is unplugged) falls back to running the press in the server. See
 
 ### Actions
 
-The Actions API provides full CRUD access to named multi-step action sequences stored in `~/.config/pydeck/core/actions.json`. Each step is either a plugin call or a delay (see [§15](../plugins/assets.md#6-actions-multi-step-sequences) for the step schema).
+The Actions API provides full CRUD access to named multi-step action sequences stored in `pydeck.db`. Each step is either a plugin call or a delay (see [§15](../plugins/assets.md#6-actions-multi-step-sequences) for the step schema).
 
 #### `GET /api/actions`
 
@@ -400,9 +400,12 @@ Returns the step list for a single named action.
     { "plugin": "discord", "function": "toggle_mute" },
     { "delay": 2000 },
     { "plugin": "discord", "function": "toggle_deafen" }
-  ]
+  ],
+  "display": { "color": "#5865f2", "text_labels": { "top": "Mute" } }
 }
 ```
+
+`display` is the action's **button defaults** — what a button running it shows wherever the button sets nothing itself: `color` (`#rrggbb`), `image` (an icon path) and `text_labels` (`top` / `middle` / `bottom`). Only the keys that are set are present; `{}` means none.
 
 **Response — 404** when the action does not exist:
 
@@ -426,6 +429,7 @@ Create a new named action. Returns **409**-equivalent via a 400 error if the nam
     { "delay": 2000 },
     { "plugin": "discord", "function": "toggle_deafen" }
   ],
+  "display": { "text_labels": { "top": "Mute" } },
   "overwrite": false
 }
 ```
@@ -434,7 +438,10 @@ Create a new named action. Returns **409**-equivalent via a 400 error if the nam
 |:---|:---|:---|:---|
 | `name` | string | yes | Unique action name. Non-empty, stripped of surrounding whitespace. |
 | `steps` | array | yes | Ordered list of step objects (see step schema below). |
+| `display` | object | no | Button defaults, as returned by `GET` above. A malformed one is a 400. |
 | `overwrite` | boolean | no (default `false`) | If `true`, replace an existing action with the same name. |
+
+The response carries `name`, `steps` and `display`.
 
 **Response — 201:**
 
@@ -459,7 +466,7 @@ Create a new named action. Returns **409**-equivalent via a 400 error if the nam
 
 #### `PUT /api/actions/<name>`
 
-Replace the step list of an existing action. The name itself cannot be changed; delete and re-create to rename.
+Replace the step list of an existing action, and its button defaults when `display` is given (omitted, they are kept). To change the name, use `rename` below.
 
 **Path parameters:** `name` — the action name (URL-encoded).
 
@@ -485,6 +492,18 @@ Replace the step list of an existing action. The name itself cannot be changed; 
 ```
 
 **Response — 404** when the action does not exist.
+
+---
+
+#### `POST /api/actions/<name>/rename`
+
+Rename an action everywhere it is referenced: the action itself (its steps and button defaults go with it), every button that runs it or switches to it next — on every device and profile — and every `{"action": name}` step inside another action, at any depth.
+
+**Request body:** `{ "name": "new name" }`
+
+**Response — 200:** `{ "name": "new name", "steps": [...] }`
+
+**Response — 400** for a blank name or one another action already has; **404** when the action does not exist.
 
 ---
 

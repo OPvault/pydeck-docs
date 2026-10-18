@@ -519,7 +519,13 @@ Without `"overwrite": true`, an existing name is `400`.
 
 ### `PUT /api/actions/{name}` — scope `actions:write`
 
-Replaces the step list. Body `{"steps": [...]}`. `404` if the action does not exist.
+Replaces the step list. Body `{"steps": [...]}`, plus `"display"` to replace the button defaults
+(`color`, `image`, `text_labels`) — omitted, they are kept. `404` if the action does not exist.
+
+### `POST /api/actions/{name}/rename` — scope `actions:write`
+
+Body `{"name": "new name"}`. Renames it everywhere: the buttons that run it and the actions that
+nest it follow. `400` if the new name is blank or taken, `404` if the action does not exist.
 
 ### `DELETE /api/actions/{name}` — scope `actions:write`
 

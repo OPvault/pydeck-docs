@@ -9,15 +9,25 @@ Actions are shared across the whole install and identified by **name**: one acti
 ## Building one
 
 1. In the sidebar, open the **Actions** category and drag **New Action** onto an empty key.
-2. The window switches into builder mode: the sidebar becomes a plugin browser, the middle becomes the step list.
+2. The window switches into builder mode: the sidebar becomes a palette of things to add, the middle shows the action's button defaults and its step list.
 3. Give the action a **Name** at the top — this is what identifies it everywhere else.
-4. Drag plugin functions from the sidebar into the step list. Drag steps within the list to reorder.
-5. Click a step to configure it in the right-hand panel — the same property form the button editor shows for that function.
+4. Drag functions from the palette into the step list, or into a Switch's slots or a Group. Any step can be dragged again later — within the list, into a Switch or Group, or back out.
+5. Every step, however deeply nested, is edited in the right-hand panel: click it to select it. A step you have just added is selected for you. Plugin functions show the same property form the button editor shows.
 6. **Save Action**.
+
+The palette lists only plugin functions that are useful as a step — the ones whose manifest marks them `actionable`. Functions that only display something, like a clock or the weather, are not offered.
 
 To edit it later, **click the action's key on the deck** — an action button opens the builder instead of firing, so clicking it in the web UI is safe.
 
-To put the same action on a second key, drag **New Action** onto that key and save it under the **same name**. Saving over an existing name replaces that action everywhere rather than creating a copy.
+To put the same action on a second key, drag it from the sidebar's **Actions** category onto that key.
+
+### Button defaults
+
+The top of the builder sets how every key running the action looks: up to three **title** lines, a **background** color and an **icon**. They show as soon as the action is on a key — no press needed — and a key that sets its own title, color or icon in the button editor keeps those instead. Changing a default later reaches every key that has not set its own.
+
+### Renaming
+
+Change the **Name** and save: the action is renamed everywhere it is used — every key on every deck and profile, and every other action that runs it. Renaming to a name another action already has is refused.
 
 ---
 
@@ -52,22 +62,20 @@ A switch needs **at least two configured options** before it will save.
 
 ## Where actions are stored
 
-```text
-~/.config/pydeck/core/actions.json
-```
+In the `actions` and `action_steps` tables of `~/.local/share/pydeck/pydeck.db` — one set for the whole install, not per device or per profile. A button that runs one is stored as `"type": "action"` with the action's name; rename an action from the builder (or `POST /api/actions/<name>/rename`), which updates those buttons too.
 
-One file for the whole install — not per device or per profile. A button that runs one is stored as `"type": "action"` with the action's name, so renaming an action in the file without updating the buttons will break them.
+An action's steps, as the API returns them:
 
 ```json
 {
-  "actions": {
-    "Start Streaming": [
-      { "plugin": "no.pydeck.discord", "function": "toggle_mute" },
-      { "delay": 250 },
-      { "action": "Lights Dim" },
-      { "set_color": { "color": "#a882ff" } }
-    ]
-  }
+  "name": "Start Streaming",
+  "steps": [
+    { "plugin": "no.pydeck.discord", "function": "toggle_mute" },
+    { "delay": 250 },
+    { "action": "Lights Dim" },
+    { "set_color": { "color": "#a882ff" } }
+  ],
+  "display": { "color": "#a882ff", "text_labels": { "top": "Live" } }
 }
 ```
 
@@ -86,4 +94,4 @@ Deleting an action from the manager does not clear buttons that reference it —
 
 Anything a plugin exposes as a function can be a step, so the two compose: build the capability as a plugin function, then sequence it in the builder.
 
-The REST endpoints behind the builder (`GET`/`POST`/`PUT`/`DELETE /api/actions`) and the full step schema are in the [HTTP API reference](../reference/http-api.md).
+The REST endpoints behind the builder (`GET`/`POST`/`PUT`/`DELETE /api/actions`, `POST /api/actions/<name>/rename`) and the full step schema are in the [HTTP API reference](../reference/http-api.md).
