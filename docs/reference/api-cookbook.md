@@ -520,12 +520,25 @@ Without `"overwrite": true`, an existing name is `400`.
 ### `PUT /api/actions/{name}` — scope `actions:write`
 
 Replaces the step list. Body `{"steps": [...]}`, plus `"display"` to replace the button defaults
-(`color`, `image`, `text_labels`) — omitted, they are kept. `404` if the action does not exist.
+(`color`, `image`, `text_labels`) and `"triggers"` to replace the buttons that run it — each kept
+when omitted. `404` if the action does not exist.
+
+```bash
+curl -s -X PUT -H "X-API-Key: $TOKEN" -H 'Content-Type: application/json' \
+  -d '{"steps": [{"plugin": "no.pydeck.home-assistant", "function": "toggle"}],
+       "triggers": [{"plugin": "no.pydeck.spotify", "function": "play_pause", "run_original": true}]}' \
+  "$PYDECK/api/actions/Dim%20lights"
+```
 
 ### `POST /api/actions/{name}/rename` — scope `actions:write`
 
 Body `{"name": "new name"}`. Renames it everywhere: the buttons that run it and the actions that
 nest it follow. `400` if the new name is blank or taken, `404` if the action does not exist.
+
+### `GET /api/action-triggers` — scope `actions:read`
+
+Every plugin button a trigger can name (with its deck, page, key and current `mapping`), and every
+function trigger already set.
 
 ### `DELETE /api/actions/{name}` — scope `actions:write`
 

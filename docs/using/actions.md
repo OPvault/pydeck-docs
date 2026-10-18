@@ -27,7 +27,20 @@ The top of the builder sets how every key running the action looks: up to three 
 
 ### Renaming
 
-Change the **Name** and save: the action is renamed everywhere it is used — every key on every deck and profile, and every other action that runs it. Renaming to a name another action already has is refused.
+Change the **Name** and save: the action is renamed everywhere it is used — every key on every deck and profile, every other action that runs it, and every key it is mapped to. Renaming to a name another action already has is refused.
+
+### Triggers: run it from another button
+
+An action can also run when an ordinary plugin key is pressed — a Spotify play/pause key that dims the lights too, say. The **Triggers** card under the button defaults lists what runs it:
+
+- **Every button of a function** — every key running that plugin function, on any deck and profile, now or added later.
+- **One button** — a single key, picked by deck, profile, page and key number.
+
+Each trigger has **Keep the button's own function**. On, the key does its usual job first and the action runs after it. Off, the action runs *instead* — the key's own function is skipped.
+
+A single key can also be mapped from the button editor: **Run an action on press**, with the same checkbox. It is the same setting as a "one button" trigger, so it shows in both places; a key carries one such mapping, and mapping it to another action replaces it. Under the field, the editor also names any action that runs for every key of that function.
+
+The action's steps act on the pressed key — a **Set color** colors it, a **Switch** keeps its place per key. Plugin steps get only their own settings, not the key's. If a mapped action fails, the key's own function still counts. A trigger fires on **press** only, never on release.
 
 ---
 
@@ -62,7 +75,7 @@ A switch needs **at least two configured options** before it will save.
 
 ## Where actions are stored
 
-In the `actions` and `action_steps` tables of `~/.local/share/pydeck/pydeck.db` — one set for the whole install, not per device or per profile. A button that runs one is stored as `"type": "action"` with the action's name; rename an action from the builder (or `POST /api/actions/<name>/rename`), which updates those buttons too.
+In the `actions` and `action_steps` tables of `~/.local/share/pydeck/pydeck.db` — one set for the whole install, not per device or per profile. Function triggers are kept on the action; a one-button trigger is kept on that button as its `mapping`. A button that runs one is stored as `"type": "action"` with the action's name; rename an action from the builder (or `POST /api/actions/<name>/rename`), which updates those buttons too.
 
 An action's steps, as the API returns them:
 
@@ -75,11 +88,16 @@ An action's steps, as the API returns them:
     { "action": "Lights Dim" },
     { "set_color": { "color": "#a882ff" } }
   ],
-  "display": { "color": "#a882ff", "text_labels": { "top": "Live" } }
+  "display": { "color": "#a882ff", "text_labels": { "top": "Live" } },
+  "triggers": [
+    { "plugin": "no.pydeck.spotify", "function": "play_pause", "run_original": true },
+    { "button": { "device_id": "BL06K1B02897", "profile": "default", "folder": null, "slot": 3 },
+      "run_original": false }
+  ]
 }
 ```
 
-Deleting an action from the manager does not clear buttons that reference it — those keys report that the action no longer exists when pressed.
+Deleting an action from the manager does not clear buttons that run it — those keys report that the action no longer exists when pressed. Keys *mapped* to it are unmapped, and go back to doing only their own job.
 
 ---
 

@@ -309,6 +309,8 @@ Create or update a button. Send the full button object as JSON.
 }
 ```
 
+A plugin button may carry a `mapping` — an action its press also runs: `{"action": "Dim lights", "run_original": true}`. With `run_original` `false` the action runs instead of the button's own function. Send it with the rest of the button; leave it out to remove it. A malformed one is a 400.
+
 To save user-level per-state image overrides (for functions that define `display_states` in their manifest), include a `display_states` field:
 
 ```json
@@ -401,9 +403,21 @@ Returns the step list for a single named action.
     { "delay": 2000 },
     { "plugin": "discord", "function": "toggle_deafen" }
   ],
-  "display": { "color": "#5865f2", "text_labels": { "top": "Mute" } }
+  "display": { "color": "#5865f2", "text_labels": { "top": "Mute" } },
+  "triggers": [
+    { "plugin": "no.pydeck.media-control", "function": "play_pause", "run_original": true }
+  ]
 }
 ```
+
+`triggers` lists the buttons whose press also runs the action, in two shapes:
+
+| Shape | Meaning |
+|:---|:---|
+| `{ "plugin", "function", "run_original" }` | Every button running that plugin function, on any device and profile. |
+| `{ "button": { "device_id", "profile", "folder", "slot" }, "run_original" }` | One plugin button, by its place: `device_id` `null` for the shared profiles, `folder` `null` for a profile's home page, `slot` from `0`. Stored on that button as its `mapping`. |
+
+With `run_original` (default `true`) the button's own function runs first and the action after it; `false` runs the action instead. Triggers fire on press, not release.
 
 `display` is the action's **button defaults** — what a button running it shows wherever the button sets nothing itself: `color` (`#rrggbb`), `image` (an icon path) and `text_labels` (`top` / `middle` / `bottom`). Only the keys that are set are present; `{}` means none.
 
@@ -439,9 +453,10 @@ Create a new named action. Returns **409**-equivalent via a 400 error if the nam
 | `name` | string | yes | Unique action name. Non-empty, stripped of surrounding whitespace. |
 | `steps` | array | yes | Ordered list of step objects (see step schema below). |
 | `display` | object | no | Button defaults, as returned by `GET` above. A malformed one is a 400. |
+| `triggers` | array | no | Triggers, as returned by `GET` above. A malformed one, or a `button` that is not a plugin button, is a 400 and nothing is saved. |
 | `overwrite` | boolean | no (default `false`) | If `true`, replace an existing action with the same name. |
 
-The response carries `name`, `steps` and `display`.
+The response carries `name`, `steps`, `display` and `triggers`.
 
 **Response — 201:**
 
@@ -466,7 +481,7 @@ The response carries `name`, `steps` and `display`.
 
 #### `PUT /api/actions/<name>`
 
-Replace the step list of an existing action, and its button defaults when `display` is given (omitted, they are kept). To change the name, use `rename` below.
+Replace the step list of an existing action, its button defaults when `display` is given, and its triggers when `triggers` is given (omitted, each is kept). `triggers` replaces them all: a button mapped to this action and left out of the list is unmapped, and a button listed that was mapped to another action now runs this one. To change the name, use `rename` below.
 
 **Path parameters:** `name` — the action name (URL-encoded).
 
@@ -497,7 +512,7 @@ Replace the step list of an existing action, and its button defaults when `displ
 
 #### `POST /api/actions/<name>/rename`
 
-Rename an action everywhere it is referenced: the action itself (its steps and button defaults go with it), every button that runs it or switches to it next — on every device and profile — and every `{"action": name}` step inside another action, at any depth.
+Rename an action everywhere it is referenced: the action itself (its steps, button defaults and triggers go with it), every button that runs it, switches to it next or is mapped to it — on every device and profile — and every `{"action": name}` step inside another action, at any depth.
 
 **Request body:** `{ "name": "new name" }`
 
@@ -507,9 +522,37 @@ Rename an action everywhere it is referenced: the action itself (its steps and b
 
 ---
 
+#### `GET /api/action-triggers`
+
+What a trigger can name: every plugin button, and every function trigger already set. The Action Builder offers `buttons` under "One button"; the button editor uses `functions` to say which actions a key's function also runs.
+
+**Response — 200:**
+
+```json
+{
+  "functions": [
+    { "action": "Dim lights", "plugin": "no.pydeck.spotify", "function": "play_pause", "run_original": true }
+  ],
+  "buttons": [
+    {
+      "button": { "device_id": "BL06K1B02897", "profile": "default", "folder": null, "slot": 1 },
+      "deck": "Stream Deck Mini",
+      "folder_label": null,
+      "plugin": "no.pydeck.spotify",
+      "function": "play_pause",
+      "mapping": { "action": "Dim lights", "run_original": false }
+    }
+  ]
+}
+```
+
+`buttons` covers the decks' own profiles; the shared profiles (`device_id` `null`) only while no deck has any. `deck` is the deck's name when it is connected, else its id. `folder_label` is the page's name, `null` for the home page. `mapping` is the action the button runs on press, or `null`.
+
+---
+
 #### `DELETE /api/actions/<name>`
 
-Remove a named action permanently.
+Remove a named action permanently. Buttons mapped to it are unmapped.
 
 **Path parameters:** `name` — the action name (URL-encoded).
 
